@@ -1,0 +1,78 @@
+{
+  "input": {
+    "base": {
+      "bits": 8,
+      "signed": true,
+      "nullable": true,
+      "optional": true
+    }
+  },
+  "old": {
+    "output": {
+      "adjusted": {
+        "if": [
+          {
+            "is_missing": "base"
+          },
+          {
+            "error": "missing-base"
+          },
+          {
+            "if": [
+              {
+                "is_null": "base"
+              },
+              {
+                "error": "null-base"
+              },
+              {
+                "add": [
+                  {
+                    "field": "base"
+                  },
+                  {
+                    "integer": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "new": {
+    "output": {
+      "adjusted": {
+        "if": [
+          {
+            "is_missing": "base"
+          },
+          {
+            "error": "missing-base"
+          },
+          {
+            "if": [
+              {
+                "is_null": "base"
+              },
+              {
+                "error": "missing-base"
+              },
+              {
+                "add": [
+                  {
+                    "field": "base"
+                  },
+                  {
+                    "integer": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
