@@ -1,20 +1,26 @@
-# Software OBJ Renderer
+# Deterministic Software OBJ Renderer
 
-A small, dependency-free software rasterizer that renders Wavefront OBJ
-meshes to 8-bit RGB PNG images using only the Python standard library.
-No Pillow, NumPy, or OpenGL is involved.
+A dependency-free software rasterizer (Python standard library only) that
+renders Wavefront OBJ meshes to 8-bit RGB PNG images and per-pixel
+depth / coverage / UV channels, built for **deterministic offline dataset
+generation**: identical input always produces bit-identical output,
+regardless of tile execution order or worker process count.
 
 ## Usage
 
 ```sh
 python3 render.py assets/cube.obj render.png
-python3 render.py assets/cube.obj render.png --size 256 --fov 50 --distance 6
-python3 render.py assets/cube.obj render.png --no-cull --light 0.2,0.9,1.0
+python3 render.py assets/cube.obj render.png --samples 4 --tile-size 32 --workers 4
+python3 render.py mesh.obj render.png --texture --depth-png depth.png
+python3 acceptance.py          # one-command local acceptance
 ```
 
 ```
 usage: render.py [-h] [--size SIZE] [--fov FOV] [--distance DISTANCE]
-                 [--light LIGHT] [--no-cull]
+                 [--near NEAR] [--far FAR] [--light LIGHT]
+                 [--samples {1,4}] [--tile-size TILE_SIZE]
+                 [--workers WORKERS] [--texture] [--depth-png PATH]
+                 [--no-cull]
                  input output
 ```
 
@@ -23,122 +29,96 @@ usage: render.py [-h] [--size SIZE] [--fov FOV] [--distance DISTANCE]
 | `--size N` | `512` | Square output resolution in pixels |
 | `--fov DEG` | `45` | Vertical field of view |
 | `--distance D` | `5` | Camera distance along the +Z axis |
+| `--near` / `--far` | `0.25` / `500` | Clip distances (view-space depth) |
 | `--light X,Y,Z` | `0.45,0.8,1` | Direction *towards* the directional light |
+| `--samples {1,4}` | `1` | Sub-samples per pixel (1x or 2x2 grid) |
+| `--tile-size N` | `64` | Rasterization tile size in pixels |
+| `--workers N` | `1` | Worker processes for tile rasterization |
+| `--texture` | off | Procedural checker texture from `vt` UVs |
+| `--depth-png PATH` | off | Also write a grayscale depth visualization |
 | `--no-cull` | off | Disable backface culling |
 
-Default camera: eye at `(0, 0, 5)`, looking at the origin down `-Z`, vertical
-FOV 45°.  The unit cube spans `z = -1..1`, so the front face is 4 units from
-the camera.
+## Pipeline and conventions
 
-## Acceptance result
+1. **Clip space** (`clipspace.py`) — world points become view points
+   `(x, y, z - distance)` and are mapped by an OpenGL-style perspective
+   matrix; `w` equals view-space depth.  Triangles are clipped against
+   **all six frustum planes** (`-w <= x,y,z <= w`) with
+   Sutherland-Hodgman; UVs are interpolated linearly in clip space along
+   clipped edges.  A 1e-9 relative tolerance keeps vertices that are
+   mathematically on a plane (e.g. shared edges exactly on the frustum
+   boundary) bit-identical across adjacent triangles.
+2. **Perspective divide** (`rasterizer._project_prim`) — one divide per
+   vertex; screen-space interpolation uses a single convention
+   everywhere: `1/w`, `u/w`, `v/w` are linear in screen space, view depth
+   is `1 / (1/w)`, attributes are `(a/w) / (1/w)`.  Zero-area and
+   `w <= 0` primitives are dropped, so depth is always finite.
+3. **Tiled rasterization** (`rasterizer._rasterize_tile`) — primitives
+   are binned into screen tiles and each tile is rasterized
+   independently at 1x (pixel centre) or 4x (2x2 sub-samples).
 
-Running `python3 render.py assets/cube.obj render.png` prints:
+### Determinism rules
 
-```
-triangle count: 12
-triangles rasterized: 4
-foreground pixels: 96100
-foreground ratio: 36.66%
-depth range: 4.0000 .. 4.0000
-resolution: 512x512
-output: render.png
-```
+* **Fill rule** — triangles are normalized to positive signed area; a
+  sample is inside when every edge function is positive, or exactly zero
+  on a **top-left** edge (`dy < 0`, or `dy == 0 and dx < 0` in y-down
+  screen space).  A shared edge belongs to exactly one triangle.
+* **Occlusion** — resolved per sample with the total order
+  `(1/w, -primitive_id)`: nearer wins, exact depth ties go to the
+  earliest input primitive.  The order is total, so the result is
+  independent of evaluation order, tile order and worker count.
+* **Degenerate input** — zero-area and collinear triangles are skipped
+  before rasterization; uncovered pixels read as the far-plane depth, so
+  every output depth is finite and valid.
 
-Independent decoding of the written file confirms:
+## Acceptance (`acceptance.py`)
 
-* valid PNG signature and CRCs, chunks `IHDR`/`IDAT`/`IEND`;
-* `512x512`, bit depth 8, colour type 2 (truecolour RGB);
-* decompressed scanline size `512 * (1 + 3 * 512) = 786944` bytes;
-* 96,100 covered pixels (36.66%), inside the required 5–90% range;
-* silhouette bounding box 310 × 310 pixels, centred in the image.
+`python3 acceptance.py` runs six sections and exits non-zero on failure:
 
-The cube is viewed exactly face-on, so the visible front face is a flat
-square at depth 4 and its two triangles are rendered twice each in the
-summary: the asset's two +Y triangles are wound inward despite the file's
-comment, so the face-normal culling test keeps them; the z-buffer then
-correctly hides them behind the front face.  Use `--no-cull` to rasterize
-all 12 triangles; the image is identical.
+1. **Cube regression** — `assets/cube.obj` at default framing must match
+   golden statistics (12 triangles, 96,100 foreground pixels, 36.66%,
+   depth 4.0) and a golden SHA-256 over color+coverage+depth+UV.
+2. **Clip-space unit checks** — near/far rejection, near-plane
+   straddling, UV interpolation along a clipped edge.
+3. **Pixel-level scene regressions** — coplanar quad in both
+   triangulations (identical coverage+color, depth/UV to 1e-9), shared
+   edges owned by exactly one triangle (separate vs. combined renders,
+   1x and 4x), front/back occlusion, mixed winding, degenerate/sub-pixel
+   triangles, camera-through-surface with finite depths.
+4. **Independent reference** — `reference.py` re-implements visibility
+   with per-sample ray casting (Moeller-Trumbore), sharing no clip or
+   coverage code with the main pipeline; full-image coverage masks must
+   match exactly and depth/UV at selected probe points to 1e-6.
+5. **Determinism** — a 7,200-triangle mesh rendered with tile orders
+   forward/reverse/shuffle and 1/2/4 workers must give one identical
+   digest.
+6. **Performance** — a 20,000-triangle heightfield at tile sizes
+   16/32/64/128 with wall time and peak RSS per run.
 
 ## Files
 
-### `obj_loader.py`
+* `obj_loader.py` — OBJ parser: `v`, `vt`, `f` (all reference forms,
+  negative indices, fan triangulation).  `load_mesh` returns positions,
+  UVs and indexed faces; `load_obj` keeps the legacy triangle-list view.
+* `clipspace.py` — projection and homogeneous six-plane clipping.
+* `rasterizer.py` — primitive preparation, tile binning, 1x/4x sampled
+  tile rasterization, deterministic merge, `RenderResult` with
+  color/depth/coverage/UV channels and a stable `digest()`.
+* `texture.py` — procedural checker texture (picklable spec tuples).
+* `reference.py` — independent ray-cast reference path.
+* `scenes.py` — deterministic scene generators (coplanar quad, textured
+  near-plane crossing, front/back overlap, mixed winding, camera through
+  surface, frustum-boundary shared edges, large heightfield).
+* `png_writer.py` — from-scratch PNG encoder (zlib + struct).
+* `render.py` — CLI entry point.
+* `acceptance.py` — one-command local acceptance.
 
-Parses `v` and `f` records.  Vertex positions are stored as
-`(x, y, z)` tuples.  Face references accept every common form
-(`v`, `v/vt`, `v//vn`, `v/vt/vn`), 1-based and negative indices, and
-polygons are fan-triangulated as `(0, i, i+1)`.  Other OBJ records
-(`o`, `g`, `s`, `vt`, `vn`, materials) are ignored.  Logical lines
-continued with a trailing backslash are joined.  `load_obj(path)` returns
-a list of triangles, each a tuple of three vertex tuples.
+## Limitations
 
-### `rasterizer.py`
-
-* **Camera / projection** — a pinhole camera at `(0, 0, distance)` looks
-  along `-Z`.  For a view-space point `(x_v, y_v, z_v)`:
-
-  ```
-  ndc_x = x_v / (z_v * tan(fov/2) * aspect)
-  ndc_y = y_v / (z_v * tan(fov/2))
-  screen_x = (ndc_x + 1) * 0.5 * width
-  screen_y = (1 - ndc_y) * 0.5 * height
-  ```
-
-  `aspect` is `width / height` (1 for the square CLI output).  Points with
-  `z_v <= 1e-6` are rejected; triangles crossing the near plane are skipped.
-* **Rasterization** — screen-space barycentric coordinates via edge
-  functions at pixel centres `(px + 0.5, py + 0.5)`; a per-triangle
-  bounding box limits the scan.  Degenerate and edge-on triangles are
-  skipped.
-* **Depth** — `1/z` is interpolated linearly with the screen barycentrics,
-  which is perspective-correct for a planar triangle.  The z-buffer stores
-  reciprocal depth; larger values are nearer, and the buffer is initialized
-  to `-inf` ("empty").
-* **Shading** — flat face normals come from the triangle winding
-  (`cross(b-a, c-a)`).  Lambert diffuse plus ambient:
-
-  ```
-  intensity = ambient + (1 - ambient) * max(0, dot(normal, light))
-  ```
-
-  with `ambient = 0.18` and a warm base colour `(238, 140, 68)`.
-* **Culling** — optional (on by default).  A triangle is kept when its
-  normal points towards the eye:
-  `dot(normal, eye - centroid) > 0`.
-
-`render(...)` returns a `RenderResult` containing the RGB pixel rows and
-the triangle count, drawn-triangle count, foreground pixel count and
-fraction, and the min/max view-space depth of visible fragments.
-
-### `png_writer.py`
-
-Writes PNG from scratch:
-
-* signature `\x89PNG\r\n\x1a\n`;
-* `IHDR` with width, height, bit depth 8, colour type 2 (RGB), no
-  interlace;
-* one `IDAT` containing zlib-compressed scanlines, each prefixed with
-  filter type 0 (None);
-* `IEND`;
-* per-chunk CRC-32 via `zlib.crc32` and big-endian lengths via `struct`.
-
-`encode_png(width, height, rows)` returns the bytes; `write_png(...)` writes
-them to disk.  Pixel values are clamped to 0–255.
-
-### `render.py`
-
-The CLI: loads the OBJ, renders, writes the PNG, and prints triangle count,
-foreground pixels, foreground ratio, depth range, resolution, and output
-path.  Invalid arguments, unreadable inputs, meshes with no faces, and
-unwritable outputs produce a non-zero exit status with a message on stderr.
-
-## Design notes and limitations
-
-* Pure standard library: `math`, `struct`, `zlib`, `argparse`, `dataclasses`.
-* No anti-aliasing: coverage is binary per pixel centre.
-* No textures, vertex normals, materials, or transformations: shading is
-  flat per triangle and the mesh is rendered in object space.
-* No near-plane clipping: a triangle with any vertex behind the camera is
-  skipped (irrelevant for the default framing).
-* Output is always square (`--size`), matching the CLI contract.
-* OBJ faces are assumed to be planar and simple; non-convex polygons are
-  fan-triangulated, which is exact for convex faces such as the cube's.
+* Pure standard library; no NumPy/Pillow/OpenGL.
+* Flat per-face Lambert shading plus optional procedural texture; no
+  materials, vertex normals or transformations (meshes render in object
+  space).
+* Square output only (`--size`), matching the CLI contract.
+* 4x sampling uses an ordered 2x2 sub-sample grid; coverage masks are
+  4-bit per pixel.
