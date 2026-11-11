@@ -1,3 +1,5 @@
+"""Command line entry point: capture log -> HLS EVENT publication."""
+
 import argparse
 from pathlib import Path
 from tempfile import TemporaryDirectory

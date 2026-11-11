@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import sys
 import unittest
@@ -8,7 +9,19 @@ from fixtures import generate
 from mux import ffmpeg_executable
 
 
+def _ffmpeg_available() -> bool:
+    candidate = ffmpeg_executable()
+    try:
+        subprocess.run([candidate, "-version"], stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=False)
+        return True
+    except OSError:
+        return False
+
+
 class NormalCaptureTest(unittest.TestCase):
+    @unittest.skipUnless(_ffmpeg_available(),
+                         "FFmpeg is required for fixture generation and decode")
     def test_cli_packages_and_decodes_both_tracks(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)
