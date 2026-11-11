@@ -1,0 +1,11 @@
+{"version":1,"id":"B-01","amount":"12.345","currency":"CNY","note":"超精度"}
+{"version":1,"id":"B-02","amount":"10.00","amount":"11.00","currency":"CNY"}
+{"version":3,"id":"B-03","amount":"1.00","currency":"CNY"}
+{"version":2,"id":"B-04","currency":"CNY"}
+{"version":1,"id":"B-05","amount":"1.00"}
+not-json-at-all
+{"version":2,"id":"B-07","amount_cents":12.5,"currency":"CNY"}
+{"version":1,"id":"B-08","amount":"1.00","currency":"CNY","note":5}
+
+["array","not","object"]
+{"version":1,"id":"B-11","amount":"abc","currency":"CNY"}
