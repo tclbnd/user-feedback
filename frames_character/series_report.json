@@ -1,0 +1,202 @@
+{
+  "times": [
+    {
+      "index": 0,
+      "time": 0.1,
+      "turn_weight": 0.0,
+      "camera_eye": [
+        4.6048,
+        3.0235,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36278,
+      "shadowed_pct": 7.878,
+      "cascade_hits": [
+        0,
+        29428,
+        6850
+      ],
+      "blend_band_fragments": 1897
+    },
+    {
+      "index": 1,
+      "time": 0.8,
+      "turn_weight": 0.0,
+      "camera_eye": [
+        6.6716,
+        3.1427,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36337,
+      "shadowed_pct": 6.283,
+      "cascade_hits": [
+        0,
+        28215,
+        8122
+      ],
+      "blend_band_fragments": 1889
+    },
+    {
+      "index": 2,
+      "time": 1.2,
+      "turn_weight": 0.0,
+      "camera_eye": [
+        6.6739,
+        3.1427,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36199,
+      "shadowed_pct": 6.031,
+      "cascade_hits": [
+        0,
+        28061,
+        8138
+      ],
+      "blend_band_fragments": 1979
+    },
+    {
+      "index": 3,
+      "time": 1.55,
+      "turn_weight": 0.2056,
+      "camera_eye": [
+        5.8869,
+        3.0974,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36095,
+      "shadowed_pct": 6.483,
+      "cascade_hits": [
+        0,
+        28444,
+        7651
+      ],
+      "blend_band_fragments": 1953
+    },
+    {
+      "index": 4,
+      "time": 1.8,
+      "turn_weight": 0.5,
+      "camera_eye": [
+        5.0023,
+        3.0464,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36044,
+      "shadowed_pct": 6.52,
+      "cascade_hits": [
+        0,
+        28740,
+        7304
+      ],
+      "blend_band_fragments": 1707
+    },
+    {
+      "index": 5,
+      "time": 2.4,
+      "turn_weight": 1.0,
+      "camera_eye": [
+        2.6699,
+        2.9118,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36278,
+      "shadowed_pct": 9.882,
+      "cascade_hits": [
+        1536,
+        28914,
+        5828
+      ],
+      "blend_band_fragments": 3143
+    },
+    {
+      "index": 6,
+      "time": 2.7,
+      "turn_weight": 1.0,
+      "camera_eye": [
+        2.6545,
+        2.2781,
+        4.0674
+      ],
+      "tris_drawn": 136,
+      "fragments": 38866,
+      "shadowed_pct": 0.0,
+      "cascade_hits": [
+        10232,
+        25510,
+        3124
+      ],
+      "blend_band_fragments": 7718
+    },
+    {
+      "index": 7,
+      "time": 3.0,
+      "turn_weight": 1.0,
+      "camera_eye": [
+        0.1646,
+        1.3127,
+        0.6273
+      ],
+      "tris_drawn": 141,
+      "fragments": 62157,
+      "shadowed_pct": 0.0,
+      "cascade_hits": [
+        61948,
+        181,
+        28
+      ],
+      "blend_band_fragments": 120
+    },
+    {
+      "index": 8,
+      "time": 3.1,
+      "turn_weight": 1.0,
+      "camera_eye": [
+        0.4699,
+        1.4316,
+        1.0515
+      ],
+      "tris_drawn": 135,
+      "fragments": 72763,
+      "shadowed_pct": 0.0,
+      "cascade_hits": [
+        66538,
+        6043,
+        182
+      ],
+      "blend_band_fragments": 2177
+    },
+    {
+      "index": 9,
+      "time": 3.7,
+      "turn_weight": 1.0,
+      "camera_eye": [
+        3.0184,
+        2.9319,
+        6.2
+      ],
+      "tris_drawn": 136,
+      "fragments": 36168,
+      "shadowed_pct": 10.014,
+      "cascade_hits": [
+        1280,
+        28990,
+        5898
+      ],
+      "blend_band_fragments": 2905
+    }
+  ],
+  "duration": 4.0,
+  "cascade_splits": [
+    0.1,
+    4.5,
+    10.0,
+    32.0
+  ],
+  "wall_seconds": 2.965
+}

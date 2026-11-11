@@ -1,85 +1,116 @@
-# Software 3D Pipeline — Skinning + Shadows + Texturing
+# Software 3D Pipeline — Skinning, Cascaded Shadows and Texturing
 
 A from-scratch software 3D rendering pipeline using **only the Python
 standard library** (`zlib`, `struct`, `json`, `math`, `os`, `time`).
-It animates a linear-blend-skinned bar, casts a moving shadow from a
-directional light onto a checkerboard floor, and shades everything with
-a perspective-correct textured Phong pass.
+It supports two scenes:
+
+1. the original skinned **bar** (single rigid rig, one shadow map);
+2. a new multi-level **humanoid character** that cross-fades from a walk
+   to a turn, lit by a directional light with **cascaded shadow maps**,
+   while a camera slides parallel to its near plane and then grazes
+   through it.
 
 ## Run
 
 ```bash
+# original bar scene (unchanged entry point, byte-identical output)
 python3 render.py
+
+# new character time series: color_XX / depth_XX / mask_XX PNG triples
+python3 render_character.py
+
+# one-click local regression (all verification suites)
+python3 run_regression.py
 ```
 
-Produces 12 `256x256` RGB PNGs in `frames/frame_00.png … frame_11.png`
-and prints per-frame statistics (triangles drawn, fragment count,
-shadowed-fragment percentage, wall time). On the reference machine the
-whole run takes about **2 seconds** (limit: 120 s).
+`render.py` writes 12 `256x256` frames to `frames/`. `render_character.py`
+writes ten fixed-time triples (color, linear depth, shadow mask) plus a
+JSON report to `frames_character/`. The full regression runs in ~4 s.
 
 ## Modules
 
 | File | Responsibility |
 |---|---|
-| `math3d.py` | Row-major 4×4 matrices, Rodrigues rotation, perspective / orthographic projection, `look_at`, vector helpers |
-| `png_texture.py` | PNG decoder built on `zlib`/`struct` (8-bit RGB plus the other common color types / bit depths, Adam7, filters 0–4), bilinear repeat-wrapping sampler, 8-bit RGB PNG encoder |
-| `obj_loader.py` | OBJ `v` / `vt` / `f` parsing with fan triangulation and negative indices; MTL `Kd` / `map_Kd` (material texture + diffuse color) |
-| `skinning.py` | Loads `rig.json` (joint hierarchy, per-vertex weights, rotation keyframes); computes bind/inverse-pose and per-frame skinning matrices, then applies linear-blend skinning |
-| `pipeline.py` | Near-plane clipping, MVP transforms, perspective-correct (`1/w`) interpolation of UVs and world positions, z-buffer rasterizer, orthographic directional-light shadow map with depth comparison and bias, Phong shading (ambient + diffuse + Blinn-style specular), gamma output |
-| `render.py` | Per-frame driver: skin → shadow depth pass → shaded main pass → PNG + stats |
+| `math3d.py` | Row-major 4×4 matrices, Rodrigues rotation, perspective/ortho, `look_at`, **general 4×4 inverse (non-uniform scale)**, **quaternions (slerp/nlerp, hemisphere canonicalization)**, **Moller–Trumbore ray/triangle** |
+| `png_texture.py` | PNG decoder (zlib/struct) + bilinear repeat-wrapping sampler + RGB encoder |
+| `obj_loader.py` | OBJ `v`/`vt`/`f` and MTL `Kd`/`map_Kd` (unchanged) |
+| `skinning.py` | Legacy `Rig` (bar, untouched) **and** format-2 `Skeleton`/`AnimationClip`/`Pose`: multi-level hierarchy, TRS channels, quaternion clips, local-pose cross-fades, general-inverse bind matrices, LBS |
+| `pipeline.py` | Legacy single-shadow `Renderer` (bar, untouched) plus shared clipping/projection helpers |
+| `csm_pipeline.py` | `CascadeRenderer`: N-cascade directional shadow maps, texel-snapped fixed-axis light frusta, linear light depth, adaptive slope bias, 2×2 PCF, cascade blend bands, depth/mask export |
+| `scene_character.py` | Format-2 scene as a pure function of time: blended pose → one shared deformed mesh → shadow + color; lateral camera slide and view-axis near-plane dolly |
+| `render_character.py` | Fixed time-series driver emitting color/depth/mask images |
+| `tools/make_character.py` | Deterministic generator for the character OBJ/MTL/PNG and `character_rig.json` |
+| `run_regression.py` | One-click runner over every verification suite |
 
-## Pipeline details
+## Skeleton and animation (format 2)
 
-### Skinning (`skinning.py`)
+`assets/character_rig.json` declares a 12-joint hierarchy (root → pelvis
+→ spine → head/shoulders/elbows, and pelvis → knees → feet), per-vertex
+skin weights, deliberately **non-uniform bind scales**, and two clips:
 
-Each joint gets a bind-pose world transform from the parent chain of
-translations; the animated pose inserts the keyframed axis-angle
-rotation at the animated joint (`elbow`). A vertex is deformed with
+* `walk` — periodic limb swings, spine sway and animated scale;
+* `turn` — a 140° root yaw with counter-sway, tucking arms and flexing
+  knees.
 
-```
-v' = Σ_j  w(v,j) · (pose_world_j · bind_world_j⁻¹) · v
-```
-
-which is standard linear-blend skinning. The elbow pivots about
-`(0, 2, 0)` and swings from 0° → 90° → 15° over the 12 keyframes, so the
-bar bends and straightens back.
-
-### Shadow map (`pipeline.py`)
-
-1. **Depth pass** — the scene is rendered from the directional light's
-   point of view with an orthographic camera into a `256×256` depth
-   buffer (no shading, z-buffer only).
-2. **Main pass** — every shaded fragment is transformed into light
-   clip space; if its depth is farther than the stored shadow-map depth
-   (plus a constant bias to avoid self-shadow acne), the fragment is
-   shadowed and only the ambient term contributes.
-
-### Perspective-correct texturing
-
-Rasterization interpolates `u/w`, `v/w`, `world/w` and `1/w` in screen
-space and divides through by the interpolated `1/w` before sampling, so
-the checkerboard on the sloped ground plane stays square instead of
-affine-skewing. UVs are sampled bilinearly with repeat wrapping.
-
-## Scene
-
-- `assets/bar.obj` — 36-vertex skinned bar (8 stacked segments),
-  checker texture, `68` triangles.
-- `assets/ground.obj` — `16 × 16` ground quad tiled `4 × 4` with the
-  same checker texture, `2` triangles.
-- `assets/rig.json` — `root` + `elbow` joints, per-vertex weights,
-  12-frame Z-axis rotation animation.
-- `assets/scene.mtl`, `assets/checker.png` — material and `64×64` RGB
-  checker texture.
-
-## Output statistics example
+Clips store unit quaternions; equivalent `q` and `-q` representations
+are mixed deliberately. At evaluation each keyframe is canonicalized to
+one hemisphere before interpolation, and the cross-fade blends **local
+joint poses** — weighted translation/scale lerps plus a hemisphere-aware
+weighted quaternion average — before the world/skin chain is rebuilt.
+Bind inverses use a general Gauss–Jordan inverse because rigid-body
+inversion cannot represent non-uniform scale.
 
 ```
-frame 00: tris= 70 fragments= 38146 shadowed=  8.12% time= 0.167s
-frame 06: tris= 70 fragments= 35998 shadowed=  6.15% time= 0.165s
-...
-done: 12 frames in 2.00s (avg 0.166s/frame)
+v' = Σ_j w(v,j) · (pose_world_j · bind_world_j⁻¹) · v
 ```
 
-`tris` counts triangles surviving near-plane clipping; `shadowed` is the
-percentage of written fragments that failed the shadow-map comparison.
+Evaluation is a pure function of `(clip, time)`: there is no pose cache,
+so rendering any time directly, or in any order, is bit-identical.
+
+## Cascaded shadow maps
+
+* The light keeps a fixed world-space basis; only the orthographic
+  origin moves, and it is **snapped to whole shadow texels**. A static
+  world point therefore keeps the same shadow texel while the camera
+  makes sub-texel movements, so the static ground does not shimmer from
+  grid re-alignment.
+* Each cascade fits a camera sub-frustum and stores **linear light-space
+  depth**; the bias is derived from the cascade depth quantum plus the
+  receiver's light-incidence slope, making the comparison identical
+  across cascades and free of self-acne.
+* Lookups project through the full snapped light view-projection (the
+  same transform the depth rasterizer uses) and take a 2×2 PCF average.
+* Around every split a **blend band** lerps the two cascades' shadow
+  factors, so crossing a cascade boundary is continuous rather than a
+  hard switch.
+* Near-plane clipping (Sutherland–Hodgman) runs in both the shadow and
+  color passes, and both consume the **same deformed geometry**.
+
+## Verification (`tests/`)
+
+* `test_skeleton_math.py` — independent first-principles FK/LBS reference:
+  joint endpoint error (0.0), selected-vertex error (0.0), quaternion
+  hemisphere equivalence, single-layer blend exactness, cross-fade
+  continuity.
+* `test_shadows.py` — ray/triangle occlusion vs the raster shadow factor
+  on confident ground samples (**100% agreement**), cascade-split
+  continuity (0 delta), and static-ground inter-frame change under
+  sub-texel camera motion (only terminator-edge pixels move).
+* `test_determinism.py` — random-access vs sequential rendering produce
+  identical color/depth/mask hashes, unordered render invariance,
+  pose/buffer cache isolation, and byte-identical bar golden frames.
+* `golden_bar_sha256.json` — captured PNG hashes of the original bar run.
+
+## Regression output example
+
+```
+SUITE: skeleton math ...   RESULT: PASS
+  joint endpoint checks    : 348 (max err 0.0e+00)
+SUITE: shadows ...         RESULT: PASS
+  ray/triangle occlusion agreement: 196/196 = 100.00%
+  static-ground inter-frame change : 3/12963 pixels (0.0231%) ...
+SUITE: determinism ...     RESULT: PASS
+  random vs sequential buffer mismatches: []
+  legacy bar golden frames                : 12/12 match
+TOTAL: 4.31s -- ALL PASS
+```
