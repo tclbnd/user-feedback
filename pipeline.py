@@ -1,9 +1,22 @@
-"""Software 3D pipeline: MVP, z-buffer, shadow maps, Phong shading.
+"""Software 3D pipeline: MVP, z-buffer, cascaded shadow maps, Phong shading.
 
-Single directional light with an orthographic depth-only shadow pass.
+Single directional light rendered as a *cascaded shadow map* (CSM): the
+view frustum is split into depth slices, each slice gets its own
+orthographic depth-only pass fitted to the slice's bounding sphere.
+Cascade origins are snapped to the shadow-texel grid so sub-texel camera
+motion does not re-align the cascade grid (no shadow swimming on static
+geometry), and fragments inside a blend band at a cascade's far edge
+sample both neighbouring cascades so switching cascades is continuous.
+
 The main pass performs perspective-correct interpolation of UVs and
-world positions, a z-buffer test, shadow-map comparison and Phong
-(ambient + diffuse + specular) shading against a bilinear texture.
+world positions, a z-buffer test, per-cascade shadow comparison with a
+slope-scaled bias and 2x2 PCF, and Phong (ambient + diffuse + specular)
+shading against a bilinear texture.  Color, depth and shadow-mask
+buffers all come from the same rasterized (and, for skinned meshes, the
+same deformed) geometry, so they always agree.
+
+Near-plane clipping runs in clip space before rasterization, so geometry
+crossing the near plane is cut correctly in every pass.
 """
 
 import math
@@ -29,10 +42,11 @@ class RenderMesh:
 
 
 class Renderer:
-    def __init__(self, width, height, shadow_size=256):
+    def __init__(self, width, height, shadow_size=256, num_cascades=3):
         self.width = width
         self.height = height
         self.shadow_size = shadow_size
+        self.num_cascades = max(1, int(num_cascades))
 
         # Main camera
         self.eye = (5.5, 4.2, 8.5)
@@ -41,35 +55,129 @@ class Renderer:
         self.fovy = math.radians(50.0)
         self.near = 0.1
         self.far = 60.0
-        self.view = math3d.look_at(self.eye, self.target, self.up)
-        self.proj = math3d.perspective(
-            self.fovy, width / height, self.near, self.far)
-        self.vp = math3d.mul(self.proj, self.view)
+        self.shadow_far = 30.0        # cascades cover [near, shadow_far]
 
-        # Directional light (travel direction, normalized)
+        # Directional light (travel direction, normalized).  The light
+        # view is anchored at the world origin; only the per-cascade
+        # orthographic boxes move (snapped to the texel grid).
         self.light_dir = math3d.normalize((-0.45, -1.0, -0.35))
-        light_target = (0.0, 1.5, 0.0)
-        light_eye = (
-            light_target[0] - self.light_dir[0] * 14.0,
-            light_target[1] - self.light_dir[1] * 14.0,
-            light_target[2] - self.light_dir[2] * 14.0,
-        )
-        self.light_view = math3d.look_at(light_eye, light_target, self.up)
-        self.light_proj = math3d.ortho(-7.0, 7.0, -7.0, 7.0, 1.0, 30.0)
-        self.light_vp = math3d.mul(self.light_proj, self.light_view)
+        light_eye = math3d.scale(-14.0, self.light_dir)
+        self.light_view = math3d.look_at(
+            light_eye, (0.0, 0.0, 0.0), self.up)
+        self.cascade_z_margin = 15.0
 
         # Phong coefficients
         self.ambient = 0.25
         self.diffuse = 0.8
         self.light_color = (1.0, 1.0, 0.95)
-        self.shadow_bias = 0.0035
+        self.shadow_bias = 0.0020
+        self.shadow_slope_bias = 0.0035
         self.shadow_attenuation = 0.30   # ambient-only multiplier when shaded
+        self.cascade_blend = 0.10        # fraction of slice depth to blend
         self.background = (24, 28, 40)
 
         # Frame buffers
         self.frame = bytearray(width * height * 3)
         self.zbuf = [1.0] * (width * height)
-        self.shadow_z = [1.0] * (shadow_size * shadow_size)
+        self.depth_buf = [0.0] * (width * height)     # view depth, 0 = bg
+        self.shadow_mask = bytearray(width * height)  # 255 = fully lit
+        self.shadow_z = [
+            [1.0] * (shadow_size * shadow_size)
+            for _ in range(self.num_cascades)]
+
+        self.set_camera(self.eye, self.target, self.up)
+
+    # ------------------------------------------------------------------
+    # Camera / cascade setup
+    # ------------------------------------------------------------------
+    def set_camera(self, eye, target, up=(0.0, 1.0, 0.0)):
+        """Move the main camera and refit every cascade."""
+        self.eye = tuple(eye)
+        self.target = tuple(target)
+        self.up = tuple(up)
+        self.forward = math3d.normalize(
+            math3d.sub(self.target, self.eye))
+        self.view = math3d.look_at(self.eye, self.target, self.up)
+        self.proj = math3d.perspective(
+            self.fovy, self.width / self.height, self.near, self.far)
+        self.vp = math3d.mul(self.proj, self.view)
+        self._fit_cascades()
+
+    def _split_depths(self):
+        """Practical split scheme between uniform and logarithmic."""
+        n = self.num_cascades
+        near, far = self.near, min(self.far, self.shadow_far)
+        lam = 0.5
+        splits = [near]
+        for i in range(1, n + 1):
+            f = i / n
+            log_split = near * (far / near) ** f
+            uni_split = near + (far - near) * f
+            splits.append(lam * log_split + (1.0 - lam) * uni_split)
+        return splits
+
+    def _frustum_slice_corners(self, d0, d1):
+        """World-space corners of the view-frustum slice [d0, d1]."""
+        aspect = self.width / self.height
+        tan_half = math.tan(self.fovy * 0.5)
+        # camera basis
+        fwd = self.forward
+        right = math3d.normalize(math3d.cross(fwd, self.up))
+        up = math3d.cross(right, fwd)
+        corners = []
+        for d in (d0, d1):
+            hh = d * tan_half
+            hw = hh * aspect
+            center = math3d.add(self.eye, math3d.scale(d, fwd))
+            for sy in (-1.0, 1.0):
+                for sx in (-1.0, 1.0):
+                    corners.append(math3d.add(
+                        center,
+                        math3d.add(math3d.scale(sx * hw, right),
+                                   math3d.scale(sy * hh, up))))
+        return corners
+
+    def _fit_cascades(self):
+        """Fit one snapped orthographic box per cascade."""
+        self.splits = self._split_depths()
+        self.light_vp = []
+        size = self.shadow_size
+        margin = self.cascade_z_margin
+        for i in range(self.num_cascades):
+            corners = self._frustum_slice_corners(
+                self.splits[i], self.splits[i + 1])
+            pts = [math3d.transform(self.light_view, c) for c in corners]
+            cx = sum(p[0] for p in pts) / 8.0
+            cy = sum(p[1] for p in pts) / 8.0
+            cz = sum(p[2] for p in pts) / 8.0
+            radius = 0.0
+            zmin = pts[0][2]
+            zmax = pts[0][2]
+            for p in pts:
+                dx, dy = p[0] - cx, p[1] - cy
+                r = math.sqrt(dx * dx + dy * dy)
+                if r > radius:
+                    radius = r
+                zmin = min(zmin, p[2])
+                zmax = max(zmax, p[2])
+            # Quantize the radius so the texel size stays constant while
+            # the camera moves, pad by a couple of texels so snapping can
+            # never uncover a slice corner, then snap the window origin
+            # to the texel grid.
+            radius = math.ceil(radius * 4.0) / 4.0
+            radius *= 1.0 + 4.0 / size
+            extent = 2.0 * radius
+            wpt = extent / size                  # world units per texel
+            ox = math.floor((cx - radius) / wpt) * wpt
+            oy = math.floor((cy - radius) / wpt) * wpt
+            near_z = -zmax - margin
+            far_z = -zmin + margin
+            wpt_z = (far_z - near_z) / size
+            near_z = math.floor(near_z / wpt_z) * wpt_z
+            far_z = math.ceil(far_z / wpt_z) * wpt_z
+            proj = math3d.ortho(ox, ox + extent, oy, oy + extent,
+                                near_z, far_z)
+            self.light_vp.append(math3d.mul(proj, self.light_view))
 
     # ------------------------------------------------------------------
     # Triangle preparation
@@ -92,7 +200,7 @@ class Renderer:
                                  for k in range(len(a))))
         return out
 
-    def _build_triangles(self, mesh, mvp, w_pos_attrs=True):
+    def _build_triangles(self, mesh, mvp, stats=None):
         """Clip + project every face; yields clipped vertex tuples.
 
         Vertex tuple layout:
@@ -112,35 +220,37 @@ class Renderer:
                 raw.append((clip[0], clip[1], clip[2], clip[3],
                             world[0], world[1], world[2], u, v))
             clipped = self._clip_near(raw)
+            if stats is not None and len(clipped) != 3:
+                stats['tris_clipped'] += 1
             for k in range(1, len(clipped) - 1):
                 triangles.append((clipped[0], clipped[k], clipped[k + 1]))
         return triangles
 
     # ------------------------------------------------------------------
-    # Shadow (depth-only) pass
+    # Shadow (depth-only) passes, one per cascade
     # ------------------------------------------------------------------
     def render_shadow(self, meshes):
         size = self.shadow_size
-        zbuf = self.shadow_z
-        for i in range(size * size):
-            zbuf[i] = 1.0
-        half = size * 0.5
-
-        for mesh in meshes:
-            for tri in self._build_triangles(mesh, self.light_vp):
-                pts = []
-                for vtx in tri:
-                    cw = vtx[3]
-                    if cw <= NEAR_EPS:
-                        break
-                    sx = (vtx[0] / cw * 0.5 + 0.5) * size
-                    sy = (1.0 - (vtx[1] / cw * 0.5 + 0.5)) * size
-                    pts.append((sx, sy, vtx[2] / cw))
-                else:
-                    self._rasterize_depth(pts, zbuf, size, half)
+        for i in range(self.num_cascades):
+            zbuf = self.shadow_z[i]
+            for k in range(size * size):
+                zbuf[k] = 1.0
+            light_vp = self.light_vp[i]
+            for mesh in meshes:
+                for tri in self._build_triangles(mesh, light_vp):
+                    pts = []
+                    for vtx in tri:
+                        cw = vtx[3]
+                        if cw <= NEAR_EPS:
+                            break
+                        sx = (vtx[0] / cw * 0.5 + 0.5) * size
+                        sy = (1.0 - (vtx[1] / cw * 0.5 + 0.5)) * size
+                        pts.append((sx, sy, vtx[2] / cw))
+                    else:
+                        self._rasterize_depth(pts, zbuf, size)
 
     @staticmethod
-    def _rasterize_depth(pts, zbuf, size, half):
+    def _rasterize_depth(pts, zbuf, size):
         (x1, y1, z1), (x2, y2, z2), (x3, y3, z3) = pts
         denom = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3)
         if abs(denom) < 1e-9:
@@ -173,25 +283,83 @@ class Renderer:
                 px += 1
 
     # ------------------------------------------------------------------
+    # Shadow lookup (cascade select + cross-cascade blend + 2x2 PCF)
+    # ------------------------------------------------------------------
+    def _cascade_lit_factor(self, cascade, world, cos_theta):
+        """Lit fraction in [0, 1] for one cascade (1 = fully lit)."""
+        lclip = math3d.clip_transform(self.light_vp[cascade], world)
+        lcw = lclip[3]
+        if lcw <= 0.0:
+            return 1.0
+        ndc_x = lclip[0] / lcw * 0.5 + 0.5
+        ndc_y = lclip[1] / lcw * 0.5 + 0.5
+        ndc_z = lclip[2] / lcw
+        if not (0.0 <= ndc_x < 1.0 and 0.0 <= ndc_y < 1.0
+                and 0.0 <= ndc_z <= 1.0):
+            return 1.0
+        size = self.shadow_size
+        zbuf = self.shadow_z[cascade]
+        bias = self.shadow_bias + self.shadow_slope_bias * (1.0 - cos_theta)
+        fx = ndc_x * size
+        fy = (1.0 - ndc_y) * size
+        x0 = int(fx)
+        y0 = int(fy)
+        lit = 0
+        for dy in (0, 1):
+            ty = y0 + dy
+            if ty >= size:
+                ty = size - 1
+            row = ty * size
+            for dx in (0, 1):
+                tx = x0 + dx
+                if tx >= size:
+                    tx = size - 1
+                if zbuf[row + tx] + bias >= ndc_z:
+                    lit += 1
+        return lit * 0.25
+
+    def _shadow_factor(self, world, view_depth, cos_theta):
+        """Lit fraction with continuous transitions across cascades."""
+        splits = self.splits
+        n = self.num_cascades
+        if view_depth >= splits[n]:
+            return 1.0
+        cascade = n - 1
+        for i in range(n):
+            if view_depth < splits[i + 1]:
+                cascade = i
+                break
+        factor = self._cascade_lit_factor(cascade, world, cos_theta)
+        if cascade < n - 1:
+            edge = splits[cascade + 1]
+            band = self.cascade_blend * (edge - splits[cascade])
+            if view_depth > edge - band:
+                nxt = self._cascade_lit_factor(cascade + 1, world, cos_theta)
+                a = (view_depth - (edge - band)) / band
+                factor = factor * (1.0 - a) + nxt * a
+        return factor
+
+    # ------------------------------------------------------------------
     # Main shaded pass
     # ------------------------------------------------------------------
     def render_frame(self, meshes):
         width, height = self.width, self.height
         frame, zbuf = self.frame, self.zbuf
+        depth_buf, shadow_mask = self.depth_buf, self.shadow_mask
         for i in range(width * height):
             zbuf[i] = 1.0
+            depth_buf[i] = 0.0
+            shadow_mask[i] = 255
         br, bg, bb = self.background
         for i in range(0, len(frame), 3):
             frame[i] = br
             frame[i + 1] = bg
             frame[i + 2] = bb
 
-        stats = {'tris_drawn': 0, 'fragments': 0, 'shadowed': 0}
-        light_vp = self.light_vp
-        shadow_z = self.shadow_z
-        shadow_size = self.shadow_size
-        bias = self.shadow_bias
+        stats = {'tris_drawn': 0, 'tris_clipped': 0,
+                 'fragments': 0, 'shadowed': 0}
         eye = self.eye
+        forward = self.forward
         l_dir = self.light_dir
         # vector pointing toward the light (for diffuse term)
         to_light = (-l_dir[0], -l_dir[1], -l_dir[2])
@@ -201,7 +369,7 @@ class Renderer:
             kd = mesh.kd
             specular = mesh.specular
             shininess = mesh.shininess
-            triangles = self._build_triangles(mesh, self.vp)
+            triangles = self._build_triangles(mesh, self.vp, stats)
             stats['tris_drawn'] += len(triangles)
 
             for tri in triangles:
@@ -229,8 +397,8 @@ class Renderer:
                     ))
                 self._rasterize_shaded(
                     screen, normal, texture, kd, specular, shininess,
-                    frame, zbuf, stats, light_vp, shadow_z, shadow_size,
-                    bias, eye, to_light, width, height)
+                    frame, zbuf, depth_buf, shadow_mask, stats,
+                    eye, forward, to_light, width, height)
 
         stats['shadowed_pct'] = (
             100.0 * stats['shadowed'] / stats['fragments']
@@ -238,9 +406,8 @@ class Renderer:
         return bytes(frame), stats
 
     def _rasterize_shaded(self, screen, normal, texture, kd, specular,
-                          shininess, frame, zbuf, stats, light_vp,
-                          shadow_z, shadow_size, bias, eye, to_light,
-                          width, height):
+                          shininess, frame, zbuf, depth_buf, shadow_mask,
+                          stats, eye, forward, to_light, width, height):
         (x1, y1, z1, iw1, u1, v1, wx1, wy1, wz1), \
             (x2, y2, z2, iw2, u2, v2, wx2, wy2, wz2), \
             (x3, y3, z3, iw3, u3, v3, wx3, wy3, wz3) = screen
@@ -280,6 +447,7 @@ class Renderer:
         lc = self.light_color
         atten = self.shadow_attenuation
         inv_gamma = 1.0 / 2.2
+        shadow_factor = self._shadow_factor
 
         for py in range(min_y, max_y + 1):
             row_base = py * width
@@ -309,25 +477,18 @@ class Renderer:
                         wy = (wy1 * b1 + wy2 * b2 + wy3 * b3) * w_recip
                         wz = (wz1 * b1 + wz2 * b2 + wz3 * b3) * w_recip
 
-                        # Shadow map lookup (orthographic light).
-                        lclip = math3d.clip_transform(
-                            light_vp, (wx, wy, wz))
-                        in_shadow = False
-                        lcw = lclip[3]
-                        if lcw > 0.0:
-                            ndc_x = lclip[0] / lcw * 0.5 + 0.5
-                            ndc_y = lclip[1] / lcw * 0.5 + 0.5
-                            ndc_z = lclip[2] / lcw
-                            if 0.0 <= ndc_x < 1.0 and 0.0 <= ndc_y < 1.0 \
-                                    and 0.0 <= ndc_z <= 1.0:
-                                tx = int(ndc_x * shadow_size)
-                                ty = int((1.0 - ndc_y) * shadow_size)
-                                if ty >= shadow_size:
-                                    ty = shadow_size - 1
-                                if shadow_z[ty * shadow_size + tx] + bias \
-                                        < ndc_z:
-                                    in_shadow = True
-                        if in_shadow:
+                        # View depth along the camera forward axis drives
+                        # cascade selection.
+                        view_depth = ((wx - eye[0]) * forward[0]
+                                      + (wy - eye[1]) * forward[1]
+                                      + (wz - eye[2]) * forward[2])
+                        depth_buf[idx] = view_depth
+
+                        lit = shadow_factor((wx, wy, wz), view_depth,
+                                            n_dot_l)
+                        mask_value = int(lit * 255.0 + 0.5)
+                        shadow_mask[idx] = mask_value
+                        if mask_value < 128:
                             stats['shadowed'] += 1
 
                         # Texture / base color.
@@ -339,17 +500,16 @@ class Renderer:
                         base_g = tg * kd[1]
                         base_b = tb * kd[2]
 
-                        if in_shadow:
-                            cr = base_r * ambient * atten
-                            cg = base_g * ambient * atten
-                            cb = base_b * ambient * atten
-                        else:
-                            cr = base_r * (ambient + diffuse * lc[0]) \
-                                + 255.0 * spec_term * lc[0]
-                            cg = base_g * (ambient + diffuse * lc[1]) \
-                                + 255.0 * spec_term * lc[1]
-                            cb = base_b * (ambient + diffuse * lc[2]) \
-                                + 255.0 * spec_term * lc[2]
+                        shade = atten + (1.0 - atten) * lit
+                        cr = base_r * (ambient * shade
+                                       + diffuse * lit * lc[0]) \
+                            + 255.0 * spec_term * lit * lc[0]
+                        cg = base_g * (ambient * shade
+                                       + diffuse * lit * lc[1]) \
+                            + 255.0 * spec_term * lit * lc[1]
+                        cb = base_b * (ambient * shade
+                                       + diffuse * lit * lc[2]) \
+                            + 255.0 * spec_term * lit * lc[2]
 
                         # Gamma encode and store.
                         frame[idx * 3] = min(
@@ -359,3 +519,36 @@ class Renderer:
                         frame[idx * 3 + 2] = min(
                             255, int(255.0 * ((cb / 255.0) ** inv_gamma)))
                 px += 1
+
+    # ------------------------------------------------------------------
+    # Auxiliary buffer export
+    # ------------------------------------------------------------------
+    def depth_image(self):
+        """Grayscale depth map: near geometry bright, background black."""
+        out = bytearray(self.width * self.height * 3)
+        far = min(self.far, self.shadow_far)
+        span = far - self.near
+        for i, d in enumerate(self.depth_buf):
+            if d <= 0.0:
+                continue
+            t = (d - self.near) / span
+            if t < 0.0:
+                t = 0.0
+            elif t > 1.0:
+                t = 1.0
+            g = int(255.0 * (1.0 - t) + 0.5)
+            out[i * 3] = g
+            out[i * 3 + 1] = g
+            out[i * 3 + 2] = g
+        return bytes(out)
+
+    def shadow_mask_image(self):
+        """Grayscale shadow mask: white = lit, black = fully shadowed."""
+        out = bytearray(self.width * self.height * 3)
+        mask = self.shadow_mask
+        for i in range(self.width * self.height):
+            v = mask[i]
+            out[i * 3] = v
+            out[i * 3 + 1] = v
+            out[i * 3 + 2] = v
+        return bytes(out)

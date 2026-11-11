@@ -135,3 +135,118 @@ def normalize(v):
     if ln == 0.0:
         return (0.0, 0.0, 0.0)
     return (v[0] / ln, v[1] / ln, v[2] / ln)
+
+
+# ----------------------------------------------------------------------
+# Quaternions: stored as (x, y, z, w) tuples.
+# ----------------------------------------------------------------------
+
+def quat_identity():
+    return (0.0, 0.0, 0.0, 1.0)
+
+
+def quat_from_axis_angle(axis, angle_rad):
+    ax, ay, az = normalize(axis)
+    h = angle_rad * 0.5
+    s = math.sin(h)
+    return (ax * s, ay * s, az * s, math.cos(h))
+
+
+def quat_normalize(q):
+    ln = math.sqrt(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3])
+    if ln == 0.0:
+        return quat_identity()
+    return (q[0] / ln, q[1] / ln, q[2] / ln, q[3] / ln)
+
+
+def quat_mul(a, b):
+    """Hamilton product a * b (apply b's rotation first, then a's)."""
+    ax, ay, az, aw = a
+    bx, by, bz, bw = b
+    return (aw * bx + ax * bw + ay * bz - az * by,
+            aw * by - ax * bz + ay * bw + az * bx,
+            aw * bz + ax * by - ay * bx + az * bw,
+            aw * bw - ax * bx - ay * by - az * bz)
+
+
+def quat_dot(a, b):
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]
+
+
+def quat_align(a, b):
+    """Flip ``a`` if needed so it lies in the same hemisphere as ``b``.
+
+    q and -q encode the same rotation; interpolating between opposite
+    hemispheres takes the long way around (or collapses), so callers must
+    align signs before blending.
+    """
+    if quat_dot(a, b) < 0.0:
+        return (-a[0], -a[1], -a[2], -a[3])
+    return a
+
+
+def quat_slerp(a, b, t):
+    """Shortest-path interpolation; handles the q / -q equivalence."""
+    b = quat_align(b, a)
+    d = quat_dot(a, b)
+    if d > 0.9995:
+        return quat_normalize(tuple(a[i] + t * (b[i] - a[i])
+                                    for i in range(4)))
+    d = max(-1.0, min(1.0, d))
+    theta = math.acos(d)
+    sin_t = math.sin(theta)
+    wa = math.sin((1.0 - t) * theta) / sin_t
+    wb = math.sin(t * theta) / sin_t
+    return tuple(wa * a[i] + wb * b[i] for i in range(4))
+
+
+def quat_to_matrix3(q):
+    """Return the 3x3 rotation (flat 9, row-major) of a unit quaternion."""
+    x, y, z, w = quat_normalize(q)
+    xx, yy, zz = x * x, y * y, z * z
+    xy, xz, yz = x * y, x * z, y * z
+    wx, wy, wz = w * x, w * y, w * z
+    return [1.0 - 2.0 * (yy + zz), 2.0 * (xy - wz), 2.0 * (xz + wy),
+            2.0 * (xy + wz), 1.0 - 2.0 * (xx + zz), 2.0 * (yz - wx),
+            2.0 * (xz - wy), 2.0 * (yz + wx), 1.0 - 2.0 * (xx + yy)]
+
+
+def trs_matrix(translation_v, quat, scale_v):
+    """Compose T * R * S as a row-major 4x4 (column-vector convention)."""
+    r = quat_to_matrix3(quat)
+    sx, sy, sz = scale_v
+    tx, ty, tz = translation_v
+    return [r[0] * sx, r[1] * sy, r[2] * sz, tx,
+            r[3] * sx, r[4] * sy, r[5] * sz, ty,
+            r[6] * sx, r[7] * sy, r[8] * sz, tz,
+            0.0, 0.0, 0.0, 1.0]
+
+
+def invert_affine(m):
+    """Inverse of a general affine 4x4 (rotation/scale/shear + translation).
+
+    Unlike invert_rigid this tolerates non-uniform scale, which skinned
+    bind matrices require once joints carry per-axis scaling.
+    """
+    a, b, c, tx = m[0], m[1], m[2], m[3]
+    d, e, f, ty = m[4], m[5], m[6], m[7]
+    g, h, i, tz = m[8], m[9], m[10], m[11]
+    det = (a * (e * i - f * h)
+           - b * (d * i - f * g)
+           + c * (d * h - e * g))
+    if abs(det) < 1e-12:
+        raise ValueError('singular affine matrix')
+    inv = 1.0 / det
+    r00 = (e * i - f * h) * inv
+    r01 = (c * h - b * i) * inv
+    r02 = (b * f - c * e) * inv
+    r10 = (f * g - d * i) * inv
+    r11 = (a * i - c * g) * inv
+    r12 = (c * d - a * f) * inv
+    r20 = (d * h - e * g) * inv
+    r21 = (b * g - a * h) * inv
+    r22 = (a * e - b * d) * inv
+    return [r00, r01, r02, -(r00 * tx + r01 * ty + r02 * tz),
+            r10, r11, r12, -(r10 * tx + r11 * ty + r12 * tz),
+            r20, r21, r22, -(r20 * tx + r21 * ty + r22 * tz),
+            0.0, 0.0, 0.0, 1.0]
