@@ -1,0 +1,14 @@
+# quad x1 y1 z1 x2 y2 z2 x3 y3 z3 x4 y4 z4 albedo_r albedo_g albedo_b
+# counter-clockwise corners as seen from inside the box
+quad -5 0 -5  5 0 -5  5 0 5  -5 0 5   0.73 0.73 0.73
+quad -5 5 -5  -5 5 5  5 5 5  5 5 -5   0.73 0.73 0.73
+quad -5 0 -5  -5 5 -5  5 5 -5  5 0 -5  0.73 0.73 0.73
+quad -5 0 -5  -5 0 5  -5 5 5  -5 5 -5  0.65 0.05 0.05
+quad  5 0 -5  5 5 -5  5 5 5  5 0 5     0.12 0.45 0.15
+# sphere cx cy cz radius albedo_r albedo_g albedo_b
+sphere -1.5 1.0 0.5 1.0 0.9 0.9 0.9
+sphere 1.5 0.8 -1.0 0.8 0.2 0.6 0.9
+# area light: 4 corners + emission rgb
+light -1 4.9 -1  1 4.9 -1  1 4.9 1  -1 4.9 1   15 15 15
+# camera px py pz look_x look_y look_z fov_degrees
+camera 0 2.5 12  0 2.5 0  40
