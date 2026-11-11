@@ -17,7 +17,5 @@ record*.json
 rollout*
 *.mp4
 *.mov
-vendor-instruction*/
-.devin/
 
 .DS_Store
