@@ -1,0 +1,275 @@
+{
+  "config": {
+    "cube_size": 512,
+    "scene_size": 128,
+    "tile_order": "row",
+    "tile_size": 32,
+    "workers": 1
+  },
+  "cube": {
+    "depth_max": 4.000000000000001,
+    "depth_min": 4.0,
+    "digests": {
+      "coverage": "09620b7fb5c93c4cb4f2c486d03be3f8c8b1de0c71fc7b7dd0d4c74bb86df5f9",
+      "depth": "cd1ecb0af7dc83363201b24540a5ee562231ee814d3f832f1ff88b5a671cca86",
+      "pixels": "15b98ee2bff120be5a7bc20fd15b22546cf9f1b4604e1269736d76fb8b6aac4c",
+      "primitive_ids": "07a57713a6e629eaec863c686e51990567c717b9782c69b68e8c105df0824f03",
+      "uv": "c262946637fa62e46d04aacfea2ac24fc9f5c712c7d2762299694af8967cd059"
+    },
+    "foreground_pixels": 96100,
+    "triangle_count": 12,
+    "triangles_drawn": 4
+  },
+  "scenes": {
+    "coplanar_quad_02": {
+      "cull_backfaces": true,
+      "description": "coplanar square split along diagonal 02",
+      "s1": {
+        "coverage_bits": [
+          0,
+          1
+        ],
+        "depth_max": 4.000000000000001,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "3e25ed7911fcfe51dca4cb1db48bd59f9e21149d3d4221317577f3b1f8db8360",
+          "depth": "0e4d04dd826a67d2c0da29f02efa37d4e9b25542e93961009fc584dcbce1e969",
+          "pixels": "1af96721cc48d528e3db59523751880711afcb8c9ecb19cb8aded78d9c65d1af",
+          "primitive_ids": "2d0100dfd854ab8a45cd5182036ca725d1889aa46216eea7563903fc28a0376e",
+          "uv": "3c7818cc07d9531ab0a230c8954912383e0563bcb6b30094efdd86e309634730"
+        },
+        "foreground_pixels": 6084,
+        "triangles_drawn": 2
+      },
+      "s4": {
+        "coverage_bits": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10,
+          12,
+          15
+        ],
+        "depth_max": 4.000000000000001,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "3725b1e180dea09a9234561bda8d8f0ce93bee9da261d67ff49ca85e3db9ee3b",
+          "depth": "4ef7ddfdd240783f78c5dc7eeace610befd367b4a2555fdae04632c309844483",
+          "pixels": "1af96721cc48d528e3db59523751880711afcb8c9ecb19cb8aded78d9c65d1af",
+          "primitive_ids": "2d0100dfd854ab8a45cd5182036ca725d1889aa46216eea7563903fc28a0376e",
+          "uv": "b2876731e5b99aef073c0b9c360dcc4dfe4b63290290522409561648244f1a19"
+        },
+        "foreground_pixels": 6084,
+        "triangles_drawn": 2
+      }
+    },
+    "coplanar_quad_13": {
+      "cull_backfaces": true,
+      "description": "coplanar square split along diagonal 13",
+      "s1": {
+        "coverage_bits": [
+          0,
+          1
+        ],
+        "depth_max": 4.000000000000001,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "3e25ed7911fcfe51dca4cb1db48bd59f9e21149d3d4221317577f3b1f8db8360",
+          "depth": "42c8a8d03d758036db59e269a6446e641b08b26cdb36d5a5e348b205fcda745d",
+          "pixels": "1af96721cc48d528e3db59523751880711afcb8c9ecb19cb8aded78d9c65d1af",
+          "primitive_ids": "70e8eeda69e399759c82da582427c7d1f87e8c315fad9fb456606f0a4758e0ad",
+          "uv": "bd5486c91a9c6c5ae308f9eade22c90df784096e490c064879a149479526a2f9"
+        },
+        "foreground_pixels": 6084,
+        "triangles_drawn": 2
+      },
+      "s4": {
+        "coverage_bits": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10,
+          12,
+          15
+        ],
+        "depth_max": 4.000000000000001,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "3725b1e180dea09a9234561bda8d8f0ce93bee9da261d67ff49ca85e3db9ee3b",
+          "depth": "2abaa78537334b39c0599c0d107eae7baefc62de19a6c310a713a83c89afd670",
+          "pixels": "1af96721cc48d528e3db59523751880711afcb8c9ecb19cb8aded78d9c65d1af",
+          "primitive_ids": "70e8eeda69e399759c82da582427c7d1f87e8c315fad9fb456606f0a4758e0ad",
+          "uv": "5bea5e2df165074c9b5df267fe4d388a77ca1861ecb94d9f1bb805f6ebda73e0"
+        },
+        "foreground_pixels": 6084,
+        "triangles_drawn": 2
+      }
+    },
+    "frustum_edge_shared": {
+      "cull_backfaces": true,
+      "description": "square clipped at left/bottom frustum planes with a sample-aligned shared diagonal",
+      "s1": {
+        "coverage_bits": [
+          0,
+          1
+        ],
+        "depth_max": 5.0,
+        "depth_min": 4.999999999999998,
+        "digests": {
+          "coverage": "66260942e86ad952783c94e0d2b07385a8a4a1e19e9be20c24698f173f03ebfe",
+          "depth": "fb23f0ad5b488f19ef05ed8aeeb2c1a6fb63b84f83b4ca7f22a8aa81aadea788",
+          "pixels": "ab1b817c62f34f3655aa77c6bd049104d19d6dbbf37c3531e0d7d011954c07d9",
+          "primitive_ids": "08a8b0d62364ab4d4aaf03c417c6b354cb9000c9d06b0cddb46726642c56ac29",
+          "uv": "b91418a547ac03e2410ae33d3010bacb8477711a292855b38c8fcc6de018dc4b"
+        },
+        "foreground_pixels": 9025,
+        "triangles_drawn": 2
+      },
+      "s4": {
+        "coverage_bits": [
+          0,
+          15
+        ],
+        "depth_max": 5.000000000000001,
+        "depth_min": 4.999999999999999,
+        "digests": {
+          "coverage": "7aad5ad7795ca863c59c7ac437f11168efa7db2b9ac8c29b3ca22a81ee38a6ca",
+          "depth": "6949c17f21a16191c7325d41ac75136991c1d6f08b52dea227cf9f69a9bc183c",
+          "pixels": "ab1b817c62f34f3655aa77c6bd049104d19d6dbbf37c3531e0d7d011954c07d9",
+          "primitive_ids": "08a8b0d62364ab4d4aaf03c417c6b354cb9000c9d06b0cddb46726642c56ac29",
+          "uv": "6c1db90a0babe9b1f85837b6cf48949d8d3d6e1b39d026c0cd6178c2855dd592"
+        },
+        "foreground_pixels": 9025,
+        "triangles_drawn": 2
+      }
+    },
+    "mixed_winding": {
+      "cull_backfaces": false,
+      "description": "adjacent triangles with opposite winding, culling off",
+      "s1": {
+        "coverage_bits": [
+          0,
+          1
+        ],
+        "depth_max": 5.0,
+        "depth_min": 4.999999999999999,
+        "digests": {
+          "coverage": "c147c5d42473aca5ff1863c1001bb998d132faad8cee5c5665b4b2c967ae22c1",
+          "depth": "ab22e76d75286bda948694a54974fe4746ce2ccd2aae344c3552c8aae6aedba9",
+          "pixels": "683d56e5b17e97faf583014b390f510e938e1f6dc29e837cdb838b6f254d38e3",
+          "primitive_ids": "ced286cba73028ee1628016b7b9607596a7714dd33d303e76dac8d068648ad82",
+          "uv": "136df1d0a363f6be98196e737f5c4b0c223188d05dfa082f9f227b6e16011030"
+        },
+        "foreground_pixels": 5476,
+        "triangles_drawn": 2
+      },
+      "s4": {
+        "coverage_bits": [
+          0,
+          15
+        ],
+        "depth_max": 5.0,
+        "depth_min": 4.999999999999999,
+        "digests": {
+          "coverage": "8004380474d38204b25c99a808c260a25e7747d95bf2543f81037a7c98d1e4d6",
+          "depth": "3e25b1fde1c7309e886de1f30e9639589fe47b56f8ee215c3bb139b266b47163",
+          "pixels": "9480c5ff640ab5bf98735e798f4adf4d96d71e4b5f6c0e3f239206d86b03037f",
+          "primitive_ids": "ced286cba73028ee1628016b7b9607596a7714dd33d303e76dac8d068648ad82",
+          "uv": "b32be99b27bd8363fcb16d3f7cd0d406de848ee295500380f95db56e6522d1d1"
+        },
+        "foreground_pixels": 5476,
+        "triangles_drawn": 2
+      }
+    },
+    "near_clip_textured": {
+      "cull_backfaces": true,
+      "description": "UV-mapped tilted plane crossing the near plane",
+      "s1": {
+        "coverage_bits": [
+          1
+        ],
+        "depth_max": 1.0895566584411398,
+        "depth_min": 0.9240474539987914,
+        "digests": {
+          "coverage": "111ce3c2a38d83a2e4706bde4abddd509d7f8248116c6832b06745bdc349e09f",
+          "depth": "0235e5ded77366002e81a6d803dc091c1b591179b8690505890e09e509c27497",
+          "pixels": "ad91d7a21dfb1d9c86ec5cfb350488d3e8b549e9d81671cf17b3c024ee7dc8ad",
+          "primitive_ids": "c37cf0802eb6d71b09cf4feee87f7ebe27d1ef3379c406ea8488a838dd816550",
+          "uv": "078f9214b1da735313ca52904650c4961577785ae33be9edea81dafe55bd9732"
+        },
+        "foreground_pixels": 16384,
+        "triangles_drawn": 2
+      },
+      "s4": {
+        "coverage_bits": [
+          15
+        ],
+        "depth_max": 1.089172632215129,
+        "depth_min": 0.9237712225961188,
+        "digests": {
+          "coverage": "f84ce8f29ad711741534250b1271da8e97c43ef4c5a386b7ea8eebcdba09ab13",
+          "depth": "5b84f5c946140d896778be08c37ca735f3ce9675653ad4d4d38d72ec0c0fda73",
+          "pixels": "ad91d7a21dfb1d9c86ec5cfb350488d3e8b549e9d81671cf17b3c024ee7dc8ad",
+          "primitive_ids": "c37cf0802eb6d71b09cf4feee87f7ebe27d1ef3379c406ea8488a838dd816550",
+          "uv": "b024a913bb86003ffb1b7b373b44bd20092e5ef82a8e53d47afc91516aee8a6c"
+        },
+        "foreground_pixels": 16384,
+        "triangles_drawn": 2
+      }
+    },
+    "overlap": {
+      "cull_backfaces": true,
+      "description": "front quad at depth 4 over back quad at depth 6",
+      "s1": {
+        "coverage_bits": [
+          0,
+          1
+        ],
+        "depth_max": 4.000000000000001,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "f7af34e98ce4d5d260bac50bee280f71c4dff0e596cfebe7c5e10e7374967549",
+          "depth": "22be13137c5eb240190ff2f7b00eb030b16173735ced887fbac5db6efd5d116c",
+          "pixels": "fd13b7ca311616ac4324d2bbf06d2dc36b970da1bc6b5a0465bc675e412c17d7",
+          "primitive_ids": "85c16fbd7478c6d80b0207637be46e7b5fbbf082190800c637881832d5626136",
+          "uv": "1223118115f86f14b34b278218143cfaea6cc6d3e5c6a50774229a98a9c63d5d"
+        },
+        "foreground_pixels": 4356,
+        "triangles_drawn": 4
+      },
+      "s4": {
+        "coverage_bits": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10,
+          12,
+          15
+        ],
+        "depth_max": 6.000000000000002,
+        "depth_min": 4.0,
+        "digests": {
+          "coverage": "0150840783cef80461327932dd242c4f58ae87efc34cc268dd1f73b6ab237f21",
+          "depth": "6ce4332d55b3f7d9ad370709ea860d4be1d3c7f0a357fa2d13759870622ca231",
+          "pixels": "32eb10f507f75159d8faa69dc8af2ae36ffbe0b726e34f5474997f5faf23d824",
+          "primitive_ids": "3db6d858466ed255d75eb97083bf184c1501f34ef96c186c2ee90f89d861bd6c",
+          "uv": "33e4a81aa1541f6069325d431e4c1189915d8e672ee37ac38f39dc665b0dad67"
+        },
+        "foreground_pixels": 4624,
+        "triangles_drawn": 4
+      }
+    }
+  }
+}
