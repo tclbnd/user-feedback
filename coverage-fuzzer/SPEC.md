@@ -17,9 +17,10 @@ provided target `json_parser.c` (it contains defects — do not fix or
   5. crash collection: deduplicate by top-of-stack signature, keep
      the crashing input in `crashes/`, and produce a one-line
      minimised variant per crash.
-- `report.py`: run the deduped crash inputs against the uninstrumented
-  binary and print a table: crash id, dedup signature, minimised size,
-  whether it still crashes.
+- `report.py`: run the deduped crash inputs against a build without
+  coverage instrumentation (sanitizer builds are fine) and print a
+  table: crash id, dedup signature, minimised size, whether it still
+  crashes.
 - `README.md`
 
 ## Acceptance

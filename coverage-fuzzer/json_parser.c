@@ -8,6 +8,9 @@
 
 static const char *p;
 static int8_t depth = 0;
+static char ctxstack[128];
+#define PUSH(c) (ctxstack[depth++] = (c))      /* BUG C: int8 overflows >127 */
+#define POP()  (--depth)
 
 static void skip_ws(void) { while (*p==' '||*p=='\t'||*p=='\n'||*p=='\r') p++; }
 
@@ -48,24 +51,24 @@ static int parse_number(void) {
 
 static int parse_array(void) {
     if (*p != '[') return 0;
-    p++; depth++;                               /* BUG C: int8 overflows >127 */
+    p++; PUSH('[');
     skip_ws();
-    if (*p == ']') { p++; depth--; return 1; }
+    if (*p == ']') { p++; POP(); return 1; }
     for (;;) {
         skip_ws();
         if (!parse_value()) return 0;
         skip_ws();
         if (*p == ',') { p++; continue; }
-        if (*p == ']') { p++; depth--; return 1; }
+        if (*p == ']') { p++; POP(); return 1; }
         return 0;
     }
 }
 
 static int parse_object(void) {
     if (*p != '{') return 0;
-    p++; depth++;
+    p++; PUSH('{');
     skip_ws();
-    if (*p == '}') { p++; depth--; return 1; }
+    if (*p == '}') { p++; POP(); return 1; }
     for (;;) {
         skip_ws();
         if (!parse_string()) return 0;
@@ -76,7 +79,7 @@ static int parse_object(void) {
         if (!parse_value()) return 0;
         skip_ws();
         if (*p == ',') { p++; continue; }
-        if (*p == '}') { p++; depth--; return 1; }
+        if (*p == '}') { p++; POP(); return 1; }
         return 0;
     }
 }
