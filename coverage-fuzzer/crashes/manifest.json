@@ -1,0 +1,29 @@
+{
+  "target": "/Users/shenaima/Documents/ChatGPT/ZQ-feedback/coverage-fuzzer/json_parser.c",
+  "crashes": [
+    {
+      "id": "crash_01_21210a",
+      "signature": "asan:global-buffer-overflow:parse_object",
+      "file": "crash_01_21210a",
+      "min_file": "crash_01_21210a.min",
+      "size": 704,
+      "min_size": 516
+    },
+    {
+      "id": "crash_02_82505f",
+      "signature": "asan:stack-buffer-overflow:parse_string",
+      "file": "crash_02_82505f",
+      "min_file": "crash_02_82505f.min",
+      "size": 742,
+      "min_size": 509
+    },
+    {
+      "id": "crash_03_51c38d",
+      "signature": "asan:global-buffer-overflow:parse_array",
+      "file": "crash_03_51c38d",
+      "min_file": "crash_03_51c38d.min",
+      "size": 2743,
+      "min_size": 826
+    }
+  ]
+}
