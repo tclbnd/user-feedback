@@ -1,0 +1,27 @@
+{
+  "input": {
+    "a": {"bits": 8, "signed": true, "nullable": true, "optional": true}
+  },
+  "old": {
+    "output": {"wrapped": {"bits": 8, "nullable": true}},
+    "block": [
+      {"emit": {"output": "wrapped",
+        "value": {"wrap": {"bits": 8, "arg": {"add": [{"field": "a"}, {"integer": 1}]}}}}}
+    ]
+  },
+  "new": {
+    "output": {"wrapped": {"bits": 8, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"eq": [{"field": "a"}, {"integer": 127}]},
+        "then": [
+          {"emit": {"output": "wrapped", "value": {"integer": 127}}}
+        ],
+        "else": [
+          {"emit": {"output": "wrapped",
+            "value": {"wrap": {"bits": 8, "arg": {"add": [{"field": "a"}, {"integer": 1}]}}}}}
+        ]
+      }}
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "input": {
+    "x": {"bits": 8, "signed": true, "nullable": false, "optional": false}
+  },
+  "old": {
+    "output": {
+      "q": {"bits": 8, "nullable": true},
+      "r": {"bits": 8, "nullable": true}
+    },
+    "block": [
+      {"emit": {"output": "q", "value": {"div": [{"field": "x"}, {"integer": 3}]}}},
+      {"emit": {"output": "r", "value": {"rem": [{"field": "x"}, {"integer": 3}]}}}
+    ]
+  },
+  "new": {
+    "output": {
+      "q": {"bits": 8, "nullable": true},
+      "r": {"bits": 8, "nullable": true}
+    },
+    "block": [
+      {"emit": {"output": "q", "value": {"div": [{"field": "x"}, {"integer": 3}]}}},
+      {"emit": {"output": "r", "value": {"rem": [{"field": "x"}, {"integer": 3}]}}}
+    ]
+  }
+}

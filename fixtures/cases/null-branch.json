@@ -1,0 +1,25 @@
+{
+  "input": {
+    "x": {"bits": 8, "signed": true, "nullable": true, "optional": false}
+  },
+  "old": {
+    "output": {"label": {"bits": 8, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"gt": [{"field": "x"}, {"integer": 0}]},
+        "then": [{"emit": {"output": "label", "value": {"integer": 1}}}],
+        "else": [{"emit": {"output": "label", "value": {"integer": 0}}}]
+      }}
+    ]
+  },
+  "new": {
+    "output": {"label": {"bits": 8, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"ge": [{"field": "x"}, {"integer": 0}]},
+        "then": [{"emit": {"output": "label", "value": {"integer": 1}}}],
+        "else": [{"emit": {"output": "label", "value": {"integer": 0}}}]
+      }}
+    ]
+  }
+}

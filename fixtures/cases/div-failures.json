@@ -1,0 +1,50 @@
+{
+  "input": {
+    "x": {"bits": 8, "signed": true, "nullable": false, "optional": false},
+    "d": {"bits": 8, "signed": true, "nullable": false, "optional": false}
+  },
+  "old": {
+    "output": {"q": {"bits": 8, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"eq": [{"field": "d"}, {"integer": 0}]},
+        "then": [{"fail": "divisor-zero"}],
+        "else": [
+          {"if": {
+            "cond": {"and": [
+              {"eq": [{"field": "x"}, {"integer": -128}]},
+              {"eq": [{"field": "d"}, {"integer": -1}]}
+            ]},
+            "then": [{"fail": "divisor-trap"}],
+            "else": [
+              {"emit": {"output": "q",
+                "value": {"div": [{"field": "x"}, {"field": "d"}]}}}
+            ]
+          }}
+        ]
+      }}
+    ]
+  },
+  "new": {
+    "output": {"q": {"bits": 8, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"eq": [{"field": "d"}, {"integer": 0}]},
+        "then": [{"fail": "divisor-zero"}],
+        "else": [
+          {"if": {
+            "cond": {"and": [
+              {"eq": [{"field": "x"}, {"integer": -128}]},
+              {"eq": [{"field": "d"}, {"integer": -1}]}
+            ]},
+            "then": [{"fail": "divisor-trap"}],
+            "else": [
+              {"emit": {"output": "q",
+                "value": {"div": [{"field": "x"}, {"field": "d"}]}}}
+            ]
+          }}
+        ]
+      }}
+    ]
+  }
+}

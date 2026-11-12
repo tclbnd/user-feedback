@@ -1,0 +1,39 @@
+{
+  "input": {
+    "k": {"bits": 8, "signed": true, "nullable": false, "optional": false}
+  },
+  "old": {
+    "output": {"total": {"bits": 16, "nullable": false}},
+    "block": [
+      {"let": {"name": "n", "value": {"var": "k"}}},
+      {"loop": {
+        "bound": {"var": "n"},
+        "max": 8,
+        "index": "i",
+        "init": {"acc": {"integer": 0}},
+        "body": [
+          {"set": {"name": "acc",
+            "value": {"wrap": {"bits": 16, "arg": {"add": [{"var": "acc"}, {"var": "i"}]}}}}}
+        ]
+      }},
+      {"emit": {"output": "total", "value": {"var": "acc"}}}
+    ]
+  },
+  "new": {
+    "output": {"total": {"bits": 16, "nullable": false}},
+    "block": [
+      {"let": {"name": "n", "value": {"var": "k"}}},
+      {"loop": {
+        "bound": {"var": "n"},
+        "max": 8,
+        "index": "i",
+        "init": {"acc": {"integer": 0}},
+        "body": [
+          {"set": {"name": "acc",
+            "value": {"wrap": {"bits": 16, "arg": {"add": [{"var": "acc"}, {"var": "i"}]}}}}}
+        ]
+      }},
+      {"emit": {"output": "total", "value": {"var": "acc"}}}
+    ]
+  }
+}

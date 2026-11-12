@@ -1,0 +1,80 @@
+{
+  "input": {
+    "tier": {"bits": 8, "signed": true, "nullable": true, "optional": true},
+    "amt": {"bits": 8, "signed": true, "nullable": false, "optional": false}
+  },
+  "old": {
+    "output": {"price": {"bits": 16, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"is_missing": "tier"},
+        "then": [{"fail": "no-tier"}],
+        "else": [
+          {"if": {
+            "cond": {"is_null": "tier"},
+            "then": [{"fail": "null-tier"}],
+            "else": [
+              {"if": {
+                "cond": {"lt": [{"field": "tier"}, {"integer": 0}]},
+                "then": [
+                  {"emit": {"output": "price",
+                    "value": {"wrap": {"bits": 16, "arg": {"sub": [{"integer": 0}, {"field": "amt"}]}}}}}
+                ],
+                "else": [
+                  {"if": {
+                    "cond": {"gt": [{"field": "tier"}, {"integer": 10}]},
+                    "then": [
+                      {"emit": {"output": "price",
+                        "value": {"wrap": {"bits": 16, "arg": {"mul": [{"field": "amt"}, {"integer": 2}]}}}}}
+                    ],
+                    "else": [
+                      {"emit": {"output": "price",
+                        "value": {"wrap": {"bits": 16, "arg": {"add": [{"field": "amt"}, {"field": "tier"}]}}}}}
+                    ]
+                  }}
+                ]
+              }}
+            ]
+          }}
+        ]
+      }}
+    ]
+  },
+  "new": {
+    "output": {"price": {"bits": 16, "nullable": true}},
+    "block": [
+      {"if": {
+        "cond": {"is_missing": "tier"},
+        "then": [{"fail": "no-tier"}],
+        "else": [
+          {"if": {
+            "cond": {"is_null": "tier"},
+            "then": [{"fail": "null-tier"}],
+            "else": [
+              {"if": {
+                "cond": {"lt": [{"field": "tier"}, {"integer": 0}]},
+                "then": [
+                  {"emit": {"output": "price",
+                    "value": {"wrap": {"bits": 16, "arg": {"sub": [{"integer": 0}, {"field": "amt"}]}}}}}
+                ],
+                "else": [
+                  {"if": {
+                    "cond": {"gt": [{"field": "tier"}, {"integer": 10}]},
+                    "then": [
+                      {"emit": {"output": "price",
+                        "value": {"wrap": {"bits": 16, "arg": {"mul": [{"field": "amt"}, {"integer": 2}]}}}}}
+                    ],
+                    "else": [
+                      {"emit": {"output": "price",
+                        "value": {"wrap": {"bits": 16, "arg": {"add": [{"field": "amt"}, {"field": "tier"}]}}}}}
+                    ]
+                  }}
+                ]
+              }}
+            ]
+          }}
+        ]
+      }}
+    ]
+  }
+}
