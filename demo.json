@@ -1,0 +1,1 @@
+{"currency_scale":{"USD":2},"entries":[{"id":"r1","rev":1,"txn":"sale","date":"2026-01-31","amount":"100.10","side":"debit","account":"cash","currency":"USD","source":"January","line":1},{"id":"r2","rev":1,"txn":"sale","date":"2026-02-01","amount":"100.10","side":"credit","account":"sales","currency":"USD","source":"February","line":1}]}
