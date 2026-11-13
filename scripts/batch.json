@@ -1,0 +1,1 @@
+{"events":[{"partition":"p","offset":1,"key":"a","payload":{"x":1}},{"partition":"p","offset":2,"invalid":true},{"partition":"p","offset":3,"key":"b","payload":[2]},{"partition":"q","offset":1,"key":"d","payload":{"q":true}}]}
