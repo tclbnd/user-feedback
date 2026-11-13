@@ -1,0 +1,8 @@
+固定射线集: 16 条（解析 10 / 细步长 6）
+最大透射绝对误差: 1.11e-15 (阈值 0.005)
+最大线性色误差:   3.20e-07 (阈值 0.01)
+固定集步数 跳过=213 不跳过=441
+合成场景步数 跳过=2449 不跳过=4412 下降=44.5%
+合成场景跳过空块计数合计=746
+输出文件: fixed_rays.json, report.txt, scene_diff.ppm, scene_noskip.json, scene_noskip.ppm, scene_skip.json, scene_skip.ppm
+结论: 全部通过

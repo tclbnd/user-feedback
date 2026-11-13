@@ -1,0 +1,568 @@
+{
+ "tolerance": {
+  "transmit": 0.005,
+  "color": 0.01
+ },
+ "rows": [
+  {
+   "name": "const-basic",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.09071795328941251,
+    "scatter": 0.7274256373684701,
+    "color": 0.7637128186842351
+   },
+   "skip": {
+    "transmit": 0.09071795328941254,
+    "scatter": 0.72742563736847,
+    "color": 0.763712818684235,
+    "steps": 16,
+    "skipped": 2,
+    "trace_len": 18,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.7755575615628914e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.09071795328941254,
+    "scatter": 0.72742563736847,
+    "color": 0.763712818684235,
+    "steps": 32,
+    "skipped": 0,
+    "trace_len": 32,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.7755575615628914e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "const-surface-inside",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.21438110142697794,
+    "scatter": 0.7070570087157199,
+    "color": 0.7606522840724643
+   },
+   "skip": {
+    "transmit": 0.2143811014269779,
+    "scatter": 0.70705700871572,
+    "color": 0.7606522840724644,
+    "steps": 9,
+    "skipped": 1,
+    "trace_len": 10,
+    "finite": true,
+    "covered": true,
+    "t_err": 5.551115123125783e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.2143811014269779,
+    "scatter": 0.70705700871572,
+    "color": 0.7606522840724644,
+    "steps": 13,
+    "skipped": 0,
+    "trace_len": 13,
+    "finite": true,
+    "covered": true,
+    "t_err": 5.551115123125783e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "const-near-clipped",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.005041760259690977,
+    "scatter": 0.4702629923374747,
+    "color": 0.4727838724673202
+   },
+   "skip": {
+    "transmit": 0.005041760259690981,
+    "scatter": 0.47026299233747476,
+    "color": 0.47278387246732023,
+    "steps": 22,
+    "skipped": 0,
+    "trace_len": 22,
+    "finite": true,
+    "covered": true,
+    "t_err": 3.469446951953614e-18,
+    "c_err": 5.551115123125783e-17,
+    "s_err": 5.551115123125783e-17
+   },
+   "noskip": {
+    "transmit": 0.005041760259690981,
+    "scatter": 0.47026299233747476,
+    "color": 0.47278387246732023,
+    "steps": 22,
+    "skipped": 0,
+    "trace_len": 22,
+    "finite": true,
+    "covered": true,
+    "t_err": 3.469446951953614e-18,
+    "c_err": 5.551115123125783e-17,
+    "s_err": 5.551115123125783e-17
+   }
+  },
+  {
+   "name": "piecewise-gaps",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.019254701775386924,
+    "scatter": 0.6097212283167812,
+    "color": 0.6126094335830893
+   },
+   "skip": {
+    "transmit": 0.019254701775386924,
+    "scatter": 0.6097212283167811,
+    "color": 0.6126094335830892,
+    "steps": 16,
+    "skipped": 5,
+    "trace_len": 21,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.019254701775386924,
+    "scatter": 0.6097212283167811,
+    "color": 0.6126094335830892,
+    "steps": 44,
+    "skipped": 0,
+    "trace_len": 44,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "piecewise-thick",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.06081006262521797,
+    "scatter": 0.8367609692378315,
+    "color": 0.879328013075484
+   },
+   "skip": {
+    "transmit": 0.060810062625217993,
+    "scatter": 0.8367609692378316,
+    "color": 0.8793280130754842,
+    "steps": 12,
+    "skipped": 3,
+    "trace_len": 15,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.0816681711721685e-17,
+    "c_err": 2.220446049250313e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.060810062625217993,
+    "scatter": 0.8367609692378316,
+    "color": 0.8793280130754842,
+    "steps": 24,
+    "skipped": 0,
+    "trace_len": 24,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.0816681711721685e-17,
+    "c_err": 2.220446049250313e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "boundary-at-step",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.06392786120670756,
+    "scatter": 0.5006491464470835,
+    "color": 0.5198275048090958
+   },
+   "skip": {
+    "transmit": 0.06392786120670757,
+    "scatter": 0.5006491464470835,
+    "color": 0.5198275048090958,
+    "steps": 16,
+    "skipped": 0,
+    "trace_len": 16,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.3877787807814457e-17,
+    "c_err": 0.0,
+    "s_err": 0.0
+   },
+   "noskip": {
+    "transmit": 0.06392786120670757,
+    "scatter": 0.5006491464470835,
+    "color": 0.5198275048090958,
+    "steps": 16,
+    "skipped": 0,
+    "trace_len": 16,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.3877787807814457e-17,
+    "c_err": 0.0,
+    "s_err": 0.0
+   }
+  },
+  {
+   "name": "short-intervals",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.8869204367171575,
+    "scatter": 0.06564281769870196,
+    "color": 0.5977950797289964
+   },
+   "skip": {
+    "transmit": 0.8869204367171575,
+    "scatter": 0.06564281769870198,
+    "color": 0.5977950797289964,
+    "steps": 3,
+    "skipped": 3,
+    "trace_len": 6,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 0.0,
+    "s_err": 1.3877787807814457e-17
+   },
+   "noskip": {
+    "transmit": 0.8869204367171575,
+    "scatter": 0.06564281769870198,
+    "color": 0.5977950797289964,
+    "steps": 16,
+    "skipped": 0,
+    "trace_len": 16,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 0.0,
+    "s_err": 1.3877787807814457e-17
+   }
+  },
+  {
+   "name": "empty-only",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 1.0,
+    "scatter": 0.0,
+    "color": 0.33
+   },
+   "skip": {
+    "transmit": 1.0,
+    "scatter": 0.0,
+    "color": 0.33,
+    "steps": 0,
+    "skipped": 3,
+    "trace_len": 3,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 0.0,
+    "s_err": 0.0
+   },
+   "noskip": {
+    "transmit": 1.0,
+    "scatter": 0.0,
+    "color": 0.33,
+    "steps": 16,
+    "skipped": 0,
+    "trace_len": 16,
+    "finite": true,
+    "covered": true,
+    "t_err": 0.0,
+    "c_err": 0.0,
+    "s_err": 0.0
+   }
+  },
+  {
+   "name": "surface-before-medium",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.2725317930340126,
+    "scatter": 0.6547213862693887,
+    "color": 0.7092277448761912
+   },
+   "skip": {
+    "transmit": 0.27253179303401265,
+    "scatter": 0.6547213862693888,
+    "color": 0.7092277448761913,
+    "steps": 4,
+    "skipped": 1,
+    "trace_len": 5,
+    "finite": true,
+    "covered": true,
+    "t_err": 5.551115123125783e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.27253179303401265,
+    "scatter": 0.6547213862693888,
+    "color": 0.7092277448761913,
+    "steps": 8,
+    "skipped": 0,
+    "trace_len": 8,
+    "finite": true,
+    "covered": true,
+    "t_err": 5.551115123125783e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "surface-at-boundary",
+   "kind": "analytic",
+   "reference": {
+    "transmit": 0.16529888822158656,
+    "scatter": 0.6677608894227308,
+    "color": 0.7421453891224448
+   },
+   "skip": {
+    "transmit": 0.1652988882215866,
+    "scatter": 0.6677608894227307,
+    "color": 0.7421453891224447,
+    "steps": 12,
+    "skipped": 0,
+    "trace_len": 12,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.7755575615628914e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   },
+   "noskip": {
+    "transmit": 0.1652988882215866,
+    "scatter": 0.6677608894227307,
+    "color": 0.7421453891224447,
+    "steps": 12,
+    "skipped": 0,
+    "trace_len": 12,
+    "finite": true,
+    "covered": true,
+    "t_err": 2.7755575615628914e-17,
+    "c_err": 1.1102230246251565e-16,
+    "s_err": 1.1102230246251565e-16
+   }
+  },
+  {
+   "name": "linear-ramp",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.02732372244729256,
+    "scatter": 0.608581394689295,
+    "color": 0.6195108836682119
+   },
+   "skip": {
+    "transmit": 0.027323722447292552,
+    "scatter": 0.608581410326078,
+    "color": 0.619510899304995,
+    "steps": 16,
+    "skipped": 2,
+    "trace_len": 18,
+    "finite": true,
+    "covered": true,
+    "t_err": 6.938893903907228e-18,
+    "c_err": 1.563678309057792e-08,
+    "s_err": 1.563678309057792e-08
+   },
+   "noskip": {
+    "transmit": 0.027323722447292552,
+    "scatter": 0.608581410326078,
+    "color": 0.619510899304995,
+    "steps": 32,
+    "skipped": 0,
+    "trace_len": 32,
+    "finite": true,
+    "covered": true,
+    "t_err": 6.938893903907228e-18,
+    "c_err": 1.563678309057792e-08,
+    "s_err": 1.563678309057792e-08
+   }
+  },
+  {
+   "name": "linear-with-attenuation",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.07427357821433384,
+    "scatter": 0.7221338523988993,
+    "color": 0.7444159258631994
+   },
+   "skip": {
+    "transmit": 0.0742735782143339,
+    "scatter": 0.7221339162896611,
+    "color": 0.7444159897539613,
+    "steps": 16,
+    "skipped": 2,
+    "trace_len": 18,
+    "finite": true,
+    "covered": true,
+    "t_err": 6.938893903907228e-17,
+    "c_err": 6.389076190327359e-08,
+    "s_err": 6.389076179225128e-08
+   },
+   "noskip": {
+    "transmit": 0.0742735782143339,
+    "scatter": 0.7221339162896611,
+    "color": 0.7444159897539613,
+    "steps": 30,
+    "skipped": 0,
+    "trace_len": 30,
+    "finite": true,
+    "covered": true,
+    "t_err": 6.938893903907228e-17,
+    "c_err": 6.389076190327359e-08,
+    "s_err": 6.389076179225128e-08
+   }
+  },
+  {
+   "name": "linear-mixed-blocks",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.016572675401762344,
+    "scatter": 0.6656962450269078,
+    "color": 0.6748112164978771
+   },
+   "skip": {
+    "transmit": 0.016572675401761237,
+    "scatter": 0.665696305484777,
+    "color": 0.6748112769557457,
+    "steps": 26,
+    "skipped": 4,
+    "trace_len": 30,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.106753577673203e-15,
+    "c_err": 6.045786860031654e-08,
+    "s_err": 6.045786915542806e-08
+   },
+   "noskip": {
+    "transmit": 0.016572675401761237,
+    "scatter": 0.665696305484777,
+    "color": 0.6748112769557457,
+    "steps": 38,
+    "skipped": 0,
+    "trace_len": 38,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.106753577673203e-15,
+    "c_err": 6.045786860031654e-08,
+    "s_err": 6.045786915542806e-08
+   }
+  },
+  {
+   "name": "linear-thin-sparse",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.9942664996105989,
+    "scatter": 0.004694871705047705,
+    "color": 0.5018281215103472
+   },
+   "skip": {
+    "transmit": 0.994266499610599,
+    "scatter": 0.004694875579017934,
+    "color": 0.5018281253843174,
+    "steps": 3,
+    "skipped": 4,
+    "trace_len": 7,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.1102230246251565e-16,
+    "c_err": 3.87397025569669e-09,
+    "s_err": 3.8739702288084765e-09
+   },
+   "noskip": {
+    "transmit": 0.994266499610599,
+    "scatter": 0.004694875579017934,
+    "color": 0.5018281253843174,
+    "steps": 83,
+    "skipped": 0,
+    "trace_len": 83,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.1102230246251565e-16,
+    "c_err": 3.87397025569669e-09,
+    "s_err": 3.8739702288084765e-09
+   }
+  },
+  {
+   "name": "linear-dense-then-thin",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.004086771438464078,
+    "scatter": 0.9361941239833781,
+    "color": 0.9372158168429942
+   },
+   "skip": {
+    "transmit": 0.0040867714384640675,
+    "scatter": 0.9361944435534196,
+    "color": 0.9372161364130357,
+    "steps": 28,
+    "skipped": 2,
+    "trace_len": 30,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.0408340855860843e-17,
+    "c_err": 3.195700415403735e-07,
+    "s_err": 3.195700415403735e-07
+   },
+   "noskip": {
+    "transmit": 0.0040867714384640675,
+    "scatter": 0.9361944435534196,
+    "color": 0.9372161364130357,
+    "steps": 37,
+    "skipped": 0,
+    "trace_len": 37,
+    "finite": true,
+    "covered": true,
+    "t_err": 1.0408340855860843e-17,
+    "c_err": 3.195700415403735e-07,
+    "s_err": 3.195700415403735e-07
+   }
+  },
+  {
+   "name": "linear-surface-inside-block",
+   "kind": "fine",
+   "reference": {
+    "transmit": 0.06904673625350999,
+    "scatter": 0.7701387120343403,
+    "color": 0.7963764718106741
+   },
+   "skip": {
+    "transmit": 0.06904673625350989,
+    "scatter": 0.7701387313483402,
+    "color": 0.796376491124674,
+    "steps": 14,
+    "skipped": 1,
+    "trace_len": 15,
+    "finite": true,
+    "covered": true,
+    "t_err": 9.71445146547012e-17,
+    "c_err": 1.931399995491745e-08,
+    "s_err": 1.931399995491745e-08
+   },
+   "noskip": {
+    "transmit": 0.06904673625350989,
+    "scatter": 0.7701387313483402,
+    "color": 0.796376491124674,
+    "steps": 18,
+    "skipped": 0,
+    "trace_len": 18,
+    "finite": true,
+    "covered": true,
+    "t_err": 9.71445146547012e-17,
+    "c_err": 1.931399995491745e-08,
+    "s_err": 1.931399995491745e-08
+   }
+  }
+ ]
+}
