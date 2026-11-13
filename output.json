@@ -1,0 +1,1 @@
+{"frames": [{"duration": [1, 25], "index": 0, "rgba_sha256": "e426f7f426d47dcc74ef133691c309f83f63e00a6480bcb37ae9c9b91903c19b", "start": [0, 1]}, {"duration": [2, 25], "index": 1, "rgba_sha256": "8969dd1b9f491c69eb51d864851a3fde97a0ef9996d0a8266a062bc6535d0f38", "start": [1, 25]}], "stats": {"max_checkpoints": 1, "max_replay_frames": 1}}
