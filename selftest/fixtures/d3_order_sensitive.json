@@ -1,0 +1,68 @@
+{
+  "session": "d3_order_sensitive",
+  "code_version": "v1",
+  "events": [
+    {
+      "seq": 5,
+      "kind": "emit",
+      "record": {
+        "id": "rB"
+      },
+      "fields_ref": 4
+    },
+    {
+      "seq": 4,
+      "kind": "parse",
+      "input_ref": 3,
+      "fields": {
+        "title": "B"
+      }
+    },
+    {
+      "seq": 3,
+      "kind": "fetch",
+      "url": "b",
+      "response": "raw-b",
+      "ts": 103
+    },
+    {
+      "seq": 2,
+      "kind": "emit",
+      "record": {
+        "id": "rA"
+      },
+      "fields_ref": 1
+    },
+    {
+      "seq": 1,
+      "kind": "parse",
+      "input_ref": 0,
+      "fields": {
+        "title": "A"
+      }
+    },
+    {
+      "seq": 0,
+      "kind": "fetch",
+      "url": "a",
+      "response": "raw-a",
+      "ts": 100
+    }
+  ],
+  "snapshots": {
+    "fetch": {
+      "a": "raw-a",
+      "b": "raw-b"
+    }
+  },
+  "recorded_outputs": [
+    {
+      "id": "rB",
+      "title": "B"
+    },
+    {
+      "id": "rA",
+      "title": "A"
+    }
+  ]
+}

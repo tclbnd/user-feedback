@@ -1,0 +1,48 @@
+{
+  "session": "d2_input_drift",
+  "code_version": "v1",
+  "events": [
+    {
+      "seq": 0,
+      "kind": "fetch",
+      "url": "a",
+      "response": {
+        "fields": {
+          "title": "Recorded Title"
+        }
+      },
+      "ts": 100
+    },
+    {
+      "seq": 1,
+      "kind": "parse",
+      "input_ref": 0,
+      "fields": {
+        "title": "Recorded Title"
+      }
+    },
+    {
+      "seq": 2,
+      "kind": "emit",
+      "record": {
+        "id": "r1"
+      },
+      "fields_ref": 1
+    }
+  ],
+  "snapshots": {
+    "fetch": {
+      "a": {
+        "fields": {
+          "title": "Drifted Title"
+        }
+      }
+    }
+  },
+  "recorded_outputs": [
+    {
+      "id": "r1",
+      "title": "Recorded Title"
+    }
+  ]
+}

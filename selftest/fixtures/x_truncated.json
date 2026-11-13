@@ -1,0 +1,52 @@
+{
+  "session": "x_truncated",
+  "code_version": "v1",
+  "events": [
+    {
+      "seq": 0,
+      "kind": "fetch",
+      "url": "a",
+      "response": "raw-a",
+      "ts": 100
+    },
+    {
+      "seq": 1,
+      "kind": "parse",
+      "input_ref": 0,
+      "fields": {
+        "title": "A"
+      }
+    },
+    {
+      "seq": 2,
+      "kind": "emit",
+      "record": {
+        "id": "r1"
+      },
+      "fields_ref": 1
+    },
+    {
+      "seq": 5,
+      "kind": "emit",
+      "record": {
+        "id": "r2"
+      },
+      "fields_ref": 1
+    }
+  ],
+  "snapshots": {
+    "fetch": {
+      "a": "raw-a"
+    }
+  },
+  "recorded_outputs": [
+    {
+      "id": "r1",
+      "title": "A"
+    },
+    {
+      "id": "r2",
+      "title": "A"
+    }
+  ]
+}

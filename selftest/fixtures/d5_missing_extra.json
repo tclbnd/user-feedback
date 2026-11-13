@@ -1,0 +1,40 @@
+{
+  "session": "d5_missing_extra",
+  "code_version": "v1",
+  "events": [
+    {
+      "seq": 0,
+      "kind": "fetch",
+      "url": "a",
+      "response": "raw-a",
+      "ts": 100
+    },
+    {
+      "seq": 1,
+      "kind": "parse",
+      "input_ref": 0,
+      "fields": {
+        "title": "A"
+      }
+    },
+    {
+      "seq": 2,
+      "kind": "emit",
+      "record": {
+        "id": "r-extra"
+      },
+      "fields_ref": 1
+    }
+  ],
+  "snapshots": {
+    "fetch": {
+      "a": "raw-a"
+    }
+  },
+  "recorded_outputs": [
+    {
+      "id": "r-missing",
+      "title": "A"
+    }
+  ]
+}
