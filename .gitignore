@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+.test_tmp/
+crawl.json
+__pycache__/
