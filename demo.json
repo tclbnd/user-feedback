@@ -1,0 +1,1 @@
+{"snapshot_id":"demo","snapshot_lsn":10,"available_from":1,"chunks":[{"table":"customer","rows":{"a":{"tier":1}}}],"events":[{"kind":"stage","chunk":0},{"kind":"begin","xid":"x"},{"kind":"op","xid":"x","table":"customer","key":"a","action":"set","value":{"tier":2}},{"kind":"commit","xid":"x","lsn":11},{"kind":"seal"}]}
