@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+out.json
+reports/
+test_reports/
