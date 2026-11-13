@@ -1,0 +1,2 @@
+{"id":"a","rev":1,"schema":1,"device":"demo","readings":[{"channel":"humidity","value":22}]}
+{"id":"b","rev":1,"schema":2,"device":"demo","samples":null}
