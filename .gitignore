@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .DS_Store
+test-stores/
+smoke/
+.smoke/
+.dbg/
+_probe.txt

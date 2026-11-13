@@ -1,0 +1,57 @@
+{
+ "tokens": [
+  "v1"
+ ],
+ "pages": {
+  "v1": {
+   "initial": {
+    "items": [
+     {
+      "id": "a",
+      "sort": 1,
+      "value": "a1"
+     },
+     {
+      "id": "b",
+      "sort": 2,
+      "value": "b1"
+     }
+    ],
+    "etag": "v1-p1",
+    "next": "p2"
+   },
+   "p2": {
+    "items": [
+     {
+      "id": "c",
+      "sort": 3,
+      "value": "c1"
+     },
+     {
+      "id": "d",
+      "sort": 4,
+      "value": "d1"
+     }
+    ],
+    "etag": "v1-p2",
+    "next": "p3"
+   },
+   "p3": {
+    "items": [
+     {
+      "id": "e",
+      "sort": 5,
+      "value": "e1"
+     },
+     {
+      "id": "f",
+      "sort": 6,
+      "value": "f1"
+     }
+    ],
+    "etag": "v1-p3",
+    "next": null
+   }
+  }
+ }
+}

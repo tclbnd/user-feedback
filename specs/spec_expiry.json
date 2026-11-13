@@ -1,0 +1,64 @@
+{
+ "tokens": [
+  "v2x",
+  "v3x"
+ ],
+ "pages": {
+  "v2x": {
+   "initial": {
+    "items": [
+     {
+      "id": "a",
+      "sort": 1,
+      "value": "stale"
+     }
+    ],
+    "etag": "x-p1",
+    "next": "p2",
+    "faults": [
+     410
+    ]
+   },
+   "p2": {
+    "items": [
+     {
+      "id": "z",
+      "sort": 9,
+      "value": "stale"
+     }
+    ],
+    "etag": "x-p2",
+    "next": null
+   }
+  },
+  "v3x": {
+   "initial": {
+    "items": [
+     {
+      "id": "a",
+      "sort": 1,
+      "value": "fresh"
+     },
+     {
+      "id": "n",
+      "sort": 2,
+      "value": "new"
+     }
+    ],
+    "etag": "n-p1",
+    "next": "p2"
+   },
+   "p2": {
+    "items": [
+     {
+      "id": "q",
+      "sort": 3,
+      "value": "q1"
+     }
+    ],
+    "etag": "n-p2",
+    "next": null
+   }
+  }
+ }
+}

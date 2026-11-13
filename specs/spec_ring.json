@@ -1,0 +1,31 @@
+{
+ "tokens": [
+  "ring"
+ ],
+ "pages": {
+  "ring": {
+   "initial": {
+    "items": [
+     {
+      "id": "a",
+      "sort": 1,
+      "value": "a1"
+     }
+    ],
+    "etag": "r-p1",
+    "next": "loop"
+   },
+   "loop": {
+    "items": [
+     {
+      "id": "b",
+      "sort": 2,
+      "value": "b1"
+     }
+    ],
+    "etag": "r-p2",
+    "next": "initial"
+   }
+  }
+ }
+}

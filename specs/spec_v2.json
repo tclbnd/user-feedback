@@ -1,0 +1,86 @@
+{
+ "tokens": [
+  "v2"
+ ],
+ "pages": {
+  "v2": {
+   "initial": {
+    "items": [
+     {
+      "id": "b",
+      "sort": 0,
+      "value": "b1"
+     },
+     {
+      "id": "a",
+      "sort": 1,
+      "value": "a1"
+     }
+    ],
+    "etag": "v2-p1",
+    "next": "p2"
+   },
+   "p2": {
+    "items": [
+     {
+      "id": "c",
+      "sort": 3,
+      "value": "c1"
+     },
+     {
+      "id": "d",
+      "sort": 4,
+      "value": "d2"
+     }
+    ],
+    "etag": "v2-p2",
+    "next": "p3",
+    "faults": [
+     429
+    ]
+   },
+   "p3": {
+    "items": [],
+    "etag": "v2-p3",
+    "next": "p4"
+   },
+   "p4": {
+    "items": [
+     {
+      "id": "c",
+      "sort": 3,
+      "value": "c1"
+     },
+     {
+      "id": "d",
+      "sort": 4,
+      "value": "d2"
+     }
+    ],
+    "etag": "v2-p2",
+    "next": "p5"
+   },
+   "p5": {
+    "items": [
+     {
+      "id": "c",
+      "sort": 3,
+      "value": "c1"
+     },
+     {
+      "id": "e",
+      "sort": 5,
+      "value": "e1"
+     },
+     {
+      "id": "g",
+      "sort": 7,
+      "value": "g1"
+     }
+    ],
+    "etag": "v2-p5",
+    "next": null
+   }
+  }
+ }
+}

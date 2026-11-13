@@ -1,0 +1,25 @@
+{
+ "tokens": [
+  "bad"
+ ],
+ "pages": {
+  "bad": {
+   "initial": {
+    "items": [
+     {
+      "id": "a",
+      "sort": 2,
+      "value": "a1"
+     },
+     {
+      "id": "b",
+      "sort": 1,
+      "value": "b1"
+     }
+    ],
+    "etag": "bad-p1",
+    "next": null
+   }
+  }
+ }
+}

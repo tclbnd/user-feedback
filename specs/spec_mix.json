@@ -1,0 +1,1 @@
+{"tokens": ["mix"], "pages": {"mix": {"initial": {"items": [{"id": "k", "sort": 1, "value": "v1"}], "etag": "m1", "next": "p2"}, "p2": {"items": [{"id": "k", "sort": 2, "value": "v2"}], "etag": "m2", "next": null}}}}
