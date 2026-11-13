@@ -1,0 +1,1 @@
+{"origin":"https://example.test","seeds":["/"],"spacing_ms":3,"disallow":["/private/"],"pages":{"/":{"body":"home","links":["/ok#nav","/private/item"]},"/ok":{"body":"ok"},"/private/item":{"body":"blocked"}}}
