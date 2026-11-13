@@ -1,0 +1,17 @@
+WEBVTT
+
+STYLE
+::cue(.tag) { color: lime; }
+
+REGION
+id:top
+width:40%
+lines:3
+
+a
+00:00:00.050 --> 00:00:00.780 region:top
+<c.tag>One <00:00:00.400>two</c>
+
+b
+00:00:00.330 --> 00:00:01.010
+Again
