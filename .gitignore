@@ -1,3 +1,9 @@
 __pycache__/
 *.pyc
 .DS_Store
+twork/
+idxroot/
+demo.pcm
+ranges.json
+edl2.json
+r2.json
