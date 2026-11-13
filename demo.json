@@ -1,0 +1,1 @@
+{"partitions":["a","b"],"gap":5,"lateness":30,"events":[{"kind":"event","partition":"a","key":"item","id":"one","t":1},{"kind":"event","partition":"b","key":"item","id":"three","t":11},{"kind":"watermark","partition":"a","t":25},{"kind":"watermark","partition":"b","t":25},{"kind":"event","partition":"b","key":"item","id":"two","t":6}]}
