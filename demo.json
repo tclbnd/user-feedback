@@ -1,0 +1,1 @@
+{"devices":{"cam":{"sync":[{"seq":0,"tick":10,"reference":0},{"seq":2,"tick":14.0004,"reference":4},{"seq":4,"tick":18.0008,"reference":8},{"seq":6,"tick":22.0012,"reference":12},{"seq":8,"tick":26.0016,"reference":16}],"probes":[{"seq":3,"tick":16.0006,"id":"p"}]}}}
