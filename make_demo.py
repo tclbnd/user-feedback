@@ -1,3 +1,5 @@
+import argparse
+import hashlib
 import json
 import re
 import struct
@@ -16,7 +18,10 @@ def units(raw):
     return out
 
 
-def packetize(raw,faults=False):
+def packetize(raw,faults=()):
+    """faults: subset of {"fu-middle","stap"}; drops the middle FU-A
+    fragment of access unit 1 and/or the STAP-A parameter sets of the
+    IDR access unit 4."""
     source=units(raw)
     packets=[]
     seq=65532
@@ -30,7 +35,7 @@ def packetize(raw,faults=False):
             if kind==7 and j+1<len(pieces) and pieces[j+1][0]&31==8:
                 vals=pieces[j:j+2]
                 payloads.append((b"\x78"+b"".join(struct.pack(">H",len(v))+v for v in vals),
-                                 faults and i==4))
+                                 "stap" in faults and i==4))
                 j+=2
                 continue
             if kind in (1,5) and len(nal)>=(4 if i==1 else 31):
@@ -39,7 +44,8 @@ def packetize(raw,faults=False):
                 for k,chunk in enumerate(blocks):
                     indicator=(nal[0]&224)|28
                     head=kind|(128 if k==0 else 64 if k==2 else 0)
-                    payloads.append((bytes([indicator,head])+chunk,faults and i==1 and k==1))
+                    payloads.append((bytes([indicator,head])+chunk,
+                                     "fu-middle" in faults and i==1 and k==1))
             else:
                 payloads.append((nal,False))
             j+=1
@@ -58,6 +64,20 @@ def packetize(raw,faults=False):
     return {"first_sequence":65532,"window":7,"packets":shuffled},source,base
 
 
+def truth(source,base):
+    """Generator ground truth: extended timestamps and per-NAL hashes."""
+    return {"units":[{"timestamp":base+i*1500,
+                      "nals":[hashlib.sha256(n).hexdigest() for n in au]}
+                     for i,au in enumerate(source)]}
+
+
 if __name__=="__main__":
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--faults",default="",help="comma list: fu-middle,stap")
+    ap.add_argument("--packets",default="packets.json")
+    ap.add_argument("--truth",default="truth.json")
+    a=ap.parse_args()
     raw=Path(__file__).with_name("source.h264").read_bytes()
-    Path("packets.json").write_text(json.dumps(packetize(raw)[0])+"\n")
+    log,source,base=packetize(raw,{f for f in a.faults.split(",") if f})
+    Path(a.packets).write_text(json.dumps(log)+"\n")
+    Path(a.truth).write_text(json.dumps(truth(source,base))+"\n")
