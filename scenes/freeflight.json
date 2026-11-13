@@ -1,0 +1,26 @@
+{
+  "wavelengths": [450, 500, 550, 600, 650],
+  "materials": {
+    "participating": {
+      "ior": [1.38, 1.37, 1.36, 1.35, 1.34],
+      "absorb": [0.12, 0.1, 0.08, 0.06, 0.05],
+      "scatter": [0.2, 0.2, 0.2, 0.2, 0.2]
+    }
+  },
+  "rays": [
+    {
+      "angle": 10,
+      "events": [
+        {"type": "enter", "material": "participating", "normal": 0},
+        {"type": "distance", "length": 2.5},
+        {"type": "exit", "material": "participating", "normal": 5}
+      ],
+      "lights": [
+        {"spectrum": [0.4, 0.6, 0.8, 0.7, 0.3], "weight": 1.0, "pdf": 1.0}
+      ]
+    }
+  ],
+  "transport": "freeflight",
+  "seed": 3,
+  "spp": 20000
+}
