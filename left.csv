@@ -1,0 +1,6 @@
+key_a,key_b,value
+hot,g,one
+hot,g,one
+hot,g,two
+cold,g,missing
+,g,null key
