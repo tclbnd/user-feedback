@@ -1,0 +1,1 @@
+{"crs":"EPSG:4326","points":[{"device":"east","t":3600,"rev":1,"lon":179.95,"lat":84,"source":"demo"},{"device":"west","t":3601,"rev":1,"lon":-179.98,"lat":84,"source":"demo"}]}
