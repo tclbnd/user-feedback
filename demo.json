@@ -1,0 +1,1 @@
+{"tokens":["base"],"pages":{"base":{"initial":{"items":[{"id":"one","sort":1,"value":"a"}],"etag":"p1","next":"second"},"second":{"items":[{"id":"two","sort":2,"value":"b"}],"etag":"p2","next":null}}}}
