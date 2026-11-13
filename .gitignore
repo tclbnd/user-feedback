@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+tests/output/
+demo_out.json
+demo_*.pgm
+demo_*.ppm
