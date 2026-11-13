@@ -1,0 +1,1 @@
+{"events":[{"event":"create","type":"customer","key":"a","epoch":1,"region":"demo"},{"event":"buy","type":"purchase","key":"a","epoch":1,"purchase":"one","value":45},{"event":"erase","type":"delete","key":"a","epoch":1}]}
