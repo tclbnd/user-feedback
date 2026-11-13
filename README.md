@@ -18,3 +18,9 @@ layers 每项为 {id,size,transform,depth,color}。id 为唯一正整数，size 
 历史重投影沿同一局部点映到上一帧的物体变换与 view，移除上一帧抖动。背景沿世界点重投影。历史源格点的间距为 0.5，从 (0.25,0.25) 开始。查询位置的双线性足迹只含非零权重样本。先按越界、物体 ID 和前帧预期深度（绝对容差 0.025）剔除，再归一化保留的采样权重。在运动覆盖边缘，不得把不同物体的亮度纳入历史。无历史样本、首帧、cut 或尺寸改变时，权重为 0；存在有效历史且启用累积时，应有正权重。局部亮度约束应使用同一物体的当前样本，可按有效覆盖量衰减混合。
 
 每帧额外输出 sample_ids、sample_colors、sample_weights，均为 [y][x][sample]，sample_colors 为线性重建结果。每像素 color 与 weights 分别为四个样本的均值。reasons 仍为逐像素可解释字段。--no-history 和从 cut 起重放继续可用。
+
+## 诊断与实现约定
+
+两种场景的每帧结果都带 history_usage（实际获得正历史权重的样本占比）、rejection_counts（按可区分原因计数：first_frame、cut、size_change、disabled、out_of_bounds、id_mismatch、depth_mismatch）和 reset（该帧的重置原因，无重置为 null）。多物体场景另导出逐样本 sample_reasons；旧场景在内部以 8×8 子样本网格累积并导出 sample_weights、sample_reasons，像素 color/weights 为子样本均值，原始的 render() 像素中心契约与 CLI 保持不变。
+
+历史混合只在通过身份与深度检测的同物体足迹内进行：先对双线性足迹做越界、物体 ID 和前帧预期深度（当前帧深度平面在历史样本局部点上的预测值，绝对容差 0.025）剔除，再按剩余权重归一化；混合强度按有效足迹覆盖率衰减，全部样本无效时历史权重为零且保留当前帧颜色。首帧若带 cut，重置原因记为 cut，因此从该 cut 帧截断重放与完整序列对应片段的输出完全一致。
