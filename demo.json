@@ -1,0 +1,1 @@
+{"sources":{"sourceA":"dialogue.vtt"},"clips":[{"id":"clip1","source":"sourceA","start_frame":3,"end_frame":32,"speed":[3,2]},{"id":"clip2","source":"sourceA","start_frame":8,"end_frame":25}]}
