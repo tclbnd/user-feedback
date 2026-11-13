@@ -5,3 +5,5 @@ Python 3.9+，使用标准库。命令为 `python3 cut_vtt.py edl.json output.vt
 输入 WebVTT 支持 UTF-8、CRLF、NOTE、显式或隐式 ID、可重叠的 cues、REGION 块以及形如 ::cue(.tag) { ... } 的独立 STYLE 规则。保留 cue 设置和普通标签、原文本、换行及实体。不同源同名 class/region 必须重命名为 <来源标签>__<原名>，同源引用与声明一致。源 cue 必须按开始时间非降序。接受 hh:mm:ss.mmm 和 mm:ss.mmm。按与 clip 的交集映射每条 cue。内嵌时间标记保留其后的原文本，仅移除交集之外或量化后不在 cue 严格内侧的标记，标记时间必须严格递增。同一时刻多个标记只留首个。输出按开始毫秒、clip 列表顺序、源 cue 顺序排列，输出 ID 唯一且稳定。
 
 cue-map.json 含 cues，每条记录包含 id、clip、source、source_id（匿名时 null）、line（源 cue 时间行，1 基）、start_ms、end_ms。顺序与导出一致。源文件和 EDL 结构错误以退出码 2 报告文件和行号或 clip 下标。任一验证错误发生时不覆盖已有输出。
+
+实现拆分：`cut_vtt.py` 是薄 CLI 入口，`vttcutter.py` 包含全部解析、有理时间计算、重命名、裁剪、ID 分配与渲染逻辑（标准库，无第三方依赖）。验收测试在 `tests/`：先运行 `python3 tests/make_fixtures.py` 生成 12 段 EDL 与双源夹具（已随仓库提供生成结果于 `tests/fixtures/`），再运行 `python3 tests/test_acceptance.py`。其中 `tests/independent_expander.py` 是独立的区间展开器（不 import 实现模块），独立计算每条 cue 的毫秒起止、内嵌标记与剪辑边界前后各 3 帧的可见集合；测试同时覆盖重复片段换序的字节级一致性、ID 唯一性、样式/区域重命名稳定性，以及坏区间、缺失引用、不支持文本块对源文件与行号的精确定位。

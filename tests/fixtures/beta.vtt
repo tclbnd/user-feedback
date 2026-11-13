@@ -1,0 +1,22 @@
+WEBVTT
+
+STYLE
+::cue(.shared) { font-weight: bold; }
+::cue(.cold) { color: blue; }
+
+REGION
+id:top
+width:60%
+lines:2
+
+b1
+00:00:00.000 --> 00:00:02.500 region:top
+<c.cold>Beta one <00:00:00.800>point <00:00:02.000>end</c>
+
+b2
+00:00:01.200 --> 00:00:03.000
+<c.shared>Beta two <00:00:01.900>x</c>
+
+b3
+00:00:03.500 --> 00:00:04.500
+<c.cold>Beta three</c>
