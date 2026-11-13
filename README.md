@@ -1,5 +1,31 @@
 # 透视纹理与各向异性采样
 
-Python 3.9+。用 `python3 texture.py demo.json output.json`。texture 是线性亮度的方形 2 的幂贴图，循环包裹。samples 给出像素中心 x,y 和三角形 vertices。每个 vertex 为 {x,y,w,u,v}，屏幕坐标已经过投影，1/w 为齐次倒数。由同一屏幕三角形内对 U/w、V/w、1/w 的仿射插值得到透视校正 UV。梯度为 quotient rule 的连续解析导数。输入可给 near；在 1/w 平面上截去 w<near 的部分，只为剩余内点输出。退化或无效采样返回 color=null，gradient=null。不得对用于求导的 UV 预先取模。可选 reference_mode="point" 关闭 Mip 及各向异性，只作 0 级双线性。双线性 texel 中心为 (i+.5)/N。
+Python 3.9+，仅依赖标准库。运行 CLI：`python3 texture.py demo.json output.json`；运行验收套件：`python3 test_acceptance.py`。
 
-实现在线性亮度域平均生成 Mip、用 UV 梯度选层和采样方向。限制 tap 数，说明退化脚印回退。输出 results 与 samples 同顺序，每项 {color,gradient,mip,taps}，gradient=[du/dx,du/dy,dv/dx,dv/dy]。均匀平面切换对角线应一致。提供局部参考或调试统计。
+## 输入 / 输出契约
+
+- `texture`：线性亮度的方形 2 的幂贴图，循环包裹（repeat wrap），双线性 texel 中心为 `(i+.5)/N`。
+- `samples[].vertices`：屏幕三角形，每顶点 `{x, y, w, u, v}`，屏幕坐标已投影，`w` 为齐次倒数的尺度（相机深度 / near）。
+- 可选 `near`：在 `1/w` 平面截去深度 `< near` 的部分，只为剩余内点输出。
+- 可选 `reference_mode="point"`：关闭 Mip 与各向异性，只做 0 级双线性（验收基线）。
+- 输出 `results` 与 `samples` 同序，每项 `{color, gradient, mip, taps, u, v}`，`gradient=[du/dx, du/dy, dv/dx, dv/dy]`。退化图元或被近裁剪拒绝的点返回 `color=null, gradient=null, mip=null, taps=null`。
+- `stats` 汇总片元数、三类回退计数、平均/最大 tap 数、Mip 与各向异性范围。
+
+## 实现要点
+
+1. **透视校正与屏幕空间梯度**：对每顶点 `1/w`、`U/w`、`V/w` 做屏幕仿射插值，再用商法则 `d(A/q)=(dA·q−A·dq)/q²` 得到连续（绝不预先取模）的 UV 导数；三角形内梯度为常数，跨三角形边界一致。
+2. **近裁剪产生的新边**：在 `1/w` 平面做 Sutherland–Hodgman 裁剪，交点在 `(1/w, U/w, V/w)` 仿射量空间插值，屏幕空间点在多边形内测试决定覆盖，保证新边透视值精确。
+3. **线性域 Mip 链**：2×2 盒式平均逐级降到 1×1，亮度均值守恒。
+4. **EWA 各向异性脚印**：对像素→UV 映射的 Gram 矩阵特征分解得到长/短半轴；短轴选 Mip 级（一次双线性覆盖约 1 texel），轴比决定沿长轴的 tap 数（上限 16），长轴高斯加权，三线性混合消除级间闪烁。
+5. **周期边界**：求导用连续 UV，包裹只发生在 texel 取整阶段，整数 tile 平移与跨边界脚印结果不变。
+6. **三类明确回退**：退化/非有限脚印→单点 0 级；极端放大（脚印 < 1 texel）→0 级双线性；极端缩小（Mip 超顶层）→钳制到 1×1 层。
+
+## 验收对应关系（test_acceptance.py）
+
+- A 解析投影倾斜平面：射线/平面解析解 + 链式法则比对 UV 导数（相对误差 ≪ 1e-3）。
+- B 掠射高频棋盘：独立 24×24 面积积分为真值，比较单点双线性与各向异性 RMSE，误差降低 ≥ 25%。
+- C 同一平面两种三角形对角线：内部非轮廓像素线性颜色差 ≪ 0.01。
+- D 近裁剪交点、全在近平面后的三角形、退化图元拒绝；裁剪边 UV 用独立透视插值交叉验证。
+- E UV 包裹边界：整数 tile 平移与跨边界脚印不变性。
+- F 两条相机路径复跑 C/D/E，输出导数与 Mip/tap 诊断。
+- G 放大 / 缩小 / 退化脚印三类回退。
