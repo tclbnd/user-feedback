@@ -1,0 +1,1 @@
+{"events":[{"type":"fact","id":"a","entity":"p","at":5,"system":1,"version":"f-a"},{"type":"dimension","entity":"p","from":0,"to":null,"system":0,"version":"old","op":"upsert","label":"first"},{"type":"dimension","entity":"p","from":5,"to":10,"system":3,"version":"changed","op":"upsert","label":"second"}]}
