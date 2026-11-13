@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .DS_Store
+packets.json
+recovered.h264
+report.json
+noloss_*
+fault_*
