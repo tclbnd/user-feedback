@@ -1,0 +1,1 @@
+{"in_rate":44100,"out_rate":48000,"channels":2,"commands":[{"op":"push","frames":[[1,0],[0,0]]},{"op":"push","frames":[[0,0],[0,1]]},{"op":"finish"}]}
