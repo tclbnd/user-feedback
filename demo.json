@@ -1,0 +1,1 @@
+{"schemas":{"orders":["id","amount"]},"queries":[{"id":"example","sql":"SELECT amount AS total FROM orders WHERE id > 0"}]}
