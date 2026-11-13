@@ -58,6 +58,13 @@ def packetize(raw,faults=False):
     return {"first_sequence":65532,"window":7,"packets":shuffled},source,base
 
 
-if __name__=="__main__":
-    raw=Path(__file__).with_name("source.h264").read_bytes()
-    Path("packets.json").write_text(json.dumps(packetize(raw)[0])+"\n")
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--faults", action="store_true",
+                        help="drop an FU-A middle fragment (frame 1) and the "
+                             "SPS/PPS STAP-A of the IDR frame 4")
+    parser.add_argument("-o", "--output", default="packets.json")
+    args = parser.parse_args()
+    raw = Path(__file__).with_name("source.h264").read_bytes()
+    Path(args.output).write_text(json.dumps(packetize(raw, faults=args.faults)[0]) + "\n")
