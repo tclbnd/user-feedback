@@ -1,0 +1,15 @@
+{
+  "nodes": ["a", "b", "c", "d", "e"],
+  "links": [
+    {"event": "e1", "a": "a", "b": "b", "source": "s1", "kind": "same", "action": "set"},
+    {"event": "e2", "a": "b", "b": "c", "source": "s1", "kind": "same", "action": "set"},
+    {"event": "e3", "a": "a", "b": "c", "source": "s2", "kind": "conflict", "action": "set"},
+    {"event": "e4", "a": "d", "b": "e", "source": "s1", "kind": "same", "action": "set"},
+    {"event": "e5", "a": "c", "b": "d", "source": "s1", "kind": "same", "action": "set"},
+    {"event": "e6", "a": "a", "b": "c", "source": "s2", "kind": "conflict", "action": "retract"},
+    {"event": "e7", "a": "c", "b": "d", "source": "s1", "kind": "same", "action": "set"},
+    {"event": "e8", "a": "b", "b": "c", "source": "s1", "kind": "same", "action": "retract"},
+    {"event": "e9", "a": "b", "b": "c", "source": "s3", "kind": "same", "action": "set"},
+    {"event": "e10", "a": "b", "b": "c", "source": "s3", "kind": "same", "action": "retract"}
+  ]
+}
