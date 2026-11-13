@@ -1,0 +1,8829 @@
+{
+ "manifest": {
+  "query_count": 32,
+  "query_sha256": {
+   "q01": "d90a0405e6e2b0d3f77b8ee0da5fdf2ea3ead5e6a7a9b81407b9f110e59a9379",
+   "q02": "0c0ecf50def6cb7af6d3422016c2151b90ec539a61f4e8f1e2ae340820a172de",
+   "q03": "45c1b14a59f6e83b730b13c64736647d8a2ee9bbf6b802cb9c5efa21d89ebd25",
+   "q04": "511e14300716067bffffbc912f9b68eb3c0d4b6ca7ab6180b12fc92826521ebb",
+   "q05": "184d25cd1f80706d6d3e4d04b6ef8af1a557ecf94278999a5979dbad94efcb13",
+   "q06": "a336fa520b7db24089a977548a4b8f39e1c6483b9f6e0f76619ead3bc1c307ca",
+   "q07": "70f902cf970a0e5f5f74dfb478485ab62057acf2c81921f4552c6b493804cb51",
+   "q08": "7e7bd0726d78731e466de49676a8c6a441746f225b4ea13e8c9d5e5ac27ba4e2",
+   "q09": "1e812ef75c2c9448e2224a551fbbcdc66fc5c9b80b2d9a0e9f8056e140e4516d",
+   "q10": "9d741fcb996bdec5ef1836f14af579fcfa9377f1711702a0412d2f99696f9101",
+   "q11": "34f944fbce01b25f0f71bdbecbc10ea2386dd2431ef461f0968ac4521f561fee",
+   "q12": "b999835e411809d171d26db295f3f449320d3b3521acf46ab28e4ec793e04848",
+   "q13": "7d607faca62b283886a094ff6a54a386c82accf2bef105f5d4d64b1e33375e72",
+   "q14": "8cda238e180a96ec7462cadf435367d1637698a3b55f36cf4adad1bbb8b08fa7",
+   "q15": "a38e99454702726faec3c457a04ee721a39ecf7c9f1e21705909dae5df8649ec",
+   "q16": "b44b6b804bae79acbdcd2b7cd37dc2e27d981adfee50f25eb55ccc09d5ebb73a",
+   "q17": "dcb63c41de77f326983a5a578c49c7d9bbaefdd1c321b984b11cb86e874b0500",
+   "q18": "018299d16f7db7784eb53327b639e0310a0e1552cd20f69871ea81258da99afb",
+   "q19": "5473de2d4d46d1b1797379dba12265665f9ee9b95cc5caa92930c00eee5a4efa",
+   "q20": "90710b5a51080bf969ec9c12584fe2c4d05dd6cee53287c1e3be19d727c224a3",
+   "q21": "4f8783343d8970e0c4197472ddf34ac208a3cf31cada3006b94daba43ea628f5",
+   "q22": "da3f12aed4d39d9de1be2596bec1f0dfbbb9c3b1ac4ca8d3b183587cdd667727",
+   "q23": "9cd2772aba259e404214e54d76e31daf228357d193fab60b64bed8f0e8ef1ce8",
+   "q24": "a22fe86941029794c80d169126010a625f8824c0f775ccecc54596e275a01148",
+   "q25": "e10b548ef7db8f8ca36d44596ba8f285916c2e49d6c561e26a89286d570d764d",
+   "q26": "1d30bc55601e96cebcf3981e297e80547c063867696acebd367b5b9a127d2b59",
+   "q27": "71a421d1745b2a97047513d55fec0ffecd47c1174ac69724d59c901ebd76b5a0",
+   "q28": "807ea2855e409463f9fabeadb0f26764e508b8f2a349a53875959f5efdb568e2",
+   "q29": "f3cd4cf56b5bdf0351c16a4e550064724bc42c66f9d2ec750ad0e1673186df37",
+   "q30": "4aae513b9588493610aa5197f708da9c83470a8e97e9f039365a138af0431a39",
+   "q31": "c821c0d4838e1429a18883a222ec5dce29bcef32db540c5a22737fb1d78ef2e7",
+   "q32": "57e403805c29dfed59aa9dba14797709f895f773868377f35306a8eb7a0730ca"
+  },
+  "schema_sha256": "9b2c93fadbec88d578d2161f1751a5d9949c179ef069208655fbeb41dc30ba89",
+  "tool": "lineage-index/1.0"
+ },
+ "queries": {
+  "q01": {
+   "outputs": {
+    "customer_name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q01",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q01",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q01",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q01",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "region": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q01",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 35,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q01",
+         "text": "region"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers"
+   ]
+  },
+  "q02": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q02",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q02",
+         "text": "c.region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q02",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q02",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q02",
+         "text": "c.region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q02",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    },
+    "segment": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q02",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q02",
+         "text": "c.region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 20,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q02",
+         "text": "c.segment"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers"
+   ]
+  },
+  "q03": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 22,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q03",
+         "text": "o.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q03",
+         "text": "o.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q03",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q03",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q03",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q04": {
+   "outputs": {
+    "amt": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q04",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q04",
+         "text": "c.region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q04",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 51,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 23,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q04",
+         "text": "o.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q04",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q04",
+         "text": "c.region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q04",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 51,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q04",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q04",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q05": {
+   "outputs": {
+    "active": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.active"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ]
+    },
+    "category": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.category"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.category"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.name"
+      }
+     ]
+    },
+    "price": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.price"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.price"
+      }
+     ]
+    },
+    "sku": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q05",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "active"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.active"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q05",
+         "text": "products.sku"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.sku"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "products"
+   ]
+  },
+  "q06": {
+   "outputs": {
+    "amt": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 13,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "o.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "created_at": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "c.created_at"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.created_at"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    },
+    "region": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "c.region"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ]
+    },
+    "segment": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q06",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q06",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q06",
+         "text": "c.segment"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q07": {
+   "outputs": {
+    "cnt": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q07",
+         "text": "scan orders"
+        },
+        {
+         "col": 14,
+         "kind": "row",
+         "line": 4,
+         "note": "row-count dependency",
+         "scope": "q07",
+         "text": "COUNT(*)"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q07",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "value",
+         "line": 1,
+         "note": "row-count dependency",
+         "scope": "q07",
+         "text": "COUNT(*)"
+        }
+       ],
+       "kind": "value",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ]
+    },
+    "customer_id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q07",
+         "text": "scan orders"
+        },
+        {
+         "col": 14,
+         "kind": "row",
+         "line": 4,
+         "note": "row-count dependency",
+         "scope": "q07",
+         "text": "COUNT(*)"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q07",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q07",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    },
+    "total": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q07",
+         "text": "scan orders"
+        },
+        {
+         "col": 14,
+         "kind": "row",
+         "line": 4,
+         "note": "row-count dependency",
+         "scope": "q07",
+         "text": "COUNT(*)"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q07",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q07",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q08": {
+   "outputs": {
+    "avg_amt": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q08",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q08",
+         "text": "status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q08",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "n": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q08",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q08",
+         "text": "status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "row-count dependency",
+         "scope": "q08",
+         "text": "COUNT(*)"
+        }
+       ],
+       "kind": "value",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q09": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        },
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        },
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q09",
+         "text": "id"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q09.cte_eu",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        },
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        },
+        {
+         "col": 49,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q09",
+         "text": "name"
+        },
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q09.cte_eu",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers"
+   ]
+  },
+  "q10": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q10.cte_customers",
+         "text": "scan customers"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q10.cte_customers",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 6,
+         "note": "",
+         "scope": "q10",
+         "text": "c.region"
+        },
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "segment"
+        },
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q10",
+         "text": "c.id"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "region": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q10.cte_customers",
+         "text": "scan customers"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q10.cte_customers",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 6,
+         "note": "",
+         "scope": "q10",
+         "text": "c.region"
+        },
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "segment"
+        },
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q10",
+         "text": "c.region"
+        },
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q10.cte_customers",
+         "text": "region"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers"
+   ]
+  },
+  "q11": {
+   "outputs": {
+    "total": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 7,
+         "note": "",
+         "scope": "q11",
+         "text": "total"
+        },
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "y"
+        },
+        {
+         "col": 23,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 45,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "customer_id"
+        },
+        {
+         "col": 45,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "value",
+         "line": 7,
+         "note": "",
+         "scope": "q11",
+         "text": "total"
+        },
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "y"
+        },
+        {
+         "col": 23,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "x": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        },
+        {
+         "col": 35,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q11.cte_b.cte_a",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 7,
+         "note": "",
+         "scope": "q11",
+         "text": "total"
+        },
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "y"
+        },
+        {
+         "col": 23,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 45,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "customer_id"
+        },
+        {
+         "col": 45,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 7,
+         "note": "",
+         "scope": "q11",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 5,
+         "note": "",
+         "scope": "q11.cte_b",
+         "text": "x"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q11.cte_b.cte_a",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q12": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q12",
+         "text": "s.*"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q12.s",
+         "text": "t.*"
+        },
+        {
+         "col": 21,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q12.s.cte_t",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "status": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q12.s.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q12",
+         "text": "s.*"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q12.s",
+         "text": "t.*"
+        },
+        {
+         "col": 25,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q12.s.cte_t",
+         "text": "status"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q13": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q13",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q13",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "total": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q13",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 3,
+         "kind": "value",
+         "line": 2,
+         "note": "via subquery",
+         "scope": "q13",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 64,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q13.sub1",
+         "text": "c.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q13.sub1",
+         "text": ""
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 3,
+         "kind": "value",
+         "line": 2,
+         "note": "via subquery",
+         "scope": "q13",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q13.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "value",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 3,
+         "kind": "value",
+         "line": 2,
+         "note": "via subquery",
+         "scope": "q13",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 15,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q13.sub1",
+         "text": "o.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 3,
+         "kind": "value",
+         "line": 2,
+         "note": "via subquery",
+         "scope": "q13",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 2,
+         "note": "",
+         "scope": "q13.sub1",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q14": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q14",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 25,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "c.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q14.sub1",
+         "text": ""
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 17,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q14.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 34,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q14",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q14",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 25,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "c.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q14.sub1",
+         "text": ""
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 17,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q14.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q14",
+         "text": "Exists"
+        },
+        {
+         "col": 34,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q14.sub1",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q14",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q15": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 38,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q15.sub1",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 30,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q15.sub1",
+         "text": "id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 54,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q15.sub1",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q15",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q15",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q15",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 38,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q15.sub1",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 30,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q15.sub1",
+         "text": "id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 19,
+         "kind": "row",
+         "line": 3,
+         "note": "via subquery",
+         "scope": "q15",
+         "text": "InOp"
+        },
+        {
+         "col": 54,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q15.sub1",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q15",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q15",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q15",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q16": {
+   "outputs": {
+    "cid": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q16.s",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q16.s",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 7,
+         "note": "",
+         "scope": "q16",
+         "text": "s.total"
+        },
+        {
+         "col": 34,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q16.s",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q16.s",
+         "text": "customer_id"
+        },
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q16.s",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q16",
+         "text": "s.cid"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q16.s",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    },
+    "total": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q16.s",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q16.s",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 7,
+         "note": "",
+         "scope": "q16",
+         "text": "s.total"
+        },
+        {
+         "col": 34,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q16.s",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q16.s",
+         "text": "customer_id"
+        },
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q16.s",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 15,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q16",
+         "text": "s.total"
+        },
+        {
+         "col": 34,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q16.s",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q17": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 22,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q17",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q17",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q17",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q17",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 22,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q17",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q17",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q17",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q17",
+         "text": "sku"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.sku"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "products"
+   ]
+  },
+  "q18": {
+   "outputs": {
+    "status": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q18",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        },
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 4,
+         "note": "ORDER BY with LIMIT decides row membership",
+         "scope": "q18",
+         "text": "status"
+        },
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      },
+      {
+       "evidence": [
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q18",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        },
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 4,
+         "note": "ORDER BY with LIMIT decides row membership",
+         "scope": "q18",
+         "text": "status"
+        },
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q18",
+         "text": "status"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "shipments.status"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders",
+    "shipments"
+   ]
+  },
+  "q19": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q19",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q19",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "size": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q19",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 13,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q19",
+         "text": "amount"
+        },
+        {
+         "col": 42,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q19",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q20": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q20",
+         "text": "scan orders"
+        },
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q20",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "b.customer_id"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "a.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 55,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "b.id"
+        },
+        {
+         "col": 62,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "a.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q20",
+         "text": "a.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "other_id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q20",
+         "text": "scan orders"
+        },
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q20",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "b.customer_id"
+        },
+        {
+         "col": 37,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "a.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 55,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "b.id"
+        },
+        {
+         "col": 62,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q20",
+         "text": "a.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q20",
+         "text": "b.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q21": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q21",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q21",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "cust_total": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q21",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q21",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 34,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q21",
+         "text": "customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q21",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q21",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "rn": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q21",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "value",
+         "line": 3,
+         "note": "",
+         "scope": "q21",
+         "text": "ordered_at"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q22": {
+   "outputs": {
+    "region": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 38,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q22",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 25,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "region"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.region"
+      }
+     ]
+    },
+    "segment": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 38,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q22",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "region"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.region"
+      },
+      {
+       "evidence": [
+        {
+         "col": 25,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 25,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q22",
+         "text": "segment"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.segment"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers"
+   ]
+  },
+  "q23": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q23",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 40,
+         "kind": "row",
+         "line": 1,
+         "note": "ORDER BY with LIMIT decides row membership",
+         "scope": "q23",
+         "text": "amount"
+        },
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q23",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q23",
+         "text": "amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q23",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 40,
+         "kind": "row",
+         "line": 1,
+         "note": "ORDER BY with LIMIT decides row membership",
+         "scope": "q23",
+         "text": "amount"
+        },
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q23",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q23",
+         "text": "id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q24": {
+   "outputs": {
+    "category": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 28,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.product_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.product_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q24",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q24",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 6,
+         "note": "",
+         "scope": "q24",
+         "text": "p.category"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.category"
+      },
+      {
+       "evidence": [
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q24",
+         "text": "p.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q24",
+         "text": "p.category"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.category"
+      }
+     ]
+    },
+    "revenue": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 28,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 30,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.product_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.product_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q24",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q24",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q24",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 6,
+         "note": "",
+         "scope": "q24",
+         "text": "p.category"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.category"
+      },
+      {
+       "evidence": [
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q24",
+         "text": "p.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.qty"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "order_items.qty"
+      },
+      {
+       "evidence": [
+        {
+         "col": 33,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q24",
+         "text": "oi.unit_price"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "order_items.unit_price"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "order_items",
+    "orders",
+    "products"
+   ]
+  },
+  "q25": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q25",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q25",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q25",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q25",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q25",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q25",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q25",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q25",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q25",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q25",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q25",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q25",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q26": {
+   "outputs": {
+    "carrier": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q26",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q26",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q26",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 34,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q26",
+         "text": "s.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.order_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q26",
+         "text": "s.carrier"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "shipments.carrier"
+      }
+     ]
+    },
+    "order_id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q26",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q26",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q26",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 34,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q26",
+         "text": "s.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.order_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q26",
+         "text": "o.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "orders",
+    "shipments"
+   ]
+  },
+  "q27": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "t.*"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "customer_id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "t.*"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "t.*"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 13,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    },
+    "ordered_at": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "t.*"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.ordered_at"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      }
+     ]
+    },
+    "status": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q27",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        },
+        {
+         "col": 26,
+         "kind": "row",
+         "line": 1,
+         "note": "table scan row set",
+         "scope": "q27.cte_t",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        },
+        {
+         "col": 39,
+         "kind": "row",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q27",
+         "text": "t.customer_id"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q27",
+         "text": "t.*"
+        },
+        {
+         "col": 19,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q27.cte_t",
+         "text": "orders.status"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "orders"
+   ]
+  },
+  "q28": {
+   "outputs": {
+    "discounted_qty": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q28",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q28",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q28",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 41,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q28",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q28",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 17,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q28",
+         "text": "oi.discount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "order_items.discount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 38,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q28",
+         "text": "oi.qty"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "order_items.qty"
+      }
+     ]
+    },
+    "status": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q28",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q28",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q28",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 41,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q28",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 10,
+         "kind": "row",
+         "line": 5,
+         "note": "",
+         "scope": "q28",
+         "text": "o.status"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q28",
+         "text": "o.status"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "order_items",
+    "orders"
+   ]
+  },
+  "q29": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q29",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 36,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q29",
+         "text": "c.segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q29",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q29",
+         "text": "p.category"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.category"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q29",
+         "text": "c.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q29",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 36,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q29",
+         "text": "c.segment"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.segment"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q29",
+         "text": "scan products"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "products.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q29",
+         "text": "p.category"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "products.category"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q29",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      },
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q29",
+         "text": "name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "products.name"
+      }
+     ]
+    }
+   },
+   "reports": [
+    {
+     "col": 14,
+     "conservative": "depends on ALL candidate columns",
+     "kind": "ambiguous",
+     "line": 1,
+     "message": "unqualified column 'name' matches 2 sources in scope: customers.name, products.name"
+    }
+   ],
+   "tables": [
+    "customers",
+    "products"
+   ]
+  },
+  "q30": {
+   "outputs": {
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan metrics"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "m.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q30",
+         "text": "m.id"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "metrics.id"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan metrics"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "m.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 21,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q30",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    },
+    "val": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 2,
+         "note": "table scan row set",
+         "scope": "q30",
+         "text": "scan metrics"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 3,
+         "note": "",
+         "scope": "q30",
+         "text": "m.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "metrics.id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 14,
+         "kind": "value",
+         "line": 1,
+         "note": "",
+         "scope": "q30",
+         "text": "m.val"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "metrics.val"
+      }
+     ]
+    }
+   },
+   "reports": [
+    {
+     "col": 6,
+     "conservative": "references to metrics.<col> are taken as stated; unqualified references widen to metrics.*",
+     "kind": "missing_table",
+     "line": 2,
+     "message": "table 'metrics' is not in the schema; its columns are unknown"
+    }
+   ],
+   "tables": [
+    "customers",
+    "metrics"
+   ]
+  },
+  "q31": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "amount"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "amount"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "amount"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "amount"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      },
+      {
+       "evidence": [
+        {
+         "col": 12,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "amount"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ]
+    },
+    "id": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      },
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.ordered_at"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q31",
+         "text": "id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 1,
+         "note": "conservative",
+         "scope": "q31",
+         "text": "RECURSIVE CTE r"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.status"
+      }
+     ]
+    }
+   },
+   "reports": [
+    {
+     "col": 16,
+     "conservative": "its output columns depend (value+row) on all columns of: orders",
+     "kind": "unsupported",
+     "line": 1,
+     "message": "recursive CTE 'r' is not supported"
+    }
+   ],
+   "tables": [
+    "orders"
+   ]
+  },
+  "q32": {
+   "outputs": {
+    "amount": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 8,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 17,
+         "kind": "row",
+         "line": 11,
+         "note": "table scan row set",
+         "scope": "q32.sub1",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.qty"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.qty"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.customer_id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.id"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        },
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "bo.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q32.sub1",
+         "text": ""
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 9,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 29,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "s.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.order_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.amount"
+        },
+        {
+         "col": 31,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "orders.amount"
+      }
+     ]
+    },
+    "carrier": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 8,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 17,
+         "kind": "row",
+         "line": 11,
+         "note": "table scan row set",
+         "scope": "q32.sub1",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.qty"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.qty"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.customer_id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.id"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        },
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "bo.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q32.sub1",
+         "text": ""
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 9,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 29,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "s.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.order_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 27,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q32",
+         "text": "s.carrier"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "shipments.carrier"
+      }
+     ]
+    },
+    "name": {
+     "row": [
+      {
+       "evidence": [
+        {
+         "col": 6,
+         "kind": "row",
+         "line": 8,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan customers"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "customers.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 24,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "c.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "customers.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 17,
+         "kind": "row",
+         "line": 11,
+         "note": "table scan row set",
+         "scope": "q32.sub1",
+         "text": "scan order_items"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "order_items.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.order_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 33,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "oi.qty"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "order_items.qty"
+      },
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        },
+        {
+         "col": 8,
+         "kind": "row",
+         "line": 3,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders",
+         "text": "scan orders"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 48,
+         "kind": "row",
+         "line": 4,
+         "note": "table scan row set",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "scan orders"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "orders.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        },
+        {
+         "col": 9,
+         "kind": "row",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.amount"
+        },
+        {
+         "col": 20,
+         "kind": "row",
+         "line": 4,
+         "note": "via subquery",
+         "scope": "q32.cte_big_orders",
+         "text": "ScalarSubq"
+        },
+        {
+         "col": 32,
+         "kind": "value",
+         "line": 4,
+         "note": "",
+         "scope": "q32.cte_big_orders.sub1",
+         "text": "o2.amount"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.amount"
+      },
+      {
+       "evidence": [
+        {
+         "col": 31,
+         "kind": "row",
+         "line": 8,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.customer_id"
+        },
+        {
+         "col": 16,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.customer_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.customer_id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 42,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "bo.id"
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        },
+        {
+         "col": 7,
+         "kind": "row",
+         "line": 10,
+         "note": "via subquery",
+         "scope": "q32",
+         "text": "Exists"
+        },
+        {
+         "col": 23,
+         "kind": "row",
+         "line": 12,
+         "note": "",
+         "scope": "q32.sub1",
+         "text": "bo.id"
+        },
+        {
+         "col": 0,
+         "kind": "row",
+         "line": 0,
+         "note": "correlated reference",
+         "scope": "q32.sub1",
+         "text": ""
+        },
+        {
+         "col": 10,
+         "kind": "value",
+         "line": 2,
+         "note": "",
+         "scope": "q32.cte_big_orders",
+         "text": "o.id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "orders.id"
+      },
+      {
+       "evidence": [
+        {
+         "col": 11,
+         "kind": "row",
+         "line": 9,
+         "note": "table scan row set",
+         "scope": "q32",
+         "text": "scan shipments"
+        }
+       ],
+       "kind": "row",
+       "rows_only": true,
+       "source": "shipments.*"
+      },
+      {
+       "evidence": [
+        {
+         "col": 29,
+         "kind": "row",
+         "line": 9,
+         "note": "",
+         "scope": "q32",
+         "text": "s.order_id"
+        }
+       ],
+       "kind": "row",
+       "rows_only": false,
+       "source": "shipments.order_id"
+      }
+     ],
+     "value": [
+      {
+       "evidence": [
+        {
+         "col": 8,
+         "kind": "value",
+         "line": 6,
+         "note": "",
+         "scope": "q32",
+         "text": "c.name"
+        }
+       ],
+       "kind": "value",
+       "rows_only": false,
+       "source": "customers.name"
+      }
+     ]
+    }
+   },
+   "reports": [],
+   "tables": [
+    "customers",
+    "order_items",
+    "orders",
+    "shipments"
+   ]
+  }
+ }
+}

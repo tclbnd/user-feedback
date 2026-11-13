@@ -1,0 +1,684 @@
+{
+ "affected": {
+  "q03": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 22,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q03",
+      "text": "o.amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q04": {
+   "amt": {
+    "evidence": [
+     {
+      "col": 23,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q04",
+      "text": "o.amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q06": {
+   "amt": {
+    "evidence": [
+     {
+      "col": 13,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q06",
+      "text": "o.amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q07": {
+   "total": {
+    "evidence": [
+     {
+      "col": 42,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q07",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q08": {
+   "avg_amt": {
+    "evidence": [
+     {
+      "col": 27,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q08",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q11": {
+   "total": {
+    "evidence": [
+     {
+      "col": 11,
+      "kind": "value",
+      "line": 7,
+      "note": "",
+      "scope": "q11",
+      "text": "total"
+     },
+     {
+      "col": 17,
+      "kind": "value",
+      "line": 5,
+      "note": "",
+      "scope": "q11.cte_b",
+      "text": "y"
+     },
+     {
+      "col": 23,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q11.cte_b.cte_a",
+      "text": "amount"
+     },
+     {
+      "col": 30,
+      "kind": "row",
+      "line": 7,
+      "note": "",
+      "scope": "q11",
+      "text": "total"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   },
+   "x": {
+    "evidence": [
+     {
+      "col": 30,
+      "kind": "row",
+      "line": 7,
+      "note": "",
+      "scope": "q11",
+      "text": "total"
+     },
+     {
+      "col": 17,
+      "kind": "value",
+      "line": 5,
+      "note": "",
+      "scope": "q11.cte_b",
+      "text": "y"
+     },
+     {
+      "col": 23,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q11.cte_b.cte_a",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   }
+  },
+  "q13": {
+   "total": {
+    "evidence": [
+     {
+      "col": 3,
+      "kind": "value",
+      "line": 2,
+      "note": "via subquery",
+      "scope": "q13",
+      "text": "ScalarSubq"
+     },
+     {
+      "col": 15,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q13.sub1",
+      "text": "o.amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q15": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 12,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q15",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q16": {
+   "cid": {
+    "evidence": [
+     {
+      "col": 7,
+      "kind": "row",
+      "line": 7,
+      "note": "",
+      "scope": "q16",
+      "text": "s.total"
+     },
+     {
+      "col": 34,
+      "kind": "value",
+      "line": 3,
+      "note": "",
+      "scope": "q16.s",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "total": {
+    "evidence": [
+     {
+      "col": 15,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q16",
+      "text": "s.total"
+     },
+     {
+      "col": 34,
+      "kind": "value",
+      "line": 3,
+      "note": "",
+      "scope": "q16.s",
+      "text": "amount"
+     },
+     {
+      "col": 7,
+      "kind": "row",
+      "line": 7,
+      "note": "",
+      "scope": "q16",
+      "text": "s.total"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   }
+  },
+  "q19": {
+   "size": {
+    "evidence": [
+     {
+      "col": 13,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q19",
+      "text": "amount"
+     },
+     {
+      "col": 42,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q19",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q21": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 12,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q21",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   },
+   "cust_total": {
+    "evidence": [
+     {
+      "col": 7,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q21",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "value"
+    ]
+   }
+  },
+  "q23": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 12,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q23",
+      "text": "amount"
+     },
+     {
+      "col": 40,
+      "kind": "row",
+      "line": 1,
+      "note": "ORDER BY with LIMIT decides row membership",
+      "scope": "q23",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   },
+   "id": {
+    "evidence": [
+     {
+      "col": 40,
+      "kind": "row",
+      "line": 1,
+      "note": "ORDER BY with LIMIT decides row membership",
+      "scope": "q23",
+      "text": "amount"
+     },
+     {
+      "col": 12,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q23",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   }
+  },
+  "q27": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 8,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q27",
+      "text": "t.*"
+     },
+     {
+      "col": 19,
+      "kind": "value",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "orders.amount"
+     },
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   },
+   "customer_id": {
+    "evidence": [
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "id": {
+    "evidence": [
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "name": {
+    "evidence": [
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "ordered_at": {
+    "evidence": [
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "status": {
+    "evidence": [
+     {
+      "col": 39,
+      "kind": "row",
+      "line": 1,
+      "note": "",
+      "scope": "q27.cte_t",
+      "text": "amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   }
+  },
+  "q31": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 12,
+      "kind": "value",
+      "line": 6,
+      "note": "",
+      "scope": "q31",
+      "text": "amount"
+     },
+     {
+      "col": 16,
+      "kind": "value",
+      "line": 1,
+      "note": "conservative",
+      "scope": "q31",
+      "text": "RECURSIVE CTE r"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   },
+   "id": {
+    "evidence": [
+     {
+      "col": 8,
+      "kind": "value",
+      "line": 6,
+      "note": "",
+      "scope": "q31",
+      "text": "id"
+     },
+     {
+      "col": 16,
+      "kind": "value",
+      "line": 1,
+      "note": "conservative",
+      "scope": "q31",
+      "text": "RECURSIVE CTE r"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   }
+  },
+  "q32": {
+   "amount": {
+    "evidence": [
+     {
+      "col": 16,
+      "kind": "value",
+      "line": 6,
+      "note": "",
+      "scope": "q32",
+      "text": "bo.amount"
+     },
+     {
+      "col": 31,
+      "kind": "value",
+      "line": 2,
+      "note": "",
+      "scope": "q32.cte_big_orders",
+      "text": "o.amount"
+     },
+     {
+      "col": 9,
+      "kind": "row",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders",
+      "text": "o.amount"
+     },
+     {
+      "col": 20,
+      "kind": "row",
+      "line": 4,
+      "note": "via subquery",
+      "scope": "q32.cte_big_orders",
+      "text": "ScalarSubq"
+     },
+     {
+      "col": 32,
+      "kind": "value",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders.sub1",
+      "text": "o2.amount"
+     }
+    ],
+    "kinds": [
+     "row",
+     "value"
+    ]
+   },
+   "carrier": {
+    "evidence": [
+     {
+      "col": 9,
+      "kind": "row",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders",
+      "text": "o.amount"
+     },
+     {
+      "col": 20,
+      "kind": "row",
+      "line": 4,
+      "note": "via subquery",
+      "scope": "q32.cte_big_orders",
+      "text": "ScalarSubq"
+     },
+     {
+      "col": 32,
+      "kind": "value",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders.sub1",
+      "text": "o2.amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   },
+   "name": {
+    "evidence": [
+     {
+      "col": 9,
+      "kind": "row",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders",
+      "text": "o.amount"
+     },
+     {
+      "col": 20,
+      "kind": "row",
+      "line": 4,
+      "note": "via subquery",
+      "scope": "q32.cte_big_orders",
+      "text": "ScalarSubq"
+     },
+     {
+      "col": 32,
+      "kind": "value",
+      "line": 4,
+      "note": "",
+      "scope": "q32.cte_big_orders.sub1",
+      "text": "o2.amount"
+     }
+    ],
+    "kinds": [
+     "row"
+    ]
+   }
+  }
+ },
+ "changes": [
+  {
+   "col": "amount",
+   "kind": "column",
+   "table": "orders"
+  }
+ ],
+ "manifest": {
+  "query_count": 32,
+  "query_sha256": {
+   "q01": "d90a0405e6e2b0d3f77b8ee0da5fdf2ea3ead5e6a7a9b81407b9f110e59a9379",
+   "q02": "0c0ecf50def6cb7af6d3422016c2151b90ec539a61f4e8f1e2ae340820a172de",
+   "q03": "45c1b14a59f6e83b730b13c64736647d8a2ee9bbf6b802cb9c5efa21d89ebd25",
+   "q04": "511e14300716067bffffbc912f9b68eb3c0d4b6ca7ab6180b12fc92826521ebb",
+   "q05": "184d25cd1f80706d6d3e4d04b6ef8af1a557ecf94278999a5979dbad94efcb13",
+   "q06": "a336fa520b7db24089a977548a4b8f39e1c6483b9f6e0f76619ead3bc1c307ca",
+   "q07": "70f902cf970a0e5f5f74dfb478485ab62057acf2c81921f4552c6b493804cb51",
+   "q08": "7e7bd0726d78731e466de49676a8c6a441746f225b4ea13e8c9d5e5ac27ba4e2",
+   "q09": "1e812ef75c2c9448e2224a551fbbcdc66fc5c9b80b2d9a0e9f8056e140e4516d",
+   "q10": "9d741fcb996bdec5ef1836f14af579fcfa9377f1711702a0412d2f99696f9101",
+   "q11": "34f944fbce01b25f0f71bdbecbc10ea2386dd2431ef461f0968ac4521f561fee",
+   "q12": "b999835e411809d171d26db295f3f449320d3b3521acf46ab28e4ec793e04848",
+   "q13": "7d607faca62b283886a094ff6a54a386c82accf2bef105f5d4d64b1e33375e72",
+   "q14": "8cda238e180a96ec7462cadf435367d1637698a3b55f36cf4adad1bbb8b08fa7",
+   "q15": "a38e99454702726faec3c457a04ee721a39ecf7c9f1e21705909dae5df8649ec",
+   "q16": "b44b6b804bae79acbdcd2b7cd37dc2e27d981adfee50f25eb55ccc09d5ebb73a",
+   "q17": "dcb63c41de77f326983a5a578c49c7d9bbaefdd1c321b984b11cb86e874b0500",
+   "q18": "018299d16f7db7784eb53327b639e0310a0e1552cd20f69871ea81258da99afb",
+   "q19": "5473de2d4d46d1b1797379dba12265665f9ee9b95cc5caa92930c00eee5a4efa",
+   "q20": "90710b5a51080bf969ec9c12584fe2c4d05dd6cee53287c1e3be19d727c224a3",
+   "q21": "4f8783343d8970e0c4197472ddf34ac208a3cf31cada3006b94daba43ea628f5",
+   "q22": "da3f12aed4d39d9de1be2596bec1f0dfbbb9c3b1ac4ca8d3b183587cdd667727",
+   "q23": "9cd2772aba259e404214e54d76e31daf228357d193fab60b64bed8f0e8ef1ce8",
+   "q24": "a22fe86941029794c80d169126010a625f8824c0f775ccecc54596e275a01148",
+   "q25": "e10b548ef7db8f8ca36d44596ba8f285916c2e49d6c561e26a89286d570d764d",
+   "q26": "1d30bc55601e96cebcf3981e297e80547c063867696acebd367b5b9a127d2b59",
+   "q27": "71a421d1745b2a97047513d55fec0ffecd47c1174ac69724d59c901ebd76b5a0",
+   "q28": "807ea2855e409463f9fabeadb0f26764e508b8f2a349a53875959f5efdb568e2",
+   "q29": "f3cd4cf56b5bdf0351c16a4e550064724bc42c66f9d2ec750ad0e1673186df37",
+   "q30": "4aae513b9588493610aa5197f708da9c83470a8e97e9f039365a138af0431a39",
+   "q31": "c821c0d4838e1429a18883a222ec5dce29bcef32db540c5a22737fb1d78ef2e7",
+   "q32": "57e403805c29dfed59aa9dba14797709f895f773868377f35306a8eb7a0730ca"
+  },
+  "schema_sha256": "9b2c93fadbec88d578d2161f1751a5d9949c179ef069208655fbeb41dc30ba89",
+  "tool": "lineage-index/1.0"
+ }
+}

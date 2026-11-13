@@ -1,0 +1,1105 @@
+{
+ "q01": {
+  "executable": true,
+  "outputs": {
+   "customer_name": {
+    "row": [
+     "customers.*"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "region": {
+    "row": [
+     "customers.*"
+    ],
+    "value": [
+     "customers.region"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q02": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.region"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.region"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   },
+   "segment": {
+    "row": [
+     "customers.*",
+     "customers.region"
+    ],
+    "value": [
+     "customers.segment"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q03": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q04": {
+  "executable": true,
+  "outputs": {
+   "amt": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "customers.region",
+     "orders.*",
+     "orders.customer_id",
+     "orders.status"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "customers.region",
+     "orders.*",
+     "orders.customer_id",
+     "orders.status"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q05": {
+  "executable": true,
+  "outputs": {
+   "active": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.active"
+    ]
+   },
+   "category": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.category"
+    ]
+   },
+   "id": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.name"
+    ]
+   },
+   "price": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.price"
+    ]
+   },
+   "sku": {
+    "row": [
+     "products.*",
+     "products.active"
+    ],
+    "value": [
+     "products.sku"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q06": {
+  "executable": true,
+  "outputs": {
+   "amt": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "created_at": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.created_at"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   },
+   "region": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.region"
+    ]
+   },
+   "segment": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.segment"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q07": {
+  "executable": true,
+  "outputs": {
+   "cnt": {
+    "row": [
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.*"
+    ]
+   },
+   "customer_id": {
+    "row": [
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.customer_id"
+    ]
+   },
+   "total": {
+    "row": [
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q08": {
+  "executable": true,
+  "outputs": {
+   "avg_amt": {
+    "row": [
+     "orders.*",
+     "orders.status"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "n": {
+    "row": [
+     "orders.*",
+     "orders.status"
+    ],
+    "value": [
+     "orders.*"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q09": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.region"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.region"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q10": {
+  "executable": false,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.region",
+     "customers.segment"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "region": {
+    "row": [
+     "customers.*",
+     "customers.region",
+     "customers.segment"
+    ],
+    "value": [
+     "customers.region"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q11": {
+  "executable": true,
+  "outputs": {
+   "total": {
+    "row": [
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "x": {
+    "row": [
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.customer_id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q12": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "status": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.status"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q13": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "total": {
+    "row": [
+     "customers.*"
+    ],
+    "value": [
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q14": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id",
+     "orders.status"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id",
+     "orders.status"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q15": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "customers.region",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "customers.region",
+     "orders.*",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q16": {
+  "executable": true,
+  "outputs": {
+   "cid": {
+    "row": [
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.customer_id"
+    ]
+   },
+   "total": {
+    "row": [
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q17": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "products.*"
+    ],
+    "value": [
+     "customers.id",
+     "products.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "products.*"
+    ],
+    "value": [
+     "customers.name",
+     "products.sku"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q18": {
+  "executable": true,
+  "outputs": {
+   "status": {
+    "row": [
+     "orders.*",
+     "orders.status",
+     "shipments.*",
+     "shipments.status"
+    ],
+    "value": [
+     "orders.status",
+     "shipments.status"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q19": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "size": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q20": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "orders.*",
+     "orders.customer_id",
+     "orders.id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "other_id": {
+    "row": [
+     "orders.*",
+     "orders.customer_id",
+     "orders.id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q21": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "cust_total": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.amount",
+     "orders.customer_id"
+    ]
+   },
+   "id": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "rn": {
+    "row": [
+     "orders.*"
+    ],
+    "value": [
+     "orders.ordered_at"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q22": {
+  "executable": true,
+  "outputs": {
+   "region": {
+    "row": [
+     "customers.*",
+     "customers.region",
+     "customers.segment"
+    ],
+    "value": [
+     "customers.region"
+    ]
+   },
+   "segment": {
+    "row": [
+     "customers.*",
+     "customers.region",
+     "customers.segment"
+    ],
+    "value": [
+     "customers.segment"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q23": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "orders.*",
+     "orders.amount"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "id": {
+    "row": [
+     "orders.*",
+     "orders.amount"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q24": {
+  "executable": true,
+  "outputs": {
+   "category": {
+    "row": [
+     "order_items.*",
+     "order_items.order_id",
+     "order_items.product_id",
+     "orders.*",
+     "orders.id",
+     "orders.status",
+     "products.*",
+     "products.category",
+     "products.id"
+    ],
+    "value": [
+     "products.category"
+    ]
+   },
+   "revenue": {
+    "row": [
+     "order_items.*",
+     "order_items.order_id",
+     "order_items.product_id",
+     "orders.*",
+     "orders.id",
+     "orders.status",
+     "products.*",
+     "products.category",
+     "products.id"
+    ],
+    "value": [
+     "order_items.qty",
+     "order_items.unit_price"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q25": {
+  "executable": true,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id",
+     "orders.id"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.customer_id",
+     "orders.id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q26": {
+  "executable": true,
+  "outputs": {
+   "carrier": {
+    "row": [
+     "orders.*",
+     "orders.id",
+     "shipments.*",
+     "shipments.order_id"
+    ],
+    "value": [
+     "shipments.carrier"
+    ]
+   },
+   "order_id": {
+    "row": [
+     "orders.*",
+     "orders.id",
+     "shipments.*",
+     "shipments.order_id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q27": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "customer_id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.customer_id"
+    ]
+   },
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   },
+   "ordered_at": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.ordered_at"
+    ]
+   },
+   "status": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id"
+    ],
+    "value": [
+     "orders.status"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q28": {
+  "executable": true,
+  "outputs": {
+   "discounted_qty": {
+    "row": [
+     "order_items.*",
+     "order_items.order_id",
+     "orders.*",
+     "orders.id",
+     "orders.status"
+    ],
+    "value": [
+     "order_items.discount",
+     "order_items.qty"
+    ]
+   },
+   "status": {
+    "row": [
+     "order_items.*",
+     "order_items.order_id",
+     "orders.*",
+     "orders.id",
+     "orders.status"
+    ],
+    "value": [
+     "orders.status"
+    ]
+   }
+  },
+  "reports": []
+ },
+ "q29": {
+  "executable": false,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.segment",
+     "products.*",
+     "products.category"
+    ],
+    "value": [
+     "customers.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.segment",
+     "products.*",
+     "products.category"
+    ],
+    "value": [
+     "customers.name",
+     "products.name"
+    ]
+   }
+  },
+  "reports": [
+   {
+    "col": 14,
+    "kind": "ambiguous",
+    "line": 1
+   }
+  ]
+ },
+ "q30": {
+  "executable": false,
+  "outputs": {
+   "id": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "metrics.*",
+     "metrics.id"
+    ],
+    "value": [
+     "metrics.id"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "metrics.*",
+     "metrics.id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   },
+   "val": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "metrics.*",
+     "metrics.id"
+    ],
+    "value": [
+     "metrics.val"
+    ]
+   }
+  },
+  "reports": [
+   {
+    "col": 6,
+    "kind": "missing_table",
+    "line": 2
+   }
+  ]
+ },
+ "q31": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "orders.ordered_at",
+     "orders.status"
+    ],
+    "value": [
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "orders.ordered_at",
+     "orders.status"
+    ]
+   },
+   "id": {
+    "row": [
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "orders.ordered_at",
+     "orders.status"
+    ],
+    "value": [
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "orders.ordered_at",
+     "orders.status"
+    ]
+   }
+  },
+  "reports": [
+   {
+    "col": 16,
+    "kind": "unsupported",
+    "line": 1
+   }
+  ]
+ },
+ "q32": {
+  "executable": true,
+  "outputs": {
+   "amount": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "order_items.*",
+     "order_items.order_id",
+     "order_items.qty",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "shipments.*",
+     "shipments.order_id"
+    ],
+    "value": [
+     "orders.amount"
+    ]
+   },
+   "carrier": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "order_items.*",
+     "order_items.order_id",
+     "order_items.qty",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "shipments.*",
+     "shipments.order_id"
+    ],
+    "value": [
+     "shipments.carrier"
+    ]
+   },
+   "name": {
+    "row": [
+     "customers.*",
+     "customers.id",
+     "order_items.*",
+     "order_items.order_id",
+     "order_items.qty",
+     "orders.*",
+     "orders.amount",
+     "orders.customer_id",
+     "orders.id",
+     "shipments.*",
+     "shipments.order_id"
+    ],
+    "value": [
+     "customers.name"
+    ]
+   }
+  },
+  "reports": []
+ }
+}

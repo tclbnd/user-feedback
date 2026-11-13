@@ -1,0 +1,2617 @@
+{
+ "failures": [],
+ "manifest": {
+  "query_count": 32,
+  "query_sha256": {
+   "q01": "d90a0405e6e2b0d3f77b8ee0da5fdf2ea3ead5e6a7a9b81407b9f110e59a9379",
+   "q02": "0c0ecf50def6cb7af6d3422016c2151b90ec539a61f4e8f1e2ae340820a172de",
+   "q03": "45c1b14a59f6e83b730b13c64736647d8a2ee9bbf6b802cb9c5efa21d89ebd25",
+   "q04": "511e14300716067bffffbc912f9b68eb3c0d4b6ca7ab6180b12fc92826521ebb",
+   "q05": "184d25cd1f80706d6d3e4d04b6ef8af1a557ecf94278999a5979dbad94efcb13",
+   "q06": "a336fa520b7db24089a977548a4b8f39e1c6483b9f6e0f76619ead3bc1c307ca",
+   "q07": "70f902cf970a0e5f5f74dfb478485ab62057acf2c81921f4552c6b493804cb51",
+   "q08": "7e7bd0726d78731e466de49676a8c6a441746f225b4ea13e8c9d5e5ac27ba4e2",
+   "q09": "1e812ef75c2c9448e2224a551fbbcdc66fc5c9b80b2d9a0e9f8056e140e4516d",
+   "q10": "9d741fcb996bdec5ef1836f14af579fcfa9377f1711702a0412d2f99696f9101",
+   "q11": "34f944fbce01b25f0f71bdbecbc10ea2386dd2431ef461f0968ac4521f561fee",
+   "q12": "b999835e411809d171d26db295f3f449320d3b3521acf46ab28e4ec793e04848",
+   "q13": "7d607faca62b283886a094ff6a54a386c82accf2bef105f5d4d64b1e33375e72",
+   "q14": "8cda238e180a96ec7462cadf435367d1637698a3b55f36cf4adad1bbb8b08fa7",
+   "q15": "a38e99454702726faec3c457a04ee721a39ecf7c9f1e21705909dae5df8649ec",
+   "q16": "b44b6b804bae79acbdcd2b7cd37dc2e27d981adfee50f25eb55ccc09d5ebb73a",
+   "q17": "dcb63c41de77f326983a5a578c49c7d9bbaefdd1c321b984b11cb86e874b0500",
+   "q18": "018299d16f7db7784eb53327b639e0310a0e1552cd20f69871ea81258da99afb",
+   "q19": "5473de2d4d46d1b1797379dba12265665f9ee9b95cc5caa92930c00eee5a4efa",
+   "q20": "90710b5a51080bf969ec9c12584fe2c4d05dd6cee53287c1e3be19d727c224a3",
+   "q21": "4f8783343d8970e0c4197472ddf34ac208a3cf31cada3006b94daba43ea628f5",
+   "q22": "da3f12aed4d39d9de1be2596bec1f0dfbbb9c3b1ac4ca8d3b183587cdd667727",
+   "q23": "9cd2772aba259e404214e54d76e31daf228357d193fab60b64bed8f0e8ef1ce8",
+   "q24": "a22fe86941029794c80d169126010a625f8824c0f775ccecc54596e275a01148",
+   "q25": "e10b548ef7db8f8ca36d44596ba8f285916c2e49d6c561e26a89286d570d764d",
+   "q26": "1d30bc55601e96cebcf3981e297e80547c063867696acebd367b5b9a127d2b59",
+   "q27": "71a421d1745b2a97047513d55fec0ffecd47c1174ac69724d59c901ebd76b5a0",
+   "q28": "807ea2855e409463f9fabeadb0f26764e508b8f2a349a53875959f5efdb568e2",
+   "q29": "f3cd4cf56b5bdf0351c16a4e550064724bc42c66f9d2ec750ad0e1673186df37",
+   "q30": "4aae513b9588493610aa5197f708da9c83470a8e97e9f039365a138af0431a39",
+   "q31": "c821c0d4838e1429a18883a222ec5dce29bcef32db540c5a22737fb1d78ef2e7",
+   "q32": "57e403805c29dfed59aa9dba14797709f895f773868377f35306a8eb7a0730ca"
+  },
+  "schema_sha256": "9b2c93fadbec88d578d2161f1751a5d9949c179ef069208655fbeb41dc30ba89",
+  "tool": "lineage-index/1.0"
+ },
+ "mutations": [
+  {
+   "col": "id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "customers.id",
+   "observed": [
+    [
+     "q01",
+     "id"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q13",
+     "id"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q01",
+     "id"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q13",
+     "id"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": "name",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "customers.name",
+   "observed": [
+    [
+     "q01",
+     "customer_name"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q01",
+     "customer_name"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": "region",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "customers.region",
+   "observed": [
+    [
+     "q01",
+     "region"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q22",
+     "region"
+    ]
+   ],
+   "predicted": [
+    [
+     "q01",
+     "region"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q22",
+     "region"
+    ],
+    [
+     "q22",
+     "segment"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": "segment",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "customers.segment",
+   "observed": [
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q22",
+     "segment"
+    ]
+   ],
+   "predicted": [
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q22",
+     "region"
+    ],
+    [
+     "q22",
+     "segment"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": "created_at",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "customers.created_at",
+   "observed": [
+    [
+     "q06",
+     "created_at"
+    ]
+   ],
+   "predicted": [
+    [
+     "q06",
+     "created_at"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": "id",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "events.id",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  },
+  {
+   "col": "customer_id",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "events.customer_id",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  },
+  {
+   "col": "event_type",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "events.event_type",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  },
+  {
+   "col": "payload",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "events.payload",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  },
+  {
+   "col": "ts",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "events.ts",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  },
+  {
+   "col": "order_id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "order_items.order_id",
+   "observed": [
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "order_items"
+  },
+  {
+   "col": "product_id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "order_items.product_id",
+   "observed": [],
+   "predicted": [
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "table": "order_items"
+  },
+  {
+   "col": "qty",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "order_items.qty",
+   "observed": [
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "order_items"
+  },
+  {
+   "col": "unit_price",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "order_items.unit_price",
+   "observed": [],
+   "predicted": [
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "table": "order_items"
+  },
+  {
+   "col": "discount",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "order_items.discount",
+   "observed": [
+    [
+     "q28",
+     "discounted_qty"
+    ]
+   ],
+   "predicted": [
+    [
+     "q28",
+     "discounted_qty"
+    ]
+   ],
+   "table": "order_items"
+  },
+  {
+   "col": "id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "orders.id",
+   "observed": [
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q12",
+     "id"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q19",
+     "id"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "id"
+    ],
+    [
+     "q23",
+     "id"
+    ],
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q12",
+     "id"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q19",
+     "id"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "id"
+    ],
+    [
+     "q23",
+     "id"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": "customer_id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "orders.customer_id",
+   "observed": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q07",
+     "cnt"
+    ],
+    [
+     "q07",
+     "customer_id"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q11",
+     "x"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q16",
+     "cid"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q07",
+     "cnt"
+    ],
+    [
+     "q07",
+     "customer_id"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q11",
+     "x"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q16",
+     "cid"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": "amount",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "orders.amount",
+   "observed": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q21",
+     "amount"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q23",
+     "amount"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q32",
+     "amount"
+    ]
+   ],
+   "predicted": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q11",
+     "x"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q16",
+     "cid"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q19",
+     "size"
+    ],
+    [
+     "q21",
+     "amount"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q23",
+     "amount"
+    ],
+    [
+     "q23",
+     "id"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": "status",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "orders.status",
+   "observed": [
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q08",
+     "n"
+    ],
+    [
+     "q12",
+     "status"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q18",
+     "status"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q28",
+     "status"
+    ]
+   ],
+   "predicted": [
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q08",
+     "n"
+    ],
+    [
+     "q12",
+     "status"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q18",
+     "status"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": "ordered_at",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "orders.ordered_at",
+   "observed": [
+    [
+     "q27",
+     "ordered_at"
+    ]
+   ],
+   "predicted": [
+    [
+     "q21",
+     "rn"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": "id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.id",
+   "observed": [
+    [
+     "q17",
+     "id"
+    ]
+   ],
+   "predicted": [
+    [
+     "q05",
+     "id"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "price",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.price",
+   "observed": [],
+   "predicted": [
+    [
+     "q05",
+     "price"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "active",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.active",
+   "observed": [
+    [
+     "q05",
+     "active"
+    ],
+    [
+     "q05",
+     "category"
+    ],
+    [
+     "q05",
+     "id"
+    ],
+    [
+     "q05",
+     "name"
+    ],
+    [
+     "q05",
+     "price"
+    ],
+    [
+     "q05",
+     "sku"
+    ]
+   ],
+   "predicted": [
+    [
+     "q05",
+     "active"
+    ],
+    [
+     "q05",
+     "category"
+    ],
+    [
+     "q05",
+     "id"
+    ],
+    [
+     "q05",
+     "name"
+    ],
+    [
+     "q05",
+     "price"
+    ],
+    [
+     "q05",
+     "sku"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "sku",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.sku",
+   "observed": [
+    [
+     "q17",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q05",
+     "sku"
+    ],
+    [
+     "q17",
+     "name"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "name",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.name",
+   "observed": [],
+   "predicted": [
+    [
+     "q05",
+     "name"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "category",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "products.category",
+   "observed": [],
+   "predicted": [
+    [
+     "q05",
+     "category"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": "id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "shipments.id",
+   "observed": [],
+   "predicted": [],
+   "table": "shipments"
+  },
+  {
+   "col": "order_id",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "shipments.order_id",
+   "observed": [],
+   "predicted": [
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "shipments"
+  },
+  {
+   "col": "shipped_at",
+   "designed_irrelevant": true,
+   "kind": "column",
+   "mutation": "shipments.shipped_at",
+   "observed": [],
+   "predicted": [],
+   "table": "shipments"
+  },
+  {
+   "col": "carrier",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "shipments.carrier",
+   "observed": [
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q32",
+     "carrier"
+    ]
+   ],
+   "predicted": [
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q32",
+     "carrier"
+    ]
+   ],
+   "table": "shipments"
+  },
+  {
+   "col": "status",
+   "designed_irrelevant": false,
+   "kind": "column",
+   "mutation": "shipments.status",
+   "observed": [
+    [
+     "q18",
+     "status"
+    ]
+   ],
+   "predicted": [
+    [
+     "q18",
+     "status"
+    ]
+   ],
+   "table": "shipments"
+  },
+  {
+   "col": null,
+   "designed_irrelevant": false,
+   "kind": "rows",
+   "mutation": "orders(rows)",
+   "observed": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q07",
+     "cnt"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q08",
+     "n"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q12",
+     "id"
+    ],
+    [
+     "q12",
+     "status"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q19",
+     "id"
+    ],
+    [
+     "q19",
+     "size"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "amount"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q21",
+     "id"
+    ],
+    [
+     "q21",
+     "rn"
+    ],
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ]
+   ],
+   "predicted": [
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q07",
+     "cnt"
+    ],
+    [
+     "q07",
+     "customer_id"
+    ],
+    [
+     "q07",
+     "total"
+    ],
+    [
+     "q08",
+     "avg_amt"
+    ],
+    [
+     "q08",
+     "n"
+    ],
+    [
+     "q11",
+     "total"
+    ],
+    [
+     "q11",
+     "x"
+    ],
+    [
+     "q12",
+     "id"
+    ],
+    [
+     "q12",
+     "status"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q16",
+     "cid"
+    ],
+    [
+     "q16",
+     "total"
+    ],
+    [
+     "q18",
+     "status"
+    ],
+    [
+     "q19",
+     "id"
+    ],
+    [
+     "q19",
+     "size"
+    ],
+    [
+     "q20",
+     "id"
+    ],
+    [
+     "q20",
+     "other_id"
+    ],
+    [
+     "q21",
+     "amount"
+    ],
+    [
+     "q21",
+     "cust_total"
+    ],
+    [
+     "q21",
+     "id"
+    ],
+    [
+     "q21",
+     "rn"
+    ],
+    [
+     "q23",
+     "amount"
+    ],
+    [
+     "q23",
+     "id"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q28",
+     "discounted_qty"
+    ],
+    [
+     "q28",
+     "status"
+    ],
+    [
+     "q31",
+     "amount"
+    ],
+    [
+     "q31",
+     "id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "orders"
+  },
+  {
+   "col": null,
+   "designed_irrelevant": false,
+   "kind": "rows",
+   "mutation": "customers(rows)",
+   "observed": [
+    [
+     "q01",
+     "customer_name"
+    ],
+    [
+     "q01",
+     "id"
+    ],
+    [
+     "q01",
+     "region"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q13",
+     "id"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ]
+   ],
+   "predicted": [
+    [
+     "q01",
+     "customer_name"
+    ],
+    [
+     "q01",
+     "id"
+    ],
+    [
+     "q01",
+     "region"
+    ],
+    [
+     "q02",
+     "id"
+    ],
+    [
+     "q02",
+     "name"
+    ],
+    [
+     "q02",
+     "segment"
+    ],
+    [
+     "q03",
+     "amount"
+    ],
+    [
+     "q03",
+     "id"
+    ],
+    [
+     "q03",
+     "name"
+    ],
+    [
+     "q04",
+     "amt"
+    ],
+    [
+     "q04",
+     "id"
+    ],
+    [
+     "q06",
+     "amt"
+    ],
+    [
+     "q06",
+     "created_at"
+    ],
+    [
+     "q06",
+     "id"
+    ],
+    [
+     "q06",
+     "name"
+    ],
+    [
+     "q06",
+     "region"
+    ],
+    [
+     "q06",
+     "segment"
+    ],
+    [
+     "q09",
+     "id"
+    ],
+    [
+     "q09",
+     "name"
+    ],
+    [
+     "q13",
+     "id"
+    ],
+    [
+     "q13",
+     "total"
+    ],
+    [
+     "q14",
+     "id"
+    ],
+    [
+     "q14",
+     "name"
+    ],
+    [
+     "q15",
+     "amount"
+    ],
+    [
+     "q15",
+     "id"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q22",
+     "region"
+    ],
+    [
+     "q22",
+     "segment"
+    ],
+    [
+     "q25",
+     "id"
+    ],
+    [
+     "q25",
+     "name"
+    ],
+    [
+     "q27",
+     "amount"
+    ],
+    [
+     "q27",
+     "customer_id"
+    ],
+    [
+     "q27",
+     "id"
+    ],
+    [
+     "q27",
+     "name"
+    ],
+    [
+     "q27",
+     "ordered_at"
+    ],
+    [
+     "q27",
+     "status"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "customers"
+  },
+  {
+   "col": null,
+   "designed_irrelevant": false,
+   "kind": "rows",
+   "mutation": "products(rows)",
+   "observed": [
+    [
+     "q05",
+     "active"
+    ],
+    [
+     "q05",
+     "category"
+    ],
+    [
+     "q05",
+     "id"
+    ],
+    [
+     "q05",
+     "name"
+    ],
+    [
+     "q05",
+     "price"
+    ],
+    [
+     "q05",
+     "sku"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "predicted": [
+    [
+     "q05",
+     "active"
+    ],
+    [
+     "q05",
+     "category"
+    ],
+    [
+     "q05",
+     "id"
+    ],
+    [
+     "q05",
+     "name"
+    ],
+    [
+     "q05",
+     "price"
+    ],
+    [
+     "q05",
+     "sku"
+    ],
+    [
+     "q17",
+     "id"
+    ],
+    [
+     "q17",
+     "name"
+    ],
+    [
+     "q24",
+     "category"
+    ],
+    [
+     "q24",
+     "revenue"
+    ]
+   ],
+   "table": "products"
+  },
+  {
+   "col": null,
+   "designed_irrelevant": false,
+   "kind": "rows",
+   "mutation": "shipments(rows)",
+   "observed": [
+    [
+     "q26",
+     "carrier"
+    ]
+   ],
+   "predicted": [
+    [
+     "q18",
+     "status"
+    ],
+    [
+     "q26",
+     "carrier"
+    ],
+    [
+     "q26",
+     "order_id"
+    ],
+    [
+     "q32",
+     "amount"
+    ],
+    [
+     "q32",
+     "carrier"
+    ],
+    [
+     "q32",
+     "name"
+    ]
+   ],
+   "table": "shipments"
+  },
+  {
+   "col": null,
+   "designed_irrelevant": true,
+   "kind": "rows",
+   "mutation": "events(rows)",
+   "observed": [],
+   "predicted": [],
+   "table": "events"
+  }
+ ],
+ "stats": {
+  "irrelevant_ok": 7,
+  "mutations": 36,
+  "obs_cells": 227,
+  "pred_cells": 321,
+  "unexplained": 0
+ }
+}
