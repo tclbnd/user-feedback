@@ -1,3 +1,9 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# 验收生成物：夹具输入、结果目录与暂存目录均可由 verify/ 脚本重新生成
+fixtures/
+runs/
+tmpcheck/
+*.stage/

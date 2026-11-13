@@ -1,47 +1,65 @@
-"""External join front end and an incomplete single-partition fallback."""
+"""命令行入口：复合键外存连接（inner / left）。
+
+用法：
+    python3 join.py left.csv right.csv result --type left --memory-mib 64
+    python3 join.py left.csv right.csv result --crash-before-publish
+
+结果目录只包含 rows.csv 与 _SUCCESS；目标目录已存在时拒绝覆盖。任何 I/O
+异常或中断都会回收本次暂存且绝不发布半成品；--crash-before-publish 模拟
+“发布前崩溃”，退出码 97，目标目录不会被创建，重跑可安全清理并重新发布。
+"""
 import argparse
-import csv
 import json
-from pathlib import Path
-import resource
+import signal
 import sys
+from pathlib import Path
 
-
-def read_rows(path):
-    with path.open(newline="",encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
-
-
-def join(left,right,out,mode,memory_mib,crash):
-    out.mkdir()
-    lookup={(x["key_a"],x["key_b"]):x["value"] for x in read_rows(right)}
-    n=0
-    with (out/"rows.csv").open("w",newline="",encoding="utf-8") as target:
-        writer=csv.writer(target)
-        writer.writerow(["key_a","key_b","left_value","right_value"])
-        for row in read_rows(left):
-            key=row["key_a"],row["key_b"]
-            if key in lookup or mode=="left":
-                writer.writerow([*key,row["value"],lookup.get(key)])
-                n+=1
-    rss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    metrics={"rows":n,"spill_bytes":0,"peak_rss_bytes":rss if sys.platform=="darwin" else rss*1024}
-    (out/"_SUCCESS").write_text(json.dumps(metrics)+"\n")
-    return metrics
+from skewjoin.engine import JoinEngine
 
 
 def main():
-    parser=argparse.ArgumentParser()
-    parser.add_argument("left",type=Path)
-    parser.add_argument("right",type=Path)
-    parser.add_argument("output",type=Path)
-    parser.add_argument("--type",choices=["inner","left"],default="inner")
-    parser.add_argument("--memory-mib",type=int,default=64)
-    parser.add_argument("--crash-before-publish",action="store_true")
-    args=parser.parse_args()
-    print(json.dumps(join(args.left,args.right,args.output,args.type,args.memory_mib,
-                          args.crash_before_publish),sort_keys=True))
+    parser = argparse.ArgumentParser(description="分区外存哈希连接（含热点分段）")
+    parser.add_argument("left", type=Path)
+    parser.add_argument("right", type=Path)
+    parser.add_argument("output", type=Path)
+    parser.add_argument("--type", choices=["inner", "left"], default="inner")
+    parser.add_argument("--memory-mib", type=int, default=64)
+    parser.add_argument("--crash-before-publish", action="store_true")
+    parser.add_argument("--spill-root", type=Path, default=None,
+                        help="暂存目录根（默认取结果目录的父目录）")
+    parser.add_argument("--max-open-fds", type=int, default=None,
+                        help="同时打开的临时文件句柄上限，默认 16")
+    args = parser.parse_args()
+
+    engine = JoinEngine(
+        args.left, args.right, args.output, args.type,
+        memory_mib=args.memory_mib,
+        crash_before_publish=args.crash_before_publish,
+        spill_root=args.spill_root,
+        max_open=args.max_open_fds,
+    )
+
+    def _on_signal(signum, frame):  # 中断同样要保证暂存被回收
+        engine.staging.destroy()
+        sys.exit(130)
+
+    signal.signal(signal.SIGTERM, _on_signal)
+    signal.signal(signal.SIGINT, _on_signal)
+
+    try:
+        metrics = engine.run()
+    except FileExistsError as exc:
+        print(json.dumps(dict(error=str(exc)), ensure_ascii=False),
+              file=sys.stderr)
+        return 2
+    except (OSError, ValueError) as exc:
+        # run() 的 finally 已销毁暂存，不会留下不完整结果或临时文件。
+        print(json.dumps(dict(error="%s: %s" % (type(exc).__name__, exc)),
+                         ensure_ascii=False), file=sys.stderr)
+        return 1
+    print(json.dumps(metrics, ensure_ascii=False, sort_keys=True))
+    return 0
 
 
-if __name__=="__main__":
-    main()
+if __name__ == "__main__":
+    sys.exit(main())
