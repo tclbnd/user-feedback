@@ -1,0 +1,2 @@
+{"res": [64, 64], "eval_order": "post",
+ "tree": {"prim": "sphere", "c": [0, 0, 0], "r": 0.9}}
