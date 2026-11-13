@@ -1,0 +1,1 @@
+{"inputs":{"d0":{"value":4,"version":"1"},"d1":{"value":8,"version":"1"}},"nodes":{"week":["d0","d1","d2"],"report":["week","d1"]}}
