@@ -1,0 +1,1 @@
+{"tz_version":"offline-demo","regions":{"east":{"initial_offset_min":480,"transitions":[]}},"events":[{"id":"one","rev":1,"region":"east","local":"2026-11-12T00:10:00","amount":"1.35"}]}
