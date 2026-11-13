@@ -1,0 +1,48 @@
+==============================================================================
+scene: mixed_sphere.json  (4 patches)
+  err=0.1   | verts=128   tris=252   edges=378   cracks=0 degen=0 maxerr=0.04209 samples=1764 digest=d9f6e3cbf7be5472 shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 28), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 56), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 56), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112)]
+  err=0.05  | verts=518   tris=1016  edges=1548  cracks=28 degen=0 maxerr=0.02035 samples=7112 digest=0b8677aeb7923e72 shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 56), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 480)]
+    FAIL: 28 interior edge(s) with only one triangle (cracks)
+  err=0.02  | verts=1370  tris=2704  edges=4104  cracks=76 degen=0 maxerr=0.007486 samples=18928 digest=50e691830da5ac6d shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 240), (1, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 240), (2, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 240), (3, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 1984)]
+    FAIL: 76 interior edge(s) with only one triangle (cracks)
+==============================================================================
+scene: reversed_sphere.json  (4 patches)
+  err=0.1   | verts=226   tris=448   edges=672   cracks=0 degen=0 maxerr=0.02375 samples=3136 digest=140a4e5e81d7fd0a shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112)]
+  err=0.05  | verts=482   tris=960   edges=1440  cracks=0 degen=0 maxerr=0.009561 samples=6720 digest=ddbf8fe11d91a100 shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240)]
+  err=0.02  | verts=962   tris=1920  edges=2880  cracks=0 degen=0 maxerr=0.006002 samples=13440 digest=af036506a4f67a1a shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (1, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (2, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (3, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480)]
+==============================================================================
+scene: saddle_grid.json  (4 patches)
+  err=0.1   | verts=81    tris=104   edges=184   cracks=24 degen=0 maxerr=0.01562 samples=728 digest=9328fee385753593 shuffle8=OK
+    shared edges checked: 4 ; patch edge factors: [(0, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (1, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (2, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (3, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26)]
+    FAIL: 24 interior edge(s) with only one triangle (cracks)
+  err=0.05  | verts=81    tris=104   edges=184   cracks=24 degen=0 maxerr=0.01562 samples=728 digest=9328fee385753593 shuffle8=OK
+    shared edges checked: 4 ; patch edge factors: [(0, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (1, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (2, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26), (3, {'N': 4, 'S': 4, 'E': 4, 'W': 4}, 26)]
+    FAIL: 24 interior edge(s) with only one triangle (cracks)
+  err=0.02  | verts=289   tris=448   edges=736   cracks=0 degen=0 maxerr=0.003906 samples=3136 digest=3915fa90e3aeb791 shuffle8=OK
+    shared edges checked: 4 ; patch edge factors: [(0, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 112), (1, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 112), (2, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 112), (3, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 112)]
+==============================================================================
+scene: saddle_hole.json  (1 patches)
+  err=0.1   | verts=81    tris=122   edges=202   cracks=6 degen=0 maxerr=0.01562 samples=854 digest=aadc99efb503cc68 shuffle8=OK
+    shared edges checked: 0 ; patch edge factors: [(0, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 122)]
+    FAIL: 6 interior edge(s) with only one triangle (cracks)
+  err=0.05  | verts=81    tris=122   edges=202   cracks=6 degen=0 maxerr=0.01562 samples=854 digest=aadc99efb503cc68 shuffle8=OK
+    shared edges checked: 0 ; patch edge factors: [(0, {'N': 8, 'S': 8, 'E': 8, 'W': 8}, 122)]
+    FAIL: 6 interior edge(s) with only one triangle (cracks)
+  err=0.02  | verts=289   tris=496   edges=784   cracks=0 degen=0 maxerr=0.003906 samples=3472 digest=cad5ce3826c20702 shuffle8=OK
+    shared edges checked: 0 ; patch edge factors: [(0, {'N': 16, 'S': 16, 'E': 16, 'W': 16}, 496)]
+==============================================================================
+scene: sphere4.json  (4 patches)
+  err=0.1   | verts=226   tris=448   edges=672   cracks=0 degen=0 maxerr=0.02375 samples=3136 digest=c6404bee11f2853c shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 112)]
+  err=0.05  | verts=482   tris=960   edges=1440  cracks=0 degen=0 maxerr=0.009561 samples=6720 digest=0635fc34dddf281d shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (1, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (2, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240), (3, {'N': 1, 'S': 1, 'E': 8, 'W': 8}, 240)]
+  err=0.02  | verts=962   tris=1920  edges=2880  cracks=0 degen=0 maxerr=0.006002 samples=13440 digest=3d773beb01e88173 shuffle8=OK
+    shared edges checked: 10 ; patch edge factors: [(0, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (1, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (2, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480), (3, {'N': 1, 'S': 1, 'E': 16, 'W': 16}, 480)]
+==============================================================================
+OVERALL: FAILURES
