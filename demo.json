@@ -1,0 +1,1 @@
+{"devices":{"x":{"bits":16,"max_gap":60,"max_rate":30}},"samples":[{"device":"x","t":3599,"boot":1,"rev":1,"value":65531},{"device":"x","t":3601,"boot":1,"rev":1,"value":3},{"device":"x","t":3600,"boot":1,"rev":1,"value":0}]}
