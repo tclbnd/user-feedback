@@ -1,0 +1,1 @@
+{"tracks": [{"name": "vox", "pcm": "/private/tmp/zq-bank2-formal-l93xipkz/M13/work/artifacts/vox_src.wav"}, {"name": "music", "pcm": "/private/tmp/zq-bank2-formal-l93xipkz/M13/work/artifacts/music_src.wav"}], "fs": 16000, "target_lufs": -16, "params": {"block": 1024}}

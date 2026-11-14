@@ -1,0 +1,41 @@
+{
+ "out": "mix.wav",
+ "gains": {
+  "vox": 3.2469206061733793,
+  "music": 3.2469206061733793
+ },
+ "peak_db": -4.362,
+ "lufs": -16.0,
+ "target_lufs": -16.0,
+ "loudness_error_lufs": 0.0,
+ "true_peak_dbtp": -4.362,
+ "envelope": "envelope.json",
+ "stems": {
+  "vox": "vox.stem.wav",
+  "music": "music.stem.wav"
+ },
+ "stats": {
+  "n_frames": 241,
+  "frame_hop_s": 0.05,
+  "voice_active_frames": 146,
+  "duck_db_speech_mean": 13.979,
+  "duck_db_speech_p95": 16.451154102316057,
+  "duck_db_speech_min": 3.0,
+  "duck_db_speech_max": 16.499,
+  "duck_db_gap_mean": 1.42,
+  "confidence_mean_active": 0.7856,
+  "raw_integrated_lufs": -19.055,
+  "mix_integrated_lufs": -16.0,
+  "target_lufs": -16.0,
+  "loudness_error_lufs": 0.0,
+  "mix_true_peak_dbtp": -4.362,
+  "true_peak_limit_dbtp": -1.0,
+  "bus_trim_db": 3.247,
+  "pumping": {
+   "gap_reattack_events": 0,
+   "max_gap_rate_db_s": 60.0,
+   "mean_gap_abs_rate_db_s": 14.257,
+   "release_rate_limit_db_s": 60.0
+  }
+ }
+}

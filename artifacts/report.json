@@ -1,0 +1,112 @@
+{
+ "blocks": [
+  256,
+  512,
+  1024,
+  4096
+ ],
+ "target_lufs": -16.0,
+ "checks": [
+  {
+   "name": "envelope_chunk_invariance_db",
+   "passed": true,
+   "detail": {
+    "max_abs_env_diff_db": 0.0,
+    "per_block": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "waveform_chunk_invariance",
+   "passed": true,
+   "detail": {
+    "max_abs_sample_diff": 0.0
+   }
+  },
+  {
+   "name": "block_order_invariance",
+   "passed": true,
+   "detail": {
+    "shuffled_max_abs_diff": 0.0
+   }
+  },
+  {
+   "name": "speech_duck_ge_8db",
+   "passed": true,
+   "detail": {
+    "duck_db_p10": 9.0,
+    "duck_db_p50": 15.309,
+    "duck_db_max": 16.499,
+    "note": "P10 over all in-dialogue frames incl. attack/hold ramps"
+   }
+  },
+  {
+   "name": "gap_release_no_pumping",
+   "passed": true,
+   "detail": {
+    "gap_reattack_events": 0,
+    "max_gap_rate_db_s": 60.0,
+    "mean_gap_abs_rate_db_s": 14.257,
+    "release_rate_limit_db_s": 60.0
+   }
+  },
+  {
+   "name": "integrated_loudness_within_0.5_lufs",
+   "passed": true,
+   "detail": {
+    "mix_lufs": -16.0,
+    "target": -16.0,
+    "abs_error": 0.0
+   }
+  },
+  {
+   "name": "true_peak_le_minus_1_dbtp",
+   "passed": true,
+   "detail": {
+    "true_peak_dbtp": -4.363
+   }
+  },
+  {
+   "name": "muted_voice_full_gain",
+   "passed": true,
+   "detail": {
+    "max_tail_attenuation_db": 0.0,
+    "max_frame_velocity_db": 0.0
+   }
+  },
+  {
+   "name": "muted_voice_smooth_transition",
+   "passed": true,
+   "detail": {
+    "max_gain_step_db_per_frame": 0.0
+   }
+  }
+ ],
+ "stats": {
+  "n_frames": 241,
+  "frame_hop_s": 0.05,
+  "voice_active_frames": 146,
+  "duck_db_speech_mean": 13.979,
+  "duck_db_speech_p95": 16.451153366177326,
+  "duck_db_speech_min": 3.0,
+  "duck_db_speech_max": 16.499,
+  "duck_db_gap_mean": 1.42,
+  "confidence_mean_active": 0.7856,
+  "raw_integrated_lufs": -19.054,
+  "mix_integrated_lufs": -16.0,
+  "target_lufs": -16.0,
+  "loudness_error_lufs": -0.0,
+  "mix_true_peak_dbtp": -4.363,
+  "true_peak_limit_dbtp": -1.0,
+  "bus_trim_db": 3.247,
+  "pumping": {
+   "gap_reattack_events": 0,
+   "max_gap_rate_db_s": 60.0,
+   "mean_gap_abs_rate_db_s": 14.257,
+   "release_rate_limit_db_s": 60.0
+  }
+ }
+}
