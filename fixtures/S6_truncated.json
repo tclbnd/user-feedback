@@ -1,0 +1,48 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "before-cut"
+      },
+      "seq": 0,
+      "ts": 0,
+      "url": "t1"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 1
+    },
+    {
+      "input_ref": 3,
+      "kind": "parse",
+      "seq": 4,
+      "ts": 4
+    },
+    {
+      "fields_ref": 4,
+      "kind": "emit",
+      "record": {
+        "id": "t2"
+      },
+      "seq": 5,
+      "ts": 5
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "t2"
+    }
+  ],
+  "session": "S6-truncated",
+  "snapshots": {
+    "fetch": {
+      "t1": {
+        "title": "before-cut"
+      }
+    }
+  }
+}

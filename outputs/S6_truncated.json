@@ -1,0 +1,34 @@
+{
+  "diff": [],
+  "errors": [
+    {
+      "detail": "input_ref 3 does not resolve to a fetch event",
+      "reason": "missing-ref",
+      "seq": 4
+    },
+    {
+      "detail": "event log is not a contiguous 0..n sequence",
+      "missing": [
+        [
+          2,
+          3
+        ]
+      ],
+      "reason": "truncated-log",
+      "seq": -1
+    }
+  ],
+  "replayed_outputs": [
+    {
+      "id": "t2"
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 5,
+      "version": "v1"
+    }
+  ]
+}

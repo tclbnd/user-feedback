@@ -1,0 +1,23 @@
+{
+  "diff": [],
+  "errors": [],
+  "replayed_outputs": [
+    {
+      "id": "c-r1",
+      "k": 1,
+      "title": "Stable"
+    },
+    {
+      "content": "raw-text",
+      "id": "c-r2"
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 5,
+      "version": "v1"
+    }
+  ]
+}

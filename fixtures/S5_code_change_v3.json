@@ -1,0 +1,75 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "Ledger"
+      },
+      "seq": 0,
+      "ts": 0,
+      "url": "p1"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 1
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "n1"
+      },
+      "seq": 2,
+      "ts": 2
+    },
+    {
+      "code_version": "v3",
+      "kind": "fetch",
+      "response": {
+        "title": "   "
+      },
+      "seq": 3,
+      "ts": 3,
+      "url": "p2"
+    },
+    {
+      "input_ref": 3,
+      "kind": "parse",
+      "seq": 4,
+      "ts": 4
+    },
+    {
+      "fields_ref": 4,
+      "kind": "emit",
+      "record": {
+        "id": "n2"
+      },
+      "seq": 5,
+      "ts": 5
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "n1",
+      "title": "Ledger"
+    },
+    {
+      "id": "n2",
+      "title": "   "
+    }
+  ],
+  "session": "S5-code-change-v3",
+  "snapshots": {
+    "fetch": {
+      "p1": {
+        "title": "Ledger"
+      },
+      "p2": {
+        "title": "   "
+      }
+    }
+  }
+}

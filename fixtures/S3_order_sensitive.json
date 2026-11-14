@@ -1,0 +1,74 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "First"
+      },
+      "seq": 0,
+      "ts": 1,
+      "url": "a"
+    },
+    {
+      "input_ref": 3,
+      "kind": "parse",
+      "seq": 4,
+      "ts": 5
+    },
+    {
+      "fields_ref": 4,
+      "kind": "emit",
+      "record": {
+        "id": "o2"
+      },
+      "seq": 5,
+      "ts": 6
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 2
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "o1"
+      },
+      "seq": 2,
+      "ts": 3
+    },
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "Second"
+      },
+      "seq": 3,
+      "ts": 4,
+      "url": "b"
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "o1",
+      "title": "First"
+    },
+    {
+      "id": "o2",
+      "title": null
+    }
+  ],
+  "session": "S3-order-sensitive",
+  "snapshots": {
+    "fetch": {
+      "a": {
+        "title": "First"
+      },
+      "b": {
+        "title": "Second"
+      }
+    }
+  }
+}

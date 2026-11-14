@@ -1,0 +1,24 @@
+{
+  "diff": [],
+  "errors": [
+    {
+      "detail": "'telemetry'",
+      "reason": "unknown-kind",
+      "seq": 1
+    }
+  ],
+  "replayed_outputs": [
+    {
+      "id": "k-r1",
+      "title": "ok"
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 3,
+      "version": "v1"
+    }
+  ]
+}

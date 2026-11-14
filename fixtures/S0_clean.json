@@ -1,0 +1,74 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "k": 1,
+        "title": "Stable"
+      },
+      "seq": 0,
+      "ts": 7,
+      "url": "c1"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "random": 0.42,
+      "seq": 1,
+      "ts": 8
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "c-r1"
+      },
+      "seq": 2,
+      "ts": 9
+    },
+    {
+      "kind": "fetch",
+      "response": "raw-text",
+      "seq": 3,
+      "ts": 10,
+      "url": "c2"
+    },
+    {
+      "input_ref": 3,
+      "kind": "parse",
+      "seq": 4,
+      "ts": 11
+    },
+    {
+      "fields_ref": 4,
+      "kind": "emit",
+      "record": {
+        "id": "c-r2"
+      },
+      "seq": 5,
+      "ts": 12
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "c-r1",
+      "k": 1,
+      "title": "Stable"
+    },
+    {
+      "content": "raw-text",
+      "id": "c-r2"
+    }
+  ],
+  "session": "S0-clean",
+  "snapshots": {
+    "fetch": {
+      "c1": {
+        "k": 1,
+        "title": "Stable"
+      },
+      "c2": "raw-text"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "diff": [
+    {
+      "cause": "input-drift",
+      "detail": {
+        "field_causes": [
+          "input-drift",
+          "input-drift"
+        ],
+        "fields": {
+          "title": {
+            "fetch_seq": 0,
+            "field": "title",
+            "recorded": "rate-A",
+            "recorded_response": {
+              "title": "rate-A",
+              "value": 100
+            },
+            "replayed": "rate-B",
+            "snapshot_value": {
+              "title": "rate-B",
+              "value": 200
+            }
+          },
+          "value": {
+            "fetch_seq": 0,
+            "field": "value",
+            "recorded": 100,
+            "recorded_response": {
+              "title": "rate-A",
+              "value": 100
+            },
+            "replayed": 200,
+            "snapshot_value": {
+              "title": "rate-B",
+              "value": 200
+            }
+          }
+        },
+        "id": "d1"
+      },
+      "kind": "emit-mismatch",
+      "seq": 2
+    }
+  ],
+  "errors": [],
+  "replayed_outputs": [
+    {
+      "id": "d1",
+      "title": "rate-B",
+      "value": 200
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 2,
+      "version": "v1"
+    }
+  ]
+}

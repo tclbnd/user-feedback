@@ -1,0 +1,46 @@
+{
+  "diff": [
+    {
+      "cause": "order-sensitive",
+      "detail": {
+        "field_causes": [
+          "order-sensitive"
+        ],
+        "fields": {
+          "title": {
+            "evidence": "upstream parse seq 4 participates in ordering pair [1, 4]",
+            "field": "title",
+            "inversion": [
+              1,
+              4
+            ],
+            "recorded": null,
+            "replayed": "Second"
+          }
+        },
+        "id": "o2"
+      },
+      "kind": "emit-mismatch",
+      "seq": 5
+    }
+  ],
+  "errors": [],
+  "replayed_outputs": [
+    {
+      "id": "o1",
+      "title": "First"
+    },
+    {
+      "id": "o2",
+      "title": "Second"
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 5,
+      "version": "v1"
+    }
+  ]
+}

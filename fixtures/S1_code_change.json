@@ -1,0 +1,75 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "  Hello World  "
+      },
+      "seq": 0,
+      "ts": 100,
+      "url": "u1"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 101
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "r1"
+      },
+      "seq": 2,
+      "ts": 102
+    },
+    {
+      "code_version": "v2",
+      "kind": "fetch",
+      "response": {
+        "title": " Bank Statement "
+      },
+      "seq": 3,
+      "ts": 103,
+      "url": "u2"
+    },
+    {
+      "input_ref": 3,
+      "kind": "parse",
+      "seq": 4,
+      "ts": 104
+    },
+    {
+      "fields_ref": 4,
+      "kind": "emit",
+      "record": {
+        "id": "r2"
+      },
+      "seq": 5,
+      "ts": 105
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "r1",
+      "title": "  Hello World  "
+    },
+    {
+      "id": "r2",
+      "title": " Bank Statement "
+    }
+  ],
+  "session": "S1-code-change",
+  "snapshots": {
+    "fetch": {
+      "u1": {
+        "title": "  Hello World  "
+      },
+      "u2": {
+        "title": " Bank Statement "
+      }
+    }
+  }
+}

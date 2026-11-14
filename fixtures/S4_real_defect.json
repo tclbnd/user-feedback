@@ -1,0 +1,60 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "amount": 50,
+        "title": "acct"
+      },
+      "seq": 0,
+      "ts": 10,
+      "url": "acct"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 11
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "x1"
+      },
+      "seq": 2,
+      "ts": 12
+    },
+    {
+      "kind": "emit",
+      "record": {
+        "amount": 9,
+        "id": "x2",
+        "title": "ghost"
+      },
+      "seq": 3,
+      "ts": 13
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "amount": 999,
+      "id": "x1",
+      "title": "acct"
+    },
+    {
+      "id": "x3",
+      "title": "missing"
+    }
+  ],
+  "session": "S4-real-defect",
+  "snapshots": {
+    "fetch": {
+      "acct": {
+        "amount": 50,
+        "title": "acct"
+      }
+    }
+  }
+}

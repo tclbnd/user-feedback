@@ -1,0 +1,46 @@
+{
+  "code_version": "v1",
+  "events": [
+    {
+      "kind": "fetch",
+      "response": {
+        "title": "rate-A",
+        "value": 100
+      },
+      "seq": 0,
+      "ts": 200,
+      "url": "rate"
+    },
+    {
+      "input_ref": 0,
+      "kind": "parse",
+      "seq": 1,
+      "ts": 201
+    },
+    {
+      "fields_ref": 1,
+      "kind": "emit",
+      "record": {
+        "id": "d1"
+      },
+      "seq": 2,
+      "ts": 202
+    }
+  ],
+  "recorded_outputs": [
+    {
+      "id": "d1",
+      "title": "rate-A",
+      "value": 100
+    }
+  ],
+  "session": "S2-input-drift",
+  "snapshots": {
+    "fetch": {
+      "rate": {
+        "title": "rate-B",
+        "value": 200
+      }
+    }
+  }
+}

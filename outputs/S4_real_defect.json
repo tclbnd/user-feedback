@@ -1,0 +1,63 @@
+{
+  "diff": [
+    {
+      "cause": "real-defect",
+      "detail": {
+        "evidence": "recorded output has no matching emit event",
+        "id": "x3"
+      },
+      "kind": "emit-missing",
+      "seq": -1
+    },
+    {
+      "cause": "real-defect",
+      "detail": {
+        "field_causes": [
+          "real-defect"
+        ],
+        "fields": {
+          "amount": {
+            "active_version": "v1",
+            "evidence": "deterministic replay under identical snapshot and version still disagrees",
+            "field": "amount",
+            "recorded": 999,
+            "replayed": 50
+          }
+        },
+        "id": "x1"
+      },
+      "kind": "emit-mismatch",
+      "seq": 2
+    },
+    {
+      "cause": "real-defect",
+      "detail": {
+        "evidence": "emitted record absent from recorded_outputs",
+        "id": "x2"
+      },
+      "kind": "emit-extra",
+      "seq": 3
+    }
+  ],
+  "errors": [],
+  "replayed_outputs": [
+    {
+      "amount": 50,
+      "id": "x1",
+      "title": "acct"
+    },
+    {
+      "amount": 9,
+      "id": "x2",
+      "title": "ghost"
+    }
+  ],
+  "version_ranges": [
+    {
+      "from_seq": 0,
+      "switched": false,
+      "to_seq": 3,
+      "version": "v1"
+    }
+  ]
+}
