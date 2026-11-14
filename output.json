@@ -1,0 +1,111 @@
+{
+ "level_stats": {
+  "L0": 0,
+  "L1": 3,
+  "L2": 0,
+  "late": 3,
+  "compactions": 1
+ },
+ "results": [
+  {
+   "at": 300,
+   "key": null,
+   "points": [
+    {
+     "ts": 100,
+     "key": "a",
+     "v": 2,
+     "ver": 2
+    },
+    {
+     "ts": 105,
+     "key": "b",
+     "v": 9,
+     "ver": 1
+    },
+    {
+     "ts": 200,
+     "key": "a",
+     "v": 5,
+     "ver": 1
+    }
+   ]
+  },
+  {
+   "at": 300,
+   "key": "a",
+   "points": [
+    {
+     "ts": 100,
+     "key": "a",
+     "v": 2,
+     "ver": 2
+    },
+    {
+     "ts": 200,
+     "key": "a",
+     "v": 5,
+     "ver": 1
+    }
+   ]
+  },
+  {
+   "at": 120,
+   "key": "b",
+   "points": [
+    {
+     "ts": 105,
+     "key": "b",
+     "v": 9,
+     "ver": 1
+    }
+   ]
+  }
+ ],
+ "digest": "980ebea5a294004e",
+ "finalized": {
+  "L0": 0,
+  "L1": 0,
+  "L2": 3,
+  "late": 3,
+  "compactions": 2,
+  "runs": {
+   "L0": 0,
+   "L1": 0,
+   "L2": 1,
+   "late": 1
+  }
+ },
+ "digest_final": "980ebea5a294004e",
+ "compaction_detail": {
+  "in_regular": 5,
+  "in_late": 3,
+  "L0->L1": 1,
+  "L1->L2": 1,
+  "L2_major": 0,
+  "late_seal": 1,
+  "late_major": 0,
+  "dup_removed": 2,
+  "late_dup_removed": 0
+ },
+ "late_points": [
+  {
+   "ts": 50,
+   "key": "a",
+   "v": 3,
+   "ver": 3
+  },
+  {
+   "ts": 130,
+   "key": "b",
+   "v": 8,
+   "ver": 1
+  },
+  {
+   "ts": 120,
+   "key": "c",
+   "v": 7,
+   "ver": 1
+  }
+ ]
+}
