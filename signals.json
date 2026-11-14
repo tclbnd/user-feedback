@@ -1,0 +1,21 @@
+{
+  "now": 1700000000,
+  "budget": 4,
+  "horizon": 7,
+  "pages": [
+    {"url": "https://site/home",       "imp": 0.95, "lastmod": 1699990000, "etag": "h1", "hist": 2.0},
+    {"url": "https://site/home",       "imp": 0.80, "lastmod": 1699900000, "etag": "h0", "hist": 1.0},
+    {"url": "https://site/news/1",     "imp": 0.85, "lastmod": 1699980000, "etag": "n1", "hist": 1.5},
+    {"url": "https://site/news/2",     "imp": 0.70, "lastmod": 1699300000, "etag": "n2", "hist": 0.2},
+    {"url": "https://site/static/x",   "imp": 0.10, "lastmod": 1698000000, "etag": "s1", "hist": 0.0},
+    {"url": "https://site/missing-lm", "imp": 0.50,                        "etag": "m1", "hist": 0.3},
+    {"url": "https://site/fresh-post", "imp": 0.90}
+  ],
+  "etag_now": {
+    "https://site/home": "h9",
+    "https://site/news/1": "n1",
+    "https://site/news/2": "n9",
+    "https://site/static/x": "s1",
+    "https://site/missing-lm": "m1"
+  }
+}
