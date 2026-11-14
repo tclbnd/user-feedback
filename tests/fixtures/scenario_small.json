@@ -1,0 +1,110 @@
+{
+  "rules": [
+    {
+      "id": "r1",
+      "pred": [
+        "dept=eng",
+        "level>5"
+      ],
+      "allow": true
+    },
+    {
+      "id": "r2",
+      "pred": [
+        "dept=ops"
+      ],
+      "allow": false
+    },
+    {
+      "id": "r3",
+      "pred": [
+        "tier=gold"
+      ],
+      "allow": true
+    }
+  ],
+  "queries": [
+    {
+      "sub": {
+        "dept": "eng",
+        "level": 7,
+        "tier": "silver",
+        "note": "a"
+      }
+    },
+    {
+      "sub": {
+        "dept": "ops",
+        "level": 2,
+        "tier": "gold",
+        "note": "b"
+      }
+    },
+    {
+      "sub": {
+        "dept": "eng",
+        "level": 3,
+        "tier": "gold",
+        "note": "c"
+      }
+    },
+    {
+      "sub": {
+        "level": 9,
+        "tier": "silver",
+        "note": "d"
+      }
+    }
+  ],
+  "changes": [
+    {
+      "kind": "attr",
+      "sub_i": 0,
+      "key": "note",
+      "to": "x"
+    },
+    {
+      "kind": "attr",
+      "sub_i": 0,
+      "key": "level",
+      "to": 9
+    },
+    {
+      "kind": "attr",
+      "sub_i": 0,
+      "key": "level",
+      "to": 4
+    },
+    {
+      "kind": "attr",
+      "sub_i": 1,
+      "key": "level",
+      "to": 99
+    },
+    {
+      "kind": "attr",
+      "sub_i": 2,
+      "key": "tier",
+      "to": "silver"
+    },
+    {
+      "kind": "rule",
+      "id": "r1",
+      "pred": [
+        "dept=ops"
+      ],
+      "allow": false
+    },
+    {
+      "kind": "attr",
+      "sub_i": 3,
+      "key": "dept",
+      "to": "eng"
+    },
+    {
+      "kind": "rule",
+      "id": "r3",
+      "allow": false
+    }
+  ]
+}

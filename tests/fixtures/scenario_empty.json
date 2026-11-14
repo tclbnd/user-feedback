@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "id": "r1",
+      "pred": [
+        "dept=eng"
+      ],
+      "allow": true
+    }
+  ],
+  "queries": [
+    {
+      "sub": {
+        "dept": "eng"
+      }
+    },
+    {
+      "sub": {
+        "dept": "sales"
+      }
+    }
+  ],
+  "changes": []
+}
