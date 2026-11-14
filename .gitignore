@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# 运行产物（示例状态文件与输出）
+state.json
+state.json.lock
+out*.json
