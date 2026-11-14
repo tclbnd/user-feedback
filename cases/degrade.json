@@ -1,0 +1,14 @@
+{
+ "fps": 25,
+ "dur": 1,
+ "w": 320,
+ "h": 240,
+ "font": 16,
+ "subs": [
+  {
+   "t0": 0,
+   "t1": 1,
+   "text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  }
+ ]
+}
