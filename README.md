@@ -16,8 +16,8 @@ scene.json：
 
 要求：
 
-- `eval`：union=min(a,b)，inter=max(a,b)，sub=max(a,-b)。**CSG 组合距离非精确**（inter/sub 高估真实距离）→ 步进需「回退」：若一步跨过表面（d 由正变负且无命中），回退半步重试；薄壁（|d|<0.03 两侧异号）强制最小步长 0.005。`eval_order` 改变子树求值顺序不得改变距离结果（union 对 nan 处理一致）。
-- 命中分类：像素输出 `hit` + `which`（归属基元 index，按树前序编号）；公共面上两基元 |d_a-d_b|<1e-6 时归属按 pre-order 先者，**全局一致**。
-- 输出 `img.pgm`（hit=255+步骤热度调试 `steps.pgm`）与 `stats.json`：`{"hits":n,"steps_hist":{...},"ownership":[…逐像素归属]}`。
-
-现有实现缺陷：纯球追踪无回退（薄壁穿透）、无 ownership 记录、eval_order 改变 union 参数顺序时 min 绑定不同（浮点 min 结合顺序影响位级结果）。
+- `eval`：union=min(a,b)，inter=max(a,b)，sub=max(a,-b)。CSG 组合距离可能不是精确距离；渲染器同时返回归属基元、梯度和局部 Lipschitz 估计。步长受 `|d|/L` 约束，并对一步跨过符号面的情况半步回退重试。进入 `|d|<0.03` 的薄壁带后，步长强制不超过 `0.005`，因此 0.02 厚度不会被跳过。
+- `eval_order` 只改变遍历调度，不交换规范的 a/b 操作数；浮点近公共面按前序基元 id 归属，NaN 由有限值优先的确定性规则处理，因此不同求值顺序输出位级一致。
+- 命中分类：`stats.json` 的逐像素 `pixels` 输出 `hit`、`category`（`entry`/`exit`/`miss`）、`owner`/`which`（归属基元 index，按树前序编号）、`steps`、回退与细分计数；`ownership` 保留逐像素归属数组。公共面上两基元距离差小于 `1e-6` 时，归属按 pre-order 先者，全局一致。
+- 输出 `img.pgm`（hit=255）、`steps.pgm`（逐像素步数热度）与 `stats.json`：包含 `hits`、`entries`、`exits`、`steps_hist`、`ownership` 和完整逐像素诊断。
+- 验收测试：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_sdf_render.py`，覆盖解析基元一致性、求值顺序/随机调度一致性、公共面归属、0.02 薄壁、布尔轮廓豪斯多夫距离。
