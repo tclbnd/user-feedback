@@ -1,0 +1,50 @@
+[
+  {
+    "file": "s1_cut_inside_cluster_block.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 745
+  },
+  {
+    "file": "s2_cut_at_cluster_boundary.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 3990
+  },
+  {
+    "file": "s3_cut_inside_laced_audio.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 2706
+  },
+  {
+    "file": "s4_cut_after_info_before_tracks.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 144
+  },
+  {
+    "file": "s5_cut_inside_segment_header.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 44
+  },
+  {
+    "file": "s6_unknown_cut_inside_cluster.mkv",
+    "source": "ref_unknown.mkv",
+    "original_size": 15719,
+    "cut_size": 757
+  },
+  {
+    "file": "s7_unknown_cut_cluster_boundary.mkv",
+    "source": "ref_unknown.mkv",
+    "original_size": 15719,
+    "cut_size": 4032
+  },
+  {
+    "file": "s8_cut_inside_final_cues.mkv",
+    "source": "ref_full.mkv",
+    "original_size": 15569,
+    "cut_size": 15486
+  }
+]

@@ -1,26 +1,51 @@
-"""Container repair command-line starter."""
+#!/usr/bin/env python3
+"""Command line entry point: rebuild a truncated Matroska container.
+
+Usage:
+    python3 repair_mkv.py clipped.mkv restored.mkv report.json
+"""
+
 import argparse
-import json
+import sys
 from pathlib import Path
 
-
-def size_vint(data,offset):
-    n=next((i for i in range(1,9) if data[offset] & (1<<(8-i))),None)
-    if n is None or offset+n>len(data):
-        raise ValueError(f"invalid size at {offset}")
-    x=int.from_bytes(data[offset:offset+n],"big") & ((1<<(7*n))-1)
-    return n,None if x==(1<<(7*n))-1 else x
+from mkvrecover.repair import RepairError, repair, write_report
 
 
 def main():
-    p=argparse.ArgumentParser()
-    p.add_argument("source",type=Path)
-    p.add_argument("output",type=Path)
-    p.add_argument("report",type=Path)
-    a=p.parse_args()
-    a.output.write_bytes(a.source.read_bytes())
-    a.report.write_text(json.dumps({"recovered":[],"discarded":[]})+"\n")
+    parser = argparse.ArgumentParser(
+        description="Rebuild SeekHead/Cues and salvage blocks of a "
+                    "truncated MKV/WebM file.")
+    parser.add_argument("source", type=Path)
+    parser.add_argument("output", type=Path)
+    parser.add_argument("report", type=Path)
+    args = parser.parse_args()
+
+    try:
+        source_bytes = args.source.read_bytes()
+    except OSError as exc:
+        print("error: cannot read source: %s" % exc, file=sys.stderr)
+        return 2
+
+    try:
+        output_bytes, report = repair(source_bytes)
+    except RepairError as exc:
+        print("error: %s" % exc, file=sys.stderr)
+        return 1
+
+    try:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_bytes(output_bytes)
+        write_report(report, args.report)
+    except OSError as exc:
+        print("error: cannot write output: %s" % exc, file=sys.stderr)
+        return 2
+    print("recovered blocks=%d discarded=%d cues=%d clusters=%d"
+          % (len(report["recovered"]), len(report["discarded"]),
+             report["cue_points"], report["clusters"]))
+    return 0
 
 
-if __name__=="__main__":
-    main()
+if __name__ == "__main__":
+    raise SystemExit(main())
