@@ -1,0 +1,86 @@
+{
+  "url": "https://bank.example/main",
+  "fields": [
+    {"name": "user", "value": "root-user"},
+    {"name": "csrf", "value": "root-csrf"}
+  ],
+  "frames": [
+    {
+      "url": "https://bank.example/frame/a",
+      "fields": [
+        {"name": "amount", "value": "100"},
+        {"name": "user", "value": "a-user"}
+      ],
+      "frames": [
+        {
+          "url": "https://bank.example/frame/a/g1",
+          "fields": [
+            {"name": "memo", "value": "g1-memo"}
+          ],
+          "frames": [
+            {
+              "url": "https://bank.example/frame/a/g1/gg1",
+              "fields": [
+                {"name": "csrf", "value": "gg1-csrf"},
+                {"name": "amount", "value": "200"}
+              ],
+              "frames": [
+                {
+                  "url": "https://bank.example/frame/a/g1/gg1/ggg1",
+                  "fields": [
+                    {"name": "token", "value": "deep-token"}
+                  ],
+                  "frames": []
+                }
+              ]
+            },
+            {
+              "url": "https://bank.example/frame/a/g1/gg2",
+              "fields": [
+                {"name": "memo", "value": "gg2-memo"}
+              ],
+              "frames": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://bank.example/frame/b",
+      "fields": [
+        {"name": "amount", "value": "300"}
+      ],
+      "frames": [
+        {
+          "url": "https://bank.example/frame/b/g1",
+          "fields": [
+            {"name": "user", "value": "bg1-user"},
+            {"name": "extra", "value": "bg1-extra"},
+            {"name": "memo", "value": "bg1-memo"}
+          ],
+          "frames": []
+        }
+      ]
+    },
+    {
+      "url": "https://bank.example/dynamic/loader",
+      "fields": [],
+      "frames": [
+        {
+          "url": "https://bank.example/dynamic/d1",
+          "fields": [
+            {"name": "csrf", "value": "d1-csrf"}
+          ],
+          "frames": []
+        },
+        {
+          "url": "https://bank.example/dynamic/d2",
+          "fields": [
+            {"name": "csrf", "value": "d2-csrf"}
+          ],
+          "frames": []
+        }
+      ]
+    }
+  ]
+}
