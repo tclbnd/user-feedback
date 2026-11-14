@@ -1,0 +1,76 @@
+{
+  "win": 128,
+  "hop": 112,
+  "overlap": 0.125,
+  "tol": 0.001,
+  "max_iter": 800,
+  "method": "afgl",
+  "materials": {
+    "speech": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 704,
+      "final_error": 0.0009993828709044287,
+      "converged": true,
+      "waveform_snr_db": -4.11537508245247,
+      "spectral_snr_db": 320.14382315537307,
+      "silence": false,
+      "meets_tol_1e-3": true
+    },
+    "percuss": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 97,
+      "final_error": 0.000983325707719296,
+      "converged": true,
+      "waveform_snr_db": -4.309032340069687,
+      "spectral_snr_db": 319.80989012080545,
+      "silence": false,
+      "meets_tol_1e-3": true
+    },
+    "noise": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 98,
+      "final_error": 0.0009966645119644088,
+      "converged": true,
+      "waveform_snr_db": -4.483452435322431,
+      "spectral_snr_db": 320.21472909925694,
+      "silence": false,
+      "meets_tol_1e-3": true
+    },
+    "silence": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 0,
+      "final_error": 0.0,
+      "converged": true,
+      "waveform_snr_db": null,
+      "spectral_snr_db": null,
+      "silence": true,
+      "meets_tol_1e-3": true
+    },
+    "mixture": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 258,
+      "final_error": 0.000998823766978358,
+      "converged": true,
+      "waveform_snr_db": -4.576781227808577,
+      "spectral_snr_db": 319.8609933813383,
+      "silence": false,
+      "meets_tol_1e-3": true
+    },
+    "transient": {
+      "frames": 72,
+      "bins": 65,
+      "iters_used": 137,
+      "final_error": 0.0009982499226346996,
+      "converged": true,
+      "waveform_snr_db": -3.3497427352992175,
+      "spectral_snr_db": 317.91296314347585,
+      "silence": false,
+      "meets_tol_1e-3": true
+    }
+  }
+}

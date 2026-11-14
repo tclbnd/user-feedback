@@ -1,0 +1,7 @@
+{
+  "one_shot_iters": 120,
+  "two_stage_iters": 120,
+  "signal_identical": true,
+  "spectrum_identical": true,
+  "err_identical": true
+}
