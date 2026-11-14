@@ -1,0 +1,19 @@
+{
+  "ops": [
+    {"op": "put", "k": 10, "v": "a"},
+    {"op": "put", "k": 20, "v": "b"},
+    {"op": "put", "k": 30, "v": "c"},
+    {"op": "put", "k": 40, "v": "d"},
+    {"op": "put", "k": 50, "v": "e"},
+    {"op": "snap", "id": "s1"},
+    {"op": "iter", "snap_id": "s1", "out": "s1_before"},
+    {"op": "put", "k": 25, "v": "x"},
+    {"op": "put", "k": 60, "v": "y"},
+    {"op": "del", "k": 30},
+    {"op": "snap", "id": "s2"},
+    {"op": "iter", "snap_id": "s1", "out": "s1_after_writes"},
+    {"op": "iter", "snap_id": "s2", "out": "s2_view"},
+    {"op": "release", "id": "s1"},
+    {"op": "release", "id": "s2"}
+  ]
+}

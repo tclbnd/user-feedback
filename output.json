@@ -1,0 +1,65 @@
+{
+  "pages_live": 0,
+  "reclaimed": 15,
+  "iters": {
+    "s1_before": [
+      10,
+      20,
+      30,
+      40,
+      50
+    ],
+    "s1_after_writes": [
+      10,
+      20,
+      30,
+      40,
+      50
+    ],
+    "s2_view": [
+      10,
+      20,
+      25,
+      40,
+      50,
+      60
+    ]
+  },
+  "errors": [],
+  "batch_reclaims": [
+    {
+      "id": "s1",
+      "reclaimed": 3
+    },
+    {
+      "id": "s2",
+      "reclaimed": 0
+    }
+  ],
+  "stats": {
+    "allocs": 15,
+    "frees": 15,
+    "peak": 8,
+    "deferred_peak": 3,
+    "deferred_now": 0,
+    "uaf_violations": 0,
+    "double_free": 0,
+    "refcount_violations": 0,
+    "reclaim_rate": 1.0,
+    "mid_run": {
+      "allocs": 15,
+      "frees": 12,
+      "pages_live": 3,
+      "peak": 8,
+      "deferred_now": 0,
+      "deferred_peak": 3,
+      "quarantined": 12,
+      "uaf_violations": 0,
+      "double_free": 0,
+      "refcount_violations": 0,
+      "snapshots_held": 0,
+      "snapshot_pinned": 0,
+      "reclaim_rate": 0.8
+    }
+  }
+}
