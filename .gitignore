@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+demo.json
+.smoke/
+.acceptance/
+edge2/
