@@ -1,0 +1,47 @@
+{
+  "resume_from": null,
+  "steps": [
+    {
+      "expect": "p_intro",
+      "fill": {"customer_type": "personal"},
+      "goto": "p_personal"
+    },
+    {
+      "expect": "p_personal",
+      "fill": {"full_name": "李四", "id_no": "ID10002"},
+      "goto": "p_merge_contact"
+    },
+    {
+      "expect": "p_merge_contact",
+      "fill": {"email": "lisi@example.com"},
+      "prefill": {"mobile": "13800000000"},
+      "goto": "p_product"
+    },
+    {
+      "expect": "p_product",
+      "fill": {"product": "deposit"},
+      "goto": "p_deposit"
+    },
+    {
+      "expect": "p_deposit",
+      "fill": {"deposit_amount": "20000", "currency": "CNY"},
+      "goto": "p_merge_verify"
+    },
+    {
+      "expect": "p_merge_verify",
+      "fill": {"verify_date": "2024-05-10", "agree_terms": false},
+      "goto": "p_review"
+    },
+    {
+      "expect": "p_promo",
+      "optional": true,
+      "fill": {"subscribe_promo": false},
+      "goto": "p_review"
+    },
+    {
+      "expect": "p_review",
+      "fill": {"confirmed": true, "confirm_date": "2024-05-11"},
+      "goto": "end"
+    }
+  ]
+}

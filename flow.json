@@ -1,0 +1,110 @@
+{
+  "entry": "p_intro",
+  "pages": [
+    {
+      "fp": "p_intro",
+      "title": "客户类型",
+      "fields": [
+        {"name": "customer_type", "type": "select", "options": ["personal", "business", "vip"]}
+      ],
+      "next": {
+        "branch_on": "customer_type",
+        "rules": {"personal": "p_personal", "business": "p_business", "vip": "p_personal", "default": "p_personal"}
+      }
+    },
+    {
+      "fp": "p_personal",
+      "title": "个人信息",
+      "fields": [
+        {"name": "full_name", "type": "text"},
+        {"name": "id_no", "type": "text"}
+      ],
+      "next": {"default": "p_merge_contact"}
+    },
+    {
+      "fp": "p_business",
+      "title": "企业信息",
+      "fields": [
+        {"name": "company_name", "type": "text"},
+        {"name": "licence_no", "type": "text"}
+      ],
+      "next": {"default": "p_merge_contact"}
+    },
+    {
+      "fp": "p_merge_contact",
+      "title": "联系方式(分支合并页)",
+      "fields": [
+        {"name": "mobile", "type": "text", "prefill": "13800000000"},
+        {"name": "email", "type": "text"}
+      ],
+      "next": {"default": "p_product"}
+    },
+    {
+      "fp": "p_product",
+      "title": "产品选择",
+      "fields": [
+        {"name": "product", "type": "select", "options": ["card", "loan", "deposit"]}
+      ],
+      "next": {
+        "branch_on": "product",
+        "rules": {"card": "p_card", "loan": "p_loan", "deposit": "p_deposit", "default": "p_card"}
+      }
+    },
+    {
+      "fp": "p_card",
+      "title": "借记卡细节",
+      "fields": [
+        {"name": "card_level", "type": "select", "options": ["classic", "gold", "platinum"]},
+        {"name": "need_cheque", "type": "checkbox"}
+      ],
+      "next": {"default": "p_merge_verify"}
+    },
+    {
+      "fp": "p_loan",
+      "title": "贷款细节",
+      "fields": [
+        {"name": "amount", "type": "text"},
+        {"name": "term_months", "type": "select", "options": ["12", "24", "36"]}
+      ],
+      "next": {"default": "p_merge_verify"}
+    },
+    {
+      "fp": "p_deposit",
+      "title": "存款细节",
+      "fields": [
+        {"name": "deposit_amount", "type": "text"},
+        {"name": "currency", "type": "select", "options": ["CNY", "USD", "JPY"]}
+      ],
+      "next": {"default": "p_merge_verify"}
+    },
+    {
+      "fp": "p_merge_verify",
+      "title": "信息核验(分支合并页)",
+      "fields": [
+        {"name": "verify_date", "type": "date"},
+        {"name": "agree_terms", "type": "checkbox"}
+      ],
+      "next": {
+        "branch_on": "agree_terms",
+        "rules": {"true": "p_promo", "false": "p_review", "default": "p_promo"}
+      }
+    },
+    {
+      "fp": "p_promo",
+      "title": "营销订阅(可选步骤)",
+      "fields": [
+        {"name": "subscribe_promo", "type": "checkbox"}
+      ],
+      "next": {"default": "p_review"}
+    },
+    {
+      "fp": "p_review",
+      "title": "最终确认",
+      "fields": [
+        {"name": "confirmed", "type": "checkbox"},
+        {"name": "confirm_date", "type": "date"}
+      ],
+      "next": {"default": "end"}
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "resume_from": null,
+  "steps": [
+    {
+      "expect": "p_intro",
+      "fill": {"customer_type": "business"},
+      "goto": "p_business"
+    },
+    {
+      "expect": "p_business",
+      "fill": {"company_name": "甲子科技有限公司", "licence_no": "LIC90001"},
+      "goto": "p_merge_contact"
+    },
+    {
+      "expect": "p_merge_contact",
+      "fill": {"email": "ops@jiazi.example.com", "mobile": "13900001111"},
+      "goto": "p_product"
+    },
+    {
+      "expect": "p_product",
+      "fill": {"product": "loan"},
+      "goto": "p_loan"
+    },
+    {
+      "expect": "p_loan",
+      "fill": {"amount": "500000", "term_months": 24},
+      "goto": "p_merge_verify"
+    },
+    {
+      "expect": "p_merge_verify",
+      "fill": {"verify_date": "2024-04-01", "agree_terms": true},
+      "goto": "p_promo"
+    },
+    {
+      "expect": "p_promo",
+      "fill": {"subscribe_promo": true},
+      "goto": "p_review"
+    },
+    {
+      "expect": "p_review",
+      "fill": {"confirmed": true, "confirm_date": "2024-04-02"},
+      "goto": "end"
+    }
+  ]
+}
