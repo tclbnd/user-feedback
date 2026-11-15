@@ -1,0 +1,715 @@
+{
+  "config": {
+    "fs": 96000,
+    "duration_s": 10.922666666666666,
+    "n": 1048576,
+    "bits": 16,
+    "f0": 1000.0,
+    "level_dbfs": -60.0,
+    "seed": 20261116,
+    "nfft": 65536,
+    "block_sizes": [
+      4096,
+      8192
+    ],
+    "shaping_sets": {
+      "A_classic_2_-1": [
+        2.0,
+        -1.0
+      ],
+      "B_gentle_1.5_-0.5": [
+        1.5,
+        -0.5
+      ],
+      "C_stable_1.8_-0.9": [
+        1.8,
+        -0.9
+      ]
+    },
+    "band_hz": [
+      4000.0,
+      8000.0
+    ]
+  },
+  "baselines": {
+    "none": {
+      "digest": "d1769001d600e77833cad74428551017d8b45b4b",
+      "thdn": {
+        "fundamental_dbfs": -63.03290989602551,
+        "harmonics": [
+          [
+            1,
+            1000.0,
+            -63.03290989602551
+          ],
+          [
+            2,
+            2000.0,
+            -154.97291678168625
+          ],
+          [
+            3,
+            3000.0,
+            -122.25698255554947
+          ],
+          [
+            4,
+            4000.0,
+            -168.95909814800874
+          ],
+          [
+            5,
+            5000.0,
+            -131.4523913992468
+          ],
+          [
+            6,
+            6000.0,
+            -170.21604109789712
+          ],
+          [
+            7,
+            7000.0,
+            -110.14404617602152
+          ],
+          [
+            8,
+            8000.0,
+            -172.05671231532082
+          ],
+          [
+            9,
+            9000.0,
+            -122.07647723556084
+          ],
+          [
+            10,
+            10000.0,
+            -175.66916325940986
+          ]
+        ],
+        "thd_db": -46.568851868006995,
+        "thd_plus_n_db": -37.24973094064862,
+        "noise_floor_dbfs": -100.8229040250116
+      },
+      "psd": {
+        "psd_4k8k_dbfs_hz": -192.48031917466815,
+        "band_power_4k8k_dbfs": -156.45971926138853,
+        "total_noise_power_dbfs": -100.64360660267256,
+        "psd_20k40k_dbfs_hz": -145.67264862901592
+      }
+    },
+    "rect": {
+      "digest": "d21e1df8c1fa60c667e43039d18e79e1e59a7ae3",
+      "thdn": {
+        "fundamental_dbfs": -63.010493735100184,
+        "harmonics": [
+          [
+            1,
+            1000.0,
+            -63.010493735100184
+          ],
+          [
+            2,
+            2000.0,
+            -149.39336897442308
+          ],
+          [
+            3,
+            3000.0,
+            -155.878712530156
+          ],
+          [
+            4,
+            4000.0,
+            -151.83412783522192
+          ],
+          [
+            5,
+            5000.0,
+            -149.4361861381194
+          ],
+          [
+            6,
+            6000.0,
+            -151.13069480983762
+          ],
+          [
+            7,
+            7000.0,
+            -158.3191006135686
+          ],
+          [
+            8,
+            8000.0,
+            -155.0972249711558
+          ],
+          [
+            9,
+            9000.0,
+            -159.3525307797964
+          ],
+          [
+            10,
+            10000.0,
+            -157.58409683086379
+          ]
+        ],
+        "thd_db": -80.24997307091901,
+        "thd_plus_n_db": -34.751589599410025,
+        "noise_floor_dbfs": -97.76220578262033
+      },
+      "psd": {
+        "psd_4k8k_dbfs_hz": -144.42504539290672,
+        "band_power_4k8k_dbfs": -108.4044454796271,
+        "total_noise_power_dbfs": -97.67220474186016,
+        "psd_20k40k_dbfs_hz": -144.4871794448709
+      }
+    },
+    "tpdf": {
+      "digest": "598856e617189124bfd66325daad25d47e071852",
+      "thdn": {
+        "fundamental_dbfs": -63.01040662750191,
+        "harmonics": [
+          [
+            1,
+            1000.0,
+            -63.01040662750191
+          ],
+          [
+            2,
+            2000.0,
+            -144.6173084055599
+          ],
+          [
+            3,
+            3000.0,
+            -148.45088814466823
+          ],
+          [
+            4,
+            4000.0,
+            -150.0104298653325
+          ],
+          [
+            5,
+            5000.0,
+            -156.5492528743067
+          ],
+          [
+            6,
+            6000.0,
+            -151.34767780567233
+          ],
+          [
+            7,
+            7000.0,
+            -154.29323458569078
+          ],
+          [
+            8,
+            8000.0,
+            -158.66633413536618
+          ],
+          [
+            9,
+            9000.0,
+            -153.0946795463866
+          ],
+          [
+            10,
+            10000.0,
+            -146.17728708307183
+          ]
+        ],
+        "thd_db": -76.88481489589753,
+        "thd_plus_n_db": -33.38668567472695,
+        "noise_floor_dbfs": -96.39728638236724
+      },
+      "psd": {
+        "psd_4k8k_dbfs_hz": -143.17107032074267,
+        "band_power_4k8k_dbfs": -107.15047040746305,
+        "total_noise_power_dbfs": -96.33136589252524,
+        "psd_20k40k_dbfs_hz": -143.13793014016528
+      }
+    }
+  },
+  "shaped": {
+    "A_classic_2_-1": {
+      "coef": [
+        2.0,
+        -1.0
+      ],
+      "single_shot": {
+        "digest": "8c79d3a92ebe78336231b689ff23a6cfc5326a32",
+        "stats": {
+          "n": 1048576,
+          "q": 3.0517578125e-05,
+          "rms_code": 23.202734721077213,
+          "rms_level": 0.000708091269564124,
+          "err_mean": 8.743789167398009e-09,
+          "err_rms": 8.8086550431e-06,
+          "err_var": 7.759232721448208e-11,
+          "n_clipped": 0,
+          "final_state": {
+            "s1": -0.0008267791827309698,
+            "s2": -0.0008245006361340085,
+            "yp": -0.000823974609375,
+            "e1": 8.015214900427095e-06,
+            "e2": 8.680892487345914e-06
+          },
+          "block_mode": "single",
+          "architecture": "delta_sigma_internal_dither"
+        },
+        "thdn": {
+          "fundamental_dbfs": -63.010298819680955,
+          "harmonics": [
+            [
+              1,
+              1000.0,
+              -63.010298819680955
+            ],
+            [
+              2,
+              2000.0,
+              -155.14599619646125
+            ],
+            [
+              3,
+              3000.0,
+              -163.66678484376803
+            ],
+            [
+              4,
+              4000.0,
+              -168.92342977616337
+            ],
+            [
+              5,
+              5000.0,
+              -165.742381529809
+            ],
+            [
+              6,
+              6000.0,
+              -166.9762867163969
+            ],
+            [
+              7,
+              7000.0,
+              -167.14149561498385
+            ],
+            [
+              8,
+              8000.0,
+              -162.65310862786873
+            ],
+            [
+              9,
+              9000.0,
+              -156.9689771037141
+            ],
+            [
+              10,
+              10000.0,
+              -166.27333755582413
+            ]
+          ],
+          "thd_db": -88.49900494770745,
+          "thd_plus_n_db": -25.54983107330532,
+          "noise_floor_dbfs": -88.56013209523837
+        },
+        "psd": {
+          "psd_4k8k_dbfs_hz": -158.66849888754226,
+          "band_power_4k8k_dbfs": -122.64789897426263,
+          "total_noise_power_dbfs": -88.5493145453785,
+          "psd_20k40k_dbfs_hz": -134.22067949437155
+        }
+      },
+      "blocks": {
+        "4096": {
+          "digest": "8c79d3a92ebe78336231b689ff23a6cfc5326a32",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -158.66849888754226,
+            "band_power_4k8k_dbfs": -122.64789897426263,
+            "total_noise_power_dbfs": -88.5493145453785,
+            "psd_20k40k_dbfs_hz": -134.22067949437155
+          }
+        },
+        "8192": {
+          "digest": "8c79d3a92ebe78336231b689ff23a6cfc5326a32",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -158.66849888754226,
+            "band_power_4k8k_dbfs": -122.64789897426263,
+            "total_noise_power_dbfs": -88.5493145453785,
+            "psd_20k40k_dbfs_hz": -134.22067949437155
+          }
+        }
+      }
+    },
+    "B_gentle_1.5_-0.5": {
+      "coef": [
+        1.5,
+        -0.5
+      ],
+      "single_shot": {
+        "digest": "04fecf6b4dcdb73186556ec6de49e852a09b5384",
+        "stats": {
+          "n": 1048576,
+          "q": 3.0517578125e-05,
+          "rms_code": 23.20007988570699,
+          "rms_level": 0.0007080102504183042,
+          "err_mean": 5.660009844760313e-10,
+          "err_rms": 8.80791100392418e-06,
+          "err_var": 7.757929593269152e-11,
+          "n_clipped": 0,
+          "final_state": {
+            "s1": -0.0008267791827309603,
+            "s2": -0.0008242405078678783,
+            "yp": -0.000823974609375,
+            "e1": 7.755086634296982e-06,
+            "e2": 1.1291711804054905e-05
+          },
+          "block_mode": "single",
+          "architecture": "delta_sigma_internal_dither"
+        },
+        "thdn": {
+          "fundamental_dbfs": -63.010297663553786,
+          "harmonics": [
+            [
+              1,
+              1000.0,
+              -63.010297663553786
+            ],
+            [
+              2,
+              2000.0,
+              -154.46998171083422
+            ],
+            [
+              3,
+              3000.0,
+              -163.9246470157423
+            ],
+            [
+              4,
+              4000.0,
+              -168.8483097765311
+            ],
+            [
+              5,
+              5000.0,
+              -169.9763878151457
+            ],
+            [
+              6,
+              6000.0,
+              -163.28309019699006
+            ],
+            [
+              7,
+              7000.0,
+              -162.72455784807633
+            ],
+            [
+              8,
+              8000.0,
+              -161.29361301593943
+            ],
+            [
+              9,
+              9000.0,
+              -159.61086450603176
+            ],
+            [
+              10,
+              10000.0,
+              -159.9515224784053
+            ]
+          ],
+          "thd_db": -87.92653557546684,
+          "thd_plus_n_db": -25.923541957632573,
+          "noise_floor_dbfs": -88.93384235951196
+        },
+        "psd": {
+          "psd_4k8k_dbfs_hz": -155.37662039071097,
+          "band_power_4k8k_dbfs": -119.35602047743134,
+          "total_noise_power_dbfs": -88.9220237726279,
+          "psd_20k40k_dbfs_hz": -134.8333955317261
+        }
+      },
+      "blocks": {
+        "4096": {
+          "digest": "04fecf6b4dcdb73186556ec6de49e852a09b5384",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -155.37662039071097,
+            "band_power_4k8k_dbfs": -119.35602047743134,
+            "total_noise_power_dbfs": -88.9220237726279,
+            "psd_20k40k_dbfs_hz": -134.8333955317261
+          }
+        },
+        "8192": {
+          "digest": "04fecf6b4dcdb73186556ec6de49e852a09b5384",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -155.37662039071097,
+            "band_power_4k8k_dbfs": -119.35602047743134,
+            "total_noise_power_dbfs": -88.9220237726279,
+            "psd_20k40k_dbfs_hz": -134.8333955317261
+          }
+        }
+      }
+    },
+    "C_stable_1.8_-0.9": {
+      "coef": [
+        1.8,
+        -0.9
+      ],
+      "single_shot": {
+        "digest": "7ff1d5094d48a509fce0e03e6335828cde7a5d3a",
+        "stats": {
+          "n": 1048576,
+          "q": 3.0517578125e-05,
+          "rms_code": 23.201163839054136,
+          "rms_level": 0.0007080433300492595,
+          "err_mean": 1.088235086625988e-09,
+          "err_rms": 8.815776817411125e-06,
+          "err_var": 7.771791971014783e-11,
+          "n_clipped": 0,
+          "final_state": {
+            "s1": -0.0008267791827309759,
+            "s2": -0.0008189135359497976,
+            "yp": -0.000823974609375,
+            "e1": 2.4281147162161926e-06,
+            "e2": 3.2025954035936168e-06
+          },
+          "block_mode": "single",
+          "architecture": "delta_sigma_internal_dither"
+        },
+        "thdn": {
+          "fundamental_dbfs": -63.010300194957054,
+          "harmonics": [
+            [
+              1,
+              1000.0,
+              -63.010300194957054
+            ],
+            [
+              2,
+              2000.0,
+              -155.16780274044135
+            ],
+            [
+              3,
+              3000.0,
+              -162.61523079805153
+            ],
+            [
+              4,
+              4000.0,
+              -164.73902091140687
+            ],
+            [
+              5,
+              5000.0,
+              -167.86480763824449
+            ],
+            [
+              6,
+              6000.0,
+              -176.44311072806664
+            ],
+            [
+              7,
+              7000.0,
+              -169.9891832573869
+            ],
+            [
+              8,
+              8000.0,
+              -169.19640444735336
+            ],
+            [
+              9,
+              9000.0,
+              -157.1042096583247
+            ],
+            [
+              10,
+              10000.0,
+              -161.0955922363106
+            ]
+          ],
+          "thd_db": -88.50312728729915,
+          "thd_plus_n_db": -25.766280392593472,
+          "noise_floor_dbfs": -88.77658290014635
+        },
+        "psd": {
+          "psd_4k8k_dbfs_hz": -158.68926716288487,
+          "band_power_4k8k_dbfs": -122.66866724960524,
+          "total_noise_power_dbfs": -88.76516902444733,
+          "psd_20k40k_dbfs_hz": -134.47986721615104
+        }
+      },
+      "blocks": {
+        "4096": {
+          "digest": "7ff1d5094d48a509fce0e03e6335828cde7a5d3a",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -158.68926716288487,
+            "band_power_4k8k_dbfs": -122.66866724960524,
+            "total_noise_power_dbfs": -88.76516902444733,
+            "psd_20k40k_dbfs_hz": -134.47986721615104
+          }
+        },
+        "8192": {
+          "digest": "7ff1d5094d48a509fce0e03e6335828cde7a5d3a",
+          "bit_exact_vs_single": true,
+          "final_state_match": true,
+          "psd": {
+            "psd_4k8k_dbfs_hz": -158.68926716288487,
+            "band_power_4k8k_dbfs": -122.66866724960524,
+            "total_noise_power_dbfs": -88.76516902444733,
+            "psd_20k40k_dbfs_hz": -134.47986721615104
+          }
+        }
+      }
+    }
+  },
+  "silence_limit_cycle": [
+    {
+      "shaping": "tpdf_flat",
+      "mean_dbfs": -143.77830130658646,
+      "rms_dbfs": -96.34960318556168,
+      "peak_lsb": 1.0,
+      "zero_fraction": 0.7511444091796875,
+      "modal_code_fraction": 0.7511444091796875,
+      "distinct_codes": 3,
+      "max_autocorr_lag1_4": 0.0025571039818857535,
+      "max_autocorr_lag8_256": -0.011731761754307946,
+      "autocorr_long_arg": 243,
+      "max_spectral_line_dbfs": -134.95857283257058,
+      "line_prominence_over_median_db": 11.189977916729406,
+      "limit_cycle_suspected": false,
+      "trigger": {
+        "periodic": false,
+        "tonal_line": false,
+        "degenerate_codes": false
+      }
+    },
+    {
+      "shaping": "A_classic_2_-1",
+      "mean_dbfs": -240.0,
+      "rms_dbfs": -88.55719647371322,
+      "peak_lsb": 4.0,
+      "zero_fraction": 0.4517364501953125,
+      "modal_code_fraction": 0.4517364501953125,
+      "distinct_codes": 9,
+      "max_autocorr_lag1_4": 0.6684743827600971,
+      "max_autocorr_lag8_256": 0.013782136231115823,
+      "autocorr_long_arg": 157,
+      "max_spectral_line_dbfs": -123.83579102083388,
+      "line_prominence_over_median_db": 18.379137228933075,
+      "limit_cycle_suspected": false,
+      "trigger": {
+        "periodic": false,
+        "tonal_line": false,
+        "degenerate_codes": false
+      }
+    },
+    {
+      "shaping": "B_gentle_1.5_-0.5",
+      "mean_dbfs": -240.0,
+      "rms_dbfs": -88.90462569741054,
+      "peak_lsb": 4.0,
+      "zero_fraction": 0.379730224609375,
+      "modal_code_fraction": 0.379730224609375,
+      "distinct_codes": 9,
+      "max_autocorr_lag1_4": 0.698175714475021,
+      "max_autocorr_lag8_256": 0.016696850567604577,
+      "autocorr_long_arg": 67,
+      "max_spectral_line_dbfs": -123.21552205092786,
+      "line_prominence_over_median_db": 19.938801869451012,
+      "limit_cycle_suspected": false,
+      "trigger": {
+        "periodic": false,
+        "tonal_line": false,
+        "degenerate_codes": false
+      }
+    },
+    {
+      "shaping": "C_stable_1.8_-0.9",
+      "mean_dbfs": -240.0,
+      "rms_dbfs": -88.7653103237406,
+      "peak_lsb": 4.0,
+      "zero_fraction": 0.37701416015625,
+      "modal_code_fraction": 0.37701416015625,
+      "distinct_codes": 9,
+      "max_autocorr_lag1_4": 0.6772575608504086,
+      "max_autocorr_lag8_256": 0.01917482996107285,
+      "autocorr_long_arg": 12,
+      "max_spectral_line_dbfs": -123.33169960523301,
+      "line_prominence_over_median_db": 19.35835958715447,
+      "limit_cycle_suspected": false,
+      "trigger": {
+        "periodic": false,
+        "tonal_line": false,
+        "degenerate_codes": false
+      }
+    }
+  ],
+  "initial_condition": {
+    "linear_homogeneous_first_below_1e_9_lsb": 3,
+    "linear_homogeneous_tail_lsb": 0.0,
+    "ntf_pole_magnitude": 0.9486832980505138,
+    "ntf_pole_time_constant_samples": 18.982443162059795,
+    "block_boundary": {
+      "block_size": 4096,
+      "bit_exact_full_stream": true,
+      "final_state_identical": true
+    },
+    "note": "反馈环 5 个状态(s1,s2,yp,e1,e2)初始置零; 分块时随样本逐拍延续, RNG 为单条连续序列, 故任意块长与整段处理逐比特一致; 线性化环的非零初始状态按 NTF 极点(系数 C 模 0.9487)指数衰减, 极短样本内即低于 1e-9 LSB; 硬量化吸引子效应由 TPDF 抖动消除"
+  },
+  "verdict": {
+    "harmonics_le_minus90": {
+      "A_classic_2_-1": true,
+      "B_gentle_1.5_-0.5": true,
+      "C_stable_1.8_-0.9": true
+    },
+    "noise_drop_4k8k_ge_6db": {
+      "A_classic_2_-1": 15.497,
+      "B_gentle_1.5_-0.5": 12.206,
+      "C_stable_1.8_-0.9": 15.518
+    },
+    "block_bit_exact": {
+      "A_classic_2_-1": true,
+      "B_gentle_1.5_-0.5": true,
+      "C_stable_1.8_-0.9": true
+    },
+    "psd_summary_consistent": {
+      "A_classic_2_-1": true,
+      "B_gentle_1.5_-0.5": true,
+      "C_stable_1.8_-0.9": true
+    },
+    "no_limit_cycle": {
+      "tpdf_flat": true,
+      "A_classic_2_-1": true,
+      "B_gentle_1.5_-0.5": true,
+      "C_stable_1.8_-0.9": true
+    },
+    "psd_bandmean_spread_db": {
+      "A_classic_2_-1": 0.0,
+      "B_gentle_1.5_-0.5": 0.0,
+      "C_stable_1.8_-0.9": 0.0
+    },
+    "all_pass": true
+  }
+}
