@@ -1,0 +1,8 @@
+{
+  "initial_rules": [
+    {"source":"east","schema":"v1","rule":{"amount_field":"amount","multiplier":100,"enum_field":"status","enum":{"ready":"ready"}}}
+  ],
+  "events": [
+    {"id":1,"kind":"row","source":"east","partition":"day1","seq":1,"key":"invoice-1","schema":"v1","revision":1,"op":"upsert","data":{"amount":2,"status":"ready"}}
+  ]
+}
