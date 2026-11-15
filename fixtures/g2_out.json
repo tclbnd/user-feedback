@@ -1,0 +1,125 @@
+{
+  "batches": [
+    {
+      "id": 1,
+      "result": "fail",
+      "arrived": [
+        0,
+        2
+      ],
+      "missing": [
+        1
+      ],
+      "lost": [
+        1
+      ],
+      "closed_at": 10,
+      "reason": "timeout"
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "arrived": [
+        0,
+        1,
+        2
+      ],
+      "missing": [],
+      "lost": [],
+      "closed_at": 14,
+      "reason": "all_arrived"
+    }
+  ],
+  "decisions": [
+    {
+      "shard": 0,
+      "batch": 1,
+      "verdict": "fail"
+    },
+    {
+      "shard": 1,
+      "batch": 1,
+      "verdict": "fail"
+    },
+    {
+      "shard": 2,
+      "batch": 1,
+      "verdict": "fail"
+    },
+    {
+      "shard": 0,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 1,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 2,
+      "batch": 2,
+      "verdict": "pass"
+    }
+  ],
+  "trace": [
+    {
+      "t": 0,
+      "batch": 1,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 1,
+      "batch": 1,
+      "shard": 2,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 3,
+      "batch": 1,
+      "shard": 1,
+      "type": "lost",
+      "action": "marked_lost"
+    },
+    {
+      "t": 10,
+      "batch": 1,
+      "shard": 1,
+      "type": "timeout",
+      "action": "timeout_fail"
+    },
+    {
+      "t": 12,
+      "batch": 1,
+      "shard": 1,
+      "type": "arrive",
+      "action": "late_rollover",
+      "target_batch": 2
+    },
+    {
+      "t": 13,
+      "batch": 2,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 14,
+      "batch": 2,
+      "shard": 2,
+      "type": "arrive",
+      "action": "arrived_and_pass"
+    },
+    {
+      "t": 15,
+      "batch": 1,
+      "shard": 1,
+      "type": "arrive",
+      "action": "late_unrouted"
+    }
+  ],
+  "digest": "035530753bd167d2a84b31f777952a9be19131b4"
+}

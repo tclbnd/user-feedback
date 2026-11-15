@@ -1,0 +1,16 @@
+{
+  "shards": 3,
+  "timeout": 10,
+  "policy": "fail",
+  "batches": 2,
+  "events": [
+    {"t": 0, "shard": 0, "batch": 1, "type": "arrive"},
+    {"t": 1, "shard": 2, "batch": 1, "type": "arrive"},
+    {"t": 3, "shard": 1, "batch": 1, "type": "lost"},
+    {"t": 10, "shard": 1, "batch": 1, "type": "timeout"},
+    {"t": 12, "shard": 1, "batch": 1, "type": "arrive"},
+    {"t": 13, "shard": 0, "batch": 2, "type": "arrive"},
+    {"t": 14, "shard": 2, "batch": 2, "type": "arrive"},
+    {"t": 15, "shard": 1, "batch": 1, "type": "arrive"}
+  ]
+}

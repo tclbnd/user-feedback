@@ -1,0 +1,18 @@
+{
+  "shards": 4,
+  "timeout": 30,
+  "policy": "release",
+  "batches": 2,
+  "events": [
+    {"t": 34, "shard": 2, "batch": 1, "type": "arrive"},
+    {"t": 33, "shard": 3, "batch": 2, "type": "arrive"},
+    {"t": 30, "shard": 2, "batch": 1, "type": "timeout"},
+    {"t": 5, "shard": 2, "batch": 1, "type": "lost"},
+    {"t": 32, "shard": 1, "batch": 2, "type": "arrive"},
+    {"t": 2, "shard": 3, "batch": 1, "type": "arrive"},
+    {"t": 31, "shard": 0, "batch": 2, "type": "arrive"},
+    {"t": 34, "shard": 2, "batch": 1, "type": "arrive"},
+    {"t": 1, "shard": 1, "batch": 1, "type": "arrive"},
+    {"t": 0, "shard": 0, "batch": 1, "type": "arrive"}
+  ]
+}

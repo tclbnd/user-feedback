@@ -1,0 +1,144 @@
+{
+  "batches": [
+    {
+      "id": 1,
+      "result": "released",
+      "arrived": [
+        0,
+        1,
+        3
+      ],
+      "missing": [
+        2
+      ],
+      "lost": [
+        2
+      ],
+      "closed_at": 30,
+      "reason": "timeout"
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "arrived": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "missing": [],
+      "lost": [],
+      "closed_at": 34,
+      "reason": "all_arrived_rollover"
+    }
+  ],
+  "decisions": [
+    {
+      "shard": 0,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 1,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 2,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 3,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 0,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 1,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 2,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 3,
+      "batch": 2,
+      "verdict": "pass"
+    }
+  ],
+  "trace": [
+    {
+      "t": 0,
+      "batch": 1,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 1,
+      "batch": 1,
+      "shard": 1,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 2,
+      "batch": 1,
+      "shard": 3,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 5,
+      "batch": 1,
+      "shard": 2,
+      "type": "lost",
+      "action": "marked_lost"
+    },
+    {
+      "t": 30,
+      "batch": 1,
+      "shard": 2,
+      "type": "timeout",
+      "action": "timeout_released"
+    },
+    {
+      "t": 31,
+      "batch": 2,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 32,
+      "batch": 2,
+      "shard": 1,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 33,
+      "batch": 2,
+      "shard": 3,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 34,
+      "batch": 1,
+      "shard": 2,
+      "type": "arrive",
+      "action": "late_rollover",
+      "target_batch": 2
+    }
+  ],
+  "digest": "3bde4dd48c222ef6eaebfeb97fc7b179223be49d"
+}

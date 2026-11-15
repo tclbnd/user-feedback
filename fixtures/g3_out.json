@@ -1,0 +1,198 @@
+{
+  "batches": [
+    {
+      "id": 1,
+      "result": "released",
+      "arrived": [
+        0,
+        1,
+        2
+      ],
+      "missing": [
+        3
+      ],
+      "lost": [],
+      "closed_at": 20,
+      "reason": "timeout"
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "arrived": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "missing": [],
+      "lost": [],
+      "closed_at": 25,
+      "reason": "all_arrived"
+    },
+    {
+      "id": 3,
+      "result": "released",
+      "arrived": [
+        1,
+        2
+      ],
+      "missing": [
+        0,
+        3
+      ],
+      "lost": [],
+      "closed_at": 60,
+      "reason": "timeout"
+    }
+  ],
+  "decisions": [
+    {
+      "shard": 0,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 1,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 2,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 3,
+      "batch": 1,
+      "verdict": "released"
+    },
+    {
+      "shard": 0,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 1,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 2,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 3,
+      "batch": 2,
+      "verdict": "pass"
+    },
+    {
+      "shard": 0,
+      "batch": 3,
+      "verdict": "released"
+    },
+    {
+      "shard": 1,
+      "batch": 3,
+      "verdict": "released"
+    },
+    {
+      "shard": 2,
+      "batch": 3,
+      "verdict": "released"
+    },
+    {
+      "shard": 3,
+      "batch": 3,
+      "verdict": "released"
+    }
+  ],
+  "trace": [
+    {
+      "t": 1,
+      "batch": 1,
+      "shard": 2,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 2,
+      "batch": 1,
+      "shard": 1,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 3,
+      "batch": 1,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 20,
+      "batch": 1,
+      "shard": 2,
+      "type": "timeout",
+      "action": "timeout_released"
+    },
+    {
+      "t": 21,
+      "batch": 1,
+      "shard": 3,
+      "type": "arrive",
+      "action": "late_rollover",
+      "target_batch": 2
+    },
+    {
+      "t": 22,
+      "batch": 2,
+      "shard": 3,
+      "type": "arrive",
+      "action": "retry_ignored"
+    },
+    {
+      "t": 23,
+      "batch": 2,
+      "shard": 0,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 24,
+      "batch": 2,
+      "shard": 1,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 25,
+      "batch": 2,
+      "shard": 2,
+      "type": "arrive",
+      "action": "arrived_and_pass"
+    },
+    {
+      "t": 40,
+      "batch": 3,
+      "shard": 2,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 41,
+      "batch": 3,
+      "shard": 1,
+      "type": "arrive",
+      "action": "arrived"
+    },
+    {
+      "t": 60,
+      "batch": 3,
+      "shard": 0,
+      "type": "timeout",
+      "action": "timeout_released"
+    }
+  ],
+  "digest": "d46bfc2d46b10ede5b51df269092cc020d316209"
+}
