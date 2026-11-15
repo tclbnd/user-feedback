@@ -1,0 +1,84 @@
+{
+ "attacks": [
+  {
+   "name": "clean",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "crop_start",
+   "sync_found": true,
+   "sync_err_frames": 0.21875,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "crop_both",
+   "sync_found": true,
+   "sync_err_frames": 0.1875,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "codec_sim",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "lowpass5k",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "resample12k",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "noise28db",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "gain0.35",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "mulaw8bit",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": null
+  },
+  {
+   "name": "mid_replace",
+   "sync_found": true,
+   "sync_err_frames": 0.0,
+   "det_rate": 1.0,
+   "missing_flagged": 5
+  }
+ ],
+ "criteria": {
+  "snr_min_db": 25.999999999999993,
+  "snr_ok": true,
+  "detection_ok": true,
+  "sync_ok": true,
+  "false_positive_rate": 0.00024937655860349125,
+  "fp_ok": true,
+  "repro_ok": true
+ },
+ "all_pass": true
+}
