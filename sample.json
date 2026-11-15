@@ -1,0 +1,7 @@
+{
+  "events": [
+    {"seq": 1, "at": 0, "op": "reserve", "key": "sales/east", "start": 10, "end": 20, "ttl": 5},
+    {"seq": 2, "at": 0, "op": "reserve", "key": "sales/east", "start": 20, "end": 30, "ttl": 5},
+    {"seq": 3, "at": 1, "op": "publish", "key": "sales/east", "lease": 1, "epoch": 1}
+  ]
+}
