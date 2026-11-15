@@ -1,0 +1,7 @@
+{
+  "roots":["index"],
+  "pages":{"index":{"nav":["a"]},"a":{},"lone":{}},
+  "resources":{},
+  "redirects":{},
+  "batches":[]
+}
