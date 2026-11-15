@@ -35,4 +35,18 @@ python3 -B sched.py examples/smoke.json output.json
 - `backlog_segments` 按租户记录逐个连续积压段的服务量。 `waits` 每项给出页组定位和原因，原因值为 `budget`、`paused` 或 `rotation`。
 - `digest` 对其余输出字段按键排序、紧凑 JSON 序列化后计算 SHA-256。原始输入顺序和重复传递次数不影响摘要。
 
-起始实现能执行最小样例。目前采用队头单次派发，检查点只记派发列表，仍缺赤字轮转、稳定去重和原子续跑。
+## 实现状态
+
+`tests/` 下提供独立朴素参考模拟器 (`naive_sim.py`)、场景生成器 (`make_scenarios.py`)
+与验收脚本 (`acceptance.py`)：
+
+```bash
+python3 tests/acceptance.py
+```
+
+验收脚本覆盖：逐 tick 派发与两级余额对拍、整数赤字公平性、单源暂停隔离、三类等待
+原因，以及在 `before-debit`、`after-commit`、`after-restore` 各注入点强制退出后，用
+打乱且重复至少 10% 事件的输入续跑，结果与不中断执行逐项一致、摘要相同。检查点用
+临时文件 fsync 后原子改名落盘，单个页组的完成、两级扣账、去重记录、轮转游标和未
+消费事件水位要么同时出现，要么都不出现。
+
