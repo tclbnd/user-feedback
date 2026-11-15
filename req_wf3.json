@@ -1,0 +1,1 @@
+{"scene": "whiteness", "lobes": ["lambert", "ggx", "mirror"], "weights": {"lambert": 0.4, "ggx": 0.4, "mirror": 0.2}, "albedo": 0.9, "f0": 1.0, "n": 16384, "seed": 5, "rough": 0.3, "wo_cos_list": [0.08, 0.5], "res": [4, 4]}

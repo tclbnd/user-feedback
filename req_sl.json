@@ -1,0 +1,1 @@
+{"scene": "single_lobe", "lobes": ["lambert", "ggx", "mirror"], "n": 8192, "seed": 7, "rough": 0.3, "albedo": 0.8, "wo_cos": 0.3, "res": [4, 4]}

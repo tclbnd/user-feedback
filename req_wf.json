@@ -1,0 +1,1 @@
+{"scene": "whiteness", "lobes": ["lambert", "ggx"], "n": 4096, "seed": 5, "rough": 0.3, "wo_cos_list": [0.08, 0.3, 0.6, 0.95], "res": [4, 4], "tile": 2, "threads": 2}

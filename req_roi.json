@@ -1,0 +1,1 @@
+{"scene": "mixed_roi", "lobes": ["lambert", "ggx"], "weights": {"lambert": 0.6, "ggx": 0.4}, "albedo": 0.7, "n": 1024, "rough": 0.35, "seeds": [11, 22, 33, 44], "res": [4, 4], "tile": 2, "threads": 2}
