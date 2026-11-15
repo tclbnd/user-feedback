@@ -1,0 +1,9 @@
+{
+  "horizon": 2,
+  "global_budget": 3,
+  "source_budget": {"east": 2},
+  "weights": {"retail": 2},
+  "events": [
+    {"kind": "arrival", "tick": 0, "seq": 1, "source": "east", "tenant": "retail", "task": "load", "part": 0, "cost": 2}
+  ]
+}
