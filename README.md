@@ -1,12 +1,49 @@
-# 帧化音频容器修复
+# ZQFR 抗损坏帧容器解析器
 
-Python 3.9+，标准库。运行 `python3 unframe.py input.zaf output.json`。`.zaf` 流以 8 字节魔数 `ZQAF0001` 开头，其后为顺序排列的帧。每帧头部 12 字节，依次为 `seq`(u32be)、`length`(u32be，载荷字节数)、`crc32`(u32be，对 `seq|length|payload` 的字节串计算 zlib.crc32)。载荷为任意字节。
+存储介质偶发位错误导致容器中出现损坏帧。本解析器以帧为粒度容错：
+坏帧跳过并标记缺失区间，后续帧正常解码，不伪造数据。
 
-流中可能出现三类损坏：**bad-header**（头部字段非法，如 length 超过剩余字节或与后续内容矛盾）、**bad-payload**（头部可解析但 CRC 不匹配）、**truncated**（流在帧中部结束）。实现必须在遇到损坏时不整体失败：
+## 帧格式（`zqframe/format.py`）
 
-- 对每个可解析的头记录 `{"seq","offset","length","status"}`，`offset` 为帧头起始字节；`status` ∈ `ok / bad-payload`。
-- 无法从某偏移继续解析时，向 `gaps` 追加 `{"offset","reason"}`，`reason` ∈ `bad-header / truncated`，并尝试在后续字节中重新对齐：从 offset+1 起寻找下一个能通过 CRC 的完整帧；找到则继续，找不到则报告 `unrecoverable` 并以 offset 标记。
-- `regions` 列出可解码区间 `{"start","end","frames"}`（帧头偏移、载荷结束偏移、区间内 ok 帧数）。bad-payload 帧的载荷**不得**计入 region，其头偏移仍出现在 frames 表。
-- `summary` 含 `frames_total`、`frames_ok`、`frames_bad`、`gaps`、`bytes_recovered`（全部 ok 载荷字节和）。
+| 偏移 | 字段 | 说明 |
+|------|------|------|
+| 0..4   | magic        | `ZQFR` |
+| 4..8   | seq          | 序号 u32 LE |
+| 8..12  | plen         | 载荷长度 u32 LE |
+| 12..16 | payload_crc  | 载荷 CRC32 |
+| 16..20 | header_crc   | 帧头前 16 字节 CRC32 |
+| 20..   | payload      | plen 字节 |
 
-输出 JSON：`{"frames":[…],"gaps":[…],"regions":[…],"summary":{…}}`，退出 0。输入文件不存在或不含魔数时退出 2，stderr 含 `magic`。全部帧损坏但有魔数时仍退出 0，`frames_ok=0`。
+帧头 CRC 与载荷 CRC 分离：
+- **头 CRC 失配** → `bad_header`：长度/序号不可信，扫描下一个 magic 重新同步，
+  损坏区间 = [帧起始, 重新同步点)；
+- **头 CRC 通过、载荷 CRC 失配** → `bad_payload`：帧边界精确已知，
+  损坏区间 = 整个帧；
+- **流尾不足一帧** → `truncated`：精确报告已收到的头字节数 / 缺的载荷字节数。
+
+## 解析输出（`zqframe/parser.py: parse_stream`）
+
+- `frames`：逐帧状态表（offset / seq / status / end），字节级定位；
+- `gaps`：缺失字节区间清单（坏帧、截断尾、无法解析区域），只标记不伪造；
+- `seq_gaps`：相邻成功帧序号不连续的如实记录 `(prev_seq, next_seq)`；
+- `intervals`：可解码字节区间清单 = 序号连续且字节相邻的 ok 帧最大游程。
+
+`parse_stream(data, base_offset=off)` 支持从任意字节偏移恢复解析，
+结果以绝对坐标输出，与全流解析直接可比；`intervals_from_frames` 对
+帧记录先按 offset 排序再求区间，因此随机重排的读取顺序给出相同区间清单。
+
+## 样本生成器（`zqframe/generator.py`）
+
+确定性生成 12 帧音频流（每帧 64 个 int16 样本），并注入 3 处已知损坏：
+帧 3 头损坏（seq 字段）、帧 6 载荷损坏、帧 9 头损坏（长度字段），
+同时输出真值（每帧期望状态、翻转字节的绝对偏移）。
+
+## 运行验收
+
+```
+python3 run_acceptance.py
+```
+
+覆盖：逐帧状态表对真值、坏帧字节范围、序号缺口、可解码区间音频逐样本
+等于原始音频、重复解析一致、200 次随机起点恢复一致、帧头/载荷中间
+截断的字节级定位、50 次随机重排读取区间清单一致。
