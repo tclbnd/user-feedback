@@ -1,0 +1,14 @@
+{
+  "partials": [
+    {"freq": 150.0, "amp": 0.9, "phase": 0.0}
+  ],
+  "ratio": 1.0,
+  "sr": 1000,
+  "frames": 240,
+  "controls": [
+    {"at": 0, "ratio": 1.0},
+    {"at": 60, "ratio": 1.0, "reset": true, "phase": 0.0},
+    {"at": 120, "ratio": 1.5},
+    {"at": 180, "reset": true, "phase": 1.0}
+  ]
+}
