@@ -1,0 +1,982 @@
+{
+  "documents": [
+    {
+      "id": "d01",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "gb18030",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d02",
+      "text": "<html><body>文字化けテスト：エンコーディング</body></html>",
+      "encoding": "shift_jis",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "cp1252",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d03",
+      "text": "<html><body>café résumé naïve – €100 „Straße“</body></html>",
+      "encoding": "cp1252",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d04",
+      "text": "<html><body>ðÒÏ×ÅÒËÁ ËÏÄÉÒÏ×ËÉ ÓÁÊÔÁ</body></html>",
+      "encoding": "iso8859-1",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "iso8859-1",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d05",
+      "text": "檔案編碼測試：繁體中文與空白",
+      "encoding": "big5",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "big5",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d06",
+      "text": "<html><head><title>Ç¨ÒÆÕ¾µã²âÊÔ</title></head><body>²É¼¯Èë²ÖÂÒÂë</body></html>",
+      "encoding": "iso8859-1",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "iso8859-1",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d07",
+      "text": "<html><body>文字化けテスト：エンコーディング</body></html>",
+      "encoding": "euc_jp",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d08",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "gb18030",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d09",
+      "text": "<html><body>café résumé naïve – €100 „Straße“</body></html>",
+      "encoding": "cp1252",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d10",
+      "text": "<html><body>Проверка кодировки сайта</body></html>",
+      "encoding": "koi8-r",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "koi8-r",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d11",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "gb18030",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d12",
+      "text": "<html><body>café résumé naïve © Straße · £100</body></html>",
+      "encoding": "iso8859-1",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "iso8859-1",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d13",
+      "text": "<html><body>文字化けテスト：エンコーディング</body></html>",
+      "encoding": "shift_jis",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "shift_jis",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d14",
+      "text": "<html><body>café résumé naïve – €100 „Straße“</body></html>",
+      "encoding": "cp1252",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d15",
+      "text": "plain ascii text only\n",
+      "encoding": "ascii",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "ascii",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d16",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "gb18030",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "x-unknown-charset",
+          "unknown"
+        ],
+        [
+          "weird-9999",
+          "unknown"
+        ],
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d17",
+      "text": "<html><body>café résumé naïve – €100 „Straße“</body></html>",
+      "encoding": "cp1252",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "totally-made-up",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d18",
+      "text": "<html><body>暥帤壔偗僥僗僩丗僄儞僐乕僨傿儞僌</body></html>",
+      "encoding": "gb18030",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "bogus-label",
+          "unknown"
+        ],
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d19",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "gb18030",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d20",
+      "text": "<html><body>café résumé naïve – €100 „Straße“</body></html>",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d21",
+      "text": "こんにちは世界",
+      "encoding": "utf-8",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d22",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "utf-8",
+      "source": "bom",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d23",
+      "text": "<html><body>文字化けテスト：エンコーディング</body></html>",
+      "encoding": "utf-16-le",
+      "source": "bom",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-16-le",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d24",
+      "text": "<html><body>文字化けテスト：エンコーディング</body></html>",
+      "encoding": "utf-16-be",
+      "source": "bom",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-16-be",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d25",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "utf-32-le",
+      "source": "bom",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-32-le",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d26",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html>",
+      "encoding": "utf-32-be",
+      "source": "bom",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-32-be",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d27",
+      "text": "ÿþA\u0000B",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-16-le",
+          "invalid"
+        ],
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d28",
+      "text": "ï»¿<html><head><title>Ç¨ÒÆÕ¾µã²âÊÔ</title></head><body>²É¼¯Èë²ÖÂÒÂë</body></html>",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d29",
+      "text": "abcﾃ",
+      "encoding": "shift_jis",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d30",
+      "text": "x€",
+      "encoding": "utf-8",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d31",
+      "text": "z馃",
+      "encoding": "gb18030",
+      "source": "probe",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d32",
+      "text": "<html><head><title>迁移站点测试</title></head><body>采集入仓乱码</body></html",
+      "encoding": "gb18030",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "gb18030",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d33",
+      "text": "headÿþ€tail",
+      "encoding": "cp1252",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d34",
+      "text": "��� start � end",
+      "encoding": null,
+      "source": "recovery",
+      "bad_bytes": [
+        128,
+        129,
+        130,
+        255
+      ],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "invalid"
+        ],
+        [
+          "utf-16-le",
+          "invalid"
+        ]
+      ]
+    },
+    {
+      "id": "d35",
+      "text": "utf8 文本 ok",
+      "encoding": "utf-8",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d36",
+      "text": "<html><body>café résumé naïve © Straße · £100</body></html>",
+      "encoding": "iso8859-1",
+      "source": "meta",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "x-bogus",
+          "unknown"
+        ],
+        [
+          "iso8859-1",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d37",
+      "text": "‚@€“” cp1252 only – dash",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d38",
+      "text": "��� start � end",
+      "encoding": null,
+      "source": "recovery",
+      "bad_bytes": [
+        128,
+        129,
+        130,
+        255
+      ],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "invalid"
+        ],
+        [
+          "utf-16-le",
+          "invalid"
+        ]
+      ]
+    },
+    {
+      "id": "d39",
+      "text": "ab��cd��gh�",
+      "encoding": null,
+      "source": "recovery",
+      "bad_bytes": [
+        226,
+        130,
+        240,
+        159,
+        129
+      ],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "invalid"
+        ],
+        [
+          "utf-16-le",
+          "invalid"
+        ]
+      ]
+    },
+    {
+      "id": "d40",
+      "text": "€ í € surrogate À€ overlong",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d41",
+      "text": "A\u0000B odd tailÿ",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-16-le",
+          "invalid"
+        ],
+        [
+          "utf-16-be",
+          "invalid"
+        ],
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d42",
+      "text": "",
+      "encoding": "utf-8",
+      "source": "http",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "id": "d43",
+      "text": "‚@€“” cp1252 fallback only",
+      "encoding": "cp1252",
+      "source": "fallback",
+      "bad_bytes": [],
+      "attempts": [
+        [
+          "utf-8",
+          "invalid"
+        ],
+        [
+          "x-probe-mystery",
+          "unknown"
+        ],
+        [
+          "gb18030",
+          "invalid"
+        ],
+        [
+          "shift_jis",
+          "invalid"
+        ],
+        [
+          "big5",
+          "invalid"
+        ],
+        [
+          "euc_jp",
+          "invalid"
+        ],
+        [
+          "unknown-99",
+          "unknown"
+        ],
+        [
+          "cp1252",
+          "ok"
+        ]
+      ]
+    }
+  ],
+  "summary": {
+    "by_source": {
+      "bom": 5,
+      "http": 14,
+      "meta": 8,
+      "probe": 6,
+      "fallback": 7,
+      "recovery": 3
+    },
+    "bad_bytes_total": 13
+  }
+}
