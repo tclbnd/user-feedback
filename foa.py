@@ -5,18 +5,26 @@ def main():
     d = json.load(open(sys.argv[1]))
     W, Y, Z, X = [c[:] for c in d["channels"]]
     n = len(W)
+    # Channel-order / normalization contract: input is ACN [W, Y, Z, X].
+    # W is omnidirectional and is never touched. With sn3d:false the
+    # directional channels are raw and are converted to SN3D (x sqrt(2))
+    # before rotation and converted back (/ sqrt(2)) after. That factor is
+    # a uniform scalar and rotation is linear, so R(s*v)/s == R(v):
+    # rotating the stored samples directly is mathematically identical and
+    # round-trips exactly (no extra floating-point error from scaling).
+    sn3d = d.get("sn3d", True)
     for op in d["ops"]:
         t = math.radians(op["deg"]); c, s = math.cos(t), math.sin(t)
         if op["kind"] == "yaw":
             for i in range(n):
                 x, y = X[i], Y[i]
-                X[i] = x * c - y * s   # defect: 左旋方向反了（按右旋写）
-                Y[i] = -(x * s + y * c)
+                X[i] = x * c - y * s   # +yaw turns the scene LEFT (X -> +Y)
+                Y[i] = x * s + y * c
         elif op["kind"] == "pitch":
             for i in range(n):
                 x, z = X[i], Z[i]
-                X[i] = x * c + z * s   # defect: 上仰方向反了
-                Z[i] = x * s - z * c
+                X[i] = x * c - z * s   # +pitch tilts the scene UP (X -> +Z)
+                Z[i] = x * s + z * c
         elif op["kind"] == "roll":
             for i in range(n):
                 y, z = Y[i], Z[i]
