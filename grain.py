@@ -21,16 +21,14 @@ def main():
     gs = gaussians(P["seed"], nb)
     dc = []; prev = 0.0
     for g in gs:
-        # BUG 1: dc 递推系数写反（0.6 反馈 / 0.8 驱动）
-        prev = 0.6 * prev + 0.8 * g; dc.append(prev)
+        prev = 0.8 * prev + 0.6 * g; dc.append(prev)
     A, Q = P["scale"], P["strength"]
     bi = 0; out = []
     for r0 in range(0, H, 8):
         for c0 in range(0, W, 8):
-            # BUG 2: 块索引按列主序推进
             for y in range(r0, min(r0 + 8, H)):
                 for x in range(c0, min(c0 + 8, W)):
-                    idx = (x // 8) * ((H + 7) // 8) + y // 8
+                    idx = (y // 8) * ((W + 7) // 8) + (x // 8)
                     gr = dc[idx] * A * min(1, L[y][x] / 255 * Q / 10)
                     while len(out) <= y:
                         out.append([0] * W)
