@@ -25,3 +25,6 @@ Output `{"frames":[{"seg","n","range","primaries","transfer",
 global frame index via the segment containing it (load that
 segment's config with NO prior state) and report the resolved
 record for that frame as `{"at", <record-fields>}`.
+
+Tests: `python3 test_vui.py` (no VUI, conflicting container marks,
+partial updates, two-track mixes, seeks, fixed-patch conversion).
