@@ -1,0 +1,163 @@
+{
+ "frames": [
+  {
+   "index": 0,
+   "channel_mode": "independent",
+   "subframes": [
+    {
+     "type": "constant",
+     "value": 0,
+     "block": 8
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "channel_mode": "independent",
+   "subframes": [
+    {
+     "type": "verbatim",
+     "samples": [
+      5,
+      -5,
+      100,
+      -100
+     ]
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "channel_mode": "independent",
+   "subframes": [
+    {
+     "type": "fixed",
+     "order": 2,
+     "block": 16,
+     "warmup": [
+      -30000,
+      -26000
+     ],
+     "bits": {
+      "data": "0fc3fc",
+      "length": 22
+     },
+     "partition_order": 1,
+     "bps": 16
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "channel_mode": "left_side",
+   "subframes": [
+    {
+     "type": "fixed",
+     "order": 1,
+     "block": 6,
+     "warmup": [
+      10
+     ],
+     "residuals": [
+      10,
+      10,
+      10,
+      10,
+      10
+     ]
+    },
+    {
+     "type": "fixed",
+     "order": 1,
+     "block": 6,
+     "warmup": [
+      9
+     ],
+     "residuals": [
+      9,
+      9,
+      9,
+      {
+       "escape": -31986
+      },
+      32004
+     ]
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "channel_mode": "mid_side",
+   "subframes": [
+    {
+     "type": "fixed",
+     "order": 1,
+     "block": 32,
+     "warmup": [
+      -2250
+     ],
+     "bits": {
+      "data": "72b0ac2b0ac2b0ac2b1cac2b0ac2b0ac2b0ac2b2c315027ee4b24b24b24b24b24b1cac2b0ac2b0ac2b0ac2b0",
+      "length": 350
+     },
+     "partition_order": 2,
+     "bps": 16
+    },
+    {
+     "type": "fixed",
+     "order": 1,
+     "block": 32,
+     "warmup": [
+      4500
+     ],
+     "bits": {
+      "data": "82ae55cab9572ae55cabc1572ae55cab9572ae55cabe04fe0314f25792bc95e4af25792bfff6a7f6a7f6a7f6a7f6a7f6a7f6a7f6a0",
+      "length": 421
+     },
+     "partition_order": 2,
+     "bps": 16
+    }
+   ]
+  },
+  {
+   "index": 5,
+   "channel_mode": "independent",
+   "subframes": [
+    {
+     "type": "fixed",
+     "order": 1,
+     "block": 10,
+     "warmup": [
+      1
+     ],
+     "residuals": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "index": 6,
+   "channel_mode": "right_side",
+   "subframes": [
+    {
+     "type": "verbatim",
+     "samples": [
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "type": "verbatim",
+     "samples": [
+      10,
+      20,
+      30
+     ]
+    }
+   ]
+  }
+ ]
+}
