@@ -21,3 +21,17 @@ applied; master_curve always linear. Output per frame per object:
 `{"frames":[[{"id","az","el","lin_gain"}...]...],
  "applied_master":[lin_gain per frame]}` with az/el rounded to 3
 decimals and lin_gain = 10^((obj_db+master_db)/20) rounded to 6.
+
+Explicit mute: a gain of `null` (or `"-inf"`) means -inf dB
+(lin_gain 0). A segment touching a muted endpoint interpolates in
+the linear-gain domain; segments between two finite dB values
+interpolate in dB. Step holds a muted value across the gap until the
+next point.
+
+Diagnostics: the output also carries `diagnostics.transitions` —
+one entry per object (and `"master"`) whenever a new segment/point
+takes effect: `{"frame","sample","id","mode","segment","f"}` where
+`sample = frame*frame_samples` is the absolute sample index at which
+the new value is first heard and `f` is the interpolation parameter
+at that frame. Evaluation is a pure function of frame time, so
+seeking to a time and playing through it produce identical output.

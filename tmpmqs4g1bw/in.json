@@ -1,0 +1,1 @@
+{"sample_rate": 1000, "frame_samples": 1, "n_frames": 101, "objects": [{"id": "a", "interp": "linear", "points": [[0, 170, 0, 0], [100, -170, 0, -6]]}], "master_curve": [[0, 0], [100, -6]]}
