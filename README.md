@@ -16,3 +16,18 @@ selects one channel (de-interleave by stride); "all" returns the raw
 interleaved span. Output `{"results":[{"id","channel","start_frame",
 "samples":[...]}|{"id","error":"eof"}], "frames_total":N}` preserving
 request order. samples are raw ints; no endianness/scale conversion.
+
+Notes:
+- `riff_size == 0xFFFFFFFF` is a placeholder; only then does `ds64_size`
+  carry the length. A real `riff_size` wins even if `ds64_size` is present.
+- Unknown extra chunks (e.g. `JUNK`, `bext`, `LIST`) are ignored: they never
+  shift the frame/channel stride, and an odd-sized chunk's pad byte is not
+  part of the data chunk.
+- `bytes_per_sample` is the container width and `bits_per_sample` the valid
+  width; stored values are already container-aligned, so nothing is shifted.
+- Reads stop at the declared end of file and at the last whole frame present
+  in `interleaved`; a truncated file yields shorter sample lists (never
+  padded), and `frames_total` still reports the declared length.
+
+Tests: `python3 -m unittest -v test_rf64`
+
