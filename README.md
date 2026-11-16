@@ -23,3 +23,46 @@ to int; a probe inside a gap or past the last sample reports
 still resolve. Output `{"tracks":[{"id","timeline":[...],"gaps":[...]}],
 "answers":[{"track","t_ms","found":bool,"pts","dur","size"}...]}` in
 request order, plus `duration_ms` per track = (last pts+dur)/timescale.
+
+## Binary fragmented MP4 indexer (`fmp4.py`)
+
+`python3 fmp4.py FILE [OUT.json]` parses the `tfhd`/`tfdt`/`trun` subset
+of an fMP4 file (`ftyp`, `moov`/`trak`/`tkhd`/`mdhd`/`hdlr`/`mvex`/`trex`,
+`moof`/`mfhd`/`traf`, `mdat`) and emits, per track:
+
+* every sample's source byte range (`offset`,`end`,`size`, sha256 digest),
+  DTS, signed-composition-offset PTS, duration, flags and keyframe state;
+* `decode_order` (DTS walk across all trun runs) and `timeline` (PTS sort,
+  so B-frame style negative offsets display in presentation order);
+* per-fragment continuation state (`cont`, `gap`, `expected_dts`) spanning
+  fragments; `cont` is also stamped on each fragment's first sample.
+
+Box reading is offset based and bounds checked (32-bit, 64-bit largesize
+and size-0-to-EOF headers; unknown boxes skipped by declared size; no read
+past a container end). Each trun resolves its own `data_offset` against the
+tfhd base (`base-data-offset`, else moof origin), so a fragment's second
+run is never located through the first run's offset. Per-sample fields
+fall back to tfhd defaults and then trex defaults.
+
+A truncated mdat leaves a locatable `truncated_mdat` error (track,
+fragment sequence, trun, sample index, offset, missing bytes) while every
+complete track and fragment stays indexed. Truncated/invalid box headers
+produce `truncated_box` / `invalid_box_size` entries likewise.
+
+`fmp4.ChunkedReader` limits each `read()`; the index only uses `seek()` /
+short-read-tolerant reads, so the result is byte-identical for any chunk
+size and repeat/seek playback never depends on buffered read history.
+
+## Acceptance fixtures and tests
+
+* `mkmp4.py` builds `out/full.fmp4` (interleaved video id 1 / audio id 2,
+  multiple trun runs, signed negative composition offsets, tfhd and trex
+  default sample fields, explicit vs. moof-anchored data offsets, a gap
+  and seamless continuation) and `out/truncated.fmp4` (cut inside the last
+  mdat).
+* `python3 -m unittest test_fmp4 test_frag` runs all checks: byte spans and
+  digests vs. the builder, DTS/PTS timelines, keyframe/default resolution,
+  continuation, truncation recovery, chunk-size independence (1..4096),
+  repeated seek positioning, largesize/size-0 headers, and the JSON
+  timeline rules.
+
