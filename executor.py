@@ -17,9 +17,11 @@ def evaluate(expr, row, excluded=None):
 
 def matches(where, row):
     for col, cond in (where or {}).items():
+        if row.get(col) is None:
+            return False
         if isinstance(cond, dict) and row.get(col) not in cond["in"]:
             return False
-        if not isinstance(cond, dict) and (row.get(col) is None or row.get(col) != cond):
+        if not isinstance(cond, dict) and row.get(col) != cond:
             return False
     return True
 
@@ -57,9 +59,13 @@ class Session:
             return self._finish(op == "commit")
         autocommit, self.in_tx = not self.in_tx, True
         modes = dict(self.cons.mode)
+        mark = len(self.journal)
         try:
             result = getattr(self, "_" + op)(stmt)
         except Violation as v:
+            # Undo this statement only; earlier statements in the
+            # transaction keep their effects.
+            self._undo(mark)
             self.cons.mode = modes
             if autocommit:
                 self._finish(False)
@@ -98,33 +104,30 @@ class Session:
 
     def _insert(self, stmt):
         conflict = stmt.get("on_conflict") or {}
+        action = conflict.get("action")
         target = conflict.get("target")
-        if conflict.get("action") == "update" and (target is None or self.cons.mode.get(target) != "immediate"):
+        if action == "update" and (target is None or self.cons.mode.get(target) != "immediate"):
             raise Violation("invalid_target", target)
         counts = {"inserted": 0, "updated": 0, "skipped": 0}
-        if not conflict:
-            seen = {}
-            for i, raw in enumerate(stmt["rows"]):
-                for c in self.cons.all:
-                    key = c.key(raw)
-                    if key is not None and (c.name, key) in seen:
-                        raise Violation("unique_violation", c.name, key, seen[c.name, key])
-                    seen.setdefault((c.name, key), i)
+        touched = set()  # rids inserted or updated by this statement
         for i, raw in enumerate(stmt["rows"]):
             row = {c: raw.get(c) for c in self.columns}
-            hit = self.cons.find_conflict(self.rows, row, target)
+            hit = self.cons.find_conflict(self.rows, row)
             if hit is None:
-                self._write(None, row)
+                touched.add(self._write(None, row))
                 counts["inserted"] += 1
                 continue
             c, rid = hit
             if not conflict or (target is not None and target != c.name):
                 raise Violation("unique_violation", c.name, c.key(row), i)
-            if conflict["action"] == "nothing":
+            if action == "nothing":
                 counts["skipped"] += 1
                 continue
+            if rid in touched:
+                raise Violation("cardinality_violation", c.name, c.key(row), i)
             old = self.rows[rid]
             self._write(rid, {**old, **{k: evaluate(e, old, row) for k, e in conflict["set"].items()}})
+            touched.add(rid)
             counts["updated"] += 1
         self.cons.check(self.rows, self.cons.in_mode("immediate"), "statement")
         return counts
@@ -134,7 +137,9 @@ class Session:
         for rid in hits:
             old = self.rows[rid]
             self._write(rid, {**old, **{k: evaluate(e, old) for k, e in stmt["set"].items()}})
-            self.cons.check(self.rows, self.cons.in_mode("immediate"), "statement")
+        # Immediate constraints must hold at the end of the statement;
+        # rows may collide while the UPDATE is still running.
+        self.cons.check(self.rows, self.cons.in_mode("immediate"), "statement")
         return {"updated": len(hits)}
 
     def _delete(self, stmt):

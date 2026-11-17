@@ -33,18 +33,26 @@ class Constraints:
     def in_mode(self, mode):
         return [c for c in self.all if self.mode[c.name] == mode]
 
-    def find_conflict(self, rows, row, target):
-        order = sorted(self.all, key=lambda c: c.name != target)
-        for c in order:
+    def find_conflict(self, rows, row):
+        # Immediate constraints only, in definition order; the first
+        # constraint with a colliding row decides.
+        for c in self.in_mode("immediate"):
             key = c.key(row)
-            rid = next((rid for rid, other in rows.items() if key is not None and c.key(other) == key), None)
+            if key is None:
+                continue
+            rid = next((rid for rid, other in rows.items() if c.key(other) == key), None)
             if rid is not None:
                 return c, rid
         return None
 
+    @staticmethod
+    def _sort_key(key):
+        # Order by value within one type; keep mixed-type keys comparable.
+        return tuple((type(v).__name__, v) for v in key)
+
     def check(self, rows, constraints, at):
         for c in constraints:
-            keys = [c.key(r) for _, r in sorted(rows.items()) if c.key(r) is not None]
-            dups = sorted({k for k in keys if keys.count(k) > 1}, key=repr)
+            keys = [k for k in (c.key(r) for r in rows.values()) if k is not None]
+            dups = {k for k in keys if keys.count(k) > 1}
             if dups:
-                raise Violation("unique_violation", c.name, dups[0], None, at)
+                raise Violation("unique_violation", c.name, min(dups, key=self._sort_key), None, at)
