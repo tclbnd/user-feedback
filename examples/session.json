@@ -1,0 +1,72 @@
+[
+ {
+  "op": "begin",
+  "tx": 1
+ },
+ {
+  "op": "set",
+  "tx": 1,
+  "page": 0,
+  "slot": 0,
+  "value": "alice=100"
+ },
+ {
+  "op": "set",
+  "tx": 1,
+  "page": 1,
+  "slot": 3,
+  "value": "bob=40"
+ },
+ {
+  "op": "commit",
+  "tx": 1
+ },
+ {
+  "op": "begin",
+  "tx": 2
+ },
+ {
+  "op": "set",
+  "tx": 2,
+  "page": 1,
+  "slot": 0,
+  "value": "carol=7"
+ },
+ {
+  "op": "checkpoint"
+ },
+ {
+  "op": "begin",
+  "tx": 3
+ },
+ {
+  "op": "set",
+  "tx": 3,
+  "page": 0,
+  "slot": 3,
+  "value": "dave=55"
+ },
+ {
+  "op": "commit",
+  "tx": 3
+ },
+ {
+  "op": "set",
+  "tx": 2,
+  "page": 1,
+  "slot": 0,
+  "value": "carol=9"
+ },
+ {
+  "op": "flush",
+  "page": 1
+ },
+ {
+  "op": "flush",
+  "page": 0,
+  "torn": true
+ },
+ {
+  "op": "crash"
+ }
+]
