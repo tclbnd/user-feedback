@@ -1,0 +1,24 @@
+{
+ "select": [
+  "t.a",
+  "t.b"
+ ],
+ "from": "t",
+ "as": "t",
+ "where": [
+  {
+   "op": "not_exists",
+   "query": {
+    "from": "s",
+    "as": "s",
+    "where": [
+     {
+      "op": "=",
+      "left": {"col": "s.x"},
+      "right": {"col": "t.a"}
+     }
+    ]
+   }
+  }
+ ]
+}

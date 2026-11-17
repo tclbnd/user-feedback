@@ -1,0 +1,25 @@
+{
+ "select": [
+  "t.a",
+  "t.b"
+ ],
+ "from": "t",
+ "as": "t",
+ "where": [
+  {
+   "op": "in",
+   "args": [
+    {"col": "t.a"},
+    {"col": "t.b"}
+   ],
+   "query": {
+    "from": "s",
+    "as": "s",
+    "select": [
+     "s.x",
+     "s.y"
+    ]
+   }
+  }
+ ]
+}

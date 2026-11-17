@@ -25,9 +25,9 @@ class Join:
         self.inner = [r for r in db[sub["from"]]["rows"]
                       if expr.and3(expr.plain(p, {self.alias: r}) for p in local) is True]
         self.select = sub.get("select", [])
-        self.inner_has_null = any(r.get(c.split(".", 1)[1]) is None for r in self.inner for c in self.select)
 
     def matches(self, env):
+        """Subquery rows visible for this outer row (correlation predicates applied)."""
         out = []
         for row in self.inner:
             inner = dict(env, **{self.alias: row})
@@ -38,12 +38,20 @@ class Join:
     def keep(self, env):
         rows = self.matches(env)
         if "args" not in self.pred:
+            # EXISTS / NOT EXISTS: only the existence of a row matters, NULLs do not.
             return bool(rows) if self.kind == "semi_join" else not rows
-        key = tuple(expr.value(a, env) for a in self.pred["args"])
-        if self.kind == "null_aware_anti_join" and (None in key or self.inner_has_null):
-            return False
-        found = key in {tuple(expr.value({"col": c}, r) for c in self.select) for r in rows}
-        return found if self.kind == "semi_join" else not found
+        if self.kind == "null_aware_anti_join":
+            # Exact NOT IN under 3VL, evaluated on the rows of *this* outer
+            # row's correlated subquery: TRUE only when IN is FALSE.
+            return expr.not3(expr.in3(self.pred["args"], self.select, env, rows)) is True
+        if self.kind == "semi_join":
+            # IN under 3VL: keep the row only when some subquery row compares
+            # TRUE. Plain tuple equality is wrong: NULL = NULL must be UNKNOWN.
+            return expr.in3(self.pred["args"], self.select, env, rows) is True
+        # Plain anti join: the planner proved every compared value is non-null,
+        # so set membership is equivalent to the NOT IN definition.
+        keys = {tuple(expr.value({"col": c}, r) for c in self.select) for r in rows}
+        return tuple(expr.value(a, env) for a in self.pred["args"]) not in keys
 
 
 def run(db, query, rewrite=True):
