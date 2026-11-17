@@ -1,0 +1,70 @@
+[
+{
+"op": "begin",
+"s": "load"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a1",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a2",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a3",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-b1",
+"value": "free"
+},
+{
+"op": "commit",
+"s": "load"
+},
+{
+"op": "begin",
+"s": "report"
+},
+{
+"op": "scan",
+"s": "report",
+"lo": "seat-",
+"hi": "seat-z"
+},
+{
+"op": "begin",
+"s": "book"
+},
+{
+"op": "put",
+"s": "book",
+"key": "seat-a1",
+"value": "taken"
+},
+{
+"op": "commit",
+"s": "book"
+},
+{
+"op": "get",
+"s": "report",
+"key": "seat-a1"
+},
+{
+"op": "commit",
+"s": "report"
+},
+{
+"op": "dump"
+}
+]

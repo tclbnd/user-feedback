@@ -1,0 +1,71 @@
+[
+{
+"op": "begin",
+"s": "load"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a1",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a2",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-a3",
+"value": "free"
+},
+{
+"op": "put",
+"s": "load",
+"key": "seat-b1",
+"value": "free"
+},
+{
+"op": "commit",
+"s": "load"
+},
+{
+"op": "begin",
+"s": "audit"
+},
+{
+"op": "scan",
+"s": "audit",
+"lo": "seat-a",
+"hi": "seat-b"
+},
+{
+"op": "begin",
+"s": "add"
+},
+{
+"op": "put",
+"s": "add",
+"key": "seat-a4",
+"value": "free"
+},
+{
+"op": "commit",
+"s": "add"
+},
+{
+"op": "put",
+"s": "audit",
+"key": "report",
+"value": "3 seats in row a"
+},
+{
+"op": "commit",
+"s": "audit"
+},
+{
+"op": "dump"
+}
+]
