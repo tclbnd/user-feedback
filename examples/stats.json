@@ -1,0 +1,18 @@
+{"tables": {
+  "orders": {"rows": 200000,
+             "columns": {"id": {"ndv": 200000, "width": 8}, "customer_id": {"ndv": 20000, "width": 8},
+                         "status": {"ndv": 5, "width": 10}, "created_at": {"ndv": 150000, "width": 8},
+                         "total": {"ndv": 9000, "width": 8}},
+             "indexes": [{"name": "pk_orders", "columns": ["id"], "unique": true},
+                         {"name": "ix_orders_status", "columns": ["status"]},
+                         {"name": "ix_orders_status_total", "columns": ["status", "total"]},
+                         {"name": "ix_orders_total", "columns": ["total"]}]},
+  "customers": {"rows": 20000,
+                "columns": {"id": {"ndv": 20000, "width": 8}, "region": {"ndv": 12, "width": 12},
+                            "email": {"ndv": 20000, "width": 40}},
+                "indexes": [{"name": "pk_customers", "columns": ["id"], "unique": true}]},
+  "events": {"rows": 500000,
+             "columns": {"id": {"ndv": 500000, "width": 8}, "kind": {"ndv": 40, "width": 12},
+                         "at": {"ndv": 400000, "width": 8}},
+             "indexes": [{"name": "pk_events", "columns": ["id"], "unique": true}]}},
+ "budget": {"max_indexes": 3, "space_bytes": 20000000}}
