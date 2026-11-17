@@ -1,0 +1,7 @@
+[
+ {"op": "begin", "s": "load"}, {"op": "write", "s": "load", "key": "stock", "value": "12"}, {"op": "commit", "s": "load"},
+ {"op": "begin", "s": "x"}, {"op": "write", "s": "x", "key": "stock", "value": "0"}, {"op": "abort", "s": "x"},
+ {"op": "begin", "s": "y"}, {"op": "write", "s": "y", "key": "stock", "value": "-1"}, {"op": "abort", "s": "y"},
+ {"op": "begin", "s": "r"}, {"op": "read", "s": "r", "key": "stock"}, {"op": "commit", "s": "r"},
+ {"op": "chain", "key": "stock"}, {"op": "vacuum"}, {"op": "chain", "key": "stock"}
+]
