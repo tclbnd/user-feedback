@@ -1,0 +1,18 @@
+{
+  "desc": "Three-way cycle through intention locks on two table resources: every edge comes from an IS/IX/S/SIX incompatibility, and the cycle only closes with the last queued request.",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 3, "op": "begin"},
+    {"tx": 1, "op": "lock", "res": "t_a", "mode": "S"},
+    {"tx": 2, "op": "lock", "res": "t_b", "mode": "IX"},
+    {"tx": 3, "op": "lock", "res": "t_a", "mode": "IS"},
+    {"tx": 3, "op": "lock", "res": "t_b", "mode": "S"},
+    {"tx": 1, "op": "lock", "res": "t_b", "mode": "IX"},
+    {"tx": 2, "op": "lock", "res": "t_a", "mode": "IX"},
+    {"tx": 3, "op": "lock", "res": "t_a", "mode": "IX"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"},
+    {"tx": 3, "op": "commit"}
+  ]
+}

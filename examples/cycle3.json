@@ -1,0 +1,17 @@
+{
+  "desc": "Three-party cycle across three tables; tx 3 began last and is the victim.",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 3, "op": "begin"},
+    {"tx": 1, "op": "lock", "res": "t1", "mode": "X"},
+    {"tx": 2, "op": "lock", "res": "t2", "mode": "X"},
+    {"tx": 3, "op": "lock", "res": "t3", "mode": "X"},
+    {"tx": 1, "op": "lock", "res": "t2", "mode": "X"},
+    {"tx": 2, "op": "lock", "res": "t3", "mode": "X"},
+    {"tx": 3, "op": "lock", "res": "t1", "mode": "X"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"},
+    {"tx": 3, "op": "commit"}
+  ]
+}

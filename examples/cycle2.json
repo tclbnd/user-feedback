@@ -1,0 +1,13 @@
+{
+  "desc": "Two-party wait-for cycle on two rows; later beginner is the victim.",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 1, "op": "write", "res": "orders/1"},
+    {"tx": 2, "op": "write", "res": "orders/2"},
+    {"tx": 1, "op": "write", "res": "orders/2"},
+    {"tx": 2, "op": "write", "res": "orders/1"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"}
+  ]
+}

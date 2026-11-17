@@ -1,0 +1,15 @@
+{
+  "desc": "Victim rule: tx 2 began first but wrote fewer rows, so tx 2 is sacrificed.",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 1, "op": "write", "res": "a/1"},
+    {"tx": 1, "op": "write", "res": "a/2"},
+    {"tx": 1, "op": "write", "res": "a/3"},
+    {"tx": 2, "op": "write", "res": "b/1"},
+    {"tx": 1, "op": "write", "res": "b/1"},
+    {"tx": 2, "op": "write", "res": "a/1"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"}
+  ]
+}

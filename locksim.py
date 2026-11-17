@@ -1,25 +1,35 @@
 #!/usr/bin/env python3
-"""Replay a scripted transaction workload against the lock manager."""
+"""Replay a scripted transaction workload against the lock manager.
+
+There are no lock timeouts: blocked transactions wait in FIFO queues and a
+wait-for graph detects deadlocks when a request blocks.  The victim of a
+deadlock is the cycle member with the fewest written rows (ties: latest
+begin), matching the rules in the README.
+"""
 import json
 import sys
 
-from deadlock import Watchdog
+from deadlock import DeadlockDetector
 from lockmgr import LockTable
 
 
 class Simulator:
     def __init__(self):
         self.locks, self.events = LockTable(), []
-        self.pending, self.blocked, self.written, self.started = {}, set(), {}, {}
+        # operations of each tx that have not been processed yet
+        self.pending = {}
+        # transactions currently blocked on a lock
+        self.blocked = set()
+        # whether the request a tx is blocked on is a write (counts on grant)
+        self.blocked_write = {}
+        self.written, self.started = {}, {}
         self.committed, self.aborted = [], []
-        self.watchdog = Watchdog()
+        self.detector = DeadlockDetector(self.locks)
 
     def log(self, **event):
         self.events.append(event)
 
     def submit(self, op):
-        self.watchdog.tick()
-        self.expire()
         tx = op["tx"]
         if tx in self.aborted or tx in self.committed:
             return
@@ -34,46 +44,65 @@ class Simulator:
             if kind == "begin":
                 self.started[tx] = len(self.started)
             elif kind in ("lock", "write"):
-                mode = op.get("mode", "X")
-                if self.locks.request(tx, op["res"], mode):
-                    self.log(event="granted", tx=tx, res=op["res"], mode=mode)
-                    self.watchdog.granted()
-                    if kind == "write":
-                        self.written[tx] = self.written.get(tx, 0) + 1
-                else:
-                    if kind == "write":
-                        self.pending[tx].insert(0, {"op": "count", "tx": tx})
-                    self.blocked.add(tx)
-                    self.log(event="waiting", tx=tx, res=op["res"], mode=mode)
-                    self.watchdog.waiting(tx)
-            elif kind == "count":
-                self.written[tx] = self.written.get(tx, 0) + 1
+                self.acquire(tx, op, kind == "write")
             elif kind in ("commit", "abort"):
                 (self.committed if kind == "commit" else self.aborted).append(tx)
                 self.log(event=kind, tx=tx)
                 self.finish(tx)
 
-    def expire(self):
-        victim = self.watchdog.expired()
-        if victim is None:
+    def acquire(self, tx, op, is_write):
+        mode = op.get("mode", "X")
+        granted_mode = self.locks.request(tx, op["res"], mode)
+        if granted_mode is not None:
+            self.log(event="granted", tx=tx, res=op["res"], mode=granted_mode)
+            if is_write:
+                self.written[tx] = self.written.get(tx, 0) + 1
             return
-        self.log(event="timeout", tx=victim)
-        self.aborted.append(victim)
-        self.log(event="abort", tx=victim)
-        self.pending.pop(victim, None)
-        self.finish(victim)
+        # The request blocked: record the wait and maintain the graph.
+        effective = self.locks.queued_mode(tx) or mode
+        self.blocked_write[tx] = is_write
+        self.detector.add_waiter(tx)
+        self.blocked.add(tx)
+        self.log(event="waiting", tx=tx, res=op["res"], mode=effective)
+        self.resolve_deadlocks(tx)
+
+    def resolve_deadlocks(self, tx):
+        # Abort victims while the blocked requester is still blocked and on a
+        # cycle.  Once it has been woken (or aborted) the resolution is done:
+        # any unrelated cycle left behind is handled when one of its members
+        # next blocks, never by an extra speculative abort.
+        while tx in self.blocked and self.locks.is_waiting(tx):
+            cycle = self.detector.find_cycle(tx)
+            if cycle is None:
+                return
+            victim = self.detector.pick_victim(cycle, self.written, self.started)
+            self.log(event="deadlock", cycle=sorted(cycle), victim=victim)
+            self.abort_tx(victim)
+
+    def abort_tx(self, tx):
+        if tx in self.aborted:
+            return
+        self.aborted.append(tx)
+        self.log(event="abort", tx=tx)
+        self.pending.pop(tx, None)
+        self.finish(tx)
 
     def finish(self, tx):
         self.blocked.discard(tx)
-        self.watchdog.resumed(tx)
-        woken = self.locks.release_all(tx)
+        self.blocked_write.pop(tx, None)
+        self.detector.remove(tx)
+        woken, touched = self.locks.release_all(tx)
+        self.detector.refresh_resources(touched)
         for t, res, mode in woken:
             self.log(event="granted", tx=t, res=res, mode=mode)
-            self.watchdog.granted()
-            self.watchdog.resumed(t)
+            self.detector.remove(t)
             self.blocked.discard(t)
+            if self.blocked_write.pop(t, False):
+                self.written[t] = self.written.get(t, 0) + 1
+        # Woken transactions resume in the order in which they were granted.
         for t in dict.fromkeys(t for t, _, _ in woken):
-            self.drain(t)
+            if t not in self.blocked and t not in self.aborted and t not in self.committed:
+                self.drain(t)
 
 
 def run(script):

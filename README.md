@@ -73,3 +73,22 @@ transaction ids first). The victim is the member of the cycle that has written
 the fewest rows, and among those the one that began last; it is aborted and
 its locks are released. This repeats while the requester is still blocked and
 on a cycle. There are no timeouts: a transaction can wait as long as it takes.
+
+## Acceptance scripts
+
+The `examples/` directory contains scripted workloads for every required
+case; `tests/test_deadlock.py` asserts the detected cycles, victims and
+completion orders for all of them:
+
+| script                  | scenario                                              |
+|-------------------------|-------------------------------------------------------|
+| `cycle2.json`           | two-party cycle, later beginner is victim             |
+| `cycle3.json`           | three-party cycle, survivors finish in wake order     |
+| `cycle_upgrade.json`    | deadlock from S -> X conversion (lock upgrade)        |
+| `cycle_intention.json`  | three-party cycle built from IS/IX/S/SIX conflicts    |
+| `victim_writes.json`    | fewest-written-rows rule overrides begin time         |
+| `acyclic.json`          | long FIFO wait with no cycle: zero false deadlocks    |
+| `intention_compat.json` | intention compatibility and SIX upgrade, no deadlock  |
+| `upgrade_queue.json`    | conversions at queue head; waiting X is not starved   |
+
+Run everything with `python3 -m unittest discover -s tests`.

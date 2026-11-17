@@ -1,0 +1,13 @@
+{
+  "desc": "Deadlock caused by S -> X lock upgrades (conversions wait at queue head).",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 1, "op": "lock", "res": "row/9", "mode": "S"},
+    {"tx": 2, "op": "lock", "res": "row/9", "mode": "S"},
+    {"tx": 1, "op": "lock", "res": "row/9", "mode": "X"},
+    {"tx": 2, "op": "lock", "res": "row/9", "mode": "X"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"}
+  ]
+}

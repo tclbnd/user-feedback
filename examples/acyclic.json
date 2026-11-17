@@ -1,0 +1,14 @@
+{
+  "desc": "Acyclic blocking workload: long waits must not raise any false deadlock.",
+  "ops": [
+    {"tx": 1, "op": "begin"},
+    {"tx": 2, "op": "begin"},
+    {"tx": 3, "op": "begin"},
+    {"tx": 1, "op": "lock", "res": "r", "mode": "X"},
+    {"tx": 2, "op": "lock", "res": "r", "mode": "S"},
+    {"tx": 3, "op": "lock", "res": "r", "mode": "S"},
+    {"tx": 1, "op": "commit"},
+    {"tx": 2, "op": "commit"},
+    {"tx": 3, "op": "commit"}
+  ]
+}
