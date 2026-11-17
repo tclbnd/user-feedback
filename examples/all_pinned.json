@@ -1,0 +1,9 @@
+[
+ {"op": "pin", "page": 0},
+ {"op": "pin", "page": 1},
+ {"op": "pin", "page": 2},
+ {"op": "pin", "page": 3},
+ {"op": "get", "page": 9},
+ {"op": "unpin", "page": 2},
+ {"op": "get", "page": 9}
+]
