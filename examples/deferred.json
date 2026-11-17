@@ -1,0 +1,17 @@
+{"table": {"columns": ["id", "email", "qty"],
+           "constraints": [{"name": "pk", "columns": ["id"]},
+                           {"name": "uq_email", "columns": ["email"], "deferrable": true}]},
+ "rows": [{"id": 1, "email": "a@x", "qty": 1}, {"id": 2, "email": "b@x", "qty": 1}],
+ "statements": [
+  {"op": "update", "where": {"id": {"in": [1, 2]}}, "set": {"id": {"sub": [3, {"col": "id"}]}}},
+  {"op": "begin"},
+  {"op": "set_constraints", "names": ["uq_email"], "mode": "deferred"},
+  {"op": "update", "where": {"id": 1}, "set": {"email": "b@x"}},
+  {"op": "update", "where": {"id": 2}, "set": {"email": "a@x"}},
+  {"op": "insert", "rows": [{"id": 3, "email": "c@x", "qty": 1}, {"id": 1, "email": "z@x", "qty": 1}]},
+  {"op": "insert", "rows": [{"id": 3, "email": "c@x", "qty": 1}]},
+  {"op": "commit"},
+  {"op": "begin"},
+  {"op": "set_constraints", "names": "all", "mode": "deferred"},
+  {"op": "insert", "rows": [{"id": 4, "email": "a@x", "qty": 1}]},
+  {"op": "commit"}]}
