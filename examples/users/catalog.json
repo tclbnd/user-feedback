@@ -1,0 +1,19 @@
+{
+ "columns": [
+  "id",
+  "email",
+  "city"
+ ],
+ "indexes": [
+  {
+   "name": "email",
+   "column": "email",
+   "unique": true
+  },
+  {
+   "name": "city",
+   "column": "city",
+   "unique": false
+  }
+ ]
+}
