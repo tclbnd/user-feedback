@@ -42,6 +42,12 @@ overflow pages and referenced by an `L` record.
   bytes for a new slot unless a free slot exists), else a new page is
   appended. The lowest free slot is reused. If a page has enough free space
   but not enough contiguous space, it is compacted first.
+- A page keeps a *forwarding reserve*: the free space never drops below
+  `sum(max(0, 5 - len(rec)))` over its live records. A forwarding pointer is
+  always 5 bytes, so this guarantees that any live slot can be turned into an
+  `F` pointer no matter how the value grows or shrinks. Without it a page full
+  of 1-byte rows could pin a row forever, because its slot could not even hold
+  the pointer.
 - Update writes in place when the new record fits the page (compacting if
   needed). Otherwise the row moves: the value goes to another page as an `M`
   record (an `L` record when it is longer than 120 bytes) and the original
@@ -49,3 +55,7 @@ overflow pages and referenced by an `L` record.
   moved is moved again by rewriting the original `F` pointer, so a row is never
   more than one hop away from its row id; the old `M` record is removed.
 - Delete frees the slot (and the `M` record of a moved row).
+- Compaction packs live records at the end of the page and never renumbers or
+  drops slots, so row ids survive it. It runs on a page when the space sitting
+  in holes exceeds half the page, and also whenever an insert or grow would
+  otherwise fail although the page has enough total free space.
