@@ -1,0 +1,10 @@
+{"lsn": 15, "time": 1150, "tx": 4, "type": "PUT", "table": "orders", "key": "o3", "value": "carol:9"}
+{"lsn": 16, "time": 1160, "tx": 4, "type": "COMMIT"}
+{"lsn": 17, "time": 1170, "tx": 5, "type": "BEGIN"}
+{"lsn": 18, "time": 1180, "tx": 5, "type": "PUT", "table": "accounts", "key": "dave", "value": "30"}
+{"lsn": 19, "time": 1190, "tx": 6, "type": "BEGIN"}
+{"lsn": 20, "time": 1200, "tx": 6, "type": "PUT", "table": "orders", "key": "o1", "value": "alice:25"}
+{"lsn": 21, "time": 1210, "tx": 6, "type": "COMMIT"}
+{"lsn": 22, "time": 1220, "tx": 5, "type": "COMMIT"}
+{"lsn": 23, "time": 1230, "tx": 7, "type": "BEGIN"}
+{"lsn": 24, "time": 1240, "tx": 7, "type": "PUT", "table": "accounts", "key": "alice", "value": "75"}

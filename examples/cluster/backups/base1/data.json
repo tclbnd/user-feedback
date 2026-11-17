@@ -1,0 +1,12 @@
+{
+ "tables": {
+  "accounts": {
+   "alice": "80",
+   "bob": "50"
+  },
+  "orders": {
+   "o1": "alice:20",
+   "o2": "bob:5"
+  }
+ }
+}

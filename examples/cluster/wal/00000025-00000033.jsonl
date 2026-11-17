@@ -1,0 +1,9 @@
+{"lsn": 25, "time": 1250, "tx": 7, "type": "COMMIT"}
+{"lsn": 26, "time": 1260, "tx": 8, "type": "BEGIN"}
+{"lsn": 27, "time": 1270, "tx": 8, "type": "DEL", "table": "orders", "key": "o1"}
+{"lsn": 28, "time": 1280, "tx": 8, "type": "DEL", "table": "orders", "key": "o2"}
+{"lsn": 29, "time": 1290, "tx": 8, "type": "DEL", "table": "orders", "key": "o3"}
+{"lsn": 30, "time": 1300, "tx": 8, "type": "COMMIT"}
+{"lsn": 31, "time": 1310, "tx": 9, "type": "BEGIN"}
+{"lsn": 32, "time": 1320, "tx": 9, "type": "PUT", "table": "accounts", "key": "erin", "value": "10"}
+{"lsn": 33, "time": 1330, "tx": 9, "type": "COMMIT"}
