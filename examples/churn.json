@@ -1,0 +1,95 @@
+[
+{
+"op": "insert",
+"value": "row-00-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "insert",
+"value": "row-01-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "insert",
+"value": "row-02-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "insert",
+"value": "row-03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "insert",
+"value": "row-04-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "insert",
+"value": "row-05-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+},
+{
+"op": "delete",
+"rid": [
+0,
+1
+]
+},
+{
+"op": "delete",
+"rid": [
+0,
+3
+]
+},
+{
+"op": "insert",
+"value": "refill-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+},
+{
+"op": "update",
+"rid": [
+0,
+0
+],
+"value": "grown-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+},
+{
+"op": "update",
+"rid": [
+0,
+0
+],
+"value": "grown-again-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+},
+{
+"op": "insert",
+"value": "big-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+},
+{
+"op": "read",
+"rid": [
+0,
+0
+]
+},
+{
+"op": "read",
+"rid": [
+0,
+1
+]
+},
+{
+"op": "read",
+"rid": [
+0,
+3
+]
+},
+{
+"op": "read",
+"rid": [
+1,
+0
+]
+},
+{
+"op": "stats"
+}
+]

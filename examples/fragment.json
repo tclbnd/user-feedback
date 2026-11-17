@@ -1,0 +1,71 @@
+[
+{
+"op": "insert",
+"value": "order-000|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "insert",
+"value": "order-001|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "insert",
+"value": "order-002|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "insert",
+"value": "order-003|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "insert",
+"value": "order-004|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "insert",
+"value": "order-005|itemitemitemitemitemitemitemitem"
+},
+{
+"op": "delete",
+"rid": [
+0,
+1
+]
+},
+{
+"op": "delete",
+"rid": [
+0,
+3
+]
+},
+{
+"op": "stats"
+},
+{
+"op": "insert",
+"value": "note|refund approved refund approved refund approved "
+},
+{
+"op": "read",
+"rid": [
+0,
+0
+]
+},
+{
+"op": "read",
+"rid": [
+0,
+2
+]
+},
+{
+"op": "read",
+"rid": [
+0,
+4
+]
+},
+{
+"op": "stats"
+}
+]
