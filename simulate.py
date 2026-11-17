@@ -15,7 +15,9 @@ class Session:
         self.txn = None
 
     def required(self):
-        return self.last_write
+        # Read-your-writes plus monotonic reads: the serving node must have
+        # replayed every commit this session made and every version it read.
+        return max(self.last_write, self.last_read)
 
 
 def run(scenario):
@@ -36,23 +38,31 @@ def run(scenario):
             s.txn = []
         elif op == "commit":
             if s.txn:
-                s.last_write = cluster.lsn
-                cluster.commit(t, s.txn)
+                s.last_write = cluster.commit(t, s.txn)
             s.txn = None
         elif op == "write":
             if s.txn is not None:
                 s.txn.append((e["key"], e["value"]))
             else:
-                s.last_write = cluster.lsn
-                cluster.commit(t, [(e["key"], e["value"])])
+                s.last_write = cluster.commit(t, [(e["key"], e["value"])])
         elif op == "read":
-            target, served, result, failed = router.read(e["key"], t, s.required())
-            own = [v for k, v in s.txn or [] if k == e["key"]]
-            if own:
-                result = dict(result, value=own[-1], version=None)
+            if s.txn is not None:
+                # Rule 1: every read inside a transaction goes to the
+                # primary immediately; a key written in this txn shows the
+                # buffered value with a null version.
+                target, served = "primary", t
+                result = cluster.read("primary", e["key"], t)
+                failed = []
+                own = [v for k, v in s.txn if k == e["key"]]
+                if own:
+                    result = dict(result, value=own[-1], version=None)
+            else:
+                target, served, result, failed = router.read(
+                    e["key"], t, s.required())
             s.last_read = max(s.last_read, result["applied"])
-            reads.append({"i": i, "session": e["session"], "target": target, "served_at": served,
-                          "value": result["value"], "version": result["version"], "failed": failed})
+            reads.append({"i": i, "session": e["session"], "target": target,
+                          "served_at": served, "value": result["value"],
+                          "version": result["version"], "failed": failed})
         else:
             raise SystemExit(f"unknown op {op!r} in event {i}")
     return {"reads": reads}
