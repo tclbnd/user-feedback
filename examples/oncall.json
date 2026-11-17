@@ -1,0 +1,11 @@
+{"initial": {"1": "alice", "2": "bob"},
+ "ops": [
+  {"op": "begin", "tx": "A"},
+  {"op": "begin", "tx": "B"},
+  {"op": "scan", "tx": "A", "lo": 1, "hi": 9},
+  {"op": "scan", "tx": "B", "lo": 1, "hi": 9},
+  {"op": "delete", "tx": "A", "key": 1},
+  {"op": "commit", "tx": "A"},
+  {"op": "delete", "tx": "B", "key": 2},
+  {"op": "commit", "tx": "B"}
+ ]}

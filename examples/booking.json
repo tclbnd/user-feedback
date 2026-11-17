@@ -1,0 +1,11 @@
+{"initial": {"50": "standup"},
+ "ops": [
+  {"op": "begin", "tx": "A"},
+  {"op": "begin", "tx": "B"},
+  {"op": "scan", "tx": "A", "lo": 100, "hi": 199},
+  {"op": "scan", "tx": "B", "lo": 100, "hi": 199},
+  {"op": "put", "tx": "A", "key": 150, "value": "review"},
+  {"op": "put", "tx": "B", "key": 160, "value": "retro"},
+  {"op": "commit", "tx": "A"},
+  {"op": "commit", "tx": "B"}
+ ]}
