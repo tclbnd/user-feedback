@@ -1,0 +1,41 @@
+{
+  "unique": true,
+  "rows": [10, 20, 30, 40],
+  "steps": [
+    {"tx": 1, "op": "range", "low": 15, "high": 32},
+    {"tx": 2, "op": "insert", "key": 25},
+    {"tx": 3, "op": "insert", "key": 35},
+    {"tx": 4, "op": "insert", "key": 15},
+    {"tx": 5, "op": "insert", "key": 10},
+    {"tx": 1, "op": "range", "low": 15, "high": 32},
+    {"tx": 1, "op": "rollback"},
+    {"tx": 2, "op": "rollback"},
+    {"tx": 3, "op": "rollback"},
+    {"tx": 4, "op": "rollback"},
+    {"tx": 5, "op": "rollback"},
+
+    {"tx": 10, "op": "get", "key": 20},
+    {"tx": 11, "op": "insert", "key": 15},
+    {"tx": 12, "op": "get", "key": 20, "for_update": true},
+    {"tx": 13, "op": "get", "key": 25},
+    {"tx": 14, "op": "get", "key": 27},
+    {"tx": 15, "op": "insert", "key": 26},
+    {"tx": 10, "op": "rollback"},
+    {"tx": 11, "op": "rollback"},
+    {"tx": 12, "op": "rollback"},
+    {"tx": 13, "op": "rollback"},
+    {"tx": 14, "op": "rollback"},
+    {"tx": 15, "op": "rollback"},
+
+    {"tx": 20, "op": "delete", "key": 20},
+    {"tx": 21, "op": "insert", "key": 20},
+    {"tx": 20, "op": "commit"},
+    {"tx": 22, "op": "get", "key": 15},
+    {"tx": 23, "op": "delete", "key": 30},
+    {"tx": 23, "op": "commit"},
+    {"tx": 24, "op": "insert", "key": 35},
+    {"tx": 22, "op": "rollback"},
+    {"tx": 21, "op": "commit"},
+    {"tx": 24, "op": "rollback"}
+  ]
+}

@@ -45,13 +45,24 @@ class Engine:
         return hits, [(e[1], NEXT_KEY, mode) for e in hits] + [(self._gap_after(key), GAP, mode)]
 
     def range(self, tx, low, high, mode):
-        scanned = [e for e in self.entries if (low is None or e[0] >= low) and (high is None or e[0] <= high)]
-        self._lock(tx, [(e[1], NEXT_KEY, mode) for e in scanned])
+        # Delete-marked entries are still part of the physical index and are
+        # scanned, but they are not returned to the transaction.
+        scanned = [e for e in self.entries
+                   if (low is None or e[0] >= low)
+                   and (high is None or e[0] <= high)]
+        requests = [(e[1], NEXT_KEY, mode) for e in scanned]
+
+        # Lock the gap immediately beyond the upper bound to stop inserts that
+        # would create a phantom inside this range.  An unbounded range ends at
+        # the supremum.
+        end_target = SUPREMUM if high is None else self._gap_after(high)
+        requests.append((end_target, GAP, mode))
+        self._lock(tx, requests)
         return {"rows": [e[0] for e in scanned if e[2] is None]}
 
     def get(self, tx, key, mode):
-        hits = [e for e in self.entries if e[0] == key]
-        self._lock(tx, [(e[1], NEXT_KEY, mode) for e in hits] + [(self._gap_after(key), GAP, mode)])
+        hits, requests = self._point(key, mode)
+        self._lock(tx, requests)
         return {"rows": [e[0] for e in hits if e[2] is None]}
 
     def delete(self, tx, key):
@@ -65,9 +76,18 @@ class Engine:
 
     def insert(self, tx, key):
         if self.unique:
-            for e in [e for e in self.entries if e[0] == key and e[2] is None]:
-                self._lock(tx, [(e[1], RECORD, "S")])
-                return {"error": f"duplicate key {key}"}
+            same_keys = [e for e in self.entries if e[0] == key]
+            if same_keys:
+                # A duplicate lookup is a unique equality lookup and therefore
+                # uses a record lock.  A delete-marked entry is not a duplicate
+                # yet: wait for the deleting transaction before inserting.
+                requests = [(e[1], RECORD, "S") for e in same_keys]
+                self._lock(tx, requests)
+                if any(e[2] is None for e in same_keys):
+                    self.locks.release_requests(tx, requests)
+                    self.undo.pop(tx, None)
+                    return {"error": f"duplicate key {key}"}
+
         successor = self._gap_after(key)
         self._lock(tx, [(successor, INSERT, "X")])
         entry = self._add(key)
@@ -77,7 +97,38 @@ class Engine:
         return {"count": 1}
 
     def _remove(self, entry):
-        self.locks.entry_removed(entry[1], self._successor(entry))
+        index = self.entries.index(entry)
+        successor = self.entries[index + 1][1] if index + 1 < len(self.entries) else SUPREMUM
+
+        # Locks from other transactions cannot be represented by a boundary
+        # belonging to an uncommitted inserted entry.  Find the first committed
+        # entry on the right and use that as the merged-gap boundary.
+        uncommitted = {inserted[1]
+                       for actions in self.undo.values()
+                       for action, inserted in actions
+                       if action == "insert" and inserted in self.entries
+                       and inserted is not entry}
+        resolved_successor = successor
+        while resolved_successor in uncommitted:
+            resolved_index = next(i for i, current in enumerate(self.entries)
+                                  if current[1] == resolved_successor)
+            if resolved_index + 1 >= len(self.entries):
+                resolved_successor = SUPREMUM
+                break
+            resolved_successor = self.entries[resolved_index + 1][1]
+
+        # If the removed entry's old gap had already been split by an
+        # uncommitted insert, existing gap locks can be attached to that
+        # private entry.  They still protect the whole logical gap, so move
+        # their gap parts to the same resolved boundary.
+        affected_private_gaps = {
+            target for target in uncommitted
+            if next((i for i, current in enumerate(self.entries)
+                     if current[1] == target), len(self.entries)) <= index
+        }
+        self.locks.entry_removed(entry[1], resolved_successor)
+        for target in affected_private_gaps:
+            self.locks.move_gap_locks(target, resolved_successor)
         self.entries.remove(entry)
 
     def end(self, tx, commit):

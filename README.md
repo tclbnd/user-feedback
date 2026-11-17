@@ -8,6 +8,7 @@ commits or rolls back, and are all released together then.
 
     python3 lockdb.py run <script.json>     # JSON result
     python3 lockdb.py show <script.json>    # one line per step
+    python3 lockdb.py show examples/acceptance.json
     python3 -m unittest discover -s tests
 
 ## Script

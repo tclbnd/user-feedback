@@ -12,11 +12,13 @@ def covers_gap(kind):
 
 
 def conflicts(kind, mode, held_kind, held_mode):
-    if kind == INSERT:
-        return covers_gap(held_kind)
-    if mode == "S" and held_mode == "S":
-        return False
-    return (covers_record(kind) and covers_record(held_kind)) or (covers_gap(kind) and covers_gap(held_kind))
+    # Record locks use the ordinary shared/exclusive matrix.
+    if covers_record(kind) and covers_record(held_kind):
+        return mode == "X" or held_mode == "X"
+
+    # An insert intention only waits for a lock that protects the gap.
+    # Ordinary gap locks, including next-key gap parts, are mutually compatible.
+    return kind == INSERT and covers_gap(held_kind)
 
 
 class LockTable:
@@ -34,7 +36,27 @@ class LockTable:
     def release(self, tx):
         self.locks = {lock for lock in self.locks if lock[0] != tx}
 
+    def release_requests(self, tx, requests):
+        requested = {(target, kind, mode) for target, kind, mode in requests}
+        self.locks = {lock for lock in self.locks
+                      if not (lock[0] == tx
+                              and (lock[1], lock[2], lock[3]) in requested)}
+
+    def move_gap_locks(self, target, successor):
+        """Move only the gap parts of locks attached to an existing entry."""
+        moved = set()
+        for tx, locked_target, kind, mode in self.locks:
+            if locked_target == target and covers_gap(kind):
+                if kind == NEXT_KEY:
+                    kind = GAP
+                moved.add((tx, successor, kind, mode))
+        self.locks = {lock for lock in self.locks
+                      if not (lock[1] == target and covers_gap(lock[2]))}
+        self.locks |= moved
+
     def entry_removed(self, target, successor):
+        """Move gap locks from a removed entry, then drop its record locks."""
+        self.move_gap_locks(target, successor)
         self.locks = {lock for lock in self.locks if lock[1] != target}
 
     def entry_added(self, tx, target, successor):
