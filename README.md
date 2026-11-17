@@ -12,10 +12,17 @@ buffered writes) and buffers its writes until commit. It records a read set
 (keys it read with `get`, and keys returned by `scan`), every `scan` range
 `[lo, hi)`, and a write set (keys it `put` or `delete`d).
 
+A `scan` remembers both the rows it returned and the range itself: it also
+observed that no *other* key in the range exists, so a concurrent insert or
+delete of a row it never saw invalidates it. `delete` removes the key from the
+committed state (and from the deleting transaction's own view); deleted keys
+are not stored as null.
+
 Every committed update transaction gets the next commit number. At `begin` a
 transaction remembers the last commit number. At `commit`:
 
-- a transaction without writes commits immediately (read-only fast path);
+- a transaction without writes commits immediately (read-only fast path,
+  serialized at its `begin`);
 - otherwise it is validated against every transaction that committed after its
   `begin`: if one of their written keys is in its read set or falls inside one
   of its scan ranges, it aborts; if not, validation and installing its writes

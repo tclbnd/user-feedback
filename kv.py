@@ -9,7 +9,11 @@ class Store:
         return dict(self.data)
 
     def install(self, writes):
-        self.data.update(writes)
+        for key, value in writes.items():
+            if value is None:
+                self.data.pop(key, None)
+            else:
+                self.data[key] = value
 
     @staticmethod
     def scan(view, lo, hi):

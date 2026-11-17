@@ -1,0 +1,53 @@
+[
+  {
+    "op": "begin",
+    "s": "load"
+  },
+  {
+    "op": "put",
+    "s": "load",
+    "key": "seat-a1",
+    "value": "free"
+  },
+  {
+    "op": "commit",
+    "s": "load"
+  },
+  {
+    "op": "begin",
+    "s": "aisle-a"
+  },
+  {
+    "op": "begin",
+    "s": "aisle-m"
+  },
+  {
+    "op": "scan",
+    "s": "aisle-a",
+    "lo": "seat-a",
+    "hi": "seat-b"
+  },
+  {
+    "op": "put",
+    "s": "aisle-m",
+    "key": "seat-b2",
+    "value": "free"
+  },
+  {
+    "op": "commit",
+    "s": "aisle-m"
+  },
+  {
+    "op": "put",
+    "s": "aisle-a",
+    "key": "report",
+    "value": "1 seat in row a"
+  },
+  {
+    "op": "commit",
+    "s": "aisle-a"
+  },
+  {
+    "op": "dump"
+  }
+]
