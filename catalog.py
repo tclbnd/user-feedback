@@ -25,11 +25,10 @@ class Database:
         return self.tables[table].get("defaults", {}).get(column)
 
     def referencing(self, table):
-        return sorted((fk for fk in self.fks if fk.ref_table == table), key=lambda fk: (fk.table, fk.position))
+        return [fk for fk in self.fks if fk.ref_table == table]
 
-    def children(self, fk, value, rows=None):
-        rows = self.rows if rows is None else rows
-        return [pk for pk, row in sorted(rows[fk.table].items()) if row.get(fk.column) == value]
+    def children(self, fk, value):
+        return [pk for pk, row in sorted(self.rows[fk.table].items()) if row.get(fk.column) == value]
 
     def parent_exists(self, fk, value):
         return any(r.get(fk.ref_column) == value for r in self.rows[fk.ref_table].values())
