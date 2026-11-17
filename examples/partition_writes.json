@@ -1,0 +1,21 @@
+{
+ "nodes": ["n1", "n2", "n3"],
+ "lease": 6,
+ "drift": 0.2,
+ "ticks": 24,
+ "events": [
+  {"t": 3, "partition": [["n1"], ["n2", "n3", "ctl"]]},
+  {"t": 11, "heal": true}
+ ],
+ "writes": [
+  {"t": 1, "node": "n1", "key": "a", "value": "1"},
+  {"t": 4, "node": "n1", "key": "x", "value": "x1"},
+  {"t": 5, "node": "n1", "key": "x", "value": "x2"},
+  {"t": 6, "node": "n1", "key": "x", "value": "x3"},
+  {"t": 7, "node": "n1", "key": "x", "value": "x4"},
+  {"t": 9, "node": "n2", "key": "b", "value": "b1"},
+  {"t": 10, "node": "n2", "key": "b", "value": "b2"},
+  {"t": 13, "node": "n1", "key": "c", "value": "stale"},
+  {"t": 14, "node": "n2", "key": "b", "value": "b3"}
+ ]
+}

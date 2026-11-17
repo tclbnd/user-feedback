@@ -1,0 +1,23 @@
+{
+ "nodes": ["n1", "n2", "n3"],
+ "lease": 5,
+ "drift": 0.2,
+ "ticks": 26,
+ "events": [
+  {"t": 3, "partition": [["n1"], ["n2", "n3", "ctl"]]},
+  {"t": 9, "partition": [["n1"], ["n2"], ["n3", "ctl"]]},
+  {"t": 10, "crash": "n2"},
+  {"t": 14, "restart": "n2"},
+  {"t": 17, "heal": true}
+ ],
+ "writes": [
+  {"t": 1, "node": "n1", "key": "a", "value": "1"},
+  {"t": 4, "node": "n1", "key": "x", "value": "x1"},
+  {"t": 5, "node": "n1", "key": "x", "value": "x2"},
+  {"t": 7, "node": "n2", "key": "b", "value": "b1"},
+  {"t": 9, "node": "n2", "key": "b", "value": "b2"},
+  {"t": 18, "node": "n2", "key": "c", "value": "stale"},
+  {"t": 19, "node": "n3", "key": "d", "value": "d1"},
+  {"t": 21, "node": "n1", "key": "e", "value": "e1"}
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "nodes": ["n1", "n2", "n3"],
+ "lease": 8,
+ "drift": 0.2,
+ "clock_rate": {"n1": 0.85},
+ "ticks": 24,
+ "events": [
+  {"t": 4, "partition": [["n1"], ["n2", "n3", "ctl"]]},
+  {"t": 16, "heal": true}
+ ],
+ "writes": [
+  {"t": 1, "node": "n1", "key": "a", "value": "1"},
+  {"t": 6, "node": "n1", "key": "x", "value": "x1"},
+  {"t": 7, "node": "n1", "key": "x", "value": "x2"},
+  {"t": 8, "node": "n1", "key": "x", "value": "x3"},
+  {"t": 9, "node": "n1", "key": "x", "value": "x4"},
+  {"t": 10, "node": "n1", "key": "x", "value": "late"},
+  {"t": 11, "node": "n1", "key": "x", "value": "too-late"},
+  {"t": 12, "node": "n2", "key": "b", "value": "b1"},
+  {"t": 13, "node": "n2", "key": "b", "value": "b2"},
+  {"t": 15, "node": "n2", "key": "b", "value": "b3"},
+  {"t": 18, "node": "n1", "key": "c", "value": "after-heal"},
+  {"t": 19, "node": "n2", "key": "f", "value": "f1"}
+ ]
+}
