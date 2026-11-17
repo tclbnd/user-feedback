@@ -1,0 +1,5 @@
+{"table": "enrollment_wide",
+ "attributes": ["student", "course", "instructor", "room", "grade"],
+ "types": {},
+ "fds": [{"lhs": ["student", "course"], "rhs": ["instructor", "grade"]},
+         {"lhs": ["course"], "rhs": ["instructor", "room"]}]}

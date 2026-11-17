@@ -1,0 +1,7 @@
+emp_id,emp_email,dept,dept_name,project,role,hours
+1,a@x.io,D1,Research,Atlas,lead,40
+1,a@x.io,D1,Research,Bison,dev,12
+2,b@x.io,D1,Research,Atlas,dev,30
+3,c@x.io,D2,Ops,Bison,ops,25
+3,c@x.io,D2,Ops,Comet,lead,15
+4,d@x.io,D2,Ops,Comet,dev,35

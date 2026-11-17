@@ -1,0 +1,8 @@
+{"table": "emp_project_wide",
+ "attributes": ["emp_id", "emp_email", "dept", "dept_name", "project", "role", "hours"],
+ "types": {"hours": "INTEGER"},
+ "fds": [{"lhs": ["emp_id"], "rhs": ["emp_email", "dept"]},
+         {"lhs": ["emp_email"], "rhs": ["emp_id", "dept"]},
+         {"lhs": ["dept"], "rhs": ["dept_name"]},
+         {"lhs": ["emp_id"], "rhs": ["dept_name"]},
+         {"lhs": ["emp_id", "project"], "rhs": ["role", "hours"]}]}
