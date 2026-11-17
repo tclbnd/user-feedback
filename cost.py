@@ -24,8 +24,12 @@ class Query:
     def _classes(pairs):
         classes = []
         for a, b in pairs:
-            if {a, b} not in classes:
-                classes.append({a, b})
+            hit = [cls for cls in classes if a in cls or b in cls]
+            merged = {a, b}
+            for cls in hit:
+                classes.remove(cls)
+                merged |= cls
+            classes.append(merged)
         return classes
 
     def ndv(self, col):
@@ -53,10 +57,10 @@ class Query:
         return out
 
     def inner_rows(self, lrows, rrows, left, right):
-        sel = prod(1 / min(min(self.ndv(c) for c in lc), min(self.ndv(c) for c in rc))
+        sel = prod(1 / max(min(self.ndv(c) for c in lc), min(self.ndv(c) for c in rc))
                    for lc, rc in self.spanning(left, right))
         return lrows * rrows * sel
 
     def left_rows(self, lrows, rrows, on, filters):
         inner = lrows * rrows * prod(1 / max(self.ndv(a), self.ndv(b)) for a, b in on)
-        return inner * prod(self.filter_sel(f) for f in filters)
+        return max(lrows, inner) * prod(self.filter_sel(f) for f in filters)

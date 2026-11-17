@@ -1,0 +1,22 @@
+{
+ "tables": {
+  "o": {"rows": 8000, "ndv": {"id": 8000, "cid": 600, "amt": 900}},
+  "c": {"rows": 600, "ndv": {"id": 600, "nid": 25}},
+  "n": {"rows": 25, "ndv": {"id": 25, "rid": 5, "name": 25}},
+  "r": {"rows": 5, "ndv": {"id": 5, "name": 5}}
+ },
+ "from": [{"table": "o"},
+          {"table": "c", "on": [["o.cid", "c.id"]]},
+          {"table": "n", "on": [["c.nid", "n.id"]]},
+          {"table": "r", "on": [["n.rid", "r.id"]]}],
+ "where": [{"col": "o.amt", "op": ">", "value": 100},
+           {"col": "r.name", "op": "=", "value": 1}],
+ "data": {
+  "o": [{"id": 1, "cid": 1, "amt": 150}, {"id": 2, "cid": 2, "amt": 50},
+        {"id": 3, "cid": 3, "amt": 200}, {"id": 4, "cid": 9, "amt": 300},
+        {"id": 5, "cid": 4, "amt": 120}, {"id": 6, "cid": 1, "amt": 400}],
+  "c": [{"id": 1, "nid": 1}, {"id": 2, "nid": 2}, {"id": 3, "nid": 3}, {"id": 4, "nid": 1}],
+  "n": [{"id": 1, "rid": 1, "name": 1}, {"id": 2, "rid": 2, "name": 2}, {"id": 3, "rid": 1, "name": 3}],
+  "r": [{"id": 1, "name": 1}, {"id": 2, "name": 2}]
+ }
+}
