@@ -1,0 +1,39 @@
+{
+ "partition_by": [
+  "store"
+ ],
+ "order_by": [
+  {
+   "col": "day",
+   "desc": true
+  }
+ ],
+ "functions": [
+  {
+   "as": "groups_3",
+   "fn": "sum",
+   "arg": "sales",
+   "frame": {
+    "mode": "groups",
+    "start": [
+     "preceding",
+     1
+    ],
+    "end": [
+     "following",
+     1
+    ]
+   }
+  },
+  {
+   "as": "first",
+   "fn": "first_value",
+   "arg": "sales"
+  },
+  {
+   "as": "next",
+   "fn": "lead",
+   "arg": "sales"
+  }
+ ]
+}
