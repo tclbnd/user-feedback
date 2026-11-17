@@ -1,0 +1,8 @@
+[{"name": "page1_by_amount", "source": "SELECT id, amount FROM orders WHERE amount = 30 ORDER BY amount DESC LIMIT 0, 2"},
+ {"name": "page2_by_amount", "source": "SELECT id, amount FROM orders WHERE amount = 30 ORDER BY amount DESC LIMIT 2, 2"},
+ {"name": "city_nulls", "source": "SELECT id, city FROM orders ORDER BY city DESC LIMIT 3 OFFSET 0"},
+ {"name": "customers_ci", "source": "SELECT id, customer FROM orders WHERE customer = 'ALICE' ORDER BY customer"},
+ {"name": "order_day", "source": "SELECT id, DATE(created_at) AS day, CONVERT_TZ(created_at, '+08:00', '+00:00') AS utc FROM orders ORDER BY created_at LIMIT 4"},
+ {"name": "amounts", "source": "SELECT id, amount FROM orders ORDER BY id"},
+ {"name": "hand_written_day", "source": "SELECT id, DATE(created_at) AS day FROM orders ORDER BY id LIMIT 3",
+  "target": "SELECT id, DATE_TRUNC('day', created_at) AS day FROM orders ORDER BY id ASC LIMIT 3 OFFSET 0"}]
