@@ -1,0 +1,29 @@
+{
+ "from": "customers",
+ "as": "c",
+ "where": [],
+ "select": [
+  {
+   "col": "c.name"
+  },
+  {
+   "scalar": {
+    "from": "orders",
+    "as": "o",
+    "agg": null,
+    "col": "o.amount",
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "o.cust"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     }
+    ]
+   }
+  }
+ ]
+}

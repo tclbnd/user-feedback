@@ -1,0 +1,84 @@
+{
+ "tables": {
+  "customers": {
+   "rows": [
+    {
+     "id": 1,
+     "name": "ann",
+     "region": "north",
+     "credit_limit": 100
+    },
+    {
+     "id": 2,
+     "name": "bo",
+     "region": "south",
+     "credit_limit": 50
+    },
+    {
+     "id": 3,
+     "name": "cy",
+     "region": "north",
+     "credit_limit": 300
+    },
+    {
+     "id": 4,
+     "name": "dee",
+     "region": "east",
+     "credit_limit": 80
+    }
+   ]
+  },
+  "orders": {
+   "rows": [
+    {
+     "id": 101,
+     "cust": 1,
+     "amount": 120,
+     "status": "paid"
+    },
+    {
+     "id": 102,
+     "cust": 1,
+     "amount": 40,
+     "status": "paid"
+    },
+    {
+     "id": 103,
+     "cust": 2,
+     "amount": null,
+     "status": "open"
+    },
+    {
+     "id": 104,
+     "cust": 3,
+     "amount": 90,
+     "status": "paid"
+    },
+    {
+     "id": 105,
+     "cust": 3,
+     "amount": 260,
+     "status": "open"
+    },
+    {
+     "id": 106,
+     "cust": 3,
+     "amount": 310,
+     "status": "paid"
+    }
+   ]
+  },
+  "targets": {
+   "rows": [
+    {
+     "region": "north",
+     "goal": 100
+    },
+    {
+     "region": "south",
+     "goal": 10
+    }
+   ]
+  }
+ }
+}

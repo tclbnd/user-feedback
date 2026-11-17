@@ -1,0 +1,120 @@
+{
+ "from": "customers",
+ "as": "c",
+ "where": [],
+ "select": [
+  {
+   "col": "c.name"
+  },
+  {
+   "scalar": {
+    "from": "orders",
+    "as": "o",
+    "agg": "count",
+    "col": null,
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "o.cust"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "scalar": {
+    "from": "orders",
+    "as": "o",
+    "agg": "sum",
+    "col": "o.amount",
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "o.cust"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "scalar": {
+    "from": "orders",
+    "as": "o",
+    "agg": "count",
+    "col": null,
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "o.cust"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     },
+     {
+      "op": ">",
+      "left": {
+       "col": "o.amount"
+      },
+      "right": {
+       "col": "c.credit_limit"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "scalar": {
+    "from": "orders",
+    "as": "o",
+    "agg": "sum",
+    "col": "o.amount",
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "o.cust"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     },
+     {
+      "op": ">=",
+      "left": {
+       "col": "o.amount"
+      },
+      "right": {
+       "scalar": {
+        "from": "targets",
+        "as": "t",
+        "agg": "max",
+        "col": "t.goal",
+        "where": [
+         {
+          "op": "=",
+          "left": {
+           "col": "t.region"
+          },
+          "right": {
+           "col": "c.region"
+          }
+         }
+        ]
+       }
+      }
+     }
+    ]
+   }
+  }
+ ]
+}
