@@ -1,0 +1,11 @@
+{"unique": true, "rows": [10, 20, 30],
+ "steps": [
+  {"tx": 1, "op": "get", "key": 15},
+  {"tx": 2, "op": "delete", "key": 20},
+  {"tx": 3, "op": "insert", "key": 20},
+  {"tx": 2, "op": "commit"},
+  {"tx": 4, "op": "insert", "key": 25},
+  {"tx": 1, "op": "get", "key": 15},
+  {"tx": 1, "op": "commit"},
+  {"tx": 3, "op": "commit"},
+  {"tx": 4, "op": "commit"}]}

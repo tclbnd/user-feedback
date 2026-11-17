@@ -1,0 +1,12 @@
+{"unique": true, "rows": [10, 20, 30],
+ "steps": [
+  {"tx": 1, "op": "get", "key": 20, "for_update": true},
+  {"tx": 2, "op": "insert", "key": 15},
+  {"tx": 3, "op": "get", "key": 25, "for_update": true},
+  {"tx": 4, "op": "get", "key": 27, "for_update": true},
+  {"tx": 5, "op": "insert", "key": 26},
+  {"tx": 1, "op": "commit"},
+  {"tx": 2, "op": "commit"},
+  {"tx": 3, "op": "commit"},
+  {"tx": 4, "op": "commit"},
+  {"tx": 5, "op": "commit"}]}

@@ -1,0 +1,9 @@
+{"unique": true, "rows": [10, 20, 30, 40],
+ "steps": [
+  {"tx": 1, "op": "range", "low": 15, "high": 32},
+  {"tx": 2, "op": "insert", "key": 25},
+  {"tx": 3, "op": "insert", "key": 35},
+  {"tx": 1, "op": "range", "low": 15, "high": 32},
+  {"tx": 1, "op": "commit"},
+  {"tx": 2, "op": "commit"},
+  {"tx": 3, "op": "commit"}]}
