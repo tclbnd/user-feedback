@@ -1,0 +1,15 @@
+{"initial": {"1": 0, "2": 0, "3": 0},
+ "ops": [
+  {"op": "begin", "tx": "A"},
+  {"op": "begin", "tx": "B"},
+  {"op": "begin", "tx": "C"},
+  {"op": "get", "tx": "A", "key": 1},
+  {"op": "get", "tx": "B", "key": 2},
+  {"op": "get", "tx": "C", "key": 3},
+  {"op": "put", "tx": "A", "key": 2, "value": 1},
+  {"op": "put", "tx": "B", "key": 3, "value": 1},
+  {"op": "put", "tx": "C", "key": 1, "value": 1},
+  {"op": "commit", "tx": "C"},
+  {"op": "commit", "tx": "A"},
+  {"op": "commit", "tx": "B"}
+ ]}
