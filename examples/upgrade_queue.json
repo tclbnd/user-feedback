@@ -1,0 +1,16 @@
+{"ops": [
+ {"tx": 1, "op": "begin"},
+ {"tx": 2, "op": "begin"},
+ {"tx": 3, "op": "begin"},
+ {"tx": 4, "op": "begin"},
+ {"tx": 1, "op": "lock", "res": "acct/9", "mode": "S"},
+ {"tx": 2, "op": "lock", "res": "acct/9", "mode": "S"},
+ {"tx": 3, "op": "write", "res": "acct/9"},
+ {"tx": 4, "op": "lock", "res": "acct/9", "mode": "S"},
+ {"tx": 1, "op": "lock", "res": "acct/9", "mode": "X"},
+ {"tx": 2, "op": "lock", "res": "acct/9", "mode": "X"},
+ {"tx": 4, "op": "commit"},
+ {"tx": 1, "op": "commit"},
+ {"tx": 3, "op": "commit"},
+ {"tx": 2, "op": "commit"}
+]}
