@@ -1,0 +1,73 @@
+{
+ "recommended": [
+  {
+   "name": "ix_events_kind_at",
+   "table": "events",
+   "columns": [
+    "kind",
+    "at"
+   ],
+   "size": 14000000
+  },
+  {
+   "name": "ix_orders_created_at",
+   "table": "orders",
+   "columns": [
+    "created_at"
+   ],
+   "size": 3200000
+  },
+  {
+   "name": "ix_orders_customer_id_created_at",
+   "table": "orders",
+   "columns": [
+    "customer_id",
+    "created_at"
+   ],
+   "size": 4800000
+  }
+ ],
+ "queries": [
+  {
+   "fingerprint": "SELECT id, total FROM orders WHERE customer_id = ? AND created_at > ? ORDER BY created_at",
+   "count": 200,
+   "cost_before": 200001.0,
+   "cost_after": 4.5,
+   "benefit": 39999300.0
+  },
+  {
+   "fingerprint": "SELECT id FROM orders WHERE created_at BETWEEN ? AND ?",
+   "count": 120,
+   "cost_before": 200000,
+   "cost_after": 30003.0,
+   "benefit": 20399640.0
+  },
+  {
+   "fingerprint": "SELECT id FROM events WHERE kind = ? AND at BETWEEN ? AND ?",
+   "count": 150,
+   "cost_before": 500000,
+   "cost_after": 1878.0,
+   "benefit": 74718300.0
+  },
+  {
+   "fingerprint": "INSERT INTO events (id, kind, at) VALUES (?, ?, ?)",
+   "count": 3000,
+   "cost_before": 2.0,
+   "cost_after": 4.0,
+   "benefit": -6000.0
+  },
+  {
+   "fingerprint": "UPDATE orders SET status = ? WHERE id = ?",
+   "count": 200,
+   "cost_before": 8.5,
+   "cost_after": 8.5,
+   "benefit": 0.0
+  }
+ ],
+ "redundant": [
+  "ix_orders_status"
+ ],
+ "unused": [
+  "ix_orders_status_created"
+ ]
+}

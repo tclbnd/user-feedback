@@ -1,0 +1,14 @@
+{
+ "tables": {
+  "ledger": {"rows": 1000000,
+    "columns": {"id": {"ndv": 1000000, "width": 8}, "acct_id": {"ndv": 100000, "width": 8},
+                "posted_at": {"ndv": 300000, "width": 8}, "amount": {"ndv": 50000, "width": 8},
+                "a": {"ndv": 1000, "width": 4}, "b": {"ndv": 500, "width": 4},
+                "c": {"ndv": 50, "width": 4}},
+    "indexes": [{"name": "pk_ledger", "columns": ["id"], "unique": true},
+                {"name": "ix_ledger_a", "columns": ["a"]},
+                {"name": "ix_ledger_a_b", "columns": ["a", "b"]},
+                {"name": "ix_ledger_c", "columns": ["c"]}]}
+ },
+ "budget": {"max_indexes": 2, "space_bytes": 60000000}
+}

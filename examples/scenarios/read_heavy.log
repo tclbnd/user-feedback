@@ -1,0 +1,3165 @@
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 0 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 1 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 2 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 3 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 4 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 5 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 6 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 7 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 8 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 9 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 10 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 11 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 12 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 13 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 14 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 15 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 16 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 17 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 18 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 19 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 20 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 21 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 22 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 23 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 24 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 25 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 26 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 27 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 28 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 29 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 30 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 31 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 32 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 33 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 34 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 35 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 36 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 37 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 38 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 39 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 40 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 41 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 42 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 43 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 44 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 45 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 46 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 47 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 48 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 49 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 50 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 51 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 52 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 53 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 54 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 55 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 56 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 57 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 58 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 59 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 60 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 61 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 62 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 63 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 64 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 65 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 66 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 67 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 68 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 69 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 70 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 71 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 72 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 73 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 74 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 75 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 76 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 77 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 78 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 79 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 80 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 81 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 82 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 83 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 84 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 85 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 86 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 87 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 88 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 89 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 90 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 91 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 92 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 93 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 94 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 95 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 96 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 97 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 98 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 99 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 100 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 101 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 102 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 103 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 104 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 105 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 106 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 107 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 108 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 109 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 110 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 111 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 112 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 113 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 114 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 115 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 116 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 117 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 118 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 119 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 120 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 121 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 122 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 123 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 124 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 125 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 126 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 127 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 128 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 129 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 130 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 131 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 132 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 133 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 134 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 135 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 136 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 137 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 138 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 139 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 140 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 141 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 142 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 143 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 144 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 145 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 146 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 147 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 148 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 149 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 150 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 151 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 152 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 153 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 154 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 155 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 156 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 157 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 158 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 159 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 160 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 161 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 162 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 163 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 164 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 165 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 166 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 167 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 168 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 169 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 170 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 171 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 172 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 173 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 174 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 175 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 176 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 177 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 178 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 179 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 180 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 181 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 182 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 183 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 184 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 185 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 186 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 187 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 188 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 189 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 190 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 191 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 192 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 193 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 194 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 195 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 196 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 197 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 198 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 199 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 200 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 201 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 202 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 203 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 204 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 205 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 206 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 207 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 208 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 209 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 210 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 211 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 212 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 213 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 214 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 215 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 216 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 217 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 218 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 219 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 220 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 221 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 222 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 223 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 224 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 225 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 226 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 227 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 228 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 229 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 230 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 231 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 232 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 233 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 234 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 235 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 236 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 237 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 238 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 239 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 240 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 241 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 242 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 243 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 244 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 245 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 246 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 247 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 248 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 249 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 250 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 251 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 252 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 253 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 254 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 255 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 256 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 257 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 258 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 259 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 260 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 261 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 262 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 263 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 264 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 265 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 266 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 267 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 268 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 269 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 270 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 271 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 272 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 273 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 274 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 275 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 276 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 277 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 278 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 279 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 280 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 281 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 282 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 283 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 284 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 285 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 286 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 287 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 288 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 289 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 290 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 291 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 292 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 293 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 294 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 295 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 296 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 297 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 298 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 299 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 300 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 301 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 302 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 303 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 304 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 305 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 306 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 307 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 308 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 309 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 310 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 311 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 312 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 313 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 314 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 315 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 316 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 317 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 318 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 319 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 320 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 321 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 322 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 323 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 324 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 325 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 326 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 327 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 328 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 329 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 330 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 331 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 332 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 333 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 334 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 335 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 336 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 337 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 338 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 339 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 340 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 341 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 342 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 343 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 344 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 345 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 346 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 347 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 348 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 349 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 350 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 351 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 352 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 353 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 354 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 355 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 356 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 357 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 358 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 359 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 360 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 361 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 362 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 363 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 364 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 365 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 366 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 367 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 368 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 369 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 370 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 371 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 372 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 373 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 374 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 375 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 376 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 377 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 378 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 379 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 380 AND tenant_id = 0 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 381 AND tenant_id = 1 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 382 AND tenant_id = 2 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 383 AND tenant_id = 3 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 384 AND tenant_id = 4 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 385 AND tenant_id = 5 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 386 AND tenant_id = 6 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 387 AND tenant_id = 7 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 388 AND tenant_id = 8 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 389 AND tenant_id = 9 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 390 AND tenant_id = 10 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 391 AND tenant_id = 11 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 392 AND tenant_id = 12 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 393 AND tenant_id = 13 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 394 AND tenant_id = 14 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 395 AND tenant_id = 15 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 396 AND tenant_id = 16 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 397 AND tenant_id = 17 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 398 AND tenant_id = 18 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE user_id = 399 AND tenant_id = 19 AND viewed_at > 1000 ORDER BY viewed_at;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/0';
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/1';
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/2';
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/3';
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/4';
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/5';
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/6';
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/7';
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/8';
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/9';
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/10';
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/11';
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/12';
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/13';
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/14';
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/15';
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/16';
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/17';
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/18';
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/19';
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/20';
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/21';
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/22';
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/23';
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/24';
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/25';
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/26';
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/27';
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/28';
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/29';
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/30';
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/31';
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/32';
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/33';
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/34';
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/35';
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/36';
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/37';
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/38';
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/39';
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/40';
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/41';
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/42';
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/43';
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/44';
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/45';
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/46';
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/47';
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/48';
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/49';
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/50';
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/51';
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/52';
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/53';
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/54';
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/55';
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/56';
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/57';
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/58';
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/59';
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/60';
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/61';
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/62';
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/63';
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/64';
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/65';
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/66';
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/67';
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/68';
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/69';
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/70';
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/71';
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/72';
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/73';
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/74';
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/75';
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/76';
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/77';
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/78';
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/79';
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/80';
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/81';
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/82';
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/83';
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/84';
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/85';
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/86';
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/87';
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/88';
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/89';
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/90';
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/91';
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/92';
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/93';
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/94';
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/95';
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/96';
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/97';
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/98';
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/99';
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/100';
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/101';
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/102';
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/103';
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/104';
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/105';
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/106';
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/107';
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/108';
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/109';
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/110';
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/111';
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/112';
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/113';
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/114';
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/115';
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/116';
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/117';
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/118';
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/119';
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/120';
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/121';
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/122';
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/123';
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/124';
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/125';
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/126';
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/127';
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/128';
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/129';
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/130';
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/131';
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/132';
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/133';
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/134';
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/135';
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/136';
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/137';
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/138';
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/139';
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/140';
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/141';
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/142';
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/143';
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/144';
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/145';
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/146';
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/147';
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/148';
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/149';
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/150';
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/151';
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/152';
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/153';
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/154';
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/155';
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/156';
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/157';
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/158';
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/159';
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/160';
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/161';
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/162';
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/163';
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/164';
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/165';
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/166';
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/167';
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/168';
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/169';
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/170';
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/171';
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/172';
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/173';
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/174';
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/175';
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/176';
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/177';
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/178';
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/179';
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/180';
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/181';
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/182';
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/183';
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/184';
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/185';
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/186';
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/187';
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/188';
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/189';
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/190';
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/191';
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/192';
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/193';
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/194';
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/195';
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/196';
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/197';
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/198';
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/199';
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/200';
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/201';
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/202';
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/203';
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/204';
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/205';
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/206';
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/207';
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/208';
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/209';
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/210';
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/211';
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/212';
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/213';
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/214';
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/215';
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/216';
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/217';
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/218';
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/219';
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/220';
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/221';
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/222';
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/223';
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/224';
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/225';
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/226';
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/227';
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/228';
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/229';
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/230';
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/231';
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/232';
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/233';
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/234';
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/235';
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/236';
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/237';
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/238';
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/239';
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/240';
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/241';
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/242';
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/243';
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/244';
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/245';
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/246';
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/247';
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/248';
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/249';
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/250';
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/251';
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/252';
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/253';
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/254';
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/255';
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/256';
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/257';
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/258';
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/259';
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/260';
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/261';
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/262';
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/263';
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/264';
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/265';
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/266';
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/267';
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/268';
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/269';
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/270';
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/271';
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/272';
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/273';
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/274';
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/275';
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/276';
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/277';
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/278';
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/279';
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/280';
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/281';
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/282';
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/283';
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/284';
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/285';
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/286';
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/287';
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/288';
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/289';
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/290';
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/291';
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/292';
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/293';
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/294';
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/295';
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/296';
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/297';
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/298';
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE path = '/p/299';
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 0 AND 100;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 1 AND 101;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 2 AND 102;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 3 AND 103;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 4 AND 104;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 5 AND 105;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 6 AND 106;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 7 AND 107;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 8 AND 108;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 9 AND 109;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 10 AND 110;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 11 AND 111;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 12 AND 112;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 13 AND 113;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 14 AND 114;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 15 AND 115;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 16 AND 116;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 17 AND 117;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 18 AND 118;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 19 AND 119;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 20 AND 120;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 21 AND 121;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 22 AND 122;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 23 AND 123;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 24 AND 124;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 25 AND 125;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 26 AND 126;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 27 AND 127;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 28 AND 128;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 29 AND 129;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 30 AND 130;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 31 AND 131;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 32 AND 132;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 33 AND 133;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 34 AND 134;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 35 AND 135;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 36 AND 136;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 37 AND 137;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 38 AND 138;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 39 AND 139;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 40 AND 140;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 41 AND 141;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 42 AND 142;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 43 AND 143;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 44 AND 144;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 45 AND 145;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 46 AND 146;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 47 AND 147;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 48 AND 148;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 49 AND 149;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 50 AND 150;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 51 AND 151;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 52 AND 152;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 53 AND 153;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 54 AND 154;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 55 AND 155;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 56 AND 156;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 57 AND 157;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 58 AND 158;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 59 AND 159;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 60 AND 160;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 61 AND 161;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 62 AND 162;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 63 AND 163;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 64 AND 164;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 65 AND 165;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 66 AND 166;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 67 AND 167;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 68 AND 168;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 69 AND 169;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 70 AND 170;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 71 AND 171;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 72 AND 172;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 73 AND 173;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 74 AND 174;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 75 AND 175;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 76 AND 176;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 77 AND 177;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 78 AND 178;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 79 AND 179;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 80 AND 180;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 81 AND 181;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 82 AND 182;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 83 AND 183;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 84 AND 184;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 85 AND 185;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 86 AND 186;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 87 AND 187;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 88 AND 188;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 89 AND 189;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 90 AND 190;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 91 AND 191;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 92 AND 192;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 93 AND 193;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 94 AND 194;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 95 AND 195;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 96 AND 196;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 97 AND 197;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 98 AND 198;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 99 AND 199;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 100 AND 200;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 101 AND 201;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 102 AND 202;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 103 AND 203;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 104 AND 204;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 105 AND 205;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 106 AND 206;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 107 AND 207;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 108 AND 208;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 109 AND 209;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 110 AND 210;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 111 AND 211;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 112 AND 212;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 113 AND 213;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 114 AND 214;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 115 AND 215;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 116 AND 216;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 117 AND 217;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 118 AND 218;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 119 AND 219;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 120 AND 220;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 121 AND 221;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 122 AND 222;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 123 AND 223;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 124 AND 224;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 125 AND 225;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 126 AND 226;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 127 AND 227;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 128 AND 228;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 129 AND 229;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 130 AND 230;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 131 AND 231;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 132 AND 232;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 133 AND 233;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 134 AND 234;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 135 AND 235;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 136 AND 236;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 137 AND 237;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 138 AND 238;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 139 AND 239;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 140 AND 240;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 141 AND 241;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 142 AND 242;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 143 AND 243;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 144 AND 244;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 145 AND 245;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 146 AND 246;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 147 AND 247;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 148 AND 248;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 149 AND 249;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 150 AND 250;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 151 AND 251;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 152 AND 252;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 153 AND 253;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 154 AND 254;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 155 AND 255;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 156 AND 256;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 157 AND 257;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 158 AND 258;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 159 AND 259;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 160 AND 260;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 161 AND 261;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 162 AND 262;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 163 AND 263;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 164 AND 264;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 165 AND 265;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 166 AND 266;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 167 AND 267;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 168 AND 268;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 169 AND 269;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 170 AND 270;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 171 AND 271;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 172 AND 272;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 173 AND 273;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 174 AND 274;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 175 AND 275;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 176 AND 276;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 177 AND 277;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 178 AND 278;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 179 AND 279;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 180 AND 280;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 181 AND 281;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 182 AND 282;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 183 AND 283;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 184 AND 284;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 185 AND 285;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 186 AND 286;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 187 AND 287;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 188 AND 288;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 189 AND 289;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 190 AND 290;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 191 AND 291;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 192 AND 292;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 193 AND 293;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 194 AND 294;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 195 AND 295;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 196 AND 296;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 197 AND 297;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 198 AND 298;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT id FROM page_views WHERE viewed_at BETWEEN 199 AND 299;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:35:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:36:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:37:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:38:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:39:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:40:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:41:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:42:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:43:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:44:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:45:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:46:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:47:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:48:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:49:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:50:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:51:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:52:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:53:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:54:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:55:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:56:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:57:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:58:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:59:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:00:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:01:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:02:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:03:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:04:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:05:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:06:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:07:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:08:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:09:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:10:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:11:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:12:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:13:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:14:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:15:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:16:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:17:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:18:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:19:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:20:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:21:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:22:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:23:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:24:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:25:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:26:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:27:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:28:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:29:00
+# Query_time: 1.0  Rows_examined: 1000
+SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = 3;
+# Time: 2026-11-10T08:30:00
+# Query_time: 1.0  Rows_examined: 1000
+INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (0, 0, 1, 2000, '/home');
+# Time: 2026-11-10T08:31:00
+# Query_time: 1.0  Rows_examined: 1000
+INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (1, 1, 1, 2000, '/home');
+# Time: 2026-11-10T08:32:00
+# Query_time: 1.0  Rows_examined: 1000
+INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (2, 2, 1, 2000, '/home');
+# Time: 2026-11-10T08:33:00
+# Query_time: 1.0  Rows_examined: 1000
+INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (3, 3, 1, 2000, '/home');
+# Time: 2026-11-10T08:34:00
+# Query_time: 1.0  Rows_examined: 1000
+INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (4, 4, 1, 2000, '/home');

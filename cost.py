@@ -61,26 +61,38 @@ def query_cost(stats, q, indexes):
         join_cost, join_used = min(options, key=lambda o: o[0])
         cost, used = cost + join_cost, used + join_used
     if q["kind"] != "select":
-        rows = 1 if q["kind"] == "insert" else filtered(stats, q, table)
         if q["kind"] == "insert":
-            cost = 0.0
-        touched = [i for i in on if i["table"] == table and set(i["columns"]) & set(q["set"])]
+            rows, cost = 1, 0.0
+        else:
+            rows = filtered(stats, q, table)
+        if q["kind"] == "update":
+            touched = [i for i in on if i["table"] == table and set(i["columns"]) & set(q["set"])]
+        else:  # insert/delete maintain every index on the table
+            touched = [i for i in on if i["table"] == table]
         cost += WRITE * rows * len(touched)
     return cost, used
 
 
 def candidates(stats, q):
+    """E+[r], E+O and E per table (README 'Candidates and selection'), plus the join inner column."""
     out = []
+
+    def add(table, cols):
+        if cols and cols not in [c["columns"] for c in out if c["table"] == table]:
+            out.append({"name": f"ix_{table}_" + "_".join(cols), "table": table, "columns": cols})
+
     for table in [q["table"]] + ([q["join"]["table"]] if q["join"] else []):
         eq = sorted({c for t, c, k in q["preds"] if t == table and k == "eq"},
                     key=lambda c: (-stats[table]["columns"][c]["ndv"], c))
-        where = list(dict.fromkeys(c for t, c, k in q["preds"] if t == table))
-        shapes = [where, eq]
-        if q["join"] and table == q["join"]["table"]:
-            shapes.append([q["join"]["column"]])
+        ranges = [c for t, c, k in q["preds"] if t == table and k == "range"]
+        r = ranges[0] if ranges else None
+        order = [c for c in (q["order"] if q["kind"] == "select" else []) if c not in eq]
+        shapes = [eq + [r] if r and r not in eq else None, eq + order if order else None, eq]
         for cols in shapes:
-            if cols and cols not in [c["columns"] for c in out if c["table"] == table]:
-                out.append({"name": f"ix_{table}_" + "_".join(cols), "table": table, "columns": cols})
+            if cols:
+                add(table, cols)
+        if q["join"] and table == q["join"]["table"]:
+            add(table, [q["join"]["column"]])
     return out
 
 

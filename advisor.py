@@ -23,9 +23,10 @@ def advise(stats, queries, budget):
     chosen = []
     while len(chosen) < budget["max_indexes"]:
         base = total(stats, queries, existing + chosen)
+        used_space = sum(cost.size(stats, c) for c in chosen)
         best = None
         for c in sorted(pool, key=lambda c: c["name"]):
-            if c in chosen or cost.size(stats, c) > budget["space_bytes"]:
+            if c in chosen or used_space + cost.size(stats, c) > budget["space_bytes"]:
                 continue
             gain = base - total(stats, queries, existing + chosen + [c])
             if gain > 1e-9 and (best is None or gain > best[0] + 1e-9):
@@ -42,9 +43,15 @@ def advise(stats, queries, budget):
         used |= set(names)
         report.append({"fingerprint": q["fingerprint"], "count": q["count"], "cost_before": round(before, 2),
                        "cost_after": round(after, 2), "benefit": round((before - after) * q["count"], 2)})
-    redundant = [e["name"] for e in existing if not e.get("unique") and any(
-        o is not e and o["table"] == e["table"] and set(e["columns"]) <= set(o["columns"])
-        and (len(o["columns"]) > len(e["columns"]) or o["name"] < e["name"]) for o in final)]
+    redundant = []
+    for e in existing:
+        if e.get("unique"):
+            continue
+        covered = any(o is not e and o["table"] == e["table"]
+                      and o["columns"][:len(e["columns"])] == e["columns"]
+                      and (len(o["columns"]) > len(e["columns"]) or o["name"] < e["name"]) for o in final)
+        if covered:
+            redundant.append(e["name"])
     unused = [e["name"] for e in existing
               if not e.get("unique") and e["name"] not in redundant and e["name"] not in used]
     return {"recommended": [{**c, "size": cost.size(stats, c)} for c in chosen], "queries": report,

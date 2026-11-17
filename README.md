@@ -8,13 +8,18 @@ existing indexes, and can explain a query against a small real data set.
 
     python3 advisor.py advise <stats.json> <slow.log> [--out report.json]   # JSON report
     python3 advisor.py explain <data.json> "<SQL>" [--indexes <report.json | list.json>]
+    python3 gen_scenarios.py     # (re)build examples/scenarios/*.log
+    python3 run_scenarios.py     # advise the read-heavy / write-heavy / mixed logs
+    python3 acceptance.py        # cross-check budgets, benefits, redundant/unused lists
+    python3 validate_sqlite.py   # build recommended indexes in SQLite and diff the plans
     python3 -m unittest discover -s tests
 
 ## Inputs
 
 `slow.log`: lines starting with `#` (`# Time:`, `# Query_time:` …) are headers;
-every other line is SQL, a statement ends with `;`. Statements are grouped by
-fingerprint: string and number literals become `?`, whitespace collapses.
+every other line is SQL, a statement ends with `;` (a line may carry several
+`;`-terminated statements). Statements are grouped by fingerprint: string and
+number literals become `?`, whitespace collapses.
 
 SQL subset: `SELECT ... FROM t [JOIN u ON t.a = u.b] [WHERE p AND p ...]
 [ORDER BY c [ASC|DESC], ...]`, `INSERT INTO t (...) VALUES (...)`,

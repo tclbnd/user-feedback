@@ -1,0 +1,73 @@
+{
+ "recommended": [
+  {
+   "name": "ix_page_views_path",
+   "table": "page_views",
+   "columns": [
+    "path"
+   ],
+   "size": 36000000
+  },
+  {
+   "name": "ix_page_views_viewed_at",
+   "table": "page_views",
+   "columns": [
+    "viewed_at"
+   ],
+   "size": 8000000
+  },
+  {
+   "name": "ix_page_views_user_id_tenant_id_viewed_at",
+   "table": "page_views",
+   "columns": [
+    "user_id",
+    "tenant_id",
+    "viewed_at"
+   ],
+   "size": 14000000
+  }
+ ],
+ "queries": [
+  {
+   "fingerprint": "SELECT id FROM page_views WHERE user_id = ? AND tenant_id = ? AND viewed_at > ? ORDER BY viewed_at",
+   "count": 400,
+   "cost_before": 3.8,
+   "cost_after": 3.08,
+   "benefit": 290.0
+  },
+  {
+   "fingerprint": "SELECT id FROM page_views WHERE path = ?",
+   "count": 300,
+   "cost_before": 500000,
+   "cost_after": 2503.0,
+   "benefit": 149249100.0
+  },
+  {
+   "fingerprint": "SELECT id FROM page_views WHERE viewed_at BETWEEN ? AND ?",
+   "count": 200,
+   "cost_before": 500000,
+   "cost_after": 75003.0,
+   "benefit": 84999400.0
+  },
+  {
+   "fingerprint": "SELECT sessions.device, page_views.id FROM page_views JOIN sessions ON sessions.user_id = page_views.user_id WHERE page_views.tenant_id = ?",
+   "count": 150,
+   "cost_before": 142503.0,
+   "cost_after": 142503.0,
+   "benefit": 0.0
+  },
+  {
+   "fingerprint": "INSERT INTO page_views (id, user_id, tenant_id, viewed_at, path) VALUES (?, ?, ?, ?, ?)",
+   "count": 5,
+   "cost_before": 6.0,
+   "cost_after": 12.0,
+   "benefit": -30.0
+  }
+ ],
+ "redundant": [
+  "ix_page_views_tenant"
+ ],
+ "unused": [
+  "ix_page_views_tenant_user"
+ ]
+}

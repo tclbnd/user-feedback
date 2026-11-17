@@ -1,0 +1,15 @@
+{
+ "tables": {
+  "orders": {"rows": 200000,
+    "columns": {"id": {"ndv": 200000, "width": 8}, "customer_id": {"ndv": 20000, "width": 8},
+                "status": {"ndv": 5, "width": 10}, "created_at": {"ndv": 150000, "width": 8}},
+    "indexes": [{"name": "pk_orders", "columns": ["id"], "unique": true},
+                {"name": "ix_orders_status", "columns": ["status"]},
+                {"name": "ix_orders_status_created", "columns": ["status", "created_at"]}]},
+  "events": {"rows": 500000,
+    "columns": {"id": {"ndv": 500000, "width": 8}, "kind": {"ndv": 40, "width": 12},
+                "at": {"ndv": 400000, "width": 8}},
+    "indexes": [{"name": "pk_events", "columns": ["id"], "unique": true}]}
+ },
+ "budget": {"max_indexes": 3, "space_bytes": 40000000}
+}

@@ -7,22 +7,28 @@ COLUMN = r"([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?)"
 
 def fingerprint(sql):
     sql = re.sub(r"'[^']*'", "?", sql.strip().rstrip(";"))
+    sql = re.sub(r"-?\d+(?:\.\d+)?", "?", sql)
     return re.sub(r"\s+", " ", sql)
 
 
 def read_log(path):
     """Statements of a slow query log grouped by fingerprint, in order of first appearance."""
     groups, text = {}, []
-    for line in open(path, encoding="utf-8"):
-        if line.startswith("#") or not line.strip():
-            continue
-        text.append(line.strip())
-        if line.rstrip().endswith(";"):
-            sql = " ".join(text)
-            text = []
-            fp = fingerprint(sql)
-            groups.setdefault(fp, {"fingerprint": fp, "sql": sql, "count": 0})["count"] += 1
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("#") or not line.strip():
+                continue
+            text.append(line.strip())
+            if line.rstrip().endswith(";"):
+                for sql in split_statements(" ".join(text)):
+                    fp = fingerprint(sql)
+                    groups.setdefault(fp, {"fingerprint": fp, "sql": sql, "count": 0})["count"] += 1
+                text = []
     return list(groups.values())
+
+
+def split_statements(text):
+    return [s.strip() for s in text.split(";") if s.strip()]
 
 
 def parse(sql):

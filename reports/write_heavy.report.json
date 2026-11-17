@@ -1,0 +1,46 @@
+{
+ "recommended": [],
+ "queries": [
+  {
+   "fingerprint": "INSERT INTO ledger (id, acct_id, posted_at, amount, a, b, c) VALUES (?, ?, ?, ?, ?, ?, ?)",
+   "count": 700000,
+   "cost_before": 8.0,
+   "cost_after": 8.0,
+   "benefit": 0.0
+  },
+  {
+   "fingerprint": "UPDATE ledger SET amount = ? WHERE id = ?",
+   "count": 5000,
+   "cost_before": 4.5,
+   "cost_after": 4.5,
+   "benefit": 0.0
+  },
+  {
+   "fingerprint": "DELETE FROM ledger WHERE id = ?",
+   "count": 2000,
+   "cost_before": 12.5,
+   "cost_after": 12.5,
+   "benefit": 0.0
+  },
+  {
+   "fingerprint": "SELECT id FROM ledger WHERE acct_id = ? AND posted_at BETWEEN ? AND ?",
+   "count": 1,
+   "cost_before": 1000000,
+   "cost_after": 1000000,
+   "benefit": 0
+  },
+  {
+   "fingerprint": "SELECT id FROM ledger WHERE a = ? AND b = ?",
+   "count": 2,
+   "cost_before": 6.0,
+   "cost_after": 6.0,
+   "benefit": 0.0
+  }
+ ],
+ "redundant": [
+  "ix_ledger_a"
+ ],
+ "unused": [
+  "ix_ledger_c"
+ ]
+}

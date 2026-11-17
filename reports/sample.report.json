@@ -1,0 +1,81 @@
+{
+ "recommended": [
+  {
+   "name": "ix_events_kind_at",
+   "table": "events",
+   "columns": [
+    "kind",
+    "at"
+   ],
+   "size": 14000000
+  },
+  {
+   "name": "ix_orders_customer_id_created_at",
+   "table": "orders",
+   "columns": [
+    "customer_id",
+    "created_at"
+   ],
+   "size": 4800000
+  },
+  {
+   "name": "ix_customers_region",
+   "table": "customers",
+   "columns": [
+    "region"
+   ],
+   "size": 400000
+  }
+ ],
+ "queries": [
+  {
+   "fingerprint": "SELECT id, total FROM orders WHERE customer_id = ? AND created_at > ? ORDER BY created_at",
+   "count": 40,
+   "cost_before": 200001.0,
+   "cost_after": 4.5,
+   "benefit": 7999860.0
+  },
+  {
+   "fingerprint": "SELECT * FROM orders WHERE status = ? AND customer_id = ? ORDER BY created_at DESC",
+   "count": 25,
+   "cost_before": 60005.0,
+   "cost_after": 18.0,
+   "benefit": 1499675.0
+  },
+  {
+   "fingerprint": "SELECT customers.email, orders.total FROM customers JOIN orders ON customers.id = orders.customer_id WHERE customers.region = ?",
+   "count": 15,
+   "cost_before": 221666.67,
+   "cost_after": 32503.0,
+   "benefit": 2837455.0
+  },
+  {
+   "fingerprint": "SELECT id FROM events WHERE kind = ? AND at BETWEEN ? AND ?",
+   "count": 30,
+   "cost_before": 500000,
+   "cost_after": 1878.0,
+   "benefit": 14943660.0
+  },
+  {
+   "fingerprint": "INSERT INTO events (id, kind, at) VALUES (?, ?, ?)",
+   "count": 3000,
+   "cost_before": 2.0,
+   "cost_after": 4.0,
+   "benefit": -6000.0
+  },
+  {
+   "fingerprint": "UPDATE orders SET status = ? WHERE id = ?",
+   "count": 10,
+   "cost_before": 8.5,
+   "cost_after": 8.5,
+   "benefit": 0.0
+  }
+ ],
+ "redundant": [
+  "ix_orders_status"
+ ],
+ "unused": [
+  "ix_orders_status_total",
+  "ix_orders_total"
+ ]
+}
