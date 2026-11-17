@@ -1,0 +1,1 @@
+{"where": [["region", "=", "us"], ["status", "=", "void"]], "select": ["id", "created"]}

@@ -1,0 +1,1 @@
+{"where": [["status", "=", "paid"], ["amount", ">", 300], ["region", "=", "us"]], "select": ["id", "amount", "region"], "order_by": [["amount", "asc"]]}
