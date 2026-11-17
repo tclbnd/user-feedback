@@ -40,7 +40,17 @@ def evaluate(e, row):
         t = datetime.strptime(args[0], "%Y-%m-%d %H:%M:%S") - offset(args[1]) + offset(args[2])
         return t.strftime("%Y-%m-%d %H:%M:%S")
     if name == "DATE_TRUNC":
-        return utc_to_local(args[1], args[2] if len(args) > 2 else "+00:00")[:10]
+        # Rewritten form: DATE_TRUNC('day', ts[, zone]); hand-written: DATE_TRUNC(ts[, zone]).
+        # A bare timestamp never matches a truncation unit, so the first string is
+        # the unit only when it is one of the known units.
+        units = {"day", "hour", "minute", "second"}
+        if isinstance(args[0], str) and args[0] in units:
+            ts = args[1]
+            zone = args[2] if len(args) > 2 else "+00:00"
+        else:
+            ts = args[0]
+            zone = args[1] if len(args) > 1 else "+00:00"
+        return utc_to_local(ts, zone)[:10]
     if name == "TIMEZONE":
         return utc_to_local(args[1], args[0])
     raise ValueError(f"unknown function {name}")
@@ -52,13 +62,17 @@ def compare(a, b, fold):
     return (a > b) - (a < b)
 
 
-def execute(dialect, query, rows):
+def execute(dialect, query, rows, primary_key=None):
     """Run a query (SQL text or parsed) over `rows` with the rules of 'legacy' or 'target'."""
     q = Parser(query).parse() if isinstance(query, str) else query
     legacy = dialect == "legacy"
     eq = (lambda a, b: a is not None and compare(a, b, legacy) == 0)
     hits = [r for r in rows if all(eq(evaluate(a, r), evaluate(b, r)) for a, b in q["where"])]
-    if not legacy and q["limit"] is not None:
+    # A primary key in the sort keys makes the order total, so ties are fully
+    # resolved and the top-N order must not change with LIMIT/OFFSET. Without it,
+    # the target engine, like a real top-N sort, returns ties in an unstable order.
+    totally_ordered = any(e[0] == "col" and e[1] == primary_key for e, _, _ in q["order"])
+    if not legacy and q["limit"] is not None and not totally_ordered:
         salt = str(q["limit"] + q["offset"])
         hits.sort(key=lambda r: zlib.crc32((salt + json.dumps(r, sort_keys=True)).encode()))
 

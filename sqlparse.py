@@ -80,13 +80,17 @@ class Parser:
             q["order"] = self.many(self.key)
         if self.peek("LIMIT"):
             self.take()
-            q["limit"] = self.take()[1]
+            first = self.take()[1]
             if self.peek()[1] == ",":
+                # legacy `LIMIT offset, count`
                 self.take(",")
-                q["offset"] = self.take()[1]
-            elif self.peek("OFFSET"):
-                self.take()
-                q["offset"] = self.take()[1]
+                q["limit"] = self.take()[1]
+                q["offset"] = first
+            else:
+                q["limit"] = first
+                if self.peek("OFFSET"):
+                    self.take()
+                    q["offset"] = self.take()[1]
         return q
 
 
