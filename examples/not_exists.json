@@ -1,0 +1,28 @@
+{
+ "select": [
+  "c.id",
+  "c.name"
+ ],
+ "from": "customers",
+ "as": "c",
+ "where": [
+  {
+   "op": "not_exists",
+   "query": {
+    "from": "blacklist",
+    "as": "b",
+    "where": [
+     {
+      "op": "=",
+      "left": {
+       "col": "b.customer_id"
+      },
+      "right": {
+       "col": "c.id"
+      }
+     }
+    ]
+   }
+  }
+ ]
+}

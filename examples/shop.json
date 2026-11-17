@@ -1,0 +1,70 @@
+{
+ "tables": {
+  "customers": {
+   "not_null": [
+    "id",
+    "region"
+   ],
+   "rows": [
+    {
+     "id": 1,
+     "name": "ann",
+     "region": "north",
+     "referrer": null
+    },
+    {
+     "id": 2,
+     "name": "bo",
+     "region": "south",
+     "referrer": 1
+    },
+    {
+     "id": 3,
+     "name": "cy",
+     "region": "north",
+     "referrer": 2
+    },
+    {
+     "id": 4,
+     "name": "dee",
+     "region": "east",
+     "referrer": null
+    },
+    {
+     "id": 5,
+     "name": "eli",
+     "region": "south",
+     "referrer": 9
+    },
+    {
+     "id": 6,
+     "name": "fay",
+     "region": "east",
+     "referrer": 4
+    }
+   ]
+  },
+  "blacklist": {
+   "not_null": [
+    "region"
+   ],
+   "rows": [
+    {
+     "customer_id": 2,
+     "region": "south",
+     "reason": "chargeback"
+    },
+    {
+     "customer_id": null,
+     "region": "north",
+     "reason": "manual review"
+    },
+    {
+     "customer_id": 4,
+     "region": "east",
+     "reason": "chargeback"
+    }
+   ]
+  }
+ }
+}

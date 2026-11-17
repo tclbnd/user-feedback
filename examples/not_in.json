@@ -1,0 +1,25 @@
+{
+ "select": [
+  "c.id",
+  "c.name"
+ ],
+ "from": "customers",
+ "as": "c",
+ "where": [
+  {
+   "op": "not_in",
+   "args": [
+    {
+     "col": "c.id"
+    }
+   ],
+   "query": {
+    "from": "blacklist",
+    "as": "b",
+    "select": [
+     "b.customer_id"
+    ]
+   }
+  }
+ ]
+}
