@@ -16,14 +16,15 @@ def analyze_column(values):
     present = [v for v in rows if v is not None]
     null_frac = (n - len(present)) / n if n else 0.0
     counts = Counter(present)
-    ndv = len(set(rows))
+    ndv = len(counts)
     mcv = []
     if ndv:
         average = len(present) / ndv
         ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
-        mcv = [[v, c / len(present)] for v, c in ranked[:MCV_LIMIT]
+        mcv = [[v, c / n] for v, c in ranked[:MCV_LIMIT]
                if c >= 2 and (ndv <= MCV_LIMIT or c > 1.25 * average)]
-    rest = sorted(present)
+    hot = {v for v, _ in mcv}
+    rest = sorted(v for v in present if v not in hot)
     if len(rest) >= 2:
         hist = [rest[round(i * (len(rest) - 1) / BUCKETS)] for i in range(BUCKETS + 1)]
     else:

@@ -52,6 +52,7 @@ class Table:
             keep = [r for r in self.rows() if not matches(r, ev["where"])]
             removed = len(self.columns[next(iter(self.columns))]) - len(keep)
             self.columns = {c: [r[c] for r in keep] for c in self.columns}
+            self.changed += removed
             return {"deleted": removed}
         if op == "estimate":
             refreshed = self.stale()

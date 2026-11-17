@@ -1,11 +1,27 @@
 """Selectivity estimation from column statistics and access path choice."""
+import operator
 from bisect import bisect_right
 
 SEQ_COST_PER_ROW, INDEX_START, INDEX_COST_PER_ROW = 1.0, 2.0, 4.0
+OPS = {"=": operator.eq, "!=": operator.ne, "<": operator.lt,
+       "<=": operator.le, ">": operator.gt, ">=": operator.ge}
+
+
+def rest_frac(st):
+    """Share of rows that are non-NULL and outside the MCV list."""
+    return max(0.0, 1.0 - st["null_frac"] - sum(f for _, f in st["mcv"]))
 
 
 def eq(st, value):
-    return (1.0 - st["null_frac"]) / st["ndv"] if st["ndv"] else 0.0
+    if value is None:
+        return 0.0
+    for v, freq in st["mcv"]:
+        if v == value:
+            return freq
+    left = st["ndv"] - len(st["mcv"])
+    if left <= 0:
+        return 0.0
+    return rest_frac(st) / left
 
 
 def below(hist, c, inclusive):
@@ -21,11 +37,12 @@ def below(hist, c, inclusive):
 
 
 def range_sel(st, op, c):
+    mcv_part = sum(f for v, f in st["mcv"] if OPS[op](v, c))
     inclusive = op in ("<=", ">=")
     part = below(st["histogram"], c, inclusive)
     if op in (">", ">="):
         part = 1.0 - below(st["histogram"], c, not inclusive)
-    return (1.0 - st["null_frac"]) * part
+    return mcv_part + rest_frac(st) * part
 
 
 def estimate(stats, expr):
@@ -38,7 +55,7 @@ def estimate(stats, expr):
         out = 0.0
         for e in expr["or"]:
             s = estimate(stats, e)
-            out = min(1.0, out + s)
+            out = out + s - out * s
         return out
     st, op = stats["columns"][expr["col"]], expr["op"]
     if op == "is_null":
@@ -50,7 +67,8 @@ def estimate(stats, expr):
     if op == "!=":
         return max(0.0, 1.0 - st["null_frac"] - eq(st, expr["value"]))
     if op == "in":
-        return min(1.0 - st["null_frac"], sum(eq(st, v) for v in expr["values"]))
+        distinct = dict.fromkeys(expr["values"])
+        return min(1.0 - st["null_frac"], sum(eq(st, v) for v in distinct))
     return range_sel(st, op, expr["value"])
 
 
