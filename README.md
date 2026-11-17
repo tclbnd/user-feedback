@@ -24,8 +24,10 @@ LSNs consecutive across segments and record times strictly increasing:
     {"lsn": 10, "time": 1100, "tx": 3, "type": "COMMIT"}
 
 `ABORT` ends a transaction without effect. Writes take effect at COMMIT, in
-commit order. A missing segment, a missing LSN or a line that does not parse is
-a gap: nothing after it in the stream can be trusted for replay.
+commit order. A missing segment, a missing LSN, an unparsable or malformed
+line, a non-increasing time or a segment that ends before its name says is a
+gap: nothing after it in the stream can be trusted for replay. So is an archive
+that stops before the `end_lsn` a finished backup recorded.
 
 `<cluster>/backups/<name>/manifest.json` and `data.json`
 (`{"tables": {"accounts": {"a1": "100"}}}`). The manifest holds `start_lsn`,
@@ -43,10 +45,13 @@ the oldest transaction open at `start_lsn`).
 * The base backup is the newest finished backup whose `end_time <= T` (or
   `end_lsn` at or before the cut); unfinished backups are never used.
 * Replay reads the log from `redo_lsn` and applies every transaction that
-  committed after `start_lsn` and at or before the cut, in commit order.
+  committed after `start_lsn` and at or before the cut, in commit order. A
+  fuzzy backup may already hold some of those commits; replaying them again is
+  safe because the whole range is reapplied in the same order.
 * If the records needed for the target are not all in the archive, the restore
   fails with the log gap error; targets up to `latest_recoverable_time` still
-  work.
-* The restore is built in `<out>.restoring`, read back and checked, then
-  replaces `<out>` as a whole. A failed restore leaves an existing `<out>`
-  untouched.
+  work. A transaction target whose COMMIT is missing from the archive reports
+  the gap rather than "transaction not found".
+* The restore is built in `<out>.restoring`, read back, checked against the
+  rows the log determines, and only then replaces `<out>` as a whole. A failed
+  restore leaves an existing `<out>` untouched.

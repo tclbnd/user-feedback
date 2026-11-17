@@ -32,7 +32,8 @@ def main():
     else:
         target = ("tx", args.to_tx) if args.to_tx is not None else ("before", args.before_tx)
     try:
-        summary = restore(args.cluster, args.out, target, wal.read(os.path.join(args.cluster, "wal")))
+        summary = restore(args.cluster, args.out, target,
+                          wal.scan(os.path.join(args.cluster, "wal")))
     except RestoreError as exc:
         print(json.dumps(exc.details))
         return 4
