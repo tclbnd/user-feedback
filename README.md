@@ -19,8 +19,11 @@ The hash aggregation operator of a small query executor.
   `[[a, b], [a], []]`. A missing column value is NULL (`null`).
 - All NULLs of a grouping column form one group. Aggregates ignore NULL
   inputs, except `count` with `arg: "*"`. `fn` is `count`, `sum`, `min`,
-  `max` or `avg`; `distinct: true` aggregates distinct non-NULL values. `sum`,
-  `min`, `max` and `avg` of no non-NULL values are NULL; `count` is 0.
+  `max`, `avg` or `grouping`; `distinct: true` aggregates distinct non-NULL
+  values. `sum`, `min`, `max` and `avg` of no non-NULL values are NULL;
+  `count` is 0. `{"fn": "grouping", "arg": "col"}` returns 1 when `col` is
+  not part of the row's grouping set (the value is a super-aggregate NULL)
+  and 0 otherwise; it takes no `distinct` and ignores the row values.
 - `having` conditions (all must hold) are checked after grouping. The left
   side is an output alias or an aggregate expression `{"fn", "arg",
   "distinct"}` that need not be selected. A comparison with NULL is false.
