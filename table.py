@@ -33,10 +33,23 @@ class Database:
         t["rows"][row[t["pk"]]] = row
         return row
 
-    def chunk(self, name, offset, size):
+    def chunk_after(self, name, after_key, size):
+        """Keyset (primary-key cursor) pagination.
+
+        Returns the up to ``size`` rows whose key is strictly greater than
+        ``after_key``, in key order, plus the new high-water key. Unlike offset
+        pagination this cannot skip rows when concurrent inserts grow the
+        table during the copy: every key is reached by walking the key space
+        forward from a cursor that never moves backwards.
+        """
         rows = self.tables[name]["rows"]
-        keys = sorted(rows)[offset:offset + size]
-        return [dict(rows[k]) for k in keys]
+        keys = sorted(rows)
+        if after_key is not None:
+            keys = [k for k in keys if k > after_key]
+        keys = keys[:size]
+        if not keys:
+            return [], after_key
+        return [dict(rows[k]) for k in keys], keys[-1]
 
     def rename(self, old, new):
         if new in self.tables:

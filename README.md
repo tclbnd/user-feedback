@@ -47,13 +47,21 @@ failure the file is saved as it is.
 
 * Shadow table `_osc_new_<t>`, change log `_osc_log_<t>`, trigger
   `_osc_trg_<t>` (installed before the copy). Rows are copied in key order,
-  `--chunk` rows at a time.
-* Changes are replayed in `seq` order; a row deleted and inserted again, or
-  whose key changed, ends up exactly as in the source.
+  `--chunk` rows at a time, driven by a primary-key cursor (`key > last_key`),
+  never an offset: concurrent inserts grow the source during the copy, so an
+  offset would skip rows while a forward cursor reaches every key.
+* Changes are replayed one entry at a time in `seq` order (not folded per
+  batch): a row deleted and inserted again, or whose key changed, ends up
+  exactly as in the source. An update that moves the primary key also removes
+  the stale row left under the old key.
 * Before the cut-over the tool replays outside the lock until at most one batch
   is left; the lock covers only that batch and the swap. `lock_ticks` is the
   longest stretch the table stayed locked.
-* The swap renames `<t>` to `_osc_old_<t>` and the shadow to `<t>` in one
-  catalog change, then drops the trigger, the change log and the old table.
+* The swap renames `<t>` to `_osc_old_<t>` and the shadow to `<t>` as one
+  catalog change, then drops the trigger, the change log and the old table. A
+  fault landing between the two renames is tracked as a distinct state, so
+  rollback can move the half-renamed old table back to its original name.
 * After a failure in any phase the original table, schema and rows are exactly
   what business traffic made of them, with no trigger, log or shadow left.
+  Rollback is idempotent: it reverses any partial rename, releases the lock,
+  and removes every `_osc_` object, and is safe to call when nothing was set up.
