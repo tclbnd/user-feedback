@@ -6,25 +6,25 @@ from engine import SubPlan
 def plan(query, ctx, rewrite=True):
     labels = []
 
-    def visit(sub, outer, exists=False, top=True):
-        if rewrite and top:
-            resolver = Decorrelated(sub, ctx, outer, exists)
-            labels.append(f"Decorrelated {sub['as']}")
-        else:
+    def visit(sub, outer, exists=False):
+        resolver = Decorrelated.build(sub, ctx, outer, exists) if rewrite else None
+        if resolver is None:
             resolver = SubPlan(sub, ctx, exists)
             labels.append(f"SubPlan {sub['as']}")
+        else:
+            labels.append(f"Decorrelated {sub['as']}")
         ctx.resolvers[id(sub)] = resolver
-        scan(sub.get("where", []), outer | {sub["as"]}, top=False)
-        resolver.prepare()
+        # Nested subqueries are planned the same way, against all enclosing aliases.
+        scan(sub.get("where", []), outer | {sub["as"]})
 
-    def scan(nodes, outer, top=True):
+    def scan(nodes, outer):
         for node in nodes:
             if "scalar" in node:
-                visit(node["scalar"], outer, top=top)
+                visit(node["scalar"], outer)
             elif node.get("op") in ("exists", "not_exists"):
-                visit(node["query"], outer, exists=True, top=top)
+                visit(node["query"], outer, exists=True)
             else:
-                scan([node[k] for k in ("left", "right", "arg") if k in node] + node.get("args", []), outer, top)
+                scan([node[k] for k in ("left", "right", "arg") if k in node] + node.get("args", []), outer)
 
     scan(query["select"] + query.get("where", []), {query["as"]})
     return labels
