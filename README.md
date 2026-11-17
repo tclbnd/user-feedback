@@ -50,6 +50,8 @@ defaults.
   transaction (0 or missing before the first one).
 - `conflicts.jsonl`: one line per conflict,
   `{"commit_lsn": C, "lsn": l, "type": T, "table": t, "key": k}`.
+- `journal.json`: internal, the durable commit record. It holds the tables,
+  `commit_lsn` and the conflict list together. See below.
 
 ## Apply rules
 
@@ -65,3 +67,34 @@ changes of its transaction. Conflict policy:
 | `delete_missing`| delete of a missing key       | skip the change, log it       |
 
 Every conflict is logged exactly once, however often the connection drops.
+
+## Crash safety
+
+Reconnects are safe because the commit position is only ever a transaction
+boundary and because all recoverable state commits in one atomic step:
+
+1. The transaction is applied to an in-memory copy of the replica. Nothing on
+   disk changes, so a drop mid-transaction leaves the replica untouched.
+2. At `commit`, `journal.json` (tables + `commit_lsn` + conflict list) is
+   written to a temp file, `fsync`ed and `os.replace`d over the old one. That
+   rename is the commit point: data, position and conflict log become visible
+   together or not at all.
+3. `replica.json`, `conflicts.jsonl` and `position.json` are re-rendered from
+   the journal afterwards, with `position.json` last, so it never names a
+   transaction the data or the conflict log do not contain.
+4. On startup the journal is the source of truth and the derived files are
+   healed before streaming, so dying during step 3 is harmless.
+
+Consequences:
+
+- A transaction is resumed exactly at its start: the stored position is a
+  commit LSN. If a position is not a commit boundary (left behind by an older
+  subscriber), it is rewound to the previous commit boundary and that
+  transaction is replayed in full.
+- A transaction delivered again after a reconnect (`commit_lsn` already
+  applied) is skipped as a whole, so it is never applied twice and its
+  conflicts are never logged twice.
+- Progress is fed back to the publisher only after the local commit, so the
+  slot can never run ahead of what the replica durably has. If it already has
+  (log truncated), `sync` says so on stderr rather than applying a suffix.
+
