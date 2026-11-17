@@ -3,7 +3,8 @@ XID_SPACE, FIRST_XID = 2 ** 32, 3
 
 
 def precedes(a, b):
-    return a < b
+    """Circular xid order: a precedes b iff (a - b) mod 2^32 >= 2^31."""
+    return (a - b) % XID_SPACE >= XID_SPACE // 2
 
 
 def oldest(xids):
@@ -48,4 +49,8 @@ class TxnManager:
         return self.clog.get(xid, "aborted")
 
     def horizon(self):
-        return oldest(self.active) if self.active else self.next
+        # Oldest running xid plus every running snapshot's xmin: a version may
+        # still be needed until all snapshots whose horizon covers it are gone.
+        bounds = list(self.active)
+        bounds.extend(snap.xmin for snap in self.active.values())
+        return oldest(bounds) if bounds else self.next
