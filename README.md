@@ -45,3 +45,24 @@ bounded heap and never spills; with N > work_mem it uses the external sort.
 
 `--stats` writes `{"rows": N, "runs": R, "merge_passes": P}`: input rows,
 initial runs written to disk, and merge passes (both 0 when nothing spilled).
+
+## Implementation notes
+
+* Rows are represented by an ascending key tuple. DESC is expressed by a
+  comparison wrapper that flips `<` but keeps `==` as value equality, so a
+  single ascending sort handles mixed directions and NULLS FIRST/LAST, and
+  equal keys keep input order.
+* `nocase` compares `casefold()`ed strings only, with no raw-string
+  tie-breaker, so strings that fold to the same text are genuinely equal keys.
+* The bounded top-N heap is a max-heap over the key; among equal keys the
+  *latest* retained row is at the root and is evicted first, so the earliest
+  equal-key rows survive and the LIMIT output is stable.
+* The k-way merge streams one row per run and breaks ties by run index (then
+  by read order within a run), never comparing row payloads. Peak residency
+  is `work_mem` rows for the buffer and `fan_in` rows for the merge frontier.
+* Temporary files are created with `mkstemp` in `--tmpdir` and removed in a
+  `finally`: on success, on bad input, on an internal crash, when the consumer
+  stops early, and on `SIGINT`/`SIGTERM`/`SIGHUP` (handled by unwinding the
+  stack so the `finally` blocks run).
+* NaN (only reachable through a JSON number literal such as `NaN`) sorts
+  after every other number, as in PostgreSQL.
