@@ -1,0 +1,11 @@
+{"tables": {"node": {"pk": "id"}},
+ "rows": {"node": [{"id": 1, "parent_id": null, "name": "root"}, {"id": 2, "parent_id": 1, "name": "a"},
+                   {"id": 3, "parent_id": 2, "name": "b"}, {"id": 4, "parent_id": 1, "name": "c"},
+                   {"id": 5, "parent_id": 6, "name": "x"}, {"id": 6, "parent_id": 5, "name": "y"}]},
+ "foreign_keys": [{"name": "fk_node_parent", "table": "node", "column": "parent_id", "ref_table": "node",
+                   "ref_column": "id", "on_delete": "cascade", "on_update": "cascade"}],
+ "statements": [
+  {"op": "update", "table": "node", "where": {"id": 1}, "set": {"id": 10}},
+  {"op": "update", "table": "node", "where": {"id": 5}, "set": {"name": "x2"}},
+  {"op": "delete", "table": "node", "where": {"id": 6}},
+  {"op": "delete", "table": "node", "where": {"id": 2}}]}

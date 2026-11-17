@@ -1,0 +1,18 @@
+{"tables": {"customer": {"pk": "id"}, "orders": {"pk": "id"}, "line": {"pk": "id"},
+            "invoice": {"pk": "id"}, "note": {"pk": "id", "defaults": {"customer_id": 0}}},
+ "rows": {"customer": [{"id": 0, "name": "walk-in"}, {"id": 1, "name": "ACME"}, {"id": 2, "name": "Globex"}],
+          "orders": [{"id": 10, "customer_id": 1}, {"id": 11, "customer_id": 1}, {"id": 12, "customer_id": 2}],
+          "line": [{"id": 100, "order_id": 10, "invoice_id": 500}, {"id": 101, "order_id": 11, "invoice_id": 500},
+                   {"id": 102, "order_id": 12, "invoice_id": 501}],
+          "invoice": [{"id": 500, "customer_id": 1}, {"id": 501, "customer_id": 2}],
+          "note": [{"id": 900, "customer_id": 1}, {"id": 901, "customer_id": 2}]},
+ "foreign_keys": [
+  {"name": "fk_orders_customer", "table": "orders", "column": "customer_id", "ref_table": "customer", "ref_column": "id", "on_delete": "cascade", "on_update": "cascade"},
+  {"name": "fk_line_order", "table": "line", "column": "order_id", "ref_table": "orders", "ref_column": "id", "on_delete": "cascade"},
+  {"name": "fk_invoice_customer", "table": "invoice", "column": "customer_id", "ref_table": "customer", "ref_column": "id", "on_delete": "cascade", "on_update": "cascade"},
+  {"name": "fk_line_invoice", "table": "line", "column": "invoice_id", "ref_table": "invoice", "ref_column": "id", "on_delete": "set_null"},
+  {"name": "fk_note_customer", "table": "note", "column": "customer_id", "ref_table": "customer", "ref_column": "id", "on_delete": "set_default", "on_update": "restrict"}],
+ "statements": [
+  {"op": "update", "table": "customer", "where": {"id": 2}, "set": {"id": 3}},
+  {"op": "delete", "table": "customer", "where": {"id": 1}},
+  {"op": "delete", "table": "customer", "where": {"id": 0}}]}
