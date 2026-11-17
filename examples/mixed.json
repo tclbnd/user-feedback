@@ -1,0 +1,219 @@
+{
+ "initial": [
+  2,
+  4,
+  6,
+  8,
+  10,
+  12,
+  14,
+  16,
+  18,
+  20,
+  22,
+  24,
+  26,
+  28,
+  30,
+  32,
+  34,
+  36,
+  38,
+  40,
+  42,
+  44,
+  46,
+  48,
+  50,
+  52,
+  54,
+  56,
+  58,
+  60
+ ],
+ "threads": [
+  [
+   {
+    "op": "insert",
+    "key": 1
+   },
+   {
+    "op": "insert",
+    "key": 5
+   },
+   {
+    "op": "insert",
+    "key": 9
+   },
+   {
+    "op": "insert",
+    "key": 13
+   },
+   {
+    "op": "insert",
+    "key": 17
+   },
+   {
+    "op": "insert",
+    "key": 21
+   },
+   {
+    "op": "insert",
+    "key": 25
+   },
+   {
+    "op": "insert",
+    "key": 29
+   },
+   {
+    "op": "insert",
+    "key": 33
+   },
+   {
+    "op": "insert",
+    "key": 37
+   },
+   {
+    "op": "insert",
+    "key": 41
+   },
+   {
+    "op": "insert",
+    "key": 45
+   },
+   {
+    "op": "insert",
+    "key": 49
+   },
+   {
+    "op": "insert",
+    "key": 53
+   },
+   {
+    "op": "insert",
+    "key": 57
+   }
+  ],
+  [
+   {
+    "op": "insert",
+    "key": 3
+   },
+   {
+    "op": "insert",
+    "key": 7
+   },
+   {
+    "op": "insert",
+    "key": 11
+   },
+   {
+    "op": "insert",
+    "key": 15
+   },
+   {
+    "op": "insert",
+    "key": 19
+   },
+   {
+    "op": "insert",
+    "key": 23
+   },
+   {
+    "op": "insert",
+    "key": 27
+   },
+   {
+    "op": "insert",
+    "key": 31
+   },
+   {
+    "op": "insert",
+    "key": 35
+   },
+   {
+    "op": "insert",
+    "key": 39
+   },
+   {
+    "op": "insert",
+    "key": 43
+   },
+   {
+    "op": "insert",
+    "key": 47
+   },
+   {
+    "op": "insert",
+    "key": 51
+   },
+   {
+    "op": "insert",
+    "key": 55
+   },
+   {
+    "op": "insert",
+    "key": 59
+   }
+  ],
+  [
+   {
+    "op": "delete",
+    "key": 4
+   },
+   {
+    "op": "delete",
+    "key": 10
+   },
+   {
+    "op": "delete",
+    "key": 16
+   },
+   {
+    "op": "delete",
+    "key": 22
+   },
+   {
+    "op": "delete",
+    "key": 28
+   },
+   {
+    "op": "delete",
+    "key": 34
+   },
+   {
+    "op": "delete",
+    "key": 40
+   },
+   {
+    "op": "delete",
+    "key": 46
+   },
+   {
+    "op": "delete",
+    "key": 52
+   },
+   {
+    "op": "delete",
+    "key": 58
+   }
+  ],
+  [
+   {
+    "op": "scan",
+    "lo": 1,
+    "hi": 60
+   },
+   {
+    "op": "scan",
+    "lo": 10,
+    "hi": 40
+   },
+   {
+    "op": "scan",
+    "lo": 1,
+    "hi": 60
+   }
+  ]
+ ]
+}
