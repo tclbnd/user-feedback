@@ -1,0 +1,88 @@
+{
+ "replicas": [
+  {
+   "name": "replica-a",
+   "lag": 20
+  },
+  {
+   "name": "replica-b",
+   "lag": 20
+  },
+  {
+   "name": "replica-c",
+   "lag": 20
+  }
+ ],
+ "policy": {
+  "on_stale": "primary",
+  "probe_interval": 300
+ },
+ "events": [
+  {
+   "t": 0,
+   "op": "write",
+   "session": "alice",
+   "key": "cart",
+   "value": 3
+  },
+  {
+   "t": 100,
+   "op": "down",
+   "replica": "replica-b"
+  },
+  {
+   "t": 110,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 111,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 112,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 113,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 200,
+   "op": "up",
+   "replica": "replica-b"
+  },
+  {
+   "t": 420,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 421,
+   "op": "read",
+   "session": "bob",
+   "key": "cart"
+  },
+  {
+   "t": 500,
+   "op": "write",
+   "session": "alice",
+   "key": "cart",
+   "value": 4
+  },
+  {
+   "t": 501,
+   "op": "read",
+   "session": "alice",
+   "key": "cart"
+  }
+ ]
+}
