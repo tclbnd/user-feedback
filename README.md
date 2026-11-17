@@ -62,7 +62,27 @@ linked left to right through `next`.
   leaf that rebalances with its left sibling releases itself, latches the left
   sibling, then latches itself again.
 - A scan descends with shared latches to the leaf of `lo`, then walks the
-  leaf chain: it latches the next leaf before releasing the current one and
-  never returns a key that is not greater than the last key it returned.
+  leaf chain: it latches the next leaf before releasing the current one.
+  It pins one immutable committed snapshot (see below), so it never returns
+  a key that is not greater than the last key it returned and a split can
+  never duplicate a key nor a merge skip one.
 - No sequence of operations may deadlock, every scan returns sorted distinct
   keys, and a scan returns every key that was present for its whole duration.
+
+## Snapshots and the deadlock safety net
+
+- Every committed insert/delete calls `Tree.commit()`, which bumps
+  `Tree.version` and stores an immutable `frozenset` of the live key set in
+  `Tree.snapshots[version]`.  A scan records the current version on entry and
+  reads that snapshot, so its result is exactly one instant's key set even
+  though writers keep mutating the tree while it walks the leaf chain.
+- Latch requests follow one global order (top-down, then strictly
+  left-to-right between siblings), which by construction cannot form a wait
+  cycle.  As a defence in depth the scheduler builds the wait graph when no
+  request is grantable; if it ever contains a cycle, every thread on that
+  cycle has its latches released and its current operation replayed from the
+  start (`RetryOperation`).  A blocked configuration without a cycle is just a
+  queue and is simply retried, never reported as a deadlock.
+- The scheduler tracks each thread's held latches, so a re-entrant request
+  for a latch the thread already holds is granted as a no-op instead of
+  deadlocking the thread against itself.

@@ -14,8 +14,25 @@ class Node:
 class Tree:
     def __init__(self):
         self.nodes = {}
+        # Bumped once per committed insert/delete.
+        self.version = 0
+        # Immutable committed key set for every version, so a scan can read a
+        # single instant without racing key-set changes.
+        self.snapshots = {0: frozenset()}
         self.anchor = self.new(False)
         self.anchor.children = [self.new(True).id]
+
+    def commit(self):
+        """Advance the version and record the newly committed key set."""
+        self.version += 1
+        self.snapshots[self.version] = frozenset(self.key_set())
+
+    def snapshot(self, version=None):
+        """Return the immutable key set visible at ``version`` (default: the
+        latest committed instant)."""
+        if version is None:
+            version = self.version
+        return self.snapshots[version]
 
     def new(self, leaf, keys=None, children=None):
         node = Node(len(self.nodes), leaf, keys, children)
@@ -47,9 +64,13 @@ class Tree:
         parent.keys.insert(i, sep)
         parent.children.insert(i + 1, right.id)
 
-    def rebalance(self, parent, node, sibling):
-        """Merge or redistribute an underfull leaf with an adjacent sibling."""
-        i, j = parent.children.index(node.id), parent.children.index(sibling.id)
+    def rebalance(self, parent, node, sibling, i, j):
+        """Merge or redistribute an underfull leaf with an adjacent sibling.
+
+        ``i`` and ``j`` are the current, caller-verified positions of ``node``
+        and ``sibling`` in ``parent.children`` (|i - j| == 1).  The caller
+        holds X latches on all three nodes."""
+        assert abs(i - j) == 1
         if len(node.keys) + len(sibling.keys) <= MAX_KEYS:
             if j > i:
                 node.keys += sibling.keys
@@ -58,14 +79,27 @@ class Tree:
                 del parent.keys[i], parent.children[j]
             else:
                 sibling.keys += node.keys
-                node.keys = []
+                # The left sibling takes the merged node's place in the
+                # leaf chain; otherwise a scan following next would land on
+                # the emptied node instead of the rest of the chain.
+                sibling.next = node.next
+                node.keys, node.next = [], None
                 del parent.keys[j], parent.children[i]
             return
+        # Redistribution: the two leaves together hold more than MAX keys,
+        # so move enough keys for both to reach the minimum instead of a
+        # single key that could leave the underfull node below MIN_KEYS.
+        total = len(node.keys) + len(sibling.keys)
+        target = max(MIN_KEYS, total // 2)
         if j > i:
-            node.keys.append(sibling.keys.pop(0))
+            # sibling is on the right: shift its smallest keys left.
+            while len(node.keys) < target:
+                node.keys.append(sibling.keys.pop(0))
             parent.keys[i] = sibling.keys[0]
         else:
-            node.keys.insert(0, sibling.keys.pop())
+            # sibling is on the left: shift its largest keys right.
+            while len(node.keys) < target:
+                node.keys.insert(0, sibling.keys.pop())
             parent.keys[j] = node.keys[0]
 
     def dump(self):
@@ -77,3 +111,17 @@ class Tree:
                                  "next": node.next}
             todo += node.children
         return {"root": root, "nodes": out}
+
+    def key_set(self):
+        """Committed keys reachable from the root, following the leaf chain."""
+        node = self.nodes[self.anchor.children[0]]
+        while not node.leaf:
+            node = self.nodes[node.children[0]]
+        keys, seen = [], set()
+        while node is not None:
+            for k in node.keys:
+                if k not in seen:
+                    seen.add(k)
+                    keys.append(k)
+            node = self.nodes[node.next] if node.next is not None else None
+        return keys
