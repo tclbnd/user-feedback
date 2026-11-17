@@ -1,0 +1,7 @@
+order_id,line_no,order_date,customer_id,customer_name,street,city,zip,product_id,product_name,unit_price,qty
+500,1,2026-11-01,1,Ann,1 Elm St,Springfield,11001,10,bolt,3,5
+500,2,2026-11-01,1,Ann,1 Elm St,Springfield,11001,11,nut,1,9
+501,1,2026-11-02,2,Bo,9 Oak Ave,Shelby,22002,12,gear,40,1
+502,1,2026-11-02,1,Ann,1 Elm St,Springfeld,11001,10,bolt,3,2
+502,2,2026-11-02,1,Ann,1 Elm St,Springfield,11001,12,gear,40,1
+503,1,2026-11-03,3,Cy,1 Elm St,Shelby,22003,11,nut,1,4

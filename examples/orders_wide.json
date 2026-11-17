@@ -1,0 +1,11 @@
+{"table": "orders_wide",
+ "attributes": ["order_id", "line_no", "order_date", "customer_id", "customer_name", "street", "city", "zip",
+                "product_id", "product_name", "unit_price", "qty"],
+ "types": {"order_id": "INTEGER", "line_no": "INTEGER", "customer_id": "INTEGER", "product_id": "INTEGER",
+           "unit_price": "INTEGER", "qty": "INTEGER"},
+ "fds": [{"lhs": ["order_id"], "rhs": ["order_date", "customer_id"]},
+         {"lhs": ["customer_id"], "rhs": ["customer_name", "street", "city"]},
+         {"lhs": ["street", "city"], "rhs": ["zip"]},
+         {"lhs": ["zip"], "rhs": ["city"]},
+         {"lhs": ["product_id"], "rhs": ["product_name", "unit_price"]},
+         {"lhs": ["order_id", "line_no"], "rhs": ["product_id", "qty", "customer_name"]}]}
