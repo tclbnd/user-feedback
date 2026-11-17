@@ -1,0 +1,89 @@
+{
+"rows": [
+{
+"region": "eu",
+"product": "tea",
+"cust": "c1",
+"amt": 5
+},
+{
+"region": "eu",
+"product": null,
+"cust": "c2",
+"amt": 7
+},
+{
+"region": null,
+"product": "tea",
+"cust": null,
+"amt": null
+},
+{
+"region": "us",
+"product": "tea",
+"cust": "c1",
+"amt": 3
+},
+{
+"region": null,
+"product": null,
+"cust": "c3",
+"amt": 4
+},
+{
+"region": "eu",
+"product": "tea",
+"cust": "c1",
+"amt": 6
+},
+{
+"region": null,
+"product": "jam",
+"cust": "c2",
+"amt": 2
+},
+{
+"region": "us",
+"product": null,
+"cust": null,
+"amt": null
+}
+],
+"rollup": [
+"region",
+"product"
+],
+"aggregates": [
+{
+"as": "orders",
+"fn": "count",
+"arg": "*"
+},
+{
+"as": "buyers",
+"fn": "count",
+"arg": "cust",
+"distinct": true
+},
+{
+"as": "total",
+"fn": "sum",
+"arg": "amt"
+}
+],
+"having": [
+[
+"orders",
+">=",
+2
+],
+[
+{
+"fn": "sum",
+"arg": "amt"
+},
+">",
+5
+]
+]
+}
