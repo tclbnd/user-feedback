@@ -1,0 +1,65 @@
+[
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 1,
+"cust": 1,
+"amount": 10,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 2,
+"cust": 1,
+"amount": 40,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 3,
+"cust": 2,
+"amount": 25,
+"status": "paid"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 1,
+"region": "eu"
+}
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 2,
+"region": "eu"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "delete",
+"table": "customers",
+"id": 1
+},
+{
+"op": "view"
+},
+{
+"op": "stats"
+}
+]

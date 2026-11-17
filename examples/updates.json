@@ -1,0 +1,142 @@
+[
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 1,
+"region": "eu"
+}
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 2,
+"region": "eu"
+}
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 3,
+"region": "us"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 1,
+"cust": 1,
+"amount": 10,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 2,
+"cust": 1,
+"amount": 50,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 3,
+"cust": 2,
+"amount": 30,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 4,
+"cust": 3,
+"amount": 20,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 5,
+"cust": 3,
+"amount": 70,
+"status": "paid"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "update",
+"table": "orders",
+"row": {
+"id": 2,
+"cust": 1,
+"amount": 50,
+"status": "void"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "update",
+"table": "orders",
+"row": {
+"id": 3,
+"cust": 3,
+"amount": 99,
+"status": "paid"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "txn",
+"steps": [
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 4,
+"region": "ap"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 6,
+"cust": 4,
+"amount": 15,
+"status": "paid"
+}
+}
+]
+},
+{
+"op": "update",
+"table": "customers",
+"row": {
+"id": 1,
+"region": "ap"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "stats"
+}
+]

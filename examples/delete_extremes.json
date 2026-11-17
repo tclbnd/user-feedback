@@ -1,0 +1,109 @@
+[
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 1,
+"region": "eu"
+}
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 2,
+"region": "eu"
+}
+},
+{
+"op": "insert",
+"table": "customers",
+"row": {
+"id": 3,
+"region": "us"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 1,
+"cust": 1,
+"amount": 10,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 2,
+"cust": 1,
+"amount": 50,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 3,
+"cust": 2,
+"amount": 30,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 4,
+"cust": 3,
+"amount": 20,
+"status": "paid"
+}
+},
+{
+"op": "insert",
+"table": "orders",
+"row": {
+"id": 5,
+"cust": 3,
+"amount": 70,
+"status": "paid"
+}
+},
+{
+"op": "view"
+},
+{
+"op": "delete",
+"table": "orders",
+"id": 1
+},
+{
+"op": "view"
+},
+{
+"op": "stats"
+},
+{
+"op": "delete",
+"table": "orders",
+"id": 5
+},
+{
+"op": "view"
+},
+{
+"op": "stats"
+},
+{
+"op": "delete",
+"table": "orders",
+"id": 4
+},
+{
+"op": "view"
+}
+]
