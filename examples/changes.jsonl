@@ -1,0 +1,35 @@
+{"type": "begin", "lsn": 1, "xid": 501}
+{"type": "insert", "table": "accounts", "row": {"id": 1, "owner": "ann", "balance": 100}, "lsn": 2, "xid": 501}
+{"type": "insert", "table": "accounts", "row": {"id": 2, "owner": "bo", "balance": 100}, "lsn": 3, "xid": 501}
+{"type": "insert", "table": "accounts", "row": {"id": 3, "owner": "cy", "balance": 100}, "lsn": 4, "xid": 501}
+{"type": "insert", "table": "accounts", "row": {"id": 4, "owner": "dee", "balance": 100}, "lsn": 5, "xid": 501}
+{"type": "commit", "lsn": 6, "xid": 501}
+{"type": "begin", "lsn": 7, "xid": 502}
+{"type": "update", "table": "accounts", "key": 1, "row": {"id": 1, "owner": "ann", "balance": 77}, "lsn": 8, "xid": 502}
+{"type": "update", "table": "accounts", "key": 3, "row": {"id": 3, "owner": "cy", "balance": 123}, "lsn": 9, "xid": 502}
+{"type": "commit", "lsn": 10, "xid": 502}
+{"type": "begin", "lsn": 11, "xid": 503}
+{"type": "update", "table": "accounts", "key": 2, "row": {"id": 2, "owner": "bo", "balance": 76}, "lsn": 12, "xid": 503}
+{"type": "update", "table": "accounts", "key": 4, "row": {"id": 4, "owner": "dee", "balance": 124}, "lsn": 13, "xid": 503}
+{"type": "commit", "lsn": 14, "xid": 503}
+{"type": "begin", "lsn": 15, "xid": 504}
+{"type": "update", "table": "accounts", "key": 3, "row": {"id": 3, "owner": "cy", "balance": 99, "status": "active"}, "lsn": 16, "xid": 504}
+{"type": "ddl", "op": "add_column", "table": "accounts", "column": "status", "default": "active", "lsn": 17, "xid": 504}
+{"type": "update", "table": "accounts", "key": 2, "row": {"id": 2, "owner": "bo", "balance": 100, "status": "active"}, "lsn": 18, "xid": 504}
+{"type": "commit", "lsn": 19, "xid": 504}
+{"type": "begin", "lsn": 20, "xid": 505}
+{"type": "update", "table": "accounts", "key": 1, "row": {"id": 1, "owner": "ann", "balance": 62, "status": "active"}, "lsn": 21, "xid": 505}
+{"type": "update", "table": "accounts", "key": 3, "row": {"id": 3, "owner": "cy", "balance": 114, "status": "active"}, "lsn": 22, "xid": 505}
+{"type": "commit", "lsn": 23, "xid": 505}
+{"type": "begin", "lsn": 24, "xid": 506}
+{"type": "update", "table": "accounts", "key": 3, "row": {"id": 3, "owner": "cy", "balance": 92, "status": "active"}, "lsn": 25, "xid": 506}
+{"type": "update", "table": "accounts", "key": 2, "row": {"id": 2, "owner": "bo", "balance": 122, "status": "active"}, "lsn": 26, "xid": 506}
+{"type": "commit", "lsn": 27, "xid": 506}
+{"type": "begin", "lsn": 28, "xid": 507}
+{"type": "update", "table": "accounts", "key": 4, "row": {"id": 4, "owner": "dee", "balance": 99, "status": "active"}, "lsn": 29, "xid": 507}
+{"type": "update", "table": "accounts", "key": 2, "row": {"id": 2, "owner": "bo", "balance": 147, "status": "active"}, "lsn": 30, "xid": 507}
+{"type": "commit", "lsn": 31, "xid": 507}
+{"type": "begin", "lsn": 32, "xid": 508}
+{"type": "insert", "table": "accounts", "row": {"id": 5, "owner": "eve", "balance": 0, "status": "new"}, "lsn": 33, "xid": 508}
+{"type": "delete", "table": "accounts", "key": 7, "lsn": 34, "xid": 508}
+{"type": "commit", "lsn": 35, "xid": 508}

@@ -1,0 +1,19 @@
+{
+ "tables": {
+  "accounts": {
+   "primary_key": "id",
+   "columns": {
+    "id": null,
+    "owner": null,
+    "balance": null
+   },
+   "rows": [
+    {
+     "id": 5,
+     "owner": "local-eve",
+     "balance": 1
+    }
+   ]
+  }
+ }
+}
