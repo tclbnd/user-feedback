@@ -53,11 +53,16 @@ class Wal:
         return record["lsn"]
 
     def flush(self, upto=None):
+        """Make every record with lsn <= upto durable (inclusive).
+
+        Write-ahead logging callers pass the page LSN, so the record of the
+        page's latest change must be among the records written here.
+        """
         upto = self.next_lsn if upto is None else upto
         if upto <= self.flushed:
             return
-        out = [r for r in self.buffer if r["lsn"] < upto]
-        self.buffer = [r for r in self.buffer if r["lsn"] >= upto]
+        out = [r for r in self.buffer if r["lsn"] <= upto]
+        self.buffer = [r for r in self.buffer if r["lsn"] > upto]
         with open(self.path, "a", encoding="utf-8") as fh:
             fh.writelines(json.dumps(r) + "\n" for r in out)
             fh.flush()
