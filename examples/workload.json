@@ -1,0 +1,14 @@
+[
+ {"tick": 1, "op": "delete", "table": "users", "pk": 1},
+ {"tick": 1, "op": "delete", "table": "users", "pk": 2},
+ {"tick": 2, "op": "update", "table": "users", "pk": 5, "set": {"name": "eva"}},
+ {"tick": 2, "op": "insert", "table": "users", "row": {"id": 13, "name": "max", "email": "max@corp.example"}},
+ {"tick": 3, "op": "delete", "table": "users", "pk": 6},
+ {"tick": 3, "op": "insert", "table": "users", "row": {"id": 6, "name": "fay2", "email": "fay@corp.example"}},
+ {"tick": 3, "op": "update", "table": "users", "pk": 3, "set": {"id": 30}},
+ {"tick": 4, "op": "update", "table": "users", "pk": 7, "set": {"name": "gil"}},
+ {"tick": 4, "op": "update", "table": "users", "pk": 8, "set": {"name": "hank"}},
+ {"tick": 5, "op": "insert", "table": "users", "row": {"id": 14, "name": "ned", "email": "ned@corp.example", "tier": "gold"}},
+ {"tick": 6, "op": "update", "table": "users", "pk": 9, "set": {"name": "iva"}},
+ {"tick": 7, "op": "delete", "table": "users", "pk": 10}
+]

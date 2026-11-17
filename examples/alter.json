@@ -1,0 +1,12 @@
+{
+ "table": "users",
+ "add": [
+  {
+   "name": "tier",
+   "default": "free"
+  }
+ ],
+ "drop": [
+  "email"
+ ]
+}

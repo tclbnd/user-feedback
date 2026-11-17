@@ -1,0 +1,77 @@
+{
+ "clock": 0,
+ "tables": {
+  "users": {
+   "pk": "id",
+   "columns": [
+    "id",
+    "name",
+    "email"
+   ],
+   "defaults": {},
+   "rows": [
+    {
+     "id": 1,
+     "name": "ann",
+     "email": "ann@corp.example"
+    },
+    {
+     "id": 2,
+     "name": "bob",
+     "email": "bob@corp.example"
+    },
+    {
+     "id": 3,
+     "name": "cat",
+     "email": "cat@corp.example"
+    },
+    {
+     "id": 4,
+     "name": "dan",
+     "email": "dan@corp.example"
+    },
+    {
+     "id": 5,
+     "name": "eve",
+     "email": "eve@corp.example"
+    },
+    {
+     "id": 6,
+     "name": "fay",
+     "email": "fay@corp.example"
+    },
+    {
+     "id": 7,
+     "name": "gus",
+     "email": "gus@corp.example"
+    },
+    {
+     "id": 8,
+     "name": "hal",
+     "email": "hal@corp.example"
+    },
+    {
+     "id": 9,
+     "name": "ivy",
+     "email": "ivy@corp.example"
+    },
+    {
+     "id": 10,
+     "name": "jon",
+     "email": "jon@corp.example"
+    },
+    {
+     "id": 11,
+     "name": "kim",
+     "email": "kim@corp.example"
+    },
+    {
+     "id": 12,
+     "name": "lou",
+     "email": "lou@corp.example"
+    }
+   ]
+  }
+ },
+ "triggers": []
+}
