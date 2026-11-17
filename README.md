@@ -36,6 +36,13 @@ Plan fields: `index`, `eq` (columns), `range` (column or null), `lo`, `hi`
 (`[value, inclusive]` or null), `index_filter`, `table_filter`, `covering`,
 `order_from_index`, `direction`, `sort`.
 
+The CLI also prints `start_key`/`end_key`: the concrete keys the scan is
+positioned on, as `[column, value, inclusive]` triples covering the equality
+prefix and the range column. An open side is marked with `-inf`/`+inf`.
+The scan window is located by binary search on those keys, so `scanned`
+counts only entries inside them; a descending plan scans the window
+backwards while keeping the trailing `id` tiebreaker ascending.
+
 ## Counters and row order
 
 `scanned` counts index entries read between the start and end keys of the
