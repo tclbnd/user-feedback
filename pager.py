@@ -31,6 +31,33 @@ def decode(raw, pid):
     return {"id": pid, "lsn": lsn, "slots": slots}
 
 
+def crc_of(raw):
+    """CRC-32 over the full page with the checksum field (bytes 14-17) zeroed."""
+    raw = raw.ljust(PAGE_SIZE, b"\0")
+    return zlib.crc32(raw[:14] + b"\0" * 4 + raw[18:]) & 0xFFFFFFFF
+
+
+def stored_crc(raw):
+    raw = raw.ljust(PAGE_SIZE, b"\0")
+    return struct.unpack(">I", raw[14:18])[0]
+
+
+def verify(raw):
+    """Classify a raw on-disk page.
+
+    Returns "empty" for an all-zero (or missing) page, "torn" when the page
+    header is present but the page is short or its CRC does not match a
+    power-loss halfway write, and "ok" for an intact page.
+    """
+    if not raw or raw == b"\0" * PAGE_SIZE:
+        return "empty"
+    if len(raw) < PAGE_SIZE:
+        return "torn"
+    if raw[:2] != b"PG" or stored_crc(raw) != crc_of(raw):
+        return "torn"
+    return "ok"
+
+
 class PageFile:
     def __init__(self, path):
         self.path = path
