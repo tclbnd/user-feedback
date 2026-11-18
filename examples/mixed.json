@@ -1,0 +1,10 @@
+{"pool_size": 1,
+ "seed": [{"key": "profile:alice", "value": "v1"}],
+ "requests": [
+  {"call": "update_profile", "user": "alice", "value": "half-written", "fail": true},
+  {"call": "plain_read", "key": "profile:alice"},
+  {"call": "report_time", "tz": "Asia/Shanghai"},
+  {"call": "report_time"},
+  {"call": "tenant_read", "schema": "tenant_b", "key": "profile:alice"},
+  {"call": "plain_read", "key": "profile:alice"}
+ ]}
