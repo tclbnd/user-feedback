@@ -17,3 +17,18 @@ any target position at all marks the segment `unknown` (all outputs -1)
 but is reported, not guessed by alphabetical order. Output:
 `{"channels":[[...sample values per target position concatenated...]],
  "segment_report":[{"status":"ok"|"conflict"|"unknown","map":[source idx or -1]}]}`.
+
+Layout positions come only from the explicit speaker ids in
+`target_speakers` and `source_speakers`; ids are never sorted to infer
+positions. Segments switch the layout over their own half-open `[start, end)`
+sample range. Silence is always written at the *target* position (missing
+speaker, muted conflict/unknown segment, or an uncovered gap between
+segments), so sample indices stay aligned with the timeline and adjacent
+segments cannot shift audio into a gap.
+
+Acceptance tests: `python3 -m unittest -v test_remap`. Each source channel
+carries a distinct impulse, so the test asserts both which speaker id landed
+at each output position and which sample (source channel) provided it. The
+`fixtures/` files exercise a re-muxed 5.1 with rear/LFE channels swapped,
+an unknown layout whose labels would sort into target positions, duplicated
+labels in one frame, and a mid-stream layout switch.

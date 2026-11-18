@@ -1,0 +1,15 @@
+{
+  "target_speakers": ["FL", "FR", "FC", "LFE", "BL", "BR"],
+  "segments": [
+    {
+      "start": 0,
+      "end": 3,
+      "source_speakers": ["AA", "ZZ", "MM"],
+      "samples": [
+        [1, 0, 0],
+        [0, 2, 0],
+        [0, 0, 3]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "target_speakers": ["FL", "FR"],
+  "segments": [
+    {
+      "start": 0,
+      "end": 3,
+      "source_speakers": ["AA", "ZZ"],
+      "samples": [
+        [1, 0, 0],
+        [0, 2, 0]
+      ]
+    }
+  ]
+}
