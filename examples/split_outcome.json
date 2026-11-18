@@ -1,0 +1,7 @@
+{"shards": {"A": {"alice": 100}, "B": {"bob": 100}},
+ "placement": {"alice": "A", "bob": "B"},
+ "steps": [
+  {"op": "transfer", "tx": "t1", "from": "alice", "to": "bob", "amount": 30, "crash": "after_first_decision"},
+  {"op": "restart_coordinator"},
+  {"op": "recover"}
+ ]}
