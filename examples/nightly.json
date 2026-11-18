@@ -1,0 +1,1 @@
+{"seed": 3, "initial": 60, "writes_per_chunk": 3, "chunk": 10, "lock_tables": false, "tables": ["orders", "order_lines"]}
