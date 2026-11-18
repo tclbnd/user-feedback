@@ -3,7 +3,7 @@ XID_SPACE, FIRST_XID = 2 ** 32, 3
 
 
 def precedes(a, b):
-    return a < b
+    return (a - b) % XID_SPACE >= XID_SPACE // 2
 
 
 def oldest(xids):
@@ -48,4 +48,7 @@ class TxnManager:
         return self.clog.get(xid, "aborted")
 
     def horizon(self):
-        return oldest(self.active) if self.active else self.next
+        cand = list(self.active)
+        for snap in self.active.values():
+            cand.append(snap.xmin)
+        return oldest(cand) if cand else self.next

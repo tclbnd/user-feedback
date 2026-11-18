@@ -16,7 +16,8 @@ class Store:
             return True
         if v["xmax"] == xid:
             return False
-        return self.tm.status(v["xmax"]) == "running" or snap.in_progress(v["xmax"])
+        return (self.tm.status(v["xmax"]) in ("running", "aborted")
+                or snap.in_progress(v["xmax"]))
 
     def read(self, key, xid, snap):
         for v in self.chains.get(key, []):
@@ -35,14 +36,15 @@ class Store:
     def vacuum(self):
         horizon, removed = self.tm.horizon(), 0
         for key, chain in self.chains.items():
-            kept, head_kept = [], False
-            for v in chain:
-                dead = (v["xmax"] != 0 and self.tm.status(v["xmax"]) == "committed"
+            def dead(v):
+                if self.tm.status(v["xmin"]) == "aborted":
+                    return True
+                return (v["xmax"] != 0 and self.tm.status(v["xmax"]) == "committed"
                         and precedes(v["xmax"], horizon))
-                if dead and head_kept:
-                    removed += 1
-                    continue
-                kept.append(v)
-                head_kept = True
+            kept = [v for v in chain if not dead(v)]
+            removed += len(chain) - len(kept)
+            if not kept and chain:
+                kept = [chain[0]]  # always keep the newest remaining version
+                removed -= 1
             self.chains[key] = kept
         return removed
