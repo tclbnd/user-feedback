@@ -1,0 +1,13 @@
+{"shards": {"A": {"alice": 100}, "B": {"bob": 100}},
+ "placement": {"alice": "A", "bob": "B"},
+ "steps": [
+  {"op": "transfer", "tx": "t1", "from": "alice", "to": "bob", "amount": 30, "crash": "after_prepare"},
+  {"op": "crash_shard", "shard": "B"},
+  {"op": "restart_coordinator", "op_note": "coordinator crash #1 ends here"},
+  {"op": "recover"},
+  {"op": "restart_coordinator", "op_note": "coordinator crash #2: the durable abort must survive"},
+  {"op": "restart_shard", "shard": "B", "op_note": "B restarts and must rebuild its row locks"},
+  {"op": "recover"},
+  {"op": "write", "shard": "A", "key": "alice", "delta": 5},
+  {"op": "write", "shard": "B", "key": "bob", "delta": 7}
+ ]}

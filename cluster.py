@@ -40,7 +40,14 @@ def run(spec):
         elif op == "restart_shard":
             shards[step["shard"]].restart()
         elif op == "recover":
-            coord.recover()
+            try:
+                coord.recover()
+            except Crash:
+                # A fault injection can also kill the coordinator mid-recovery;
+                # treat it like any other crash so later restart/recover steps
+                # can drive the cluster to convergence.
+                events.append({"recover": "coordinator crashed"})
+                coord.crash()
             for shard in shards.values():
                 try:
                     shard.resolve(coord)
