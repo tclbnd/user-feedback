@@ -1,0 +1,104 @@
+{
+ "replicas": [
+  {
+   "name": "replica-a",
+   "lag": 40
+  },
+  {
+   "name": "replica-b",
+   "lag": 400
+  }
+ ],
+ "policy": {
+  "on_stale": "wait",
+  "max_wait": 100,
+  "probe_interval": 1000
+ },
+ "events": [
+  {
+   "t": 0,
+   "op": "write",
+   "session": "alice",
+   "key": "profile:alice",
+   "value": "v1"
+  },
+  {
+   "t": 500,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1000,
+   "op": "write",
+   "session": "alice",
+   "key": "profile:alice",
+   "value": "v2"
+  },
+  {
+   "t": 1010,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1060,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1061,
+   "op": "read",
+   "session": "bob",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1062,
+   "op": "read",
+   "session": "bob",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1063,
+   "op": "read",
+   "session": "bob",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1100,
+   "op": "begin",
+   "session": "alice"
+  },
+  {
+   "t": 1101,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1102,
+   "op": "write",
+   "session": "alice",
+   "key": "profile:alice",
+   "value": "v3"
+  },
+  {
+   "t": 1103,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  },
+  {
+   "t": 1104,
+   "op": "commit",
+   "session": "alice"
+  },
+  {
+   "t": 1105,
+   "op": "read",
+   "session": "alice",
+   "key": "profile:alice"
+  }
+ ]
+}
