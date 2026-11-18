@@ -17,8 +17,16 @@ class Server:
         if self.heap.locked_by:
             return False
         targets = [ix for ix in self.indexes if ix.maintained()]
+        # ``targets`` is fixed at plan time: a statement only ever maintains
+        # the indexes that were already ``ready`` when it was planned.
         self.inflight.append({"op": op, "apply_at": tick + op.get("latency", 0), "indexes": targets})
         return True
+
+    def inflight_without(self, index):
+        """True while a statement that does not maintain ``index`` has not
+        committed.  Such a statement can still change rows without leaving a
+        trace in the index, so a build must wait for them."""
+        return any(index not in w["indexes"] for w in self.inflight)
 
     def apply_due(self, tick):
         due = [w for w in self.inflight if w["apply_at"] <= tick]
@@ -34,10 +42,15 @@ class Server:
             old = heap.find(op["key"])
             if old is None:
                 return
+            old_key = heap.tuples[old]["key"]
             if op["op"] == "delete":
                 heap.delete(old)
+                for ix in indexes:
+                    ix.remove(old_key, old)
                 return
             tid = heap.update(old, op.get("new_key", op["key"]), op["val"])
+            for ix in indexes:
+                ix.remove(old_key, old)
         for ix in indexes:
             ix.add(heap.tuples[tid]["key"], tid)
 
