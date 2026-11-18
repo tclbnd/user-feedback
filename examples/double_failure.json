@@ -1,0 +1,102 @@
+{
+ "nodes": [
+  "n1",
+  "n2",
+  "n3"
+ ],
+ "lease": 5,
+ "drift": 0.1,
+ "clock_rate": {
+  "n3": 0.9
+ },
+ "ticks": 30,
+ "events": [
+  {
+   "t": 2,
+   "partition": [
+    [
+     "n1"
+    ],
+    [
+     "n2",
+     "n3",
+     "ctl"
+    ]
+   ]
+  },
+  {
+   "t": 9,
+   "crash": "n2"
+  },
+  {
+   "t": 20,
+   "heal": true
+  },
+  {
+   "t": 22,
+   "restart": "n2"
+  }
+ ],
+ "writes": [
+  {
+   "t": 1,
+   "node": "n1",
+   "key": "a",
+   "value": "1"
+  },
+  {
+   "t": 3,
+   "node": "n1",
+   "key": "x",
+   "value": "old-3"
+  },
+  {
+   "t": 4,
+   "node": "n1",
+   "key": "x",
+   "value": "old-4"
+  },
+  {
+   "t": 5,
+   "node": "n1",
+   "key": "x",
+   "value": "old-5"
+  },
+  {
+   "t": 6,
+   "node": "n1",
+   "key": "x",
+   "value": "old-6"
+  },
+  {
+   "t": 7,
+   "node": "n2",
+   "key": "b",
+   "value": "b-7"
+  },
+  {
+   "t": 8,
+   "node": "n2",
+   "key": "b",
+   "value": "b-8"
+  },
+  {
+   "t": 12,
+   "node": "n3",
+   "key": "c",
+   "value": "c-12"
+  },
+  {
+   "t": 13,
+   "node": "n3",
+   "key": "c",
+   "value": "c-13"
+  },
+  {
+   "t": 24,
+   "node": "n3",
+   "key": "d",
+   "value": "d-24"
+  }
+ ]
+}
