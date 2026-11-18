@@ -1,0 +1,12 @@
+[
+ {"op": "begin", "s": "load"}, {"op": "write", "s": "load", "key": "acct", "value": "100"}, {"op": "commit", "s": "load"},
+ {"op": "begin", "s": "report"}, {"op": "read", "s": "report", "key": "acct"},
+ {"op": "begin", "s": "pay"}, {"op": "write", "s": "pay", "key": "acct", "value": "70"}, {"op": "commit", "s": "pay"},
+ {"op": "begin", "s": "oops"}, {"op": "write", "s": "oops", "key": "acct", "value": "0"}, {"op": "abort", "s": "oops"},
+ {"op": "vacuum"},
+ {"op": "read", "s": "report", "key": "acct"},
+ {"op": "chain", "key": "acct"},
+ {"op": "commit", "s": "report"},
+ {"op": "vacuum"},
+ {"op": "chain", "key": "acct"}
+]

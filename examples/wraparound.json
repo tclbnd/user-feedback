@@ -1,0 +1,7 @@
+[
+ {"op": "next_xid", "value": 4294967294},
+ {"op": "begin", "s": "A"}, {"op": "write", "s": "A", "key": "seq", "value": "41"}, {"op": "commit", "s": "A"},
+ {"op": "begin", "s": "B"}, {"op": "write", "s": "B", "key": "seq", "value": "42"}, {"op": "commit", "s": "B"},
+ {"op": "begin", "s": "C"}, {"op": "read", "s": "C", "key": "seq"}, {"op": "commit", "s": "C"},
+ {"op": "vacuum"}, {"op": "chain", "key": "seq"}
+]
