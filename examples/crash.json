@@ -1,0 +1,5 @@
+{"cache": 20, "steps": [
+  {"op": "order", "n": 7},
+  {"op": "crash"},
+  {"op": "order", "n": 3}
+]}
