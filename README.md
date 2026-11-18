@@ -9,11 +9,23 @@ Order numbers only need to be unique. Gaps are fine (a declined payment or a
 crash may skip a few numbers), reusing a number that was already handed out
 is not.
 
+### Sequence durability
+
+`nextval` serves numbers from an in-memory block of `cache` values.  When a
+new block is needed, the block end is written to the WAL as a `seqreserve`
+record and the WAL is fsynced *before* the first value of that block is
+returned.  The same record is log-shipped to the standby, so a promoted
+standby replays it and starts above the reserved block end.  On crash
+recovery the sequence jumps to its last reserved block end: the unspent tail
+becomes a gap, never a reused number.  Reservation costs one sync per block
+(`cache` numbers), never one per number, and `nextval` is not transactional,
+so rollback never reclaims a number that was already issued.
+
 ## Layout
 
 - `seqdb/disk.py` – simulated local disk with a page cache; unsynced writes are lost on crash
-- `seqdb/wal.py` – write-ahead log, synced at every commit
-- `seqdb/sequence.py` – cached sequences (`cache` numbers per block)
+- `seqdb/wal.py` – write-ahead log, synced at every commit and at every sequence reservation
+- `seqdb/sequence.py` – cached sequences: a block of `cache` numbers is reserved through a fsynced, replicated WAL record before use
 - `seqdb/engine.py` – tables, transactions, crash recovery
 - `seqdb/replication.py` – log shipping and standby promotion
 - `seqdb/orders.py` – order placement and the nightly bulk import
