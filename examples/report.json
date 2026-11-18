@@ -1,0 +1,60 @@
+{
+ "partition_by": [
+  "store"
+ ],
+ "order_by": [
+  {
+   "col": "day"
+  }
+ ],
+ "functions": [
+  {
+   "as": "running",
+   "fn": "sum",
+   "arg": "sales"
+  },
+  {
+   "as": "last_7d",
+   "fn": "sum",
+   "arg": "sales",
+   "frame": {
+    "mode": "range",
+    "start": [
+     "preceding",
+     6
+    ],
+    "end": [
+     "current"
+    ]
+   }
+  },
+  {
+   "as": "last_3_rows",
+   "fn": "avg",
+   "arg": "sales",
+   "frame": {
+    "mode": "rows",
+    "start": [
+     "preceding",
+     2
+    ],
+    "end": [
+     "current"
+    ]
+   }
+  },
+  {
+   "as": "rank",
+   "fn": "rank"
+  },
+  {
+   "as": "dense",
+   "fn": "dense_rank"
+  },
+  {
+   "as": "prev",
+   "fn": "lag",
+   "arg": "sales"
+  }
+ ]
+}
