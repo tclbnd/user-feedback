@@ -1,0 +1,449 @@
+{
+ "tables": {
+  "sales": {
+   "rows": 1000000,
+   "ndv": {
+    "cid": 50000,
+    "pid": 2000,
+    "sid": 40,
+    "did": 1000,
+    "amount": 900
+   }
+  },
+  "customer": {
+   "rows": 50000,
+   "ndv": {
+    "cid": 50000,
+    "region": 8
+   }
+  },
+  "product": {
+   "rows": 2000,
+   "ndv": {
+    "pid": 2000,
+    "cat": 25
+   }
+  },
+  "store": {
+   "rows": 40,
+   "ndv": {
+    "sid": 40,
+    "city": 12
+   }
+  },
+  "day": {
+   "rows": 1000,
+   "ndv": {
+    "did": 1000,
+    "month": 12
+   }
+  },
+  "promo": {
+   "rows": 300,
+   "ndv": {
+    "pid": 300,
+    "kind": 6
+   }
+  }
+ },
+ "from": [
+  {
+   "table": "sales"
+  },
+  {
+   "table": "customer",
+   "on": [
+    [
+     "sales.cid",
+     "customer.cid"
+    ]
+   ]
+  },
+  {
+   "table": "product",
+   "on": [
+    [
+     "sales.pid",
+     "product.pid"
+    ]
+   ]
+  },
+  {
+   "table": "store",
+   "on": [
+    [
+     "sales.sid",
+     "store.sid"
+    ]
+   ]
+  },
+  {
+   "table": "day",
+   "on": [
+    [
+     "sales.did",
+     "day.did"
+    ]
+   ]
+  },
+  {
+   "table": "promo",
+   "on": [
+    [
+     "product.pid",
+     "promo.pid"
+    ]
+   ]
+  }
+ ],
+ "where": [
+  {
+   "col": "customer.region",
+   "op": "=",
+   "value": 3
+  },
+  {
+   "col": "day.month",
+   "op": "=",
+   "value": 7
+  },
+  {
+   "col": "product.cat",
+   "op": "=",
+   "value": 4
+  },
+  {
+   "col": "promo.kind",
+   "op": "!=",
+   "value": 1
+  }
+ ],
+ "data": {
+  "sales": [
+   {
+    "cid": 8,
+    "pid": 5,
+    "sid": 2,
+    "did": 4,
+    "amount": 9
+   },
+   {
+    "cid": 4,
+    "pid": 2,
+    "sid": 3,
+    "did": 4,
+    "amount": 3
+   },
+   {
+    "cid": 2,
+    "pid": 4,
+    "sid": 2,
+    "did": 2,
+    "amount": 2
+   },
+   {
+    "cid": 1,
+    "pid": 5,
+    "sid": 2,
+    "did": 4,
+    "amount": 3
+   },
+   {
+    "cid": 1,
+    "pid": 5,
+    "sid": 1,
+    "did": 1,
+    "amount": 1
+   },
+   {
+    "cid": 4,
+    "pid": 2,
+    "sid": 3,
+    "did": 1,
+    "amount": 8
+   },
+   {
+    "cid": 6,
+    "pid": 4,
+    "sid": 3,
+    "did": 2,
+    "amount": 9
+   },
+   {
+    "cid": 4,
+    "pid": 6,
+    "sid": 2,
+    "did": 4,
+    "amount": 1
+   },
+   {
+    "cid": 2,
+    "pid": 4,
+    "sid": 3,
+    "did": 3,
+    "amount": 7
+   },
+   {
+    "cid": 2,
+    "pid": 6,
+    "sid": 2,
+    "did": 3,
+    "amount": 4
+   },
+   {
+    "cid": 5,
+    "pid": 1,
+    "sid": 1,
+    "did": 5,
+    "amount": 2
+   },
+   {
+    "cid": 7,
+    "pid": 1,
+    "sid": 2,
+    "did": 4,
+    "amount": 2
+   },
+   {
+    "cid": 1,
+    "pid": 6,
+    "sid": 1,
+    "did": 2,
+    "amount": 4
+   },
+   {
+    "cid": 1,
+    "pid": 4,
+    "sid": 2,
+    "did": 4,
+    "amount": 7
+   },
+   {
+    "cid": 2,
+    "pid": 5,
+    "sid": 3,
+    "did": 2,
+    "amount": 5
+   },
+   {
+    "cid": 6,
+    "pid": 1,
+    "sid": 2,
+    "did": 3,
+    "amount": 1
+   },
+   {
+    "cid": 7,
+    "pid": 1,
+    "sid": 1,
+    "did": 2,
+    "amount": 2
+   },
+   {
+    "cid": 1,
+    "pid": 1,
+    "sid": 2,
+    "did": 4,
+    "amount": 3
+   },
+   {
+    "cid": 4,
+    "pid": 4,
+    "sid": 3,
+    "did": 2,
+    "amount": 3
+   },
+   {
+    "cid": 7,
+    "pid": 6,
+    "sid": 2,
+    "did": 1,
+    "amount": 7
+   },
+   {
+    "cid": 7,
+    "pid": 2,
+    "sid": 1,
+    "did": 3,
+    "amount": 5
+   },
+   {
+    "cid": 1,
+    "pid": 2,
+    "sid": 1,
+    "did": 4,
+    "amount": 2
+   },
+   {
+    "cid": 1,
+    "pid": 2,
+    "sid": 1,
+    "did": 4,
+    "amount": 5
+   },
+   {
+    "cid": 1,
+    "pid": 5,
+    "sid": 2,
+    "did": 3,
+    "amount": 7
+   },
+   {
+    "cid": 2,
+    "pid": 1,
+    "sid": 1,
+    "did": 2,
+    "amount": 4
+   },
+   {
+    "cid": 1,
+    "pid": 5,
+    "sid": 2,
+    "did": 3,
+    "amount": 8
+   },
+   {
+    "cid": 3,
+    "pid": 5,
+    "sid": 2,
+    "did": 5,
+    "amount": 3
+   },
+   {
+    "cid": 7,
+    "pid": 2,
+    "sid": 3,
+    "did": 2,
+    "amount": 5
+   },
+   {
+    "cid": 4,
+    "pid": 5,
+    "sid": 1,
+    "did": 2,
+    "amount": 3
+   },
+   {
+    "cid": 4,
+    "pid": 6,
+    "sid": 2,
+    "did": 4,
+    "amount": 2
+   }
+  ],
+  "customer": [
+   {
+    "cid": 1,
+    "region": 3
+   },
+   {
+    "cid": 2,
+    "region": 1
+   },
+   {
+    "cid": 3,
+    "region": 3
+   },
+   {
+    "cid": 4,
+    "region": 1
+   },
+   {
+    "cid": 5,
+    "region": 3
+   },
+   {
+    "cid": 6,
+    "region": 1
+   },
+   {
+    "cid": 7,
+    "region": 3
+   },
+   {
+    "cid": 8,
+    "region": 1
+   }
+  ],
+  "product": [
+   {
+    "pid": 1,
+    "cat": 4
+   },
+   {
+    "pid": 2,
+    "cat": 4
+   },
+   {
+    "pid": 3,
+    "cat": 4
+   },
+   {
+    "pid": 4,
+    "cat": 4
+   },
+   {
+    "pid": 5,
+    "cat": 5
+   },
+   {
+    "pid": 6,
+    "cat": 5
+   }
+  ],
+  "store": [
+   {
+    "sid": 1,
+    "city": 2
+   },
+   {
+    "sid": 1,
+    "city": 1
+   },
+   {
+    "sid": 1,
+    "city": 2
+   }
+  ],
+  "day": [
+   {
+    "did": 1,
+    "month": 7
+   },
+   {
+    "did": 2,
+    "month": 7
+   },
+   {
+    "did": 3,
+    "month": 7
+   },
+   {
+    "did": 4,
+    "month": 8
+   },
+   {
+    "did": 5,
+    "month": 8
+   }
+  ],
+  "promo": [
+   {
+    "pid": 1,
+    "kind": 2
+   },
+   {
+    "pid": 2,
+    "kind": 1
+   },
+   {
+    "pid": 3,
+    "kind": 2
+   },
+   {
+    "pid": 4,
+    "kind": 2
+   }
+  ]
+ }
+}

@@ -1,0 +1,247 @@
+{
+ "tables": {
+  "o": {
+   "rows": 20000,
+   "ndv": {
+    "id": 20000,
+    "cust": 4000,
+    "st": 5
+   }
+  },
+  "c": {
+   "rows": 4000,
+   "ndv": {
+    "id": 4000,
+    "tier": 4
+   }
+  },
+  "r": {
+   "rows": 15000,
+   "ndv": {
+    "oid": 12000,
+    "score": 10
+   }
+  },
+  "s": {
+   "rows": 9000,
+   "ndv": {
+    "oid": 9000,
+    "carrier": 20
+   }
+  },
+  "n": {
+   "rows": 50,
+   "ndv": {
+    "tier": 4,
+    "label": 50
+   }
+  }
+ },
+ "from": [
+  {
+   "table": "o"
+  },
+  {
+   "table": "r",
+   "join": "left",
+   "on": [
+    [
+     "o.id",
+     "r.oid"
+    ]
+   ]
+  },
+  {
+   "table": "c",
+   "on": [
+    [
+     "o.cust",
+     "c.id"
+    ]
+   ]
+  },
+  {
+   "table": "s",
+   "join": "left",
+   "on": [
+    [
+     "o.id",
+     "s.oid"
+    ]
+   ]
+  },
+  {
+   "table": "n",
+   "on": [
+    [
+     "c.tier",
+     "n.tier"
+    ]
+   ]
+  }
+ ],
+ "where": [
+  {
+   "col": "o.st",
+   "op": "<",
+   "value": 4
+  },
+  {
+   "col": "r.score",
+   "op": ">",
+   "value": 3
+  }
+ ],
+ "data": {
+  "o": [
+   {
+    "id": 1,
+    "cust": 1,
+    "st": 5
+   },
+   {
+    "id": 4,
+    "cust": 4,
+    "st": 5
+   },
+   {
+    "id": 1,
+    "cust": 1,
+    "st": 4
+   },
+   {
+    "id": 12,
+    "cust": 1,
+    "st": 2
+   },
+   {
+    "id": 9,
+    "cust": 3,
+    "st": 2
+   },
+   {
+    "id": 11,
+    "cust": 1,
+    "st": 5
+   },
+   {
+    "id": 9,
+    "cust": 4,
+    "st": 1
+   },
+   {
+    "id": 10,
+    "cust": 1,
+    "st": 3
+   },
+   {
+    "id": 3,
+    "cust": 3,
+    "st": 5
+   },
+   {
+    "id": 8,
+    "cust": 1,
+    "st": 3
+   },
+   {
+    "id": 4,
+    "cust": 2,
+    "st": 1
+   },
+   {
+    "id": 9,
+    "cust": 1,
+    "st": 2
+   }
+  ],
+  "c": [
+   {
+    "id": 1,
+    "tier": 1
+   },
+   {
+    "id": 2,
+    "tier": 2
+   },
+   {
+    "id": 3,
+    "tier": 1
+   },
+   {
+    "id": 4,
+    "tier": 1
+   }
+  ],
+  "r": [
+   {
+    "oid": 1,
+    "score": 7
+   },
+   {
+    "oid": 2,
+    "score": 2
+   },
+   {
+    "oid": 3,
+    "score": 9
+   },
+   {
+    "oid": 5,
+    "score": 8
+   },
+   {
+    "oid": 6,
+    "score": 4
+   },
+   {
+    "oid": 8,
+    "score": 7
+   },
+   {
+    "oid": 9,
+    "score": 1
+   },
+   {
+    "oid": 11,
+    "score": 9
+   }
+  ],
+  "s": [
+   {
+    "oid": 3,
+    "carrier": 2
+   },
+   {
+    "oid": 2,
+    "carrier": 3
+   },
+   {
+    "oid": 3,
+    "carrier": 3
+   },
+   {
+    "oid": 16,
+    "carrier": 2
+   },
+   {
+    "oid": 6,
+    "carrier": 2
+   },
+   {
+    "oid": 3,
+    "carrier": 2
+   }
+  ],
+  "n": [
+   {
+    "tier": 1,
+    "label": 10
+   },
+   {
+    "tier": 2,
+    "label": 20
+   }
+  ]
+ }
+}
