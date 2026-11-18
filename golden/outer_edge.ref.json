@@ -1,0 +1,127 @@
+{
+ "pixels": [
+  [
+   100,
+   105,
+   110,
+   115,
+   120,
+   125,
+   130,
+   135
+  ],
+  [
+   100,
+   105,
+   110,
+   115,
+   120,
+   125,
+   130,
+   135
+  ],
+  [
+   100,
+   105,
+   110,
+   115,
+   120,
+   125,
+   130,
+   135
+  ],
+  [
+   100,
+   105,
+   110,
+   115,
+   120,
+   125,
+   130,
+   135
+  ]
+ ],
+ "filtered": [],
+ "edges": [
+  {
+   "at": 1,
+   "dir": "v",
+   "A": 0.0,
+   "class": "outer",
+   "strength": 8,
+   "filtered": false
+  },
+  {
+   "at": 2,
+   "dir": "v",
+   "A": 10.0,
+   "class": "flat",
+   "strength": 11,
+   "filtered": false
+  },
+  {
+   "at": 3,
+   "dir": "v",
+   "A": 10.0,
+   "class": "flat",
+   "strength": 11,
+   "filtered": false
+  },
+  {
+   "at": 4,
+   "dir": "v",
+   "A": 10.0,
+   "class": "flat",
+   "strength": 11,
+   "filtered": false
+  },
+  {
+   "at": 5,
+   "dir": "v",
+   "A": 10.0,
+   "class": "flat",
+   "strength": 11,
+   "filtered": false
+  },
+  {
+   "at": 6,
+   "dir": "v",
+   "A": 10.0,
+   "class": "flat",
+   "strength": 11,
+   "filtered": false
+  },
+  {
+   "at": 7,
+   "dir": "v",
+   "A": 0.0,
+   "class": "outer",
+   "strength": 8,
+   "filtered": false
+  },
+  {
+   "at": 1,
+   "dir": "h",
+   "A": 0.0,
+   "class": "outer",
+   "strength": 8,
+   "filtered": false
+  },
+  {
+   "at": 2,
+   "dir": "h",
+   "A": 0.0,
+   "class": "flat",
+   "strength": 8,
+   "filtered": false
+  },
+  {
+   "at": 3,
+   "dir": "h",
+   "A": 0.0,
+   "class": "outer",
+   "strength": 8,
+   "filtered": false
+  }
+ ]
+}
