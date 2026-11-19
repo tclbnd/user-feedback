@@ -1,60 +1,102 @@
 """to_char(date/timestamp, format) — the template patterns the reports use.
 
-Supported: YYYY, MM, DD, HH24, HH12, MI, SS, AM/PM, Mon, Month, Day, Dy,
-D, DDD, IW, Q, and the FM prefix.
+Supported: YYYY, MM, DD, HH24, HH12 (HH), MI, SS, AM/PM (A.M./P.M.),
+Mon, Month, Day, Dy, D, DDD, IW, Q, the FM prefix and double-quoted
+literals.  Pattern matching is case-insensitive; for the textual patterns
+the case of the pattern chooses the case of the output (DAY -> MONDAY,
+day -> monday, Day -> Monday).  Without FM, Day/Month are blank-padded
+to 9 characters and numeric patterns are zero-padded.
 """
+
+_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+         "Saturday", "Sunday"]
+_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+           "August", "September", "October", "November", "December"]
+
+# numeric patterns: pattern -> (zero-pad width, value function)
+_NUMERIC = {
+    "YYYY": (4, lambda t: t.year),
+    "MM": (2, lambda t: t.month),
+    "DD": (2, lambda t: t.day),
+    "DDD": (3, lambda t: t.timetuple().tm_yday),
+    # day of week, Sunday = 1 .. Saturday = 7
+    "D": (1, lambda t: t.isoweekday() % 7 + 1),
+    "HH24": (2, lambda t: t.hour),
+    "HH12": (2, lambda t: t.hour % 12 or 12),
+    "HH": (2, lambda t: t.hour % 12 or 12),
+    "MI": (2, lambda t: t.minute),
+    "SS": (2, lambda t: t.second),
+    # ISO 8601 week number
+    "IW": (2, lambda t: t.isocalendar()[1]),
+    "Q": (1, lambda t: (t.month - 1) // 3 + 1),
+}
+
+# all patterns, longest first so e.g. DDD wins over DD wins over D
+_PATTERNS = (
+    ["MONTH"] +
+    ["YYYY", "HH24", "HH12", "A.M.", "P.M."] +
+    ["DDD", "DAY", "MON"] +
+    ["HH", "MM", "DD", "MI", "SS", "DY", "IW", "AM", "PM"] +
+    ["D", "Q"]
+)
 
 
 def to_char(t, fmt):
     out, i = [], 0
-    pats = ["YYYY", "Month", "Mon", "Day", "Dy", "DDD", "DD", "D", "HH24", "HH12", "MI", "SS", "AM", "PM",
-            "MM", "IW", "Q"]
     while i < len(fmt):
         fm = False
-        if fmt.startswith("FM", i):
+        if fmt[i:i + 2].upper() == "FM":
             fm, i = True, i + 2
-        for p in pats:
-            if fmt.startswith(p, i):
-                out.append(_field(t, p, fm))
+        if i < len(fmt) and fmt[i] == '"':
+            j = fmt.find('"', i + 1)
+            if j == -1:
+                j = len(fmt)
+            out.append(fmt[i + 1:j])
+            i = j + 1 if j < len(fmt) else len(fmt)
+            continue
+        for p in _PATTERNS:
+            if fmt[i:i + len(p)].upper() == p:
+                out.append(_field(t, p, fmt[i:i + len(p)], fm))
                 i += len(p)
                 break
         else:
-            out.append(fmt[i])
+            if i < len(fmt):
+                out.append(fmt[i])
             i += 1
     return "".join(out)
 
 
-def _field(t, p, fm):
-    if p == "YYYY":
-        return f"{t.year:04d}"
-    if p == "MM":
-        return f"{t.month:02d}"
-    if p == "DD":
-        return f"{t.day:02d}"
-    if p == "HH24":
-        return f"{t.hour:02d}"
-    if p == "HH12":
-        return f"{t.hour % 12:02d}"
-    if p == "MI":
-        return f"{t.minute:02d}"
-    if p == "SS":
-        return f"{t.second:02d}"
+def _cased(name, text):
+    if text.isupper():
+        return name.upper()
+    if text.islower():
+        return name.lower()
+    return name  # initcap, as stored
+
+
+def _field(t, p, text, fm):
+    if p in _NUMERIC:
+        width, func = _NUMERIC[p]
+        v = func(t)
+        return str(v) if fm else f"{v:0{width}d}"
+    if p == "MONTH":
+        name = _cased(_MONTHS[t.month - 1], text)
+        return name if fm else name.ljust(9)
+    if p == "MON":
+        return _cased(_MONTHS[t.month - 1][:3], text)
+    if p == "DAY":
+        name = _cased(_DAYS[t.weekday()], text)
+        return name if fm else name.ljust(9)
+    if p == "DY":
+        return _cased(_DAYS[t.weekday()][:3], text)
     if p in ("AM", "PM"):
-        return "AM" if t.hour < 12 else "PM"
-    if p == "Mon":
-        return t.strftime("%b")
-    if p == "Month":
-        return t.strftime("%B")
-    if p == "Day":
-        return t.strftime("%A")
-    if p == "Dy":
-        return t.strftime("%a")
-    if p == "D":
-        return str(t.weekday() + 1)
-    if p == "DDD":
-        return str(t.timetuple().tm_yday)
-    if p == "IW":
-        return str(t.isocalendar()[1])
-    if p == "Q":
-        return str((t.month - 1) // 3 + 1)
-    return p
+        s = "AM" if t.hour < 12 else "PM"
+        return _cased(s, text)
+    if p in ("A.M.", "P.M."):
+        s = "A.M." if t.hour < 12 else "P.M."
+        if text.isupper():
+            return s
+        if text.islower():
+            return s.lower()
+        return s
+    return text
