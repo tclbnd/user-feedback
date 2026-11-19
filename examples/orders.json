@@ -1,0 +1,5 @@
+{"sequences": {"order_seq": {"start": 1000, "minvalue": 1000, "maxvalue": 1003}},
+ "ops": [["web1", "nextval", "order_seq"], ["web2", "nextval", "order_seq"], ["web2", "currval", "order_seq"],
+         ["web1", "currval", "order_seq"], ["admin", "setval", "order_seq", 1001, false],
+         ["web1", "nextval", "order_seq"], ["web1", "nextval", "order_seq"], ["web1", "nextval", "order_seq"],
+         ["web1", "nextval", "order_seq"], ["web3", "currval", "order_seq"]]}
