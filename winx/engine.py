@@ -6,7 +6,7 @@ and every row gets the function's value.  The result is keyed by row id.
 """
 import functools
 
-from .frames import frame_rows
+from .frames import FrameEvaluator
 from .functions import agg, ranking, value_fn
 
 AGGS = {"sum", "avg", "count", "count_star", "min", "max"}
@@ -37,12 +37,16 @@ def evaluate(rows, call):
     for part in parts.values():
         part = sorted(part, key=functools.cmp_to_key(lambda a, b: _cmp(a, b, order)))
         keys = [tuple(r.get(o["col"]) for o in order) for r in part]
-        for i, r in enumerate(part):
-            fn = call["fn"]
-            if fn in ("row_number", "rank", "dense_rank"):
+        fn = call["fn"]
+        # Build the frame first: an invalid frame definition is a parse error in
+        # PostgreSQL even when the function ignores the frame (ranking).
+        frames = FrameEvaluator(w, part, keys)
+        if fn in ("row_number", "rank", "dense_rank"):
+            for i, r in enumerate(part):
                 out[r["id"]] = ranking(fn, keys, i)
-                continue
-            idx = frame_rows(w, part, i, keys)
+            continue
+        for i, r in enumerate(part):
+            idx = frames.rows(i)
             vals = [part[j].get(call["arg"]) if call.get("arg") else 1 for j in idx]
             out[r["id"]] = agg(fn, vals) if fn in AGGS else value_fn(fn, vals, call.get("n"))
     return out

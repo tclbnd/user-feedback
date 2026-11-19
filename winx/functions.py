@@ -22,14 +22,19 @@ def agg(name, values):
 
 
 def value_fn(name, values, n=None):
+    if name == "nth_value":
+        if n is None:
+            raise ValueError("nth_value requires n")
+        # PostgreSQL rejects n < 1; an n past the end of the frame is NULL.
+        if n < 1:
+            raise ValueError("nth_value n must be a positive integer")
+        return values[n - 1] if n <= len(values) else None
     if not values:
         return None
     if name == "first_value":
         return values[0]
     if name == "last_value":
         return values[-1]
-    if name == "nth_value":
-        return values[n - 1] if 0 < n <= len(values) else None
     raise ValueError(name)
 
 
