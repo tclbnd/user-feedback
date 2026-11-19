@@ -1,0 +1,22 @@
+{
+ "rows": [
+  {
+   "id": 1,
+   "name": "Acme",
+   "note": null,
+   "credit": "100.50"
+  },
+  {
+   "id": 2,
+   "name": "\"Smith",
+   "note": " J.\"",
+   "credit": null
+  },
+  {
+   "id": 3,
+   "name": "The \"\"Best\"\" Co",
+   "note": "regular",
+   "credit": null
+  }
+ ]
+}

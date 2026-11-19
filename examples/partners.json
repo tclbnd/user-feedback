@@ -1,0 +1,3 @@
+{"table": {"columns": [{"name": "id", "type": "int"}, {"name": "name", "type": "text"},
+                       {"name": "note", "type": "text"}, {"name": "credit", "type": "numeric"}]},
+ "options": {"header": true}}
