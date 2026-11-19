@@ -1,0 +1,3 @@
+{"rows": [{"region": "eu", "year": 2025, "quarter": 1, "amount": 10}, {"region": "eu", "year": 2025, "quarter": 2, "amount": 20},
+          {"region": "eu", "year": 2026, "quarter": 1, "amount": 5}, {"region": "us", "year": 2025, "quarter": 1, "amount": 7},
+          {"region": "us", "year": null, "quarter": null, "amount": 3}]}

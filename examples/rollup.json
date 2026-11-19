@@ -1,0 +1,2 @@
+{"group_by": [{"rollup": ["year", "quarter"]}],
+ "select": {"cols": ["year", "quarter"], "aggs": [["sum", "amount"], ["count_star", null]], "grouping": [["year", "quarter"]]}}
