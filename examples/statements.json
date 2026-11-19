@@ -1,0 +1,3 @@
+[{"as": {"role": "alice", "user": "alice", "tenant": "acme"}, "select": "invoices"},
+ {"as": {"role": "alice", "user": "alice", "tenant": "acme"}, "insert": "invoices", "row": {"id": 4, "tenant": "globex", "author": "alice", "status": "draft"}},
+ {"as": {"role": "alice", "user": "alice", "tenant": "acme"}, "select": "audit_log"}]

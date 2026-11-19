@@ -1,0 +1,11 @@
+{"roles": {"alice": {"members_of": ["app"]}, "bob": {"members_of": ["app"]}, "owner": {}, "auditor": {}},
+ "tables": {"invoices": {"owner": "owner", "rls": true, "rows": [
+   {"id": 1, "tenant": "acme", "author": "alice", "status": "draft"},
+   {"id": 2, "tenant": "acme", "author": "bob", "status": "sent"},
+   {"id": 3, "tenant": "globex", "author": "carol", "status": "draft"}]},
+            "audit_log": {"owner": "owner", "rls": true, "rows": [{"id": 9, "tenant": "acme"}]}},
+ "policies": [
+   {"name": "same_tenant", "table": "invoices", "command": "all", "kind": "permissive", "roles": ["app"],
+    "using": {"cmp": ["tenant", "=", {"session": "tenant"}]}, "check": {"cmp": ["tenant", "=", {"session": "tenant"}]}},
+   {"name": "own_drafts", "table": "invoices", "command": "select", "kind": "permissive", "roles": ["app"],
+    "using": {"and": [{"cmp": ["author", "=", {"session": "user"}]}, {"cmp": ["status", "=", "draft"]}]}, "check": null}]}
