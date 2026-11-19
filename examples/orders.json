@@ -1,0 +1,206 @@
+{
+"rows": [
+{
+"id": 1,
+"shop": 2,
+"created": 128,
+"total": 39
+},
+{
+"id": 2,
+"shop": 2,
+"created": 124,
+"total": 23
+},
+{
+"id": 3,
+"shop": 2,
+"created": null,
+"total": 35
+},
+{
+"id": 4,
+"shop": null,
+"created": 114,
+"total": 24
+},
+{
+"id": 5,
+"shop": null,
+"created": 112,
+"total": null
+},
+{
+"id": 6,
+"shop": 2,
+"created": 117,
+"total": 30
+},
+{
+"id": 7,
+"shop": null,
+"created": 107,
+"total": 56
+},
+{
+"id": 8,
+"shop": null,
+"created": 117,
+"total": 10
+},
+{
+"id": 9,
+"shop": 1,
+"created": 114,
+"total": 10
+},
+{
+"id": 10,
+"shop": 1,
+"created": null,
+"total": 38
+},
+{
+"id": 11,
+"shop": 2,
+"created": 116,
+"total": 23
+},
+{
+"id": 12,
+"shop": 2,
+"created": 121,
+"total": 25
+},
+{
+"id": 13,
+"shop": 2,
+"created": 103,
+"total": 31
+},
+{
+"id": 14,
+"shop": 2,
+"created": 125,
+"total": 42
+},
+{
+"id": 15,
+"shop": null,
+"created": 109,
+"total": 45
+},
+{
+"id": 16,
+"shop": 2,
+"created": 100,
+"total": 27
+},
+{
+"id": 17,
+"shop": 1,
+"created": null,
+"total": 42
+},
+{
+"id": 18,
+"shop": 2,
+"created": 113,
+"total": 40
+},
+{
+"id": 19,
+"shop": 1,
+"created": 117,
+"total": 28
+},
+{
+"id": 20,
+"shop": 2,
+"created": 127,
+"total": 38
+},
+{
+"id": 21,
+"shop": 1,
+"created": 108,
+"total": 53
+},
+{
+"id": 22,
+"shop": 2,
+"created": null,
+"total": 37
+},
+{
+"id": 23,
+"shop": 2,
+"created": null,
+"total": 39
+},
+{
+"id": 24,
+"shop": null,
+"created": 105,
+"total": 38
+},
+{
+"id": 25,
+"shop": null,
+"created": 103,
+"total": 40
+},
+{
+"id": 26,
+"shop": null,
+"created": null,
+"total": 18
+},
+{
+"id": 27,
+"shop": null,
+"created": 112,
+"total": 34
+},
+{
+"id": 28,
+"shop": 2,
+"created": 100,
+"total": 43
+},
+{
+"id": 29,
+"shop": 1,
+"created": 123,
+"total": 47
+},
+{
+"id": 30,
+"shop": 2,
+"created": 128,
+"total": 41
+}
+],
+"indexes": [
+{
+"name": "orders_created",
+"columns": [
+{
+"col": "created"
+}
+]
+},
+{
+"name": "orders_shop_total",
+"columns": [
+{
+"col": "shop"
+},
+{
+"col": "total",
+"dir": "desc"
+}
+]
+}
+]
+}
