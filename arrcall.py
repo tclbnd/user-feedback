@@ -21,9 +21,17 @@ FUNCS.update({"subscript": core.subscript, "slice": core.slice_, "@>": core.cont
 
 
 def call(c):
+    """Evaluate one call; errors become results, never abort the batch."""
     try:
+        if not isinstance(c, list) or not c:
+            raise ArrayError("call must be a non-empty array of [function, args...]")
+        if c[0] not in FUNCS:
+            raise ArrayError("unknown function %r" % (c[0],))
         return {"call": c, "value": FUNCS[c[0]](*c[1:])}
     except ArrayError as exc:
+        return {"call": c, "error": str(exc)}
+    except TypeError as exc:
+        # Wrong number of arguments for the function.
         return {"call": c, "error": str(exc)}
 
 

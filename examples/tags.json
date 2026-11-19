@@ -4,4 +4,14 @@
  ["subscript", ["a", "b"], 3],
  ["string_to_array", "red,,blue", ","],
  ["array_to_string", ["red", null, "blue"], ","],
- ["array_out", ["big sale", null, "x"]]]
+ ["array_out", ["big sale", null, "x"]],
+ ["array_append", null, "gift"],
+ ["array_cat", ["sale"], null],
+ ["array_upper", [], 1],
+ ["slice", ["a", "b", "c"], 2, 9],
+ ["array_position", ["a", null, "b"], null],
+ ["array_to_string", ["red", null, "blue"], ",", "-"],
+ ["string_to_array", "red,blue", ",", ""],
+ ["@>", ["sale", "new"], ["new"]],
+ ["&&", ["sale", "new"], ["gift", "new"]],
+ ["trim_array", ["a", "b"], 3]]
