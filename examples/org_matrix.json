@@ -1,0 +1,5 @@
+{"nodes": [{"id": "ceo", "title": "CEO"}, {"id": "cto"}, {"id": "cfo"}, {"id": "pm1"}, {"id": "eng1"}, {"id": "eng2"}, {"id": "acct"}],
+ "edges": [{"src": "ceo", "dst": "cto", "kind": "manages"}, {"src": "ceo", "dst": "cfo", "kind": "manages"},
+           {"src": "cto", "dst": "pm1", "kind": "manages"}, {"src": "pm1", "dst": "eng1", "kind": "manages"},
+           {"src": "cto", "dst": "eng2", "kind": "manages"}, {"src": "cfo", "dst": "acct", "kind": "manages"},
+           {"src": "cfo", "dst": "pm1", "kind": "dotted"}]}
