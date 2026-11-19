@@ -1,0 +1,7 @@
+[["array_append", ["sale", "new"], "gift"],
+ ["array_length", []],
+ ["cardinality", []],
+ ["subscript", ["a", "b"], 3],
+ ["string_to_array", "red,,blue", ","],
+ ["array_to_string", ["red", null, "blue"], ","],
+ ["array_out", ["big sale", null, "x"]]]
