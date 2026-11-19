@@ -1,0 +1,8 @@
+[["count", "int4", [1042, null, 1043]],
+ ["count_star", "int4", [1042, null, 1043]],
+ ["sum", "numeric", []],
+ ["max", "numeric", ["19.90", null, "7.50"]],
+ ["string_agg", "text", ["red", null, "blue"], ", "],
+ ["avg", "int4", [1, 2, 4]],
+ ["array_agg", "text", ["gift wrap", null, ""]],
+ ["percentile_cont", "int4", [10, 20, 30, 40], 0.5]]
