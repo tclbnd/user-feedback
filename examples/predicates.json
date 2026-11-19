@@ -1,0 +1,8 @@
+[{"path": "$.tags[*]", "op": "=", "value": "red"},
+ {"path": "$.tags", "op": "=", "value": "red"},
+ {"path": "$.price", "op": "=", "value": 20},
+ {"path": "$.discount", "op": "exists"},
+ {"path": "$.discount", "op": "is_null"},
+ {"path": "$.tags", "op": "is_empty_array"},
+ {"path": "$.items[*].qty", "op": "is_null"},
+ {"path": "$.flags[*]", "op": "=", "value": 1}]

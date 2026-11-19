@@ -1,0 +1,5 @@
+{"p1": {"name": "shirt", "tags": ["red", "cotton"], "price": 20, "stock": {"eu": 3}},
+ "p2": {"name": "mug", "tags": "red", "price": 20.0, "discount": null},
+ "p3": {"name": "cap", "tags": [], "price": "20", "items": [{"sku": "A1", "qty": 1}, {"sku": "B2", "qty": null}]},
+ "p4": {"name": "sock", "price": 5, "flags": [true, 1], "stock": {"eu": null}},
+ "p5": {"name": "bag", "tags": ["blue"], "discount": 0, "items": [{"sku": "A1"}]}}
