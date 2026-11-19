@@ -20,10 +20,11 @@ class Num:
         return self.text
 
     def __eq__(self, other):
-        return isinstance(other, Num) and self.text == other.text
+        # jsonb numeric equality is by value: 20, 20.0 and 2e1 are equal
+        return isinstance(other, Num) and self.decimal() == other.decimal()
 
     def __hash__(self):
-        return hash(self.text)
+        return hash(self.decimal())
 
     def decimal(self):
         return Decimal(self.text)
@@ -32,8 +33,8 @@ class Num:
 def _pairs(pairs):
     out = {}
     for key, value in pairs:
-        if key not in out:
-            out[key] = value
+        # jsonb keeps the last of duplicate object keys
+        out[key] = value
     return dict(sorted(out.items()))
 
 

@@ -14,24 +14,25 @@ def _scalar_equal(a, b):
 def contains(a, b):
     """a @> b"""
     ka, kb = kind(a), kind(b)
-    if ka == "array" and kb not in ("array", "object"):
-        # an array contains a primitive value it has as an element
+    if ka == "array" and kb != "array":
+        # an array contains a non-array value if some element contains it
         return any(contains(x, b) for x in a)
     if ka != kb:
         return False
     if ka == "object":
         return all(k in a and contains(a[k], v) for k, v in b.items())
     if ka == "array":
-        return len(b) <= len(a) and all(contains(x, y) for x, y in zip(a, b))
+        # unordered: every element of b must be contained in some element of a
+        return all(any(contains(x, y) for x in a) for y in b)
     return _scalar_equal(a, b)
 
 
 def exists(a, key):
-    """a ? key"""
+    """a ? key — a top-level object key, or a top-level string array element"""
     if isinstance(a, dict):
-        return key in a or any(exists(v, key) for v in a.values())
+        return key in a
     if isinstance(a, list):
-        return any(exists(v, key) for v in a)
+        return any(isinstance(x, str) and x == key for x in a)
     return False
 
 

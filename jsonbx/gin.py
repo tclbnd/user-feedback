@@ -14,13 +14,22 @@ must never miss one.
 """
 import hashlib
 from collections import defaultdict
+from decimal import Decimal
 
-from .value import Num, kind
+from .value import Num
+
+
+def _canonical_number(text):
+    """One spelling per numeric value, so 20, 20.0 and 2e1 index identically."""
+    d = Decimal(text).normalize()
+    if d == 0:
+        d = Decimal(0)  # collapse 0, 0.0, -0 into a single form
+    return str(d)
 
 
 def _text(value):
     if isinstance(value, Num):
-        return "n:" + value.text
+        return "n:" + _canonical_number(value.text)
     if isinstance(value, bool):
         return "b:" + str(value).lower()
     if value is None:
@@ -44,8 +53,11 @@ class GinIndex:
             self.entries[item].discard(rid)
 
     def _all(self, items):
+        if not items:
+            # an empty query (e.g. @> '{}') matches every row for recheck
+            return set(self.rows)
         sets = [self.entries.get(i, set()) for i in items]
-        return set.intersection(*sets) if sets else set()
+        return set.intersection(*sets)
 
     def size(self):
         return sum(len(v) for v in self.entries.values())
@@ -67,7 +79,12 @@ class JsonbOps(GinIndex):
                 for x in v:
                     walk(x)
             else:
-                items.add("V" + _text(v))
+                if isinstance(v, str):
+                    # string values are indexed like keys, so `?` also
+                    # finds documents with the string as an array element
+                    items.add("K" + v)
+                else:
+                    items.add("V" + _text(v))
         walk(doc)
         return items
 
@@ -102,8 +119,10 @@ class JsonbPathOps(GinIndex):
                 for k, x in v.items():
                     walk(x, path + [k])
             elif isinstance(v, list):
-                for i, x in enumerate(v):
-                    walk(x, path + [str(i)])
+                # array elements share the path: jsonb_path_ops ignores
+                # array structure, so element order and count don't matter
+                for x in v:
+                    walk(x, path)
             else:
                 items.add(self._hash(path, v))
         walk(doc, [])
