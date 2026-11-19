@@ -1,0 +1,6 @@
+[["like", "100% cotton", "100\\%%"],
+ ["like", "SKU_7", "SKU\\_%"],
+ ["ilike", "Cotton Shirt", "%shirt"],
+ ["~", "order-1042", "[0-9]+"],
+ ["similar", "red", "(red|blue)"],
+ ["regexp_match", "INV-2026-0042", "(\\d+)-(\\d+)"]]
