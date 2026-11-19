@@ -28,6 +28,21 @@ statement fails; in an explicit transaction the transaction becomes failed
 and only ROLLBACK (or COMMIT, which then rolls back) ends it; outside an
 explicit transaction the implicit transaction is rolled back.
 
+All interruption paths (operator cancel, `statement_timeout`, client
+disconnect) unwind the same way, whether the statement is executing or
+blocked on a lock:
+
+- a queued lock request is withdrawn from the FIFO queue, so it can never
+  be granted later to a session whose statement has already ended;
+- an implicit transaction is fully aborted, releasing every table and row
+  lock it held;
+- an explicit transaction keeps the locks already granted to it until it
+  ends, and enters the failed state – further statements are rejected and a
+  later COMMIT rolls everything back instead of publishing partial writes;
+- disconnect aborts any transaction, withdraws queued requests and releases
+  all locks.
+
 Savepoints follow PostgreSQL: ROLLBACK TO SAVEPOINT undoes what was done
-after the savepoint and ends the failed state, so a batch can skip one bad
-record and go on in the same transaction.
+after the savepoint, releases the locks acquired after it, ends the failed
+state and keeps the savepoint so it can be used again, so a batch can skip
+one bad record and go on in the same transaction.

@@ -133,9 +133,13 @@ class Session:
             del self.savepoints[i:]
             self._done("ok")
             return
-        _, pending, _held = self.savepoints[i]
+        _, pending, held = self.savepoints[i]
         del self.savepoints[i + 1:]
         self.pending = dict(pending)
+        # Locks acquired after the savepoint belong to the subtransaction and
+        # are dropped with it; earlier locks stay with the outer transaction.
+        self.locks.release_resources(
+            self.sid, [r for r in self.locks.held_by(self.sid) if r not in held])
         self.state = "in_txn"
         self._done("ok")
 
@@ -160,14 +164,45 @@ class Session:
 
     # interruption ----------------------------------------------------------
     def interrupt(self, reason):
-        """Statement cancelled by the operator or hit statement_timeout."""
+        """Statement cancelled by the operator or hit statement_timeout.
+
+        The interrupted statement always fails.  Waiting for a lock counts as
+        part of the statement, so a queued request is withdrawn first; it must
+        never be granted later to a session that has moved on.  Outside an
+        explicit transaction the whole implicit transaction is aborted, which
+        drops every lock it took.  Inside a transaction block the transaction
+        enters the failed state: later statements are rejected until
+        ROLLBACK (or a savepoint rollback) ends the failure, and a COMMIT in
+        that state rolls the whole transaction back.  Locks already granted
+        to the transaction stay held until it ends, as in PostgreSQL.
+        """
         if self.stmt is None:
             return
-        self.waiting = None
+        if self.waiting is not None:
+            self.locks.cancel_wait(self.sid, self.waiting)
+            self.waiting = None
         self._done(reason)
+        if not self.explicit:
+            self._abort_implicit()
+        else:
+            self.state = "failed"
+
+    def _abort_implicit(self):
+        self.pending = {}
+        self.savepoints = []
+        self.locks.release(self.sid)
+        self.state, self.explicit = "idle", False
 
     def disconnect(self):
+        """Client gone: abort any transaction and free everything."""
+        if self.waiting is not None:
+            self.locks.cancel_wait(self.sid, self.waiting)
+            self.waiting = None
         self.pending = {}
-        self.locks.release(self.sid, kinds=("table",))
+        self.savepoints = []
+        self.locks.cancel_wait(self.sid)
+        self.locks.release(self.sid)
         self.state = "closed"
+        self.explicit = False
+        self.stmt, self.steps = None, []
         self.script = []
