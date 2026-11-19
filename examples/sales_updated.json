@@ -1,0 +1,8 @@
+{"rows": [{"id": 1, "region": "eu", "status": "open", "amount": 120},
+          {"id": 2, "region": "us", "status": "open", "amount": 80},
+          {"id": 3, "region": "eu", "status": "closed", "amount": 950},
+          {"id": 4, "region": "eu", "status": "open", "amount": 40},
+          {"id": 5, "region": "apac", "status": "refund", "amount": 300},
+          {"id": 6, "region": "eu", "status": null, "amount": 610}],
+ "updates": [{"id": 1, "set": {"amount": 130}}, {"id": 4, "set": {"status": "closed"}}],
+ "deleted": [2]}
