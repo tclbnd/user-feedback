@@ -1,0 +1,4 @@
+{"nodes": [{"id": "bike"}, {"id": "frame"}, {"id": "wheel"}, {"id": "hub"}, {"id": "bolt"}, {"id": "spoke"}],
+ "edges": [{"src": "bike", "dst": "frame", "qty": 1}, {"src": "bike", "dst": "wheel", "qty": 2},
+           {"src": "frame", "dst": "bolt", "qty": 4}, {"src": "wheel", "dst": "hub", "qty": 1},
+           {"src": "wheel", "dst": "spoke", "qty": 32}, {"src": "hub", "dst": "bolt", "qty": 2}]}
