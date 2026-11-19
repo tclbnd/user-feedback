@@ -1,0 +1,6 @@
+{"data": {"accounts": {"1": 100}},
+ "sessions": {
+  "holder": {"script": [{"cmd": "begin"}, {"cmd": "update", "table": "accounts", "key": "1", "value": 80, "work": 8}, {"cmd": "commit"}]},
+  "report": {"statement_timeout": 3, "script": [{"cmd": "lock_table", "table": "accounts", "mode": "S", "work": 1}]},
+  "app":    {"script": [{"cmd": "begin"}, {"cmd": "update", "table": "accounts", "key": "1", "value": 70, "work": 0}, {"cmd": "update", "table": "accounts", "key": "1", "value": 60, "work": 12}, {"cmd": "commit"}]}
+ }}

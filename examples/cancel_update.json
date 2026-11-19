@@ -1,0 +1,6 @@
+{"data": {"accounts": {"1": 100, "2": 50}},
+ "sessions": {
+  "batch": {"script": [{"cmd": "update", "table": "accounts", "key": "1", "value": 0, "work": 20}]},
+  "app":   {"script": [{"cmd": "update", "table": "accounts", "key": "1", "value": 95, "work": 1}]}
+ },
+ "cancel": [{"tick": 4, "session": "batch"}]}
