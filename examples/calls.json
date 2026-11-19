@@ -1,0 +1,4 @@
+[{"fn": "sum", "arg": "amount", "window": {"partition_by": ["region"], "order_by": [{"col": "day"}]}},
+ {"fn": "rank", "arg": null, "window": {"partition_by": ["region"], "order_by": [{"col": "day"}]}},
+ {"fn": "sum", "arg": "amount", "window": {"partition_by": ["region"], "order_by": [{"col": "day"}],
+  "frame": {"mode": "range", "start": {"type": "preceding", "offset": 1}, "end": {"type": "current_row"}}}}]
