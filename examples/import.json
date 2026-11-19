@@ -1,0 +1,6 @@
+[["42", "text", "int4"],
+ ["12abc", "text", "int4"],
+ ["3.7", "text", "int4"],
+ ["maybe", "text", "bool"],
+ ["123.456", "numeric", "numeric(5,2)"],
+ ["0.1", "float8", "text"]]
