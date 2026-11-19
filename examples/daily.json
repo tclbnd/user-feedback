@@ -1,0 +1,10 @@
+{"target": {"name": "dim_customer", "key": "customer_id",
+            "columns": ["customer_id", "email", "name", "tier", "active", "updated_at"], "unique": ["email"],
+            "rows": [{"customer_id": 1, "email": "a@x.com", "name": "Ann", "tier": "gold", "active": true, "updated_at": 10},
+                     {"customer_id": 2, "email": "b@x.com", "name": "Bob", "tier": "silver", "active": true, "updated_at": 10},
+                     {"customer_id": 3, "email": "c@x.com", "name": "Cid", "tier": "bronze", "active": true, "updated_at": 10}]},
+ "source": [{"customer_id": 2, "email": "b@x.com", "name": "Bob B.", "tier": "gold", "updated_at": 20, "op": "upsert"},
+            {"customer_id": 2, "email": "b@x.com", "name": "Bobby", "tier": "silver", "updated_at": 21, "op": "upsert"},
+            {"customer_id": 4, "email": "d@x.com", "name": "Dee", "tier": "silver", "updated_at": 20, "op": "upsert"},
+            {"customer_id": 4, "email": "d2@x.com", "name": "Dee", "tier": "gold", "updated_at": 22, "op": "upsert"},
+            {"customer_id": 3, "email": "c@x.com", "name": "Cid", "tier": "gold", "updated_at": 20, "op": null}]}
