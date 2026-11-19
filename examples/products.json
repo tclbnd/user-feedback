@@ -1,0 +1,4 @@
+{"p1": "{\"name\": \"shirt\", \"tags\": [\"red\", \"cotton\"], \"price\": 20, \"stock\": {\"eu\": 3, \"us\": 0}}",
+ "p2": "{\"name\": \"mug\", \"tags\": [\"cotton\", \"red\"], \"price\": 20.0}",
+ "p3": "{\"name\": \"cap\", \"tags\": [\"blue\"], \"price\": 15, \"sizes\": [\"S\", \"M\"]}",
+ "p4": "{\"name\": \"sock\", \"tags\": [\"red\"], \"price\": 5, \"stock\": {\"eu\": 0}}"}
