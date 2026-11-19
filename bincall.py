@@ -8,19 +8,29 @@ Arguments: "\\x..." is a bytea literal, "B'...'" a bit string literal, other str
 JSON integers are integers, null is NULL (every function here is strict).
 Each result is {"call": ..., "value": <psql text>} or {"call": ..., "error": "..."}.
 """
+import inspect
 import json
 import sys
 
 from binfn.functions import FUNCTIONS
-from binfn.values import BinError, parse, show
+from binfn.values import BinError, parse, show, type_name
 
 
 def call(c):
-    args = [parse(a) for a in c[1:]]
-    if any(a is None for a in args):
-        return {"call": c, "value": None}
     try:
-        return {"call": c, "value": show(FUNCTIONS[c[0]](*args))}
+        args = [parse(a) for a in c[1:]]
+        func = FUNCTIONS.get(c[0])
+        if func is None:
+            raise BinError("function %s(%s) does not exist"
+                           % (c[0], ", ".join(type_name(a) for a in args)))
+        try:
+            inspect.signature(func).bind(*args)
+        except TypeError:
+            raise BinError("function %s(%s) does not exist"
+                           % (c[0], ", ".join(type_name(a) for a in args)))
+        if any(a is None for a in args):
+            return {"call": c, "value": None}
+        return {"call": c, "value": show(func(*args))}
     except BinError as exc:
         return {"call": c, "error": str(exc)}
 
