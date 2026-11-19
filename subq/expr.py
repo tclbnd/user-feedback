@@ -19,6 +19,8 @@ def term(t, row, outer):
         return row.get(t["col"])
     if isinstance(t, dict) and "outer" in t:
         return outer.get(t["outer"])
+    if isinstance(t, list):
+        return [term(x, row, outer) for x in t]
     return t
 
 
@@ -26,12 +28,47 @@ def terms(t, row, outer):
     return [term(x, row, outer) for x in t] if isinstance(t, list) else [term(t, row, outer)]
 
 
-def subquery_rows(db, sub, outer):
+def value(t, row, outer):
+    """Resolve a term; a row-valued term stays a list rather than a 1-list."""
+    return term(t, row, outer)
+
+
+def subquery_rows(db, sub, current_row):
+    """Rows produced by a subquery: a list of value lists.
+
+    ``current_row`` is the row of the enclosing query level; the subquery
+    sees it as its ``outer`` row, so {"outer": col} terms in the WHERE
+    resolve against it.  A ``corr`` list of ``[outer_col, inner_col]`` pairs
+    adds ``inner = outer`` equalities; because ``=`` is three-valued a NULL
+    on either side cannot match, exactly as in SQL.
+    """
+    corr = sub.get("corr") or []
     rows = []
     for r in db[sub["from"]]:
-        if sub.get("where") is None or evaluate(db, sub["where"], r, outer) is True:
-            rows.append([r.get(c) for c in sub["select"]])
+        if sub.get("where") is not None and evaluate(db, sub["where"], r, current_row) is not True:
+            continue
+        if any(compare(r.get(inner), "=", current_row.get(outer)) is not True
+               for outer, inner in corr):
+            continue
+        rows.append([r.get(c) for c in sub["select"]])
     return rows
+
+
+def _in_result(db, spec, row, outer):
+    """SQL value of ``left IN (subquery)`` before any NOT is applied.
+
+    IN is ``left = ANY(subquery)``: a three-valued OR over the element
+    equalities.  A NULL on the left, or a NULL in a compared subquery
+    column, yields unknown unless some row compares equal (True wins over
+    unknown).  An empty subquery yields False.
+    """
+    left = terms(spec["left"], row, outer)
+    return or_(row_compare(left, "=", v) for v in subquery_rows(db, spec["sub"], row))
+
+
+def _exists_result(db, spec, row, outer):
+    """SQL value of ``EXISTS (subquery)``: True iff it produces any row."""
+    return bool(subquery_rows(db, spec["sub"], row))
 
 
 def evaluate(db, p, row, outer=None):
@@ -43,31 +80,32 @@ def evaluate(db, p, row, outer=None):
     if "not" in p:
         return not_(evaluate(db, p["not"], row, outer))
     if "is_null" in p:
-        return term(p["is_null"], row, outer) is None
+        v = value(p["is_null"], row, outer)
+        if isinstance(v, list):
+            return all(x is None for x in v)
+        return v is None
     if "cmp" in p:
         c = p["cmp"]
         return row_compare(terms(c["left"], row, outer), c["op"], terms(c["right"], row, outer))
     if "distinct_from" in p:
         a, b = p["distinct_from"]
-        return distinct_from(term(a, row, outer), term(b, row, outer))
+        return distinct_from(value(a, row, outer), value(b, row, outer))
     if "in" in p or "not_in" in p:
         spec = p.get("in") or p["not_in"]
-        left = terms(spec["left"], row, outer)
-        values = subquery_rows(db, spec["sub"], row)
-        found = left in values
-        return found if "in" in p else not found
+        result = _in_result(db, spec, row, outer)
+        return result if "in" in p else not_(result)
     if "exists" in p or "not_exists" in p:
         spec = p.get("exists") or p["not_exists"]
-        found = bool(subquery_rows(db, spec["sub"], row))
-        return found if "exists" in p else not found
+        result = _exists_result(db, spec, row, outer)
+        return result if "exists" in p else not_(result)
     if "any" in p:
         a = p["any"]
         x = term(a["left"], row, outer)
-        return any(compare(x, a["op"], v) is True for v in a["values"])
+        return or_(compare(x, a["op"], v) for v in a["values"])
     if "all" in p:
         a = p["all"]
         x = term(a["left"], row, outer)
-        return all(compare(x, a["op"], v) is True for v in a["values"])
+        return and_(compare(x, a["op"], v) for v in a["values"])
     raise ValueError(f"bad predicate {p}")
 
 
