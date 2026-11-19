@@ -8,7 +8,11 @@ import functools
 
 def normalize(item):
     d = item.get("dir", "asc")
-    nulls = item.get("nulls") or "last"
+    # PostgreSQL default NULL placement: ASC -> NULLS LAST, DESC -> NULLS FIRST.
+    # Only apply the default when the placement is genuinely unspecified.
+    nulls = item.get("nulls")
+    if nulls is None:
+        nulls = "first" if d == "desc" else "last"
     return {"col": item["col"], "dir": d, "nulls": nulls}
 
 

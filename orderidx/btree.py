@@ -4,16 +4,15 @@ CREATE INDEX ... (a [ASC|DESC] [NULLS FIRST|LAST], b ...).  The defaults
 are ASC NULLS LAST, and DESC NULLS FIRST.  The index keeps its entries in
 exactly that order; it can be read forwards or backwards.
 """
-from .sortkeys import sort_rows
+from .sortkeys import normalize, sort_rows
 
 
 class BTree:
     def __init__(self, name, columns):
         self.name = name
-        self.columns = [dict(c) for c in columns]
-        for c in self.columns:
-            c.setdefault("dir", "asc")
-            c.setdefault("nulls", "first" if c["dir"] == "desc" else "last")
+        # Index columns default to ASC NULLS LAST / DESC NULLS FIRST, exactly
+        # like CREATE INDEX in PostgreSQL; the entries are stored in that order.
+        self.columns = [normalize(c) for c in columns]
 
     def build(self, rows):
         self.entries = sort_rows(rows, self.columns)
