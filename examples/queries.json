@@ -1,0 +1,4 @@
+[{"from": "customers", "where": {"not_in": {"left": {"col": "region"}, "sub": {"from": "blocked_regions", "select": ["region"]}}}},
+ {"from": "customers", "where": {"in": {"left": {"col": "region"}, "sub": {"from": "blocked_regions", "select": ["region"]}}}},
+ {"from": "customers", "where": {"exists": {"sub": {"from": "orders", "select": ["id"], "corr": [["id", "customer"]]}}}},
+ {"from": "customers", "where": {"not_exists": {"sub": {"from": "orders", "select": ["id"], "corr": [["id", "customer"]]}}}}]

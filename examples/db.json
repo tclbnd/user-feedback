@@ -1,0 +1,5 @@
+{"customers": [{"id": 1, "region": "eu", "tier": 2}, {"id": 2, "region": "us", "tier": null},
+               {"id": 3, "region": null, "tier": 1}, {"id": 4, "region": "apac", "tier": 3}],
+ "blocked_regions": [{"region": "us"}, {"region": null}],
+ "orders": [{"id": 10, "customer": 1, "amount": 50}, {"id": 11, "customer": 3, "amount": 20},
+            {"id": 12, "customer": null, "amount": 70}]}
