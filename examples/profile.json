@@ -1,0 +1,5 @@
+[["||", "{\"name\": \"Ann\", \"tags\": [\"a\"]}", "{\"tags\": [\"b\"], \"vip\": true}"],
+ ["-", "{\"name\": \"Ann\", \"tmp\": 1}", "tmp"],
+ ["jsonb_set", "{\"addr\": {\"city\": \"Oslo\"}}", ["addr", "city"], "\"Bergen\""],
+ ["jsonb_strip_nulls", "{\"a\": null, \"b\": 1}"],
+ ["jsonb", "{\"zip\": \"0150\", \"id\": 7}"]]
