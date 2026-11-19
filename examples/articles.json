@@ -1,0 +1,18 @@
+[
+ {"op": "add", "doc": "a1", "text": "The quick brown fox jumps over the lazy dog"},
+ {"op": "add", "doc": "a2", "text": "A brown dog and a quick red fox"},
+ {"op": "add", "doc": "a3", "text": "Release notes: database index tuning guide"},
+ {"op": "flush"},
+ {"op": "delete", "doc": "a3"},
+ {"op": "update", "doc": "a2", "text": "A sleepy cat naps all day"},
+ {"op": "add", "doc": "a4", "text": "Index tuning for the brown field database"},
+ {"op": "flush"},
+ {"op": "search", "q": "tuning guide"},
+ {"op": "search", "q": "fox"},
+ {"op": "phrase", "q": "quick brown"},
+ {"op": "phrase", "q": "brown quick"},
+ {"op": "phrase", "q": "index tuning"},
+ {"op": "merge"},
+ {"op": "search", "q": "fox"},
+ {"op": "phrase", "q": "index tuning"}
+]
