@@ -1,0 +1,7 @@
+{"left": [{"id": "s1", "region": "eu", "sku": 1, "day": 3}, {"id": "s2", "region": "eu", "sku": 1, "day": 9},
+          {"id": "s3", "region": "eu", "sku": null, "day": 4}, {"id": "s4", "region": "us", "sku": 2, "day": 5},
+          {"id": "s5", "region": "us", "sku": 2, "day": 1}],
+ "right": [{"id": "p1", "region": "eu", "sku": 1, "valid_from": 1}, {"id": "p2", "region": "eu", "sku": 1, "valid_from": 8},
+           {"id": "p3", "region": "us", "sku": 2, "valid_from": 4}, {"id": "p4", "region": "eu", "sku": null, "valid_from": 0}],
+ "lkey": ["region", "sku"], "rkey": ["region", "sku"], "filter": [{"l": "day", "op": ">=", "r": "valid_from"}],
+ "kind": "left"}
