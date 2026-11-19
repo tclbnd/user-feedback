@@ -1,0 +1,8 @@
+[["concat", "Order ", 1042, " - ", null],
+ ["||", "Order ", null],
+ ["split_part", "2026-11-20", "-", 2],
+ ["split_part", "2026-11-20", "-", 4],
+ ["lpad", "4711", 8, "0"],
+ ["lpad", "INV-2026-000123", 10],
+ ["format", "%s shipped to %s", "Order 1042", null],
+ ["initcap", "acme corp"]]
