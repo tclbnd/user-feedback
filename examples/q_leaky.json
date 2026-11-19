@@ -1,0 +1,1 @@
+{"tenant": "acme", "plan": {"filter": {"fn": "audit_log", "args": ["col.id", "col.amount"]}, "input": {"scan": "orders"}}}

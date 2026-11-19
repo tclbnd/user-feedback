@@ -1,0 +1,147 @@
+{
+"tables": {
+"orders": [
+{
+"id": 1,
+"tenant": "acme",
+"sku": "S0",
+"status": "open",
+"amount": 10
+},
+{
+"id": 2,
+"tenant": "acme",
+"sku": "S1",
+"status": "paid",
+"amount": 20
+},
+{
+"id": 3,
+"tenant": "acme",
+"sku": "S2",
+"status": "open",
+"amount": 30
+},
+{
+"id": 4,
+"tenant": "acme",
+"sku": "S0",
+"status": "paid",
+"amount": 40
+},
+{
+"id": 5,
+"tenant": "acme",
+"sku": "S1",
+"status": "open",
+"amount": 50
+},
+{
+"id": 6,
+"tenant": "acme",
+"sku": "S2",
+"status": "paid",
+"amount": 60
+},
+{
+"id": 7,
+"tenant": "globex",
+"sku": "S0",
+"status": "open",
+"amount": 70
+},
+{
+"id": 8,
+"tenant": "globex",
+"sku": "S1",
+"status": "paid",
+"amount": 80
+},
+{
+"id": 9,
+"tenant": "globex",
+"sku": "S2",
+"status": "open",
+"amount": 90
+},
+{
+"id": 10,
+"tenant": "globex",
+"sku": "S0",
+"status": "paid",
+"amount": 100
+},
+{
+"id": 11,
+"tenant": "globex",
+"sku": "S1",
+"status": "open",
+"amount": 110
+}
+],
+"skus": [
+{
+"id": 100,
+"tenant": "acme",
+"sku": "S0",
+"secret_cost": 0
+},
+{
+"id": 101,
+"tenant": "acme",
+"sku": "S1",
+"secret_cost": 7
+},
+{
+"id": 102,
+"tenant": "acme",
+"sku": "S2",
+"secret_cost": 14
+},
+{
+"id": 103,
+"tenant": "acme",
+"sku": "S3",
+"secret_cost": 21
+},
+{
+"id": 100,
+"tenant": "globex",
+"sku": "S0",
+"secret_cost": 1000
+},
+{
+"id": 101,
+"tenant": "globex",
+"sku": "S1",
+"secret_cost": 1007
+},
+{
+"id": 102,
+"tenant": "globex",
+"sku": "S2",
+"secret_cost": 1014
+},
+{
+"id": 103,
+"tenant": "globex",
+"sku": "S3",
+"secret_cost": 1021
+}
+]
+},
+"views": {
+"open_orders": {
+"filter": {
+"cmp": [
+"status",
+"=",
+"open"
+]
+},
+"input": {
+"scan": "orders"
+}
+}
+}
+}

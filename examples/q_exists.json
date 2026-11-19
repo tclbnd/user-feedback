@@ -1,0 +1,1 @@
+{"tenant": "acme", "plan": {"filter": {"exists": {"plan": {"filter": {"cmp": ["secret_cost", ">", 500]}, "input": {"scan": "skus"}}, "corr": ["sku", "sku"]}}, "input": {"scan": "orders"}}}
