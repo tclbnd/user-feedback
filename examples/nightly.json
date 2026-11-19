@@ -1,0 +1,8 @@
+{"tables": {"orders": 3000, "customers": 40},
+ "indexes": {"orders_status_idx": ["orders", "status"]},
+ "statements": {"orders_by_status": {"outer": "orders", "inner": "customers", "join_col": "id", "filter_col": "status"}},
+ "steps": [
+  {"op": "execute", "name": "orders_by_status", "repeat": 3},
+  {"op": "reload", "table": "customers", "rows": 30000},
+  {"op": "execute", "name": "orders_by_status", "repeat": 3}
+ ]}

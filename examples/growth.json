@@ -1,0 +1,12 @@
+{"tables": {"orders": 40, "customers": 30},
+ "statements": {"orders_by_status": {"outer": "orders", "inner": "customers", "join_col": "id", "filter_col": "status"}},
+ "steps": [
+  {"op": "execute", "name": "orders_by_status", "repeat": 2},
+  {"op": "insert", "table": "orders", "rows": 2000},
+  {"op": "insert", "table": "customers", "rows": 1500},
+  {"op": "analyze", "table": "orders"},
+  {"op": "analyze", "table": "customers"},
+  {"op": "execute", "name": "orders_by_status", "repeat": 2},
+  {"op": "create_index", "index": "orders_status_idx", "table": "orders", "column": "status"},
+  {"op": "execute", "name": "orders_by_status"}
+ ]}
