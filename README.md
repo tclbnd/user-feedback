@@ -25,3 +25,14 @@ the total number of (term, article) postings and the number of merges.
 Besides `merge` (merge everything), the operations file accepts
 `merge_tier` and the pair `merge_begin` / `merge_commit`, which run the
 size-tiered merge in the background while other operations go on.
+
+## Deletes and updates
+
+Every write to an article (add, update, delete) bumps its version, and
+each posting records the version it was written with. A posting is visible
+only while it is the article's latest version, so deletes and edits take
+effect immediately, even for articles already frozen into segments. Merges
+keep only the newest version of each article and re-validate postings at
+commit time, so a delete or edit that happens while a background merge is
+running is never resurrected, and merged segments carry no postings for
+deleted content.
