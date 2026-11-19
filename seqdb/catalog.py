@@ -5,8 +5,6 @@ from .sequence import Sequence, SequenceError
 class Catalog:
     def __init__(self):
         self.sequences = {}
-        self.last_values = {}
-        self.last_sequence = None
 
     def create(self, name, **options):
         if name in self.sequences:

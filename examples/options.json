@@ -1,0 +1,17 @@
+{"sequences": {
+   "ticket_seq": {"minvalue": 1, "maxvalue": 5, "cache": 2},
+   "refund_seq": {"increment": -1, "minvalue": 1, "maxvalue": 4, "cycle": true},
+   "roll_seq": {"start": 100, "cache": 2}},
+ "ops": [["a", "nextval", "ticket_seq"], ["b", "nextval", "ticket_seq"],
+         ["a", "currval", "ticket_seq"], ["b", "lastval"],
+         ["a", "nextval", "ticket_seq"], ["b", "nextval", "ticket_seq"],
+         ["a", "nextval", "ticket_seq"], ["b", "nextval", "ticket_seq"],
+         ["a", "nextval", "ticket_seq"],
+         ["c", "nextval", "refund_seq"], ["c", "nextval", "refund_seq"],
+         ["c", "nextval", "refund_seq"], ["c", "nextval", "refund_seq"],
+         ["c", "nextval", "refund_seq"],
+         ["d", "setval", "ticket_seq", 3, false], ["d", "nextval", "ticket_seq"],
+         ["d", "nextval", "ticket_seq"], ["d", "nextval", "ticket_seq"],
+         ["d", "nextval", "ticket_seq"],
+         ["e", "nextval", "roll_seq"], ["e", "begin"], ["e", "nextval", "roll_seq"],
+         ["e", "rollback"], ["e", "nextval", "roll_seq"], ["f", "nextval", "roll_seq"]]}
