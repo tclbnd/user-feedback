@@ -1,0 +1,211 @@
+{
+ "table": {
+  "name": "invoice_lines",
+  "key": "id",
+  "columns": [
+   {
+    "name": "id",
+    "default": {
+     "nextval": "line_id"
+    }
+   },
+   {
+    "name": "sku",
+    "not_null": true
+   },
+   {
+    "name": "qty",
+    "default": 1
+   },
+   {
+    "name": "unit_price"
+   },
+   {
+    "name": "discount",
+    "default": 0
+   },
+   {
+    "name": "created_at",
+    "default": {
+     "clock": true
+    }
+   },
+   {
+    "name": "total",
+    "generated": {
+     "mul": [
+      {
+       "col": "qty"
+      },
+      {
+       "add": [
+        {
+         "col": "unit_price"
+        },
+        {
+         "col": "discount"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "name": "label",
+    "generated": {
+     "concat": [
+      {
+       "col": "sku"
+      },
+      "x",
+      {
+       "col": "qty"
+      }
+     ]
+    }
+   }
+  ],
+  "triggers": [
+   {
+    "name": "b10_price_lookup",
+    "timing": "before",
+    "events": [
+     "insert"
+    ],
+    "actions": [
+     {
+      "set": "unit_price",
+      "expr": 25
+     }
+    ]
+   },
+   {
+    "name": "b20_promo",
+    "timing": "before",
+    "events": [
+     "insert",
+     "update"
+    ],
+    "actions": [
+     {
+      "set": "discount",
+      "expr": -5
+     }
+    ]
+   },
+   {
+    "name": "b25_vip",
+    "timing": "before",
+    "events": [
+     "insert",
+     "update"
+    ],
+    "actions": [
+     {
+      "set": "discount",
+      "expr": {
+       "mul": [
+        {
+         "col": "discount"
+        },
+        2
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "name": "b30_normalize",
+    "timing": "before",
+    "events": [
+     "insert",
+     "update"
+    ],
+    "actions": [
+     {
+      "set": "sku",
+      "expr": {
+       "upper": {
+        "col": "sku"
+       }
+      }
+     }
+    ]
+   },
+   {
+    "name": "a10_audit",
+    "timing": "after",
+    "events": [
+     "insert",
+     "update"
+    ],
+    "actions": [
+     {
+      "log": [
+       "id",
+       "sku",
+       "total",
+       "label"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "a20_count",
+    "timing": "after",
+    "events": [
+     "insert"
+    ],
+    "actions": [
+     {
+      "log": [
+       "id"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "statements": [
+  {
+   "insert": [
+    {
+     "sku": "ab-1",
+     "qty": 2
+    }
+   ]
+  },
+  {
+   "insert": [
+    {
+     "sku": "cd-2",
+     "qty": 1
+    },
+    {
+     "sku": "ef-3",
+     "qty": 3
+    },
+    {
+     "sku": "gh-4"
+    }
+   ]
+  },
+  {
+   "update": {
+    "keys": [
+     1
+    ],
+    "set": {
+     "qty": {
+      "add": [
+       {
+        "col": "qty"
+       },
+       2
+      ]
+     }
+    }
+   }
+  }
+ ]
+}
