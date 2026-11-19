@@ -41,6 +41,8 @@ def call(c):
         return {"call": c, "value": v}
     except JsonbError as exc:
         return {"call": c, "error": str(exc)}
+    except RecursionError:
+        return {"call": c, "error": "stack depth limit exceeded"}
 
 
 def main():
