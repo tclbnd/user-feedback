@@ -1,0 +1,26 @@
+WEBVTT - Harbour Lights, episode 1
+Kind: captions
+Language: en
+
+NOTE
+Delivered by vendor 14, reviewed 2026-11-02.
+
+STYLE
+::cue(.loud) { font-weight: bold; }
+
+1
+00:00.800 --> 00:03.200 align:start position:10%,line-left
+<v Mira>The tide's coming in &mdash; we should go.</v>
+
+2
+00:03.400 --> 00:06.000 line:85% align:center
+<v.loud Tomas>Not yet. <i>Not</i> until the light&nbsp;turns.</v>
+
+3
+00:06.100 --> 00:09.750
+[waves crash]
+<c.sfx>&lt;distant bell&gt;</c>
+
+4
+01:00:00.000 --> 01:00:02.500 size:40% align:end
+<v Mira>An hour already?</v>
