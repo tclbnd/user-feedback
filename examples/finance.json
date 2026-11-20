@@ -1,0 +1,6 @@
+[["round", ["numeric", "2.5"]],
+ ["round", ["numeric", "1234.565"], 2],
+ ["trunc", ["numeric", "-1.99"]],
+ ["mod", ["int", -7], ["int", 2]],
+ ["/", ["int", -7], ["int", 2]],
+ ["log", ["numeric", "100"]]]
