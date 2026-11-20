@@ -12,13 +12,15 @@ import json
 import sys
 
 from ranges.operators import FUNCTIONS
-from ranges.rangetype import SUBTYPES, Range, RangeError
+from ranges.rangetype import SUBTYPES, Range, RangeError, element_text
 
 
 def evaluate(c):
     if c[0] in SUBTYPES:
         return Range.parse(c[0], c[1])
     args = [evaluate(a) if isinstance(a, list) else a for a in c[1:]]
+    if any(a is None for a in args):
+        return None  # SQL NULL propagates through every function/operator
     typ = next((a.typ for a in args if isinstance(a, Range)), None)
     args = [SUBTYPES[typ](str(a)) if typ and not isinstance(a, Range) else a for a in args]
     return FUNCTIONS[c[0]](*args)
@@ -27,7 +29,11 @@ def evaluate(c):
 def call(c):
     try:
         v = evaluate(c)
-        return {"call": c, "value": None if v is None else str(v)}
+        if v is None or isinstance(v, (Range, str)):
+            value = None if v is None else str(v)
+        else:
+            value = element_text(v)
+        return {"call": c, "value": value}
     except RangeError as exc:
         return {"call": c, "error": str(exc)}
 
