@@ -18,5 +18,7 @@ def form(data):
         cid = data[pos:pos + 4]
         size = int.from_bytes(data[pos + 4:pos + 8], "big")
         out.append((cid, data[pos + 8:pos + 8 + size]))
-        pos += 8 + size
+        # Chunks are padded to an even byte count; the pad byte is not
+        # included in the chunk size.
+        pos += 8 + size + (size & 1)
     return form_type, out

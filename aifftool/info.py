@@ -15,7 +15,7 @@ def summary(data):
         elif cid == b"SSND":
             if info is None:
                 raise AiffError("SSND before COMM")
-            sound = body[8:]
+            _, _, sound = fields.ssnd(body)
         elif cid == b"MARK":
             marks = fields.markers(body)
     if info is None:
