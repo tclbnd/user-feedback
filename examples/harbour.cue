@@ -1,0 +1,23 @@
+REM GENRE "Folk"
+REM DATE 2026
+PERFORMER "Mira Sol"
+TITLE "Harbour Lights"
+CATALOG 0123456789012
+FILE "Harbour Lights.wav" WAVE
+  TRACK 01 AUDIO
+    TITLE "Low Tide, High Hopes"
+    ISRC QZDA82600001
+    INDEX 01 00:00:00
+  TRACK 02 AUDIO
+    TITLE "Lantern Song"
+    INDEX 00 04:11:52
+    INDEX 01 04:13:40
+  TRACK 03 AUDIO
+    TITLE "Undertow"
+    PERFORMER "Mira Sol & Tomas Vey"
+    PREGAP 00:01:00
+    INDEX 01 08:20:17
+  TRACK 04 AUDIO
+    TITLE "Coda (Live)"
+    INDEX 00 35:58:70
+    INDEX 01 36:00:00
