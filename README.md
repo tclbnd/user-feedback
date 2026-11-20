@@ -6,6 +6,16 @@ layout with LFE, bit rate, dialogue normalisation, frame and sample counts,
 duration) and compare it with the delivery spec. `channels` counts the LFE
 channel; `dialnorm` is in dB (e.g. -24).
 
+Parsing follows ATSC A/52: AC-3 frame sizes for all three sample rates
+(44.1 kHz frames alternate between two sizes), the bsi fields that appear
+with the channel mode (cmixlev/surmixlev/dsurmod) ahead of LFE and
+dialnorm, and E-AC-3 (Annex E) frame headers with reduced sample rates
+and variable blocks per frame. An E-AC-3 programme is its independent
+substream plus dependent substreams; dependent substreams only add
+channels, while bit rate, sample count and duration are per programme.
+Corrupt bytes mid-stream and an incomplete final frame are skipped; the
+complete frames are still counted.
+
 ## Layout
 
 - `dolbyscan/syncframe.py` – sync frame headers
