@@ -26,3 +26,20 @@ class BitReader:
     def se(self):
         k = self.ue()
         return (k + 1) // 2 if k & 1 else -(k // 2)
+
+    def at_rbsp_trailing(self):
+        """True when only an rbsp_stop_one_bit plus alignment zeros remain."""
+        if self.pos >= len(self.data) * 8:
+            return True
+        byte_off = self.pos >> 3
+        bit_off = self.pos & 7
+        tail = bytearray()
+        if bit_off:
+            tail.append(self.data[byte_off] & ((1 << (8 - bit_off)) - 1))
+            tail.extend(self.data[byte_off + 1:])
+        else:
+            tail.extend(self.data[byte_off:])
+        bits = "".join(format(b, "08b") for b in tail)
+        # rbsp_trailing_bits = one '1' followed by zero or more '0'.
+        ones = bits.count("1")
+        return ones == 1 and bits.rstrip("0").endswith("1")
