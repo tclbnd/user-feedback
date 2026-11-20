@@ -10,7 +10,6 @@ Results are rendered as text the way psql shows them.
 """
 import json
 import sys
-from decimal import Decimal
 
 from numfn import funcs
 from numfn.funcs import NumericError
@@ -21,10 +20,7 @@ NAMES = {"round": funcs.round_, "trunc": funcs.trunc, "ceil": funcs.ceil_, "floo
 
 
 def show(result):
-    t, v = result
-    if isinstance(v, float) and v.is_integer():
-        return str(int(v))
-    return str(v)
+    return funcs.render(result)
 
 
 def call(c):
