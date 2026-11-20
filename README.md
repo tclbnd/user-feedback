@@ -19,4 +19,7 @@ two call directions), and exports must open in the standard players.
 
     python3 g711calc.py examples/values.json out.json
     python3 g711calc.py --decode ulaw examples/carrier_a.ul out.pcm
+    python3 g711wav.py info examples/switch_b_stereo.wav
+    python3 g711wav.py decode examples/switch_a_mono.wav out_pcm.wav
+    python3 g711wav.py encode alaw out_pcm.wav out_alaw.wav
     python3 -m unittest discover -s tests
