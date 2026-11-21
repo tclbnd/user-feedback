@@ -1,34 +1,71 @@
 """SCTE 35 splice_info_section."""
 import base64
-import zlib
 from fractions import Fraction
 
 from .bits import Reader
 
 COMMANDS = {0x00: "splice_null", 0x04: "splice_schedule", 0x05: "splice_insert", 0x06: "time_signal",
             0x07: "bandwidth_reservation", 0xFF: "private_command"}
-TEXT_UPIDS = {0x09, 0x0F}
+TEXT_UPIDS = {0x01, 0x02, 0x03, 0x07, 0x09, 0x0B, 0x0E, 0x0F}
+MPU_UPID = 0x0C
+MID_UPID = 0x0D
+SUB_SEGMENT_TYPES = {0x34, 0x36}
+PTS_MOD = 1 << 33
+LEGACY_LENGTH = 0xFFF
 
 
 class SpliceError(ValueError):
     pass
 
 
+def _crc_table():
+    out = []
+    for i in range(256):
+        c = i << 24
+        for _ in range(8):
+            c = ((c << 1) ^ 0x04C11DB7) if c & 0x80000000 else c << 1
+        out.append(c & 0xFFFFFFFF)
+    return out
+
+
+_CRC_TABLE = _crc_table()
+
+
 def crc32(data):
-    return zlib.crc32(data[:-4]) == int.from_bytes(data[-4:], "big")
+    """MPEG-2 CRC-32 (poly 0x04C11DB7, init 0xFFFFFFFF, no reflection)."""
+    c = 0xFFFFFFFF
+    for b in data:
+        c = ((c << 8) & 0xFFFFFFFF) ^ _CRC_TABLE[(c >> 24) ^ b]
+    return c
+
+
+def crc_ok(data):
+    return len(data) >= 4 and crc32(data[:-4]) == int.from_bytes(data[-4:], "big")
 
 
 def decode_line(line):
-    return base64.b64decode(line.strip(), validate=True)
+    line = line.strip()
+    if line[:2].lower() == "0x":
+        return bytes.fromhex(line[2:])
+    return base64.b64decode(line, validate=True)
 
 
 def seconds(ticks):
     return None if ticks is None else str(Fraction(ticks, 90000))
 
 
-def splice_time(r, adj):
+def splice_time(r):
+    """Raw 90 kHz pts ticks, or None when no time is specified."""
+    if r.u(1):  # time_specified_flag
+        r.u(6)
+        return r.u(33)
     r.u(7)
-    return r.u(33)
+    return None
+
+
+def pts_time(r, adj):
+    t = splice_time(r)
+    return None if t is None else seconds((t + adj) % PTS_MOD)
 
 
 def break_duration(r):
@@ -40,10 +77,22 @@ def break_duration(r):
 def splice_insert(r, adj):
     ev = {"event_id": r.u(32), "cancel": bool(r.u(1))}
     r.u(7)
-    out_net, program, has_dur, immediate = r.u(1), r.u(1), r.u(1), r.u(1)
+    if ev["cancel"]:
+        return ev
+    out_net = bool(r.u(1))
+    program = bool(r.u(1))
+    has_dur = bool(r.u(1))
+    immediate = bool(r.u(1))
     r.u(4)
-    ev.update(out_of_network=bool(out_net), immediate=bool(immediate))
-    ev["time"] = seconds(splice_time(r, adj))
+    ev.update(out_of_network=out_net, immediate=immediate)
+    if program:
+        ev["time"] = None if immediate else pts_time(r, adj)
+    else:
+        comps = []
+        for _ in range(r.u(8)):
+            tag = r.u(8)
+            comps.append({"tag": tag, "time": None if immediate else pts_time(r, adj)})
+        ev["components"] = comps
     if has_dur:
         ev["break"] = break_duration(r)
     ev["unique_program_id"] = r.u(16)
@@ -54,6 +103,15 @@ def splice_insert(r, adj):
 def upid(kind, raw):
     if kind in TEXT_UPIDS:
         return raw.decode("utf-8")
+    if kind == MPU_UPID:
+        return {"format": raw[:4].decode("latin-1"), "private": raw[4:].hex()}
+    if kind == MID_UPID:
+        out, p = [], 0
+        while p + 2 <= len(raw):
+            k, n = raw[p], raw[p + 1]
+            out.append({"type": k, "value": upid(k, raw[p + 2:p + 2 + n])})
+            p += 2 + n
+        return out
     return raw.hex()
 
 
@@ -63,8 +121,16 @@ def segmentation(body, adj):
     r.u(7)
     if d["cancel"]:
         return d
-    program, has_dur, dnr = r.u(1), r.u(1), r.u(1)
-    r.u(5)
+    program = bool(r.u(1))
+    has_dur = bool(r.u(1))
+    dnr = bool(r.u(1))
+    if dnr:
+        r.u(5)
+    else:
+        d["restrictions"] = {"web_delivery_allowed": bool(r.u(1)),
+                             "no_regional_blackout": bool(r.u(1)),
+                             "archive_allowed": bool(r.u(1)),
+                             "device_restrictions": r.u(2)}
     if not program:
         comps = []
         for _ in range(r.u(8)):
@@ -73,11 +139,13 @@ def segmentation(body, adj):
             comps.append({"tag": tag, "pts_offset": seconds(r.u(33))})
         d["components"] = comps
     if has_dur:
-        d["duration"] = seconds(r.u(32))
+        d["duration"] = seconds(r.u(40))
     kind, n = r.u(8), r.u(8)
     d["upid_type"] = kind
     d["upid"] = upid(kind, r.take(n))
     d["type_id"], d["segment_num"], d["segments_expected"] = r.u(8), r.u(8), r.u(8)
+    if d["type_id"] in SUB_SEGMENT_TYPES and len(body) * 8 - r.pos >= 16:
+        d["sub_segment_num"], d["sub_segments_expected"] = r.u(8), r.u(8)
     return d
 
 
@@ -88,9 +156,9 @@ def descriptors(data, adj):
         body = data[p + 2:p + 2 + n]
         p += 2 + n
         ident = body[:4].decode("latin-1")
-        if tag == 0x00:
+        if tag == 0x00 and ident == "CUEI":
             out.append({"tag": "avail", "provider_avail_id": int.from_bytes(body[4:8], "big")})
-        elif tag == 0x02:
+        elif tag == 0x02 and ident == "CUEI":
             out.append({"tag": "segmentation", **segmentation(body[4:], adj)})
         else:
             out.append({"tag": tag, "identifier": ident, "bytes": n})
@@ -108,7 +176,7 @@ def parse(data):
     if 3 + length > len(data):
         raise SpliceError("section truncated")
     data = data[:3 + length]
-    crc_ok = crc32(data)
+    ok = crc_ok(data)
     version = r.u(8)
     encrypted = bool(r.u(1))
     r.u(6)
@@ -118,15 +186,18 @@ def parse(data):
     cmd_len = r.u(12)
     cmd = r.u(8)
     out = {"protocol_version": version, "sap_type": sap, "tier": tier, "pts_adjustment": seconds(adj),
-           "encrypted": encrypted, "command": COMMANDS.get(cmd, "0x%02x" % cmd), "crc_ok": crc_ok}
+           "encrypted": encrypted, "command": COMMANDS.get(cmd, "0x%02x" % cmd), "crc_ok": ok}
+    if encrypted:
+        return out
     start = r.byte
     if cmd == 0x05:
         out["splice_insert"] = splice_insert(r, adj)
     elif cmd == 0x06:
-        out["time"] = seconds(splice_time(r, adj))
+        out["time"] = pts_time(r, adj)
     elif cmd == 0x00:
         pass
-    r.pos = (start + cmd_len) * 8
+    if cmd_len != LEGACY_LENGTH:
+        r.pos = (start + cmd_len) * 8
     dlen = r.u(16)
     out["descriptors"] = descriptors(r.take(dlen), adj)
     return out
