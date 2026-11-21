@@ -17,6 +17,10 @@ def form(*chunks_):
     return b"FORM" + len(body).to_bytes(4, "big") + body
 
 
+def chan(flags):
+    return chunk(b"CHAN", flags.to_bytes(4, "big"))
+
+
 def text(cid, s):
     return chunk(cid, s.encode("latin-1"))
 
