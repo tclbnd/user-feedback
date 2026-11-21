@@ -1,0 +1,14 @@
+PERFORMER "Night Shift"
+TITLE "Two Discs"
+FILE "CD1.flac" WAVE
+  TRACK 01 AUDIO
+    TITLE "Side A"
+    INDEX 01 00:00:00
+  TRACK 02 AUDIO
+    TITLE "Bridge"
+    INDEX 00 41:10:00
+FILE "CD2.flac" WAVE
+    INDEX 01 00:00:32
+  TRACK 03 AUDIO
+    TITLE "Side B"
+    INDEX 01 120:00:00
