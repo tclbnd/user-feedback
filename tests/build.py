@@ -27,6 +27,7 @@ def cue(points):
 
 
 def adtl(labels=(), notes=(), spans=()):
+    """labl/note entries are (cue, text); spans are (cue, length, text)."""
     body = b"adtl"
     for cid, text in labels:
         body += ck("labl", struct.pack("<I", cid) + text.encode("latin-1") + b"\0")
@@ -48,10 +49,15 @@ def plst(items):
     return ck("plst", struct.pack("<I", len(items)) + b"".join(struct.pack("<III", *i) for i in items))
 
 
-def smpl(loops, note=60, pitch=0, period=20833):
-    body = struct.pack("<9I", 0, 0, period, note, pitch, 0, 0, len(loops), 0)
-    for cid, ltype, start, end, count in loops:
-        body += struct.pack("<6I", cid, ltype, start, end, 0, count)
+def smpl(loops, note=60, pitch=0, period=20833, manufacturer=0, product=0,
+         smpte_format=0, smpte_offset=0):
+    """loops: (cue, type, start, end, play_count[, fraction])."""
+    body = struct.pack("<9I", manufacturer, product, period, note, pitch,
+                       smpte_format, smpte_offset, len(loops), 0)
+    for loop in loops:
+        cue_id, ltype, start, end, count = loop[:5]
+        fraction = loop[5] if len(loop) > 5 else 0
+        body += struct.pack("<6I", cue_id, ltype, start, end, fraction, count)
     return ck("smpl", body)
 
 
