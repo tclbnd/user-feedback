@@ -6,8 +6,12 @@ from .boxes import Mp4Error, boxes, find, full, path
 
 
 def _time_header(data, s):
-    """mvhd / mdhd: (timescale, duration)."""
-    _, _, p = full(data, s)
+    """mvhd / mdhd: (timescale, duration). Version 1 uses 64-bit fields."""
+    version, _, p = full(data, s)
+    if version == 1:
+        (scale,) = struct.unpack_from(">I", data, p + 16)
+        (dur,) = struct.unpack_from(">Q", data, p + 20)
+        return scale, dur
     return struct.unpack_from(">II", data, p + 8)
 
 
@@ -20,11 +24,16 @@ def _entries(data, s, fmt):
 
 def sample_sizes(data, s):
     _, _, p = full(data, s)
-    _, n = struct.unpack_from(">II", data, p)
+    size, n = struct.unpack_from(">II", data, p)
+    if size:
+        return [size] * n
     return list(struct.unpack_from(">%dI" % n, data, p + 8))
 
 
 def chunk_offsets(data, stbl):
+    hit = find(data, *stbl, "co64")
+    if hit:
+        return [o for (o,) in _entries(data, hit[0], ">Q")]
     hit = find(data, *stbl, "stco")
     if hit:
         return [o for (o,) in _entries(data, hit[0], ">I")]
@@ -35,7 +44,7 @@ def sample_offsets(sizes, offsets, stsc):
     out = []
     i = 0
     for k, (first, per_chunk, _) in enumerate(stsc):
-        last = stsc[k + 1][0] - 1 if k + 1 < len(stsc) else first
+        last = stsc[k + 1][0] - 1 if k + 1 < len(stsc) else len(offsets)
         for chunk in range(first, last + 1):
             pos = offsets[chunk - 1]
             for _ in range(per_chunk):
@@ -52,20 +61,24 @@ def edits(data, edts):
     if hit is None:
         return None
     _, _, p = full(data, hit[0])
+    version = data[hit[0]]
     (n,) = struct.unpack_from(">I", data, p)
     p += 4
     out = []
     for _ in range(n):
-        dur, mt = struct.unpack_from(">Ii", data, p)
-        p += 12
+        if version == 1:
+            dur, mt = struct.unpack_from(">Qq", data, p)
+            p += 20
+        else:
+            dur, mt = struct.unpack_from(">Ii", data, p)
+            p += 12
         out.append((dur, mt))
     return out
 
 
 def track(data, s, e, movie_scale):
     tkhd = find(data, s, e, "tkhd")
-    _, flags, p = full(data, tkhd[0])
-    version = data[tkhd[0]]
+    version, flags, p = full(data, tkhd[0])
     tid = struct.unpack_from(">I", data, p + (16 if version == 1 else 8))[0]
     mdia = find(data, s, e, "mdia")
     scale, mdur = _time_header(data, find(data, *mdia, "mdhd")[0])
@@ -82,7 +95,8 @@ def track(data, s, e, movie_scale):
     ctts = find(data, *stbl, "ctts")
     cmin = cmax = None
     if ctts:
-        vals = [o for _, o in _entries(data, ctts[0], ">II")]
+        fmt = ">Ii" if data[ctts[0]] == 1 else ">II"
+        vals = [o for _, o in _entries(data, ctts[0], fmt)]
         cmin, cmax = min(vals), max(vals)
     count = sum(c for c, _ in stts)
     total = sum(c * d for c, d in stts)
@@ -94,10 +108,14 @@ def track(data, s, e, movie_scale):
     start = None
     shown = Fraction(total, scale)
     if elst is not None:
-        start = elst[0][1]
-        shown = Fraction(sum(d for d, _ in elst), scale)
+        # Edit segment durations are in movie timescale units; media_time -1
+        # marks an empty edit (a dwell on the presentation timeline).
+        delay = Fraction(sum(d for d, mt in elst if mt == -1), movie_scale)
+        starts = [mt for _, mt in elst if mt != -1]
+        start = starts[0] if starts else None
+        shown = Fraction(sum(d for d, _ in elst), movie_scale)
     return {
-        "id": tid, "handler": handler, "enabled": bool(flags & 2), "timescale": scale,
+        "id": tid, "handler": handler, "enabled": bool(flags & 1), "timescale": scale,
         "media_duration": str(Fraction(total, scale)), "samples": count, "chunks": len(offsets),
         "bytes": sum(sizes), "first_offset": where[0] if where else None, "last_offset": where[-1] if where else None,
         "sync_samples": sync, "ctts_min": cmin, "ctts_max": cmax,

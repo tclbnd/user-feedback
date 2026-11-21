@@ -13,10 +13,17 @@ def boxes(data, start=0, end=None):
     while pos + 8 <= end:
         size, kind = struct.unpack_from(">I4s", data, pos)
         head = 8
-        if size < head or pos + size > end:
-            raise Mp4Error("bad size for box %r" % kind)
+        if size == 1:
+            if pos + 16 > end:
+                raise Mp4Error("truncated largesize for box %r" % kind)
+            (size,) = struct.unpack_from(">Q", data, pos + 8)
+            head = 16
+        elif size == 0:
+            size = end - pos
         if kind == b"uuid":
             head += 16
+        if size < head or pos + size > end:
+            raise Mp4Error("bad size for box %r" % kind)
         yield kind.decode("latin-1"), pos + head, pos + size
         pos += size
 
