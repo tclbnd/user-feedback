@@ -16,11 +16,22 @@ and Blu-ray style `.m2ts` exports). `tsinfo.py` prints one JSON summary per file
 | `pcr` | packets carrying a PCR |
 | `programs` | programs from the PAT, by program number |
 
+The packet layout (188/192/204 bytes, and the 4-byte prefix of the 192-byte
+form) is detected from the file. A damaged capture (a junk or truncated region)
+is not an error: the scanner resynchronises on the next packet boundary.
+
 Per program: `program`, `pmt_pid`, `pcr_pid`, `pcr_count` (PCRs carried on the
 PCR PID) and `streams` in PMT order. Per stream: `pid`, `stream_type`,
 `packets` (packets with payload), `pes` (PES packets started), `first_pts`,
 `last_pts` (raw 33-bit values), `cc_errors`, `duration` (time from the first to
 the last PTS in seconds as a fraction string, across 33-bit wraparound).
+
+Continuity counters are checked per PID over packets that carry payload;
+adaptation-field-only packets (such as PCR-only packets) leave the counter
+unchanged, an exact duplicate packet is not an error, and the
+discontinuity_indicator resets the expectation. Sections may span several
+packets (the pointer_field finishes the previous one). A PES header may be
+split across packets; the PTS is read from both PTS-only and PTS+DTS headers.
 
 ## Layout
 
