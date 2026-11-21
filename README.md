@@ -23,6 +23,15 @@ summary per file.
 
 Only one program and one layer are supported; frameLengthType must be 0.
 
+Parsing follows ISO/IEC 14496-3: the sync layer resynchronises on the 11-bit
+AudioSyncStream syncword, so captures that start with stray bytes are handled.
+Both `audioMuxVersion` 0 and 1 StreamMuxConfigs are read, including the
+`ascLen` wrapper and its padding, `otherData` and `crcCheckPresent` fields, and
+payload lengths accumulate over repeated `0xFF` bytes. HE-AAC is reported with
+the core coder's object type and sampling rate; the SBR/PS rates come from
+either the hierarchical (audioObjectType 5/29) or the backward-compatible
+syncExtensionType signalling.
+
 ## Layout
 
 - `latmkit/bits.py` – bit reader

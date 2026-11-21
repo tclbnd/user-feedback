@@ -34,9 +34,16 @@ def _aot(w, a):
         w.put(31, 5).put(a - 32, 6)
 
 
-def asc(aot=2, rate=48000, chconf=2, frame960=False, sbr=None, sbr_aot=5):
+def asc(aot=2, rate=48000, chconf=2, frame960=False, sbr=None, sbr_aot=5,
+        sbr_sync=False, ps_sync=False, depends=False, core_delay=0):
+    """AudioSpecificConfig() bit writer.
+
+    ``sbr`` gives the SBR output rate and is signalled hierarchically with
+    audioObjectType ``sbr_aot`` (5 for SBR, 29 for SBR+PS).  Passing
+    ``sbr_sync`` instead appends the backward-compatible syncExtensionType.
+    """
     w = W()
-    if sbr:
+    if sbr and not sbr_sync:
         _aot(w, sbr_aot)
         _rate(w, rate)
         w.put(chconf, 4)
@@ -46,7 +53,15 @@ def asc(aot=2, rate=48000, chconf=2, frame960=False, sbr=None, sbr_aot=5):
         _aot(w, aot)
         _rate(w, rate)
         w.put(chconf, 4)
-    w.put(1 if frame960 else 0, 1).put(0, 1).put(0, 1)
+    w.put(1 if frame960 else 0, 1).put(1 if depends else 0, 1)
+    if depends:
+        w.put(core_delay, 14)
+    w.put(0, 1)                                     # frameLengthFlag/extFlag
+    if sbr and sbr_sync:
+        w.put(0x2B7, 11).put(5, 5).put(1, 1)         # syncExtensionType/SBR
+        _rate(w, sbr)
+        if ps_sync:
+            w.put(0x548, 11).put(1, 1)
     return w
 
 
@@ -55,7 +70,13 @@ def latm_value(w, v):
     w.put(n - 1, 2).put(v, 8 * n)
 
 
-def smc(cfg, version=0, subframes=1, other=None, crc=None, asc_pad=0):
+def smc(cfg, version=0, subframes=1, other=None, other_payload=None, crc=None,
+        asc_pad=0, other_pad=0):
+    """StreamMuxConfig() bit writer.
+
+    ``other`` is the otherDataLenBits value; the announced otherData bits are
+    written only when ``other_payload`` is given (encoders differ here).
+    """
     w = W().put(version, 1)
     if version == 1:
         w.put(0, 1)
@@ -84,6 +105,8 @@ def smc(cfg, version=0, subframes=1, other=None, crc=None, asc_pad=0):
             chunks.reverse()
             for i, c in enumerate(chunks):
                 w.put(1 if i < len(chunks) - 1 else 0, 1).put(c, 8)
+        if other_payload is not None:
+            w.put(other_payload, other).put(0, other_pad)
     if crc is None:
         w.put(0, 1)
     else:
