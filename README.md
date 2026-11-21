@@ -9,7 +9,17 @@ and how often each speech mode was used (keyed by bit rate in kbit/s).
 Messages left through the SIP gateway arrive as RTP payloads instead of
 files. `rtp2amr.py` writes one call leg as a storage-format file, using the
 payload format the session negotiated (octet-aligned or bandwidth-efficient,
-no interleaving, no payload CRC).
+no interleaving, no payload CRC). Both formats carry the same speech bits, so
+the two produce byte-identical files.
+
+## Output conventions
+
+- Duration is 20 ms per frame block; an incomplete block at the end of a file
+  is not counted.
+- Frame blocks are accounted for as speech, SID (comfort noise), no data or
+  damaged, following RFC 4867 / TS 26.101 / TS 26.201. A block whose Q bit is
+  0, and AMR-WB's speech-lost type, count as damaged rather than speech.
+- Speech modes are keyed by bit rate in kbit/s, for both AMR-NB and AMR-WB.
 
 ## Layout
 
