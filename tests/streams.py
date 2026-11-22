@@ -62,5 +62,5 @@ def mpc(*packets):
 
 def stream(samples=44100 * 10, napk=None, size=100, **kw):
     block = kw.get("block", 1)
-    napk = napk if napk is not None else -(-samples // (1152 * 4 ** block))
+    napk = napk if napk is not None else -(-samples // (1152 * 2 ** block))
     return mpc(sh(samples, **kw), rg(), ei(), so(), *[ap(size, k) for k in range(napk)], se())

@@ -12,7 +12,28 @@ class MpcError(ValueError):
 
 
 def varint(data, pos):
-    return data[pos] & 0x7F, 1
+    """Decode an SV8 size field: 7 data bits per byte, high bit set means
+    another byte follows, most significant group first (libmpc order)."""
+    value = 0
+    start = pos
+    while True:
+        if pos >= len(data):
+            raise MpcError("truncated packet size field")
+        byte = data[pos]
+        pos += 1
+        value = (value << 7) | (byte & 0x7F)
+        if not byte & 0x80:
+            return value, pos - start
+
+
+def id3v2_size(data):
+    """Length of a leading ID3v2 tag (10-byte header + synchsafe size),
+    or 0 when the stream does not begin with one."""
+    if data[:3] != b"ID3" or len(data) < 10:
+        return 0
+    tag = ((data[6] & 0x7F) << 21) | ((data[7] & 0x7F) << 14) \
+        | ((data[8] & 0x7F) << 7) | (data[9] & 0x7F)
+    return 10 + tag
 
 
 def packets(data, pos):
@@ -27,12 +48,14 @@ def packets(data, pos):
         out.append((key.decode(), data[pos + 2 + n:pos + size]))
         pos += size
         if key == b"SE":
+            # Everything after the stream end packet (e.g. APE tags) is
+            # not part of the packet stream.
             break
     return out
 
 
 def parse(data):
-    start = 0
+    start = id3v2_size(data)
     if data[start:start + 4] != b"MPCK":
         raise MpcError("not a Musepack SV8 stream")
     pk = packets(data, start + 4)
@@ -54,10 +77,13 @@ def parse(data):
             out["max_band"] = (b1 & 0x1F) + 1
             out["channels"] = (b2 >> 4) + 1
             out["mid_side"] = bool(b2 & 8)
-            out["frames_per_packet"] = b2 & 7
+            # Low three bits are a power of two: every audio packet holds
+            # 2 ** block frames (one MPC frame = 1152 samples).
+            out["frames_per_packet"] = 1 << (b2 & 7)
             out["samples"], out["beginning_silence"] = samples, silence
         elif key == "RG":
-            ver, tg, tp, ag, ap = struct.unpack_from(">BHHHH", p, 0)
+            # Gains are signed 16-bit values in 1/256 dB; peaks are unsigned.
+            ver, tg, tp, ag, ap = struct.unpack_from(">BhHhH", p, 0)
             out["replay_gain"] = {"title_gain": str(Fraction(tg, 256)), "title_peak": tp,
                                   "album_gain": str(Fraction(ag, 256)), "album_peak": ap}
         elif key == "EI":
@@ -70,6 +96,7 @@ def parse(data):
         elif key == "SE":
             out["stream_end"] = True
     if out["samples"] is not None and out["sample_rate"]:
-        out["duration"] = str(Fraction(out["samples"], out["sample_rate"]))
+        playable = out["samples"] - out["beginning_silence"]
+        out["duration"] = str(Fraction(playable, out["sample_rate"]))
         out["frames"] = -(-out["samples"] // FRAME)
     return out
