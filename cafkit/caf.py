@@ -15,6 +15,12 @@ def chunks(data):
         ctype = data[pos:pos + 4].decode("latin-1")
         size, = struct.unpack_from(">q", data, pos + 4)
         body = pos + 12
+        if size == -1:
+            # Unknown size: the chunk (only the data chunk may do this) runs
+            # to the end of the file. Recorders that stop mid-take, e.g. on
+            # power loss, leave their files in this state.
+            out.append((ctype, body, len(data) - body))
+            break
         if size < 0 or body + size > len(data):
             raise CafError("chunk %s runs past the end of the file" % ctype)
         out.append((ctype, body, size))
@@ -23,7 +29,15 @@ def chunks(data):
 
 
 def varint(data, pos):
-    return data[pos], pos + 1
+    # CAF variable-length integer: 7 bits per byte, most significant byte
+    # first; the high bit of a byte means another byte follows.
+    v = 0
+    while True:
+        b = data[pos]
+        pos += 1
+        v = (v << 7) | (b & 0x7F)
+        if not b & 0x80:
+            return v, pos
 
 
 def parse(data):
@@ -42,26 +56,49 @@ def parse(data):
     pakt = None
     for ctype, body, size in found:
         if ctype == "data":
-            out["data_bytes"] = size
+            if size < 4:
+                raise CafError("data chunk too small for the edit count")
+            out["edit_count"], = struct.unpack_from(">I", data, body)
+            out["data_bytes"] = size - 4  # the edit count is not audio
         elif ctype == "pakt":
             npk, valid, prime, rem = struct.unpack_from(">qqii", data, body)
-            p, sizes, frames = body + 24, [], []
+            p, end = body + 24, body + size
+            sizes, frames = [], []
             for _ in range(npk):
                 if bpp == 0:
                     s, p = varint(data, p)
                     sizes.append(s)
-            pakt = {"packets": npk, "valid": valid, "priming": prime, "remainder": rem, "sizes": sizes, "frames": frames}
+                if fpp == 0:
+                    f, p = varint(data, p)
+                    frames.append(f)
+            if p > end:
+                raise CafError("pakt chunk entries run past the end of the chunk")
+            pakt = {"packets": npk, "valid": valid, "priming": prime, "remainder": rem,
+                    "sizes": sizes, "frames": frames}
         elif ctype == "info":
-            n, = struct.unpack_from("<I", data, body)
-            parts = data[body + 4:body + size].split(b"\0")
-            for k in range(n):
-                out["info"][parts[2 * k].decode("utf-8")] = parts[2 * k + 1].decode("utf-8")
+            n, = struct.unpack_from(">I", data, body)
+            p, end = body + 4, body + size
+            strings = []
+            while p < end and len(strings) < 2 * n:
+                z = data.index(b"\0", p, end)
+                strings.append(data[p:z].decode("utf-8"))
+                p = z + 1
+            for k in range(0, len(strings) - 1, 2):
+                out["info"][strings[k]] = strings[k + 1]
         elif ctype == "chan":
             tag, bitmap = struct.unpack_from(">II", data, body)
             out["channel_layout"] = {"tag": tag, "bitmap": bitmap}
     if pakt is not None:
         out["packets"] = pakt["packets"]
-        out["frames"] = pakt["packets"] * fpp
+        out["priming"] = pakt["priming"]
+        out["remainder"] = pakt["remainder"]
+        total = sum(pakt["frames"]) if pakt["frames"] else pakt["packets"] * fpp
+        # Playable frames: the valid-frame count already excludes the priming
+        # and remainder frames; -1 means the writer left it unknown.
+        if pakt["valid"] >= 0:
+            out["frames"] = pakt["valid"]
+        else:
+            out["frames"] = max(0, total - pakt["priming"] - pakt["remainder"])
         if pakt["sizes"]:
             out["max_packet_bytes"] = max(pakt["sizes"])
         if pakt["frames"]:
