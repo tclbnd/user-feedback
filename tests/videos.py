@@ -3,16 +3,17 @@ import struct
 
 
 def rate_word(rate=22050, bits=16, channels=2, codec="smacker"):
-    present = True
     v = rate & 0xFFFFFF
-    if present:
-        v |= 1 << 30
-    if bits == 16:
-        v |= 1 << 29
     if channels == 2:
         v |= 1 << 28
-    if codec != "pcm":
-        v |= 1 << 31
+    if bits == 16:
+        v |= 1 << 29
+    if codec == "bink-dct":
+        v |= 1 << 30
+    elif codec == "bink-rdft":
+        v |= 2 << 30
+    elif codec == "smacker":
+        v |= 3 << 30
     return v
 
 
@@ -20,13 +21,13 @@ def smk(frames=10, width=320, height=200, rate=66, ring=False, tracks=(rate_word
     flags, palette_every, key_every, audio_len, trees, track_mask, video = 0, 5, 5, None, 64, None, 120
     n = frames + (1 if ring else 0)
     rates = list(tracks) + [0] * (7 - len(tracks))
-    mask = track_mask if track_mask is not None else [t for t, v in enumerate(rates) if v & (1 << 30)]
+    mask = track_mask if track_mask is not None else [t for t, v in enumerate(rates) if v]
     bodies, sizes, types = [], [], []
     for i in range(n):
         typ, body = 0, b""
         if palette_every and i % palette_every == 0:
             typ |= 1
-            body += bytes([12]) + bytes(47)                  # 12 * 4 = 48 bytes
+            body += bytes([12]) + bytes(51)                  # (12 + 1) * 4 = 52 bytes
         for t in mask:
             al = audio_len(i, t) if audio_len else 100 + 10 * t + i
             typ |= 2 << t
