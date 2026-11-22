@@ -3,8 +3,8 @@ import struct
 import zlib
 
 
-def psf(version=1, program=bytes(range(256)) * 16, reserved=b"", tags=None):
-    crc_bad, raw_tag, crlf = False, None, False
+def psf(version=1, program=bytes(range(256)) * 16, reserved=b"", tags=None,
+        raw_tag=None, crlf=False, crc_bad=False):
     comp = zlib.compress(program, 9) if program else b""
     crc = zlib.crc32(comp) & 0xFFFFFFFF
     if crc_bad:
@@ -16,3 +16,9 @@ def psf(version=1, program=bytes(range(256)) * 16, reserved=b"", tags=None):
         nl = "\r\n" if crlf else "\n"
         out += b"[TAG]" + nl.join("%s=%s" % kv for kv in tags).encode("utf-8")
     return out
+
+
+def psf2(**kwargs):
+    """A PSF2 (PlayStation 2) file; same layout as psf() with version byte 0x02."""
+    kwargs.setdefault("version", 2)
+    return psf(**kwargs)
