@@ -8,9 +8,10 @@ def bcd(v):
 
 
 def dpx(width=2048, height=1556, elements=((50, 10, 1, 0),), film_rate=24.0, timecode=(1, 0, 0, 0),
-        stamp="2024:03:15:10:22:05:UTC", version="V2.0", creator="Scanner"):
-    e, tv_rate, interlace, encrypted, data, cut, eol, user = ">", None, 0xFF, False, True, 0, 0, 0
+        stamp="2024:03:15:10:22:05:UTC", version="V2.0", creator="Scanner",
+        endian=">", tv_rate=None, interlace=0xFF, eol=0, cut=0, data=True):
     """elements: (descriptor, bit depth, packing, encoding)."""
+    e, encrypted, user = endian, False, 0
     h = bytearray(b"\xff" * 2048)
     magic = b"SDPX" if e == ">" else b"XPDS"
     h[0:4] = magic
