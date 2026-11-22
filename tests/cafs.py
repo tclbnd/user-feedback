@@ -19,11 +19,10 @@ def varint(v):
     return bytes(out)
 
 
-def pakt(sizes=(), valid=0, priming=0, remainder=0):
-    frames = ()
-    n = len(sizes)
+def pakt(sizes=(), frames=(), valid=0, priming=0, remainder=0, packets=None):
+    n = packets if packets is not None else max(len(sizes), len(frames))
     body = struct.pack(">qqii", n, valid, priming, remainder)
-    for i in range(n):
+    for i in range(max(len(sizes), len(frames))):
         if sizes:
             body += varint(sizes[i])
         if frames:
