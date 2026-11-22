@@ -41,8 +41,7 @@ def biphase(bits, rate, fps, amp=12000, phase=0.0, invert=False):
     return out
 
 
-def wav(samples_per_channel, rate=48000, bits=16):
-    extensible, odd_chunk = False, False
+def wav(samples_per_channel, rate=48000, bits=16, extensible=False, odd_chunk=False):
     ch = len(samples_per_channel)
     n = len(samples_per_channel[0])
     width = bits // 8
@@ -54,8 +53,10 @@ def wav(samples_per_channel, rate=48000, bits=16):
                 raw.append((v >> 8) + 128)
             elif width == 2:
                 raw += struct.pack("<h", v)
-            else:
+            elif width == 3:
                 raw += (v * 256).to_bytes(3, "little", signed=True)
+            else:
+                raw += (v * 65536).to_bytes(4, "little", signed=True)
     if extensible:
         fmt = struct.pack("<HHIIHHHHI", 0xFFFE, ch, rate, rate * ch * width, ch * width, bits, 22, bits, 0)
         fmt += struct.pack("<H", 1) + bytes.fromhex("000000001000800000aa00389b71")
@@ -66,8 +67,10 @@ def wav(samples_per_channel, rate=48000, bits=16):
     return b"RIFF" + struct.pack("<I", len(body)) + body
 
 
-def ltc_wav(start=(1, 0, 0, 0), n=10, fps=25, rate=48000, user=0, channels=1, lead=0.37):
-    drop, reverse, bits, invert, extensible, odd_chunk, dc = False, False, 16, False, False, False, 0
+def ltc_wav(start=(1, 0, 0, 0), n=10, fps=25, rate=48000, user=0, channels=1, lead=0.37,
+            drop=False, reverse=False, bits=16, invert=False, extensible=False,
+            odd_chunk=False, dc=0):
+    """An LTC recording; lead is where in the previous frame the recording starts."""
     stream = []
     for i in range(n):
         stream += frame_bits(tc_add(start, i, fps), drop, user)
@@ -80,7 +83,5 @@ def ltc_wav(start=(1, 0, 0, 0), n=10, fps=25, rate=48000, user=0, channels=1, le
     # the recording starts inside the previous frame (its tail, sync word included) and runs out after the last one
     stream = before[80 - lead_bits:] + stream + [0] * 24
     sig = [s + dc for s in biphase(stream, rate, fps, invert=invert)]
-    chans = [[0] * len(sig) for _ in range(channels - 1)] + [sig]
-    for c in range(channels - 1):
-        chans[c] = [int(3000 * math.sin(i / 7.0)) for i in range(len(sig))]
-    return wav(chans, rate, bits)
+    chans = [[int(3000 * math.sin(i / 7.0)) for i in range(len(sig))] for _ in range(channels - 1)] + [sig]
+    return wav(chans, rate, bits, extensible=extensible, odd_chunk=odd_chunk)

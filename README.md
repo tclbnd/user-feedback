@@ -19,8 +19,8 @@ put it there.
 | `drop_frame` | the timecode is drop-frame |
 | `reverse` | the LTC was recorded or played backwards |
 | `frames` | complete LTC frames in the file (a frame cut off at the start or end of the recording does not count) |
-| `first`, `last` | first and last complete frames in recording order, `HH:MM:SS:FF` (`;` before the frames for drop-frame) |
-| `user_bits` | the 32 user bits of the first frame as 8 hex digits, binary group 8 first and group 1 last |
+| `first`, `last` | first and last complete frames in recording order, `HH:MM:SS:FF` (`;` before the frames for drop-frame). When `reverse` is set the timecode runs backwards, so `first` is later than `last` |
+| `user_bits` | the 32 user bits of the first complete frame as 8 hex digits, binary group 8 first and group 1 last |
 
 ## Layout
 
