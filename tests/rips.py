@@ -8,8 +8,8 @@ def pad(s, n=32):
 
 
 def nsf(songs=12, start=1, title="Stage Theme", artist="Composer", copyright="1987 Company", region=0, chips=0,
-        ntsc=16639, pal=19997, prg=4096):
-    banks, version, appended, load = bytes(8), 1, b"", 0x8000
+        ntsc=16639, pal=19997, prg=4096, version=1, appended=b""):
+    banks, load = bytes(8), 0x8000
     h = b"NESM\x1a" + struct.pack("<BBBHHH", version, songs, start, load, 0x8003, 0x8006)
     h += pad(title) + pad(artist) + pad(copyright) + struct.pack("<H", ntsc) + banks + struct.pack("<H", pal)
     h += bytes([region, chips, 0]) + ((prg if version >= 2 and appended else 0).to_bytes(3, "little"))
