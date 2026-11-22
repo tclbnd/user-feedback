@@ -2,9 +2,9 @@
 import struct
 from fractions import Fraction
 
-FORMATS = {0xAF11: "FLC", 0xAF12: "FLI"}
+FORMATS = {0xAF11: "FLI", 0xAF12: "FLC"}
 FRAME, PREFIX, SEGMENT_TABLE, HUFFMAN = 0xF1FA, 0xF100, 0xF1FB, 0xF1FC
-CHUNKS = {4: "COLOR_256", 7: "DELTA_FLI", 11: "COLOR_64", 12: "DELTA_FLC", 13: "BLACK", 15: "BYTE_RUN",
+CHUNKS = {4: "COLOR_256", 7: "DELTA_FLC", 11: "COLOR_64", 12: "DELTA_FLI", 13: "BLACK", 15: "BYTE_RUN",
           16: "FLI_COPY", 18: "PSTAMP", 31: "LABEL"}
 
 
@@ -26,8 +26,12 @@ def _palette(data, b, e, six_bit, pal):
         skip, count = data[p], data[p + 1]
         p += 2
         idx += skip
+        if count == 0:
+            count = 256
         for _ in range(count):
             r, g, bl = data[p:p + 3]
+            if six_bit:
+                r, g, bl = (v << 2 | v >> 4 for v in (r, g, bl))
             if idx < 256:
                 pal[idx] = "#%02x%02x%02x" % (r, g, bl)
             idx += 1
@@ -43,10 +47,12 @@ def parse(data):
     if magic not in FORMATS:
         raise FlicError("not a FLIC file")
     fmt = FORMATS[magic]
+    unit = Fraction(1000, 70) if fmt == "FLI" else Fraction(1)  # FLI: 1/70 s jiffies, FLC: ms
     if fmt == "FLI":
-        speed = Fraction(_u("H", data, 16)[0])
+        speed = unit * _u("H", data, 16)[0]
     else:
         speed = Fraction(_u("I", data, 16)[0])
+    data = data[:size]  # only the bytes up to the header's file size belong to the animation
     pos = 128
     counts, pal, delays, empty, prefix = {}, {}, [], 0, False
     seen = 0
@@ -59,7 +65,7 @@ def parse(data):
         elif ctype == FRAME:
             n, delay = _u("HH", data, pos + 6)
             seen += 1
-            delays.append(speed)
+            delays.append(unit * delay if delay else speed)
             if n == 0:
                 empty += 1
             p = pos + 16
@@ -73,8 +79,8 @@ def parse(data):
                     _palette(data, p + 6, p + ssize, stype == 11, pal)
                 p += ssize
         pos += csize
-    return {"format": fmt, "width": width, "height": height, "depth": depth, "frames": seen,
+    return {"format": fmt, "width": width, "height": height, "depth": depth, "frames": frames,
             "ring_frame": seen == frames + 1, "frame_delay_ms": str(speed),
-            "duration": str(sum(delays, Fraction(0)) / 1000), "empty_frames": empty, "prefix": prefix,
+            "duration": str(sum(delays[:frames], Fraction(0)) / 1000), "empty_frames": empty, "prefix": prefix,
             "chunks": dict(sorted(counts.items())),
             "first_colors": [pal.get(i) for i in range(4)]}
