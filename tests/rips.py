@@ -33,13 +33,19 @@ def msf(lba):
     return bytes([bcd(a // 4500), bcd(a // 75 % 60), bcd(a % 75)])
 
 
-def sector(lba, submode=0x62, coding=0, fill=0x11):
-    form2, edc_mode, sub_mismatch, mode, bad_sync = None, "ok", False, 2, False
-    form2 = bool(submode & 0x20) if form2 is None else form2
+def sector(lba, submode=0x62, coding=0, fill=0x11, bad_sync=False, sub_mismatch=False,
+           edc_mode="ok", mode=2):
+    form2 = bool(submode & 0x20) if mode == 2 else None
     s = bytearray(2352)
     s[0:12] = SYNC if not bad_sync else b"\x00" * 12
     s[12:15] = msf(lba)
     s[15] = mode
+    if mode == 1:
+        # Mode 1: user data at 16..2064, EDC at 2064 over bytes 0..2064.
+        s[16:2064] = bytes([fill]) * 2048
+        val = edc(bytes(s[:2064])) ^ (0x10 if edc_mode == "bad" else 0)
+        struct.pack_into("<I", s, 2064, val)
+        return bytes(s)
     if mode != 2:
         s[16:2064] = bytes([fill]) * 2048
         return bytes(s)
@@ -61,11 +67,11 @@ def sector(lba, submode=0x62, coding=0, fill=0x11):
     return bytes(s)
 
 
-def cdxa(sectors, file_number=1, attrs=0x0D55):
-    extra, trailing = b"", b""
+def cdxa(sectors, file_number=1, attrs=0x0D55, trailing=b"", extra=b""):
     fmt = struct.pack("<HH", 0, 0) + struct.pack(">H", attrs) + b"XA" + bytes([file_number]) + bytes(5)
     data = b"".join(sectors) + trailing
-    body = b"CDXA" + b"fmt " + struct.pack("<I", len(fmt)) + fmt + extra + b"data" + struct.pack("<I", len(data)) + data
+    body = (b"CDXA" + b"fmt " + struct.pack("<I", len(fmt)) + fmt + extra +
+            b"data" + struct.pack("<I", len(data)) + data)
     return b"RIFF" + struct.pack("<I", len(body)) + body
 
 
