@@ -32,8 +32,8 @@ def block(sct, seq, num, body, fsc=0):
     return (head + body).ljust(80, b"\xff")
 
 
-def frame(pal=False, tc=(0, 0, 0, 0), audio=None, disp=0, date=None, time=None):
-    drop, channels, af = False, 1, None
+def frame(pal=False, tc=(0, 0, 0, 0), audio=None, disp=0, date=None, time=None, drop=False, channels=1):
+    af = None
     seqs = 12 if pal else 10
     out = b""
     for ch in range(channels):
