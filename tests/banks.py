@@ -1,8 +1,13 @@
 """Builders for small synthetic SoundBanks used by the tests."""
 import struct
 
-
+# Test banks are little-endian by default; flip to ">" for console banks.
 E = "<"
+
+
+def set_endian(prefix):
+    global E
+    E = prefix
 
 
 def chunk(tag, body):
@@ -24,6 +29,7 @@ def media(items, align=16):
 
 
 def obj(otype, oid, body):
+    # Wwise object size covers the object id plus the body that follows it.
     return struct.pack(E + "BII", otype, len(body) + 4, oid) + body
 
 
@@ -33,6 +39,15 @@ def sound(oid, source, stream=0, version=134):
     else:
         body = struct.pack(E + "IBI", 0x00040001, stream, source)
     return obj(2, oid, body + struct.pack(E + "I", 1000) + bytes(10))
+
+
+def music_track(oid, source, stream=0, version=134):
+    # Music tracks (HIRC type 11) carry the same source header as sounds.
+    if version <= 88:
+        body = struct.pack(E + "III", 0x00040001, stream, source)
+    else:
+        body = struct.pack(E + "IBI", 0x00040001, stream, source)
+    return obj(11, oid, body + bytes(20))
 
 
 def event(oid, actions, version=134):
