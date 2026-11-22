@@ -2,8 +2,14 @@
 import struct
 from fractions import Fraction
 
-CHIPS = ("VRC7", "VRC6", "FDS", "MMC5", "Namco163", "Sunsoft5B", "VT02")
+# Sound chip bits in the order defined by the NSF/NSF2 header and the NSFe
+# INFO chunk: bit 0 is VRC6, bit 1 is VRC7, ...
+CHIPS = ("VRC6", "VRC7", "FDS", "MMC5", "Namco163", "Sunsoft5B", "VT02")
 REGIONS = {0: "NTSC", 1: "PAL"}
+# Default play routine periods (CPU cycles per call) from the NSF spec, used
+# by NSFe files, which carry no speed fields of their own.
+DEFAULT_NTSC_SPEED = 16639
+DEFAULT_PAL_SPEED = 19997
 
 
 class NsfError(ValueError):
@@ -11,7 +17,9 @@ class NsfError(ValueError):
 
 
 def _text(raw):
-    return raw.rstrip(b"\0").decode("latin-1")
+    """Decode a fixed-length NUL-terminated field; None when it is empty."""
+    text = raw.split(b"\0", 1)[0].decode("latin-1")
+    return text or None
 
 
 def _chips(bits):
@@ -19,12 +27,30 @@ def _chips(bits):
 
 
 def _region(bits):
+    # Bit 0 set: PAL supported; bit 1 set: NTSC supported. Both -> dual.
+    if (bits & 1) and (bits & 2):
+        return "dual"
     return REGIONS[bits & 1]
 
 
 def _rate(region, ntsc_speed, pal_speed):
-    speed = ntsc_speed
+    if region == "PAL":
+        # A zero PAL speed means "fall back to the NTSC speed" per spec.
+        speed = pal_speed or ntsc_speed
+    else:
+        # NTSC-only and dual files are reported at the NTSC rate.
+        speed = ntsc_speed
     return str(Fraction(1000000, speed)) if speed else None
+
+
+def _strings(body, count=None):
+    """Split an NSFe chunk of NUL-separated UTF-8 strings."""
+    parts = body.split(b"\0")
+    if parts and parts[-1] == b"":
+        parts.pop()
+    if count is not None:
+        parts = parts[:count]
+    return [s.decode("utf-8", "replace") for s in parts]
 
 
 def _nsf(data):
@@ -38,7 +64,7 @@ def _nsf(data):
     out = {"format": "NSF", "version": version, "songs": songs, "start_song": start,
            "title": _text(data[0x0E:0x2E]), "artist": _text(data[0x2E:0x4E]), "copyright": _text(data[0x4E:0x6E]),
            "region": region, "play_rate_hz": _rate(region, ntsc_speed, pal_speed), "chips": _chips(data[0x7B]),
-           "bankswitched": bool(banks[0]), "load": "%04X" % load, "init": "%04X" % init, "play": "%04X" % play,
+           "bankswitched": any(banks), "load": "%04X" % load, "init": "%04X" % init, "play": "%04X" % play,
            "track_labels": None, "track_times_ms": None, "playlist": None}
     out["data_bytes"] = len(data) - 128
     return out
@@ -46,7 +72,8 @@ def _nsf(data):
 
 def _nsfe(data):
     out = {"format": "NSFe", "version": None, "songs": 1, "start_song": 1, "title": None, "artist": None,
-           "copyright": None, "region": "NTSC", "play_rate_hz": "60", "chips": [], "bankswitched": False,
+           "copyright": None, "region": "NTSC",
+           "play_rate_hz": str(Fraction(1000000, DEFAULT_NTSC_SPEED)), "chips": [], "bankswitched": False,
            "load": None, "init": None, "play": None, "track_labels": None, "track_times_ms": None,
            "playlist": None, "data_bytes": 0}
     pos, seen = 4, set()
@@ -60,25 +87,37 @@ def _nsfe(data):
         if cid == "NEND":
             break
         if cid == "INFO":
-            load, init, play, region, chips, songs, start = struct.unpack_from("<HHHBBBB", body)
+            if size < 8:
+                raise NsfError("INFO chunk is too short")
+            load, init, play, region, chips = struct.unpack_from("<HHHBB", body, 0)
+            songs = body[8] if size >= 9 else 1
+            # The starting song is 0-based in the file, 1-based in the output.
+            start = body[9] + 1 if size >= 10 else 1
             out.update(load="%04X" % load, init="%04X" % init, play="%04X" % play, region=_region(region),
                        chips=_chips(chips), songs=songs, start_song=start)
-            out["play_rate_hz"] = str(Fraction(1000000, 20000)) if out["region"] == "PAL" else "60"
+            out["play_rate_hz"] = _rate(out["region"], DEFAULT_NTSC_SPEED, DEFAULT_PAL_SPEED)
         elif cid == "DATA":
             out["data_bytes"] = size
         elif cid == "BANK":
             out["bankswitched"] = any(body[:8])
         elif cid == "auth":
             parts = body.split(b"\0")
+            if parts and parts[-1] == b"":
+                parts.pop()
             for key, raw in zip(("title", "artist", "copyright"), parts):
-                out[key] = raw.decode("utf-8", "replace")
+                out[key] = raw.decode("utf-8", "replace") or None
         elif cid == "tlbl":
-            out["track_labels"] = [s.decode("utf-8", "replace") for s in body.split(b"\0")]
+            out["track_labels"] = _strings(body, out["songs"])
         elif cid == "time":
-            vals = struct.unpack_from("<%dI" % (size // 4), body)
-            out["track_times_ms"] = [v if v >= 0 else None for v in vals]
+            vals = struct.unpack_from("<%di" % (size // 4), body)
+            # Negative durations (the spec uses -1) mean the length is unknown.
+            out["track_times_ms"] = [None if v < 0 else v for v in vals]
         elif cid == "plst":
-            out["playlist"] = list(body)
+            # Playlist entries are 0-based song numbers in the file.
+            out["playlist"] = [song + 1 for song in body]
+        elif cid[0].isupper():
+            raise NsfError("unknown NSFe chunk %s" % cid)
+        # Unknown chunks whose name starts with a lower-case letter are skipped.
         seen.add(cid)
     if "INFO" not in seen or "DATA" not in seen:
         raise NsfError("NSFe file without INFO or DATA")
