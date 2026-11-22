@@ -64,6 +64,23 @@ def partition(kind="header", status=4, body_sid=0, index_sid=0, op="OP1a"):
     return klv(key, body)
 
 
+def std_partition(kind="header", status=1, body_sid=0, index_sid=0, op="OP1a"):
+    """Partition pack laid out exactly as SMPTE ST 377-1 Annex G."""
+    k = {"header": 2, "body": 3, "footer": 4}[kind]
+    key = H("060e2b34020501010d01020101040000")[:14] + bytes([k, status])
+    opul = (H("060e2b34040101020d01020110000000") if op == "OP-Atom"
+            else H("060e2b34040101010d010201") + bytes(OP[op]) + b"\x09\x00")
+    body = (struct.pack(">HHI", 1, 3, 1) + u64(0) * 4 + u32(index_sid) + u64(0)
+            + u32(body_sid) + opul + batch([]))
+    return klv(key, body)
+
+
+def dynamic_primer(tagmap):
+    """Primer pack whose entries rename some static local tags to dynamic ones."""
+    items = [struct.pack(">H", tagmap.get(t, t)) + ul for t, ul in UL.items()]
+    return klv(H("060e2b34020501010d01020101050100"), batch(items, 18))
+
+
 def fill(n=20, version=2):
     return klv(H("060e2b34010101") + bytes([version]) + H("0301021001000000"), bytes(n))
 
@@ -83,8 +100,8 @@ def local_set(kind, props, tagmap=None):
     return klv(key, body)
 
 
-def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),)):
-    source_duration, tagmap, multiple, open_duration = None, None, True, False
+def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),),
+                    tagmap=None, open_duration=False):
     """video: (width, stored_height, frame_layout, depth); returns primer + sets."""
     sets = []
     n = [0]
@@ -92,9 +109,9 @@ def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48
     def new():
         n[0] += 1
         return uid(n[0])
-    dur = u64(duration if not open_duration else (1 << 64) - 1) if not open_duration else u64(-1, True)
+    dur = u64(-1, True) if open_duration else u64(duration)
     mp_tracks, sp_tracks = [], []
-    for defn, tracks, d in ((PICTURE, mp_tracks, duration), (PICTURE, sp_tracks, source_duration or duration)):
+    for defn, tracks, d in ((PICTURE, mp_tracks, duration), (PICTURE, sp_tracks, duration)):
         seq, trk = new(), new()
         sets.append(local_set(0x0F00, [(0x3C0A, seq), (0x0201, defn), (0x0202, u64(d) if not open_duration else u64(-1, True))]))
         sets.append(local_set(0x3B00, [(0x3C0A, trk), (0x4B01, rat(rate)), (0x4803, seq)]))
@@ -115,8 +132,8 @@ def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48
         d = new()
         descs.append(d)
         sets.append(local_set(0x4800, [(0x3C0A, d), (0x3D03, rat(sr)), (0x3D07, u32(ch)), (0x3D01, u32(bits))], tagmap))
-    if multiple and len(descs) > 1:
-        sets.append(local_set(0x4400, [(0x3C0A, new()), (0x3001, rat(rate)), (0x3F01, batch(descs))]))
+    if len(descs) > 1:
+        sets.append(local_set(0x4400, [(0x3C0A, new()), (0x3001, rat(rate)), (0x3F01, batch(descs))], tagmap))
     sets.insert(0, local_set(0x3700, [(0x3C0A, new()), (0x4403, batch(sp_tracks))]))
     sets.append(local_set(0x3600, [(0x3C0A, new()), (0x4403, batch(mp_tracks))]))
     return sets
