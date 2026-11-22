@@ -8,9 +8,9 @@ def bcd(v):
 
 
 def dpx(width=2048, height=1556, elements=((50, 10, 1, 0),), film_rate=24.0, timecode=(1, 0, 0, 0),
-        stamp="2024:03:15:10:22:05:UTC", version="V2.0", creator="Scanner"):
-    e, tv_rate, interlace, encrypted, data, cut, eol, user = ">", None, 0xFF, False, True, 0, 0, 0
+        stamp="2024:03:15:10:22:05:UTC", version="V2.0", creator="Scanner", endian="big", tv_rate=None):
     """elements: (descriptor, bit depth, packing, encoding)."""
+    e, interlace, encrypted, data, cut, eol, user = (">" if endian == "big" else "<"), 0xFF, False, True, 0, 0, 0
     h = bytearray(b"\xff" * 2048)
     magic = b"SDPX" if e == ">" else b"XPDS"
     h[0:4] = magic
@@ -30,7 +30,7 @@ def dpx(width=2048, height=1556, elements=((50, 10, 1, 0),), film_rate=24.0, tim
     for i, (desc, depth, packing, enc) in enumerate(elements):
         b = 780 + 72 * i
         h[b:b + 72] = bytes(72)
-        comps = {50: 3, 51: 4, 100: 2, 6: 1, 102: 3}.get(desc, 1)
+        comps = {1: 1, 2: 1, 3: 1, 4: 1, 6: 1, 50: 3, 51: 4, 52: 4, 100: 2, 101: 3, 102: 3, 103: 4}.get(desc, 1)
         if depth == 10 and packing:
             lb = math.ceil(width * comps / 3) * 4
         elif depth == 12 and packing:
