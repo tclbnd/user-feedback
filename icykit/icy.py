@@ -6,79 +6,198 @@ class IcyError(ValueError):
     pass
 
 
+class Headers(dict):
+    """Header map with case-insensitive lookups; the first occurrence wins.
+
+    Keys keep their original spelling, but ``headers["Icy-Name"]`` and
+    ``headers["icy-name"]`` address the same value.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self._names = {}
+
+    def add(self, key, value):
+        low = key.lower()
+        if low in self._names:
+            return
+        self._names[low] = key
+        super().__setitem__(key, value)
+
+    def __getitem__(self, key):
+        return super().__getitem__(self._names[key.lower()])
+
+    def __contains__(self, key):
+        return key.lower() in self._names
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+
 def split_headers(data):
-    end = data.find(b"\r\n\r\n")
-    sep = 4
-    if end < 0:
-        raise IcyError("no end of response headers")
-    lines = data[:end].split(b"\r\n")
-    status = lines[0].decode("latin-1").strip()
-    m = re.match(r"(ICY|HTTP/1\.[01]) (\d{3})", status)
+    """Split a captured response into (protocol, status, headers, body).
+
+    Header names are case-insensitive and the first of a repeated name wins.  A
+    line starting with whitespace continues the header above it.
+    """
+    m = re.search(rb"\r\n\r\n|\n\n", data)
     if not m:
+        raise IcyError("no end of response headers")
+    head = data[:m.start()].replace(b"\r\n", b"\n")
+    body = data[m.end():]
+
+    lines = head.split(b"\n")
+    status = lines[0].decode("latin-1").strip()
+    sm = re.match(r"(ICY|HTTP/1\.[01])\s+(\d{3})\b", status)
+    if not sm:
         raise IcyError("not an HTTP or ICY response")
-    headers = {}
+
+    raw = []
     for line in lines[1:]:
+        if not line.strip():
+            continue
+        if line[:1] in (b" ", b"\t") and raw:
+            raw[-1][1] += " " + line.strip().decode("latin-1")
+            continue
         if b":" not in line:
             continue
-        k, v = line.split(b":", 1)
-        headers[k.decode("latin-1").strip()] = v.decode("latin-1").strip()
-    return m.group(1), int(m.group(2)), headers, data[end + sep:]
+        key, value = line.split(b":", 1)
+        raw.append([key.decode("latin-1").strip(), value.decode("latin-1").strip()])
+
+    headers = Headers()
+    for key, value in raw:
+        headers.add(key, value)
+    return sm.group(1), int(sm.group(2)), headers, body
+
+
+def _last_coding(value):
+    parts = [p.strip().lower() for p in (value or "").split(",") if p.strip()]
+    return parts[-1] if parts else ""
+
+
+def _leading_int(value):
+    m = re.match(r"\s*(\d+)", value or "")
+    return int(m.group(1)) if m else None
 
 
 def dechunk(body):
-    out, pos = b"", 0
-    while pos < len(body):
+    """Decode an HTTP/1.1 chunked body (chunk extensions are ignored)."""
+    out = bytearray()
+    pos, end = 0, len(body)
+    while pos < end:
         eol = body.find(b"\r\n", pos)
         if eol < 0:
             break
-        size = int(body[pos:eol].split(b";")[0].strip() or b"0", 16)
+        try:
+            size = int(body[pos:eol].split(b";", 1)[0].strip(), 16)
+        except ValueError:
+            break
+        pos = eol + 2
         if size == 0:
             break
-        out += body[eol + 2:eol + 2 + size]
-        pos = eol + 2 + size + 2
-    return out
+        out += body[pos:pos + size]
+        pos += size
+        if pos >= end:
+            break
+        if body[pos:pos + 2] == b"\r\n":
+            pos += 2
+        else:
+            break
+    return bytes(out)
 
 
 def _text(raw):
     raw = raw.rstrip(b"\0")
-    return raw.decode("utf-8")
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw.decode("latin-1")
 
 
 def fields(meta):
-    """StreamTitle='...';StreamUrl='...';"""
+    """Parse ``StreamTitle='...';StreamUrl='...';``.
+
+    A quoted value may itself contain quotes and semicolons; it ends at the
+    quote that is followed by a semicolon.  Unknown fields are ignored.
+    """
     out = {}
-    for part in meta.split(";"):
-        if "=" in part:
-            k, v = part.split("=", 1)
-            out[k.strip()] = v.split("'")[1] if "'" in v else v
+    i, n = 0, len(meta)
+    while i < n:
+        while i < n and meta[i] in " \t\r\n\0;":
+            i += 1
+        if i >= n:
+            break
+        eq = meta.find("=", i)
+        if eq < 0:
+            break
+        key = meta[i:eq].strip()
+        i = eq + 1
+        if i < n and meta[i] == "'":
+            close = meta.find("';", i + 1)
+            if close < 0:
+                value = meta[i + 1:].rstrip("\0")
+                if value.endswith("'"):
+                    value = value[:-1]
+                if key:
+                    out[key] = value
+                break
+            if key:
+                out[key] = meta[i + 1:close]
+            i = close + 2
+        else:
+            close = meta.find(";", i)
+            if close < 0:
+                if key:
+                    out[key] = meta[i:].rstrip("\0")
+                break
+            if key:
+                out[key] = meta[i:close]
+            i = close + 1
     return out
 
 
 def scan(data):
     proto, code, headers, body = split_headers(data)
-    metaint = int(headers["icy-metaint"]) if headers.get("icy-metaint", "").isdigit() else 0
+
+    if _last_coding(headers.get("transfer-encoding")) == "chunked":
+        body = dechunk(body)
+    else:
+        cl = _leading_int(headers.get("content-length"))
+        if cl is not None:
+            body = body[:cl]
+
+    metaint = _leading_int(headers.get("icy-metaint")) or 0
     audio, blocks, titles, truncated = 0, 0, [], False
     if metaint <= 0:
         audio = len(body)
     else:
-        pos = 0
+        pos, last_title = 0, None
         while pos < len(body):
             take = min(metaint, len(body) - pos)
             audio += take
             pos += take
             if pos >= len(body):
                 break
-            n = body[pos]
+            size = body[pos] * 16
             pos += 1
-            if pos + n > len(body):
+            if size == 0:
+                continue
+            if pos + size > len(body):
                 truncated = True
                 break
             blocks += 1
-            f = fields(_text(body[pos:pos + n]))
-            titles.append({"at_audio_byte": audio, "title": f.get("StreamTitle", ""), "url": f.get("StreamUrl")})
-            pos += n
-    br = headers.get("icy-br", "")
-    return {"protocol": proto, "status": code, "name": headers.get("icy-name"), "genre": headers.get("icy-genre"),
-            "bitrate": int(br.split(",")[0]) if br.split(",")[0].isdigit() else None,
+            info = fields(_text(body[pos:pos + size]))
+            pos += size
+            title = info.get("StreamTitle")
+            if title is not None and title != last_title:
+                titles.append({"at_audio_byte": audio, "title": title, "url": info.get("StreamUrl")})
+                last_title = title
+
+    return {"protocol": proto, "status": code, "name": headers.get("icy-name"),
+            "genre": headers.get("icy-genre"), "bitrate": _leading_int(headers.get("icy-br")),
             "content_type": headers.get("content-type"), "metaint": metaint or None,
             "audio_bytes": audio, "metadata_blocks": blocks, "titles": titles, "truncated": truncated}
+

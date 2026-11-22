@@ -1,8 +1,9 @@
 """Builders for small synthetic stream captures used by the tests."""
 
 
-def head(metaint=None, proto="ICY 200 OK", name="Harbour FM", br="128", ctype="audio/mpeg"):
-    extra, crlf, case = (), True, "lower"
+def head(metaint=None, proto="ICY 200 OK", name="Harbour FM", br="128", ctype="audio/mpeg", extra=()):
+    crlf, case = True, "lower"
+    extra = list(extra)
     lines = [proto]
     key = (lambda k: k) if case == "lower" else (lambda k: "-".join(p.capitalize() for p in k.split("-")))
     lines.append(f"{key('content-type')}: {ctype}")
