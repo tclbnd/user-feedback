@@ -2,8 +2,8 @@
 import struct
 
 
-def brstm(codec=2, channels=2, rate=32000, total=100000, loop=None, tracks=None, track_type=1, stale_loop=0):
-    e, bsize, cut, no_adpc, ps, version = ">", 0x2000, 0, None, 0x23, 0x0100
+def brstm(codec=2, channels=2, rate=32000, total=100000, loop=None, tracks=None, track_type=1, stale_loop=0, endian=">"):
+    e, bsize, cut, no_adpc, ps, version = endian, 0x2000, 0, None, 0x23, 0x0100
     spb = bsize // 8 * 14 if codec == 2 else bsize // (1 if codec == 0 else 2)
     blocks = -(-total // spb)
     last_samples = total - (blocks - 1) * spb
