@@ -26,10 +26,16 @@ def _audio(ts):
     if version not in (4, 5):
         return {"type": "audio", "codec": None, "ra_version": version}
     p = 6 + 2 + 4 + 4 + 2 + 4 + 2 + 4 + 12 + 2 + 2 + 2 + 2
+    if version == 5:
+        p += 6  # version 5 headers carry six extra bytes before the sample rate
     rate, _, bits, channels = _u("HHHH", ts, p)
     p += 8
-    _, p = _pstr(ts, p, 1)
-    codec, p = _pstr(ts, p, 1)
+    if version == 5:
+        # 4-byte interleaver id ("genr") followed by a 4-byte codec FourCC
+        codec = ts[p + 4:p + 8].decode("latin-1")
+    else:
+        _, p = _pstr(ts, p, 1)
+        codec, p = _pstr(ts, p, 1)
     return {"type": "audio", "codec": codec, "ra_version": version, "sample_rate": rate, "bits": bits,
             "channels": channels}
 
@@ -39,11 +45,29 @@ def _video(ts):
         return None
     codec = ts[8:12].decode("latin-1")
     w, h, _, _, fps = _u("HHHHI", ts, 12)
-    return {"type": "video", "codec": codec, "width": w, "height": h, "fps": str(fps)}
+    # frames per second is stored as a 16.16 fixed-point value
+    return {"type": "video", "codec": codec, "width": w, "height": h, "fps": str(Fraction(fps, 65536))}
 
 
 def _type_specific(ts):
     return _audio(ts) or _video(ts)
+
+
+def _logical_streams(ts):
+    """Physical stream numbers listed in a logical (multi-rate / file-info) MDPR."""
+    if len(ts) < 7:
+        return []
+    _, version = _u("IH", ts, 0)
+    if version != 0:
+        return []
+    count = ts[6]
+    nums = []
+    p = 7
+    for _i in range(count):
+        num, = _u("H", ts, p)
+        nums.append(num)
+        p += 2
+    return nums
 
 
 def parse(data):
@@ -51,7 +75,8 @@ def parse(data):
         raise RmError("not a RealMedia file")
     out = {"duration": None, "preroll": None, "avg_bitrate": None, "streams": [], "title": None,
            "author": None, "copyright": None, "comment": None, "indexed": False, "data_chunks": 0}
-    pos, packets = 0, {}
+    pos, mdprs = 0, []
+    packets = {}
     keyframes = {}
     while pos + 10 <= len(data):
         cid = data[pos:pos + 4]
@@ -61,7 +86,8 @@ def parse(data):
         b = pos + 10
         if cid == b"PROP":
             vals = _u("9I", data, b)
-            out.update(avg_bitrate=vals[1], duration=str(Fraction(vals[5])), preroll=vals[6])
+            # duration is stored in milliseconds; report it in seconds
+            out.update(avg_bitrate=vals[1], duration=str(Fraction(vals[5], 1000)), preroll=vals[6])
         elif cid == b"MDPR":
             num, = _u("H", data, b)
             p = b + 2 + 4 * 7
@@ -69,30 +95,50 @@ def parse(data):
             mime, p = _pstr(data, p, 1)
             tlen, = _u("I", data, p)
             ts = data[p + 4:p + 4 + tlen]
-            s = {"number": num, "mime": mime, "name": name}
-            s.update(_type_specific(ts) or {"type": "other"})
-            s.setdefault("rates", 1)
-            out["streams"].append(s)
+            mdprs.append((num, name, mime, ts))
         elif cid == b"CONT":
             p = b
             for key in ("title", "author", "copyright", "comment"):
-                out[key], p = _pstr(data, p, 1)
+                out[key], p = _pstr(data, p, 2)
         elif cid == b"DATA":
             out["data_chunks"] += 1
             count, _ = _u("II", data, b)
             p = b + 8
             for _ in range(count):
                 pver, plen, stream, ts = _u("HHHI", data, p)
-                flags = data[p + 11]
+                # version 0 packets have a 12-byte header, version 1 a 13-byte one
+                flags = data[p + (11 if pver == 0 else 12)]
                 packets[stream] = packets.get(stream, 0) + 1
                 if flags & 2:
                     keyframes[stream] = keyframes.get(stream, 0) + 1
                 p += plen
-            break
         elif cid == b"INDX":
             out["indexed"] = True
         pos += size
-    for s in out["streams"]:
-        s["packets"] = packets.get(s["number"], 0)
-        s["keyframes"] = keyframes.get(s["number"], 0)
+    by_num = {num: ts for num, _name, _mime, ts in mdprs}
+    physical_of = {}  # physical stream number -> owning multi-rate stream number
+    fileinfo = set()  # physical streams of the logical file-info entry
+    for num, _name, mime, ts in mdprs:
+        if mime == "logical-fileinfo":
+            fileinfo.update(_logical_streams(ts))
+        elif "multirate" in mime:
+            for pnum in _logical_streams(ts):
+                physical_of[pnum] = num
+    for num, name, mime, ts in mdprs:
+        if mime == "logical-fileinfo" or num in fileinfo or num in physical_of:
+            continue
+        s = {"number": num, "mime": mime, "name": name}
+        if "multirate" in mime:
+            phys = _logical_streams(ts)
+            first = by_num.get(phys[0]) if phys else None
+            s.update((first is not None and _type_specific(first)) or {"type": "other"})
+            s["rates"] = len(phys) or 1
+            s["packets"] = sum(packets.get(pnum, 0) for pnum in phys)
+            s["keyframes"] = sum(keyframes.get(pnum, 0) for pnum in phys)
+        else:
+            s.update(_type_specific(ts) or {"type": "other"})
+            s["rates"] = 1
+            s["packets"] = packets.get(num, 0)
+            s["keyframes"] = keyframes.get(num, 0)
+        out["streams"].append(s)
     return out
