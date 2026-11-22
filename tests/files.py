@@ -16,8 +16,9 @@ def sig(name, mask=False):
     return bytes(b | 0x80 if mask and b else b for b in raw)
 
 
-def hca(channels=2, rate=48000, blocks=500, delay=128, padding=300, bsize=0x200, loop=None, cipher=None, comment=None):
-    version, ath, volume, mask, dec, vbr, cut, bad_crc, extra_pad, data = 0x0200, None, None, False, False, None, 0, False, 8, True
+def hca(channels=2, rate=48000, blocks=500, delay=128, padding=300, bsize=0x200, loop=None,
+        cipher=None, comment=None, version=0x0200, ath=None, volume=None, mask=False,
+        dec=False, vbr=None, cut=0, bad_crc=False, extra_pad=8, data=True):
     body = sig("fmt", mask) + bytes([channels]) + rate.to_bytes(3, "big") + struct.pack(">IHH", blocks, delay, padding)
     if dec:
         body += sig("dec", mask) + struct.pack(">HBBBBBB", bsize, 1, 15, 0x1F, 0x1F, 0x20, 1)
