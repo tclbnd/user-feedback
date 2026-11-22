@@ -11,6 +11,8 @@ GUIDS = {
     "no_ec": "20FB5700-5B55-11CF-A8FD-00805F5C442B", "spread": "BFC3CD50-618F-11CF-8BB2-00AA00B4E220",
     "padding": "1806D474-CADF-4509-A4BA-9AABCB96AAE8", "codec_list": "86D15240-311D-11D0-A3A4-00A0C90348F6",
     "ext_reserved": "ABD3D211-A9BA-11CF-8EE6-00C00C205365",
+    "metadata_library": "44231C94-9498-49D1-A141-1D134E457054",
+    "ext_stream": "14E6A5CB-C672-4332-8399-A96952065B5A",
 }
 
 
@@ -26,8 +28,8 @@ def u16(s, nul=True):
     return (s + ("\0" if nul else "")).encode("utf-16-le")
 
 
-def file_props(play_s=60, preroll_ms=3000, packets=500, seekable=True, packet=3200, rate=128000):
-    broadcast, maxp = False, None
+def file_props(play_s=60, preroll_ms=3000, packets=500, seekable=True, packet=3200, rate=128000, broadcast=False):
+    maxp = None
     flags = (1 if broadcast else 0) | (2 if seekable else 0)
     play = 0 if broadcast else int(play_s * 10_000_000) + preroll_ms * 10_000
     return obj("file", bytes(16) + struct.pack("<QQQQQQIIII", 0, 0, 0 if broadcast else packets, play, play, preroll_ms,
@@ -82,6 +84,26 @@ def enc(vt, v, bool_size):
 
 def padding(n=64):
     return obj("padding", bytes(n))
+
+
+def metadata(items, library=False):
+    """items: list of (name, type, value); records get language 0, stream 0."""
+    body = struct.pack("<H", len(items))
+    for name, vt, v in items:
+        n = u16(name)
+        raw = enc(vt, v, 2)
+        body += struct.pack("<HHHHI", 0, 0, len(n), vt, len(raw)) + n + raw
+    return obj("metadata_library" if library else "metadata", body)
+
+
+def extension(*objs):
+    inner = b"".join(objs)
+    return obj("extension", g("ext_reserved") + struct.pack("<HI", 6, len(inner)) + inner)
+
+
+def ext_stream_props(number, avg_frame=0):
+    fixed = struct.pack("<QQ", 0, 0) + struct.pack("<8I", 128000, 0, 0, 0, 0, 0, 0, 0)
+    return obj("ext_stream", fixed + struct.pack("<HHQHH", number, 0, avg_frame, 0, 0))
 
 
 def asf(*objs, packets=0):

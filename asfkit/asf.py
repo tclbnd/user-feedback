@@ -12,6 +12,8 @@ G = {k: uuid.UUID(v).bytes_le for k, v in {
     "ext_content": "D2D0A440-E307-11D2-97F0-00A0C95EA850",
     "extension": "5FBF03B5-A92E-11CF-8EE3-00C00C205365",
     "metadata": "C5F8CBEA-5BAF-4877-8467-AA8C44FA4CCA",
+    "metadata_library": "44231C94-9498-49D1-A141-1D134E457054",
+    "ext_stream": "14E6A5CB-C672-4332-8399-A96952065B5A",
     "audio": "F8699E40-5B4D-11CF-A8FD-00805F5C442B",
     "video": "BC19EFC0-5B4D-11CF-A8FD-00805F5C442B",
 }.items()}
@@ -34,11 +36,23 @@ def objects(data, start, end):
 
 
 def _utf16(b):
-    return b.decode("utf-8", "replace").rstrip("\0")
+    return b.decode("utf-16-le", "replace").rstrip("\0")
 
 
 def _value(vtype, raw, bool_size):
-    return _utf16(raw)
+    if vtype == 0:  # Unicode string
+        return _utf16(raw)
+    if vtype == 2:  # BOOL: 4 bytes in content descriptors, 2 in metadata records
+        return bool(int.from_bytes(raw[:bool_size], "little"))
+    if vtype == 3:  # DWORD
+        return int.from_bytes(raw[:4], "little")
+    if vtype == 4:  # QWORD
+        return int.from_bytes(raw[:8], "little")
+    if vtype == 5:  # WORD
+        return int.from_bytes(raw[:2], "little")
+    if vtype == 6:  # GUID
+        return str(uuid.UUID(bytes_le=raw[:16]))
+    return raw.hex()  # byte array (type 1) and anything unknown
 
 
 def parse(data):
@@ -48,22 +62,36 @@ def parse(data):
     out = {"duration": None, "preroll": None, "packets": None, "packet_size": None, "broadcast": None,
            "seekable": None, "max_bitrate": None, "streams": [], "title": None, "author": None,
            "copyright": None, "description": None, "tags": {}}
-    for gid, b, e in objects(data, 30, hsize):
+    frame_times = {}  # stream number -> average time per frame (100 ns units)
+
+    def tag(name, value):
+        if name in out["tags"]:
+            cur = out["tags"][name]
+            if isinstance(cur, list):
+                cur.append(value)
+            else:
+                out["tags"][name] = [cur, value]
+        else:
+            out["tags"][name] = value
+
+    def handle(gid, b, e):
         if gid == G["file"]:
             (size, created, packets, play, send, preroll, flags,
              minp, maxp, rate) = struct.unpack_from("<QQQQQQIIII", data, b + 16)
             broadcast = bool(flags & 1)
             out.update(packets=None if broadcast else packets, preroll=preroll, broadcast=broadcast,
                        seekable=bool(flags & 2), packet_size=minp if minp == maxp else None, max_bitrate=rate)
-            out["duration"] = str(Fraction(play, 10_000_000))
+            if not broadcast:
+                # play duration includes the preroll; subtract it (preroll ms -> 100 ns units)
+                out["duration"] = str(Fraction(play - preroll * 10_000, 10_000_000))
         elif gid == G["stream"]:
             stype = data[b:b + 16]
             tlen, elen, flags = struct.unpack_from("<IIH", data, b + 40)
             t = b + 54
-            s = {"number": flags, "encrypted": bool(flags & 0x8000)}
+            s = {"number": flags & 0x7F, "encrypted": bool(flags & 0x8000)}
             if stype == G["audio"]:
-                tag, ch, rate, avg, align, bits = struct.unpack_from("<HHIIHH", data, t)
-                s.update(type="audio", codec="0x%04x" % tag, channels=ch, sample_rate=rate, bits=bits)
+                tag_, ch, rate, avg, align, bits = struct.unpack_from("<HHIIHH", data, t)
+                s.update(type="audio", codec="0x%04x" % tag_, channels=ch, sample_rate=rate, bits=bits)
             elif stype == G["video"]:
                 w, h = struct.unpack_from("<II", data, t)
                 fourcc = data[t + 11 + 16:t + 11 + 20].decode("latin-1")
@@ -85,6 +113,30 @@ def parse(data):
                 nl, = struct.unpack_from("<H", data, p)
                 name = _utf16(data[p + 2:p + 2 + nl]); p += 2 + nl
                 vt, vl = struct.unpack_from("<HH", data, p); p += 4
-                out["tags"][name] = _value(vt, data[p:p + vl], 4); p += vl
+                tag(name, _value(vt, data[p:p + vl], 4)); p += vl
+        elif gid == G["extension"]:
+            # Header Extension: 16-byte reserved GUID, 2-byte reserved, 4-byte data size
+            for gid2, b2, e2 in objects(data, b + 22, e):
+                handle(gid2, b2, e2)
+        elif gid in (G["metadata"], G["metadata_library"]):
+            count, = struct.unpack_from("<H", data, b)
+            p = b + 2
+            for _ in range(count):
+                lang, stream, nl, vt, vl = struct.unpack_from("<HHHHI", data, p)
+                p += 12
+                name = _utf16(data[p:p + nl]); p += nl
+                tag(name, _value(vt, data[p:p + vl], 2)); p += vl
+        elif gid == G["ext_stream"]:
+            sn, = struct.unpack_from("<H", data, b + 48)
+            avg, = struct.unpack_from("<Q", data, b + 52)
+            if avg:
+                frame_times[sn] = avg
+
+    for gid, b, e in objects(data, 30, hsize):
+        handle(gid, b, e)
+    for s in out["streams"]:
+        if s["type"] == "video":
+            avg = frame_times.get(s["number"])
+            s["frame_rate"] = str(Fraction(10_000_000, avg)) if avg else None
     out["streams"].sort(key=lambda s: s["number"])
     return out
