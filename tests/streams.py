@@ -9,8 +9,9 @@ def picture(nslices=8, slice_size=200, phsize=8):
     return head + table + body
 
 
-def frame(width=1920, height=1080, chroma=2, scan=0, aspect=3, rate=2, color=(1, 1, 1), alpha=0, creator=b"apl0", slices=8):
-    version, matrices, extra_header, bad_slice = 0, 0, 0, False
+def frame(width=1920, height=1080, chroma=2, scan=0, aspect=3, rate=2, color=(1, 1, 1), alpha=0,
+          creator=b"apl0", slices=8, matrices=0, extra_header=0, bad_slice=False):
+    version = 0
     hdr = struct.pack(">HH", 0, version) + creator + struct.pack(">HH", width, height)
     hdr += bytes([chroma << 6 | scan << 2, aspect << 4 | rate, color[0], color[1], color[2], alpha, 0, matrices])
     hdr += bytes(64 * bin(matrices & 3).count("1")) + bytes(extra_header)
