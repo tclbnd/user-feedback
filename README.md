@@ -19,8 +19,18 @@ JSON summary per file.
 | `essence` | essence element counts by item type: `picture`, `sound`, `data`, `compound`, `system` |
 | `index` | `segments` (distinct index table segments), `edit_units` they cover, `constant_bytes` (edit unit byte count for constant-size essence, else `null`) |
 
+A `Rational` property (`EditRate`, `SampleRate`, `FrameRate`, ...) is reported as the
+exact fraction, e.g. `30000/1001` rather than a truncated integer. `height` is the
+height of a whole frame: a descriptor whose `FrameLayout` stores fields separately
+(`SeparateFields`, `OneField`, `MixedFields`) gives the field height in `StoredHeight`,
+so that value is doubled.
+
 Header metadata is taken from the best copy in the file: a closed and complete
 partition's copy is preferred over one in an open or incomplete partition.
+
+An index table segment is counted once however many partitions carry a copy of it, and
+the edit units it covers are its `IndexStartPosition` … `IndexStartPosition + Extent`,
+counting overlapping segments once.
 
 ## Layout
 

@@ -85,8 +85,8 @@ def local_set(kind, props, tagmap=None):
     return klv(key, body)
 
 
-def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),)):
-    source_duration, tagmap, multiple, open_duration = None, None, True, False
+def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),),
+                    source_duration=None, tagmap=None, multiple=True, open_duration=False):
     """video: (width, stored_height, frame_layout, depth); returns primer + sets."""
     sets = []
     n = [0]
@@ -140,8 +140,8 @@ def rip(count=2):
     return klv(H("060e2b34020501010d01020101110100"), bytes(12 * count) + u32(0))
 
 
-def mxf(header_sets, frames=10, audio=1, index=None):
-    op, header_status, footer_sets, run_in, width, extra, body = "OP1a", 4, None, b"", None, b"", False
+def mxf(header_sets, frames=10, audio=1, index=None, op="OP1a", header_status=4,
+        footer_sets=None, run_in=b"", width=None, extra=b"", body=False):
     out = run_in + partition("header", header_status, 0, 0, op) + fill()
     out += primer() + b"".join(header_sets)
     for i in range(frames):
