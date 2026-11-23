@@ -20,6 +20,7 @@ UL = {k: H(v) for k, v in {
 }.items()}
 PICTURE = H("060e2b34040101010103020201000000")
 SOUND = H("060e2b34040101010103020202000000")
+TIMECODE = H("060e2b34040101010103020101000000")
 OP = {"OP1a": (1, 1), "OP1b": (1, 2), "OP2a": (2, 1), "OP3c": (3, 3), "OP-Atom": (0x10, 0)}
 
 
@@ -62,7 +63,11 @@ def partition(kind="header", status=4, body_sid=0, index_sid=0, op="OP1a"):
     opul = H("060e2b34040101010d010201") + bytes(o) + b"\x09\x00"
     if op == "OP-Atom":
         opul = H("060e2b34040101020d01020110000000")
-    body = struct.pack(">HHI", 1, 3, 1) + u64(0) * 5 + u32(index_sid) + u64(0) + u32(body_sid) + opul + batch([])
+    # ST 377-1 fixed partition pack layout: version/URN/KAG (8), five 8-byte
+    # partition offsets (40), Body SID (4), Operational Pattern UL (16),
+    # essence container batch. The Index SID is not a partition pack field;
+    # the index segments in this partition carry it via tag 0x3F06.
+    body = struct.pack(">HHI", 1, 3, 1) + u64(0) * 5 + u32(body_sid) + opul + batch([])
     return klv(key, body)
 
 
@@ -85,8 +90,8 @@ def local_set(kind, props, tagmap=None):
     return klv(key, body)
 
 
-def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),)):
-    source_duration, tagmap, multiple, open_duration = None, None, True, False
+def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48000, 2, 24),),
+                    open_picture=False):
     """video: (width, stored_height, frame_layout, depth); returns primer + sets."""
     sets = []
     n = [0]
@@ -94,11 +99,14 @@ def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48
     def new():
         n[0] += 1
         return uid(n[0])
-    dur = u64(duration if not open_duration else (1 << 64) - 1) if not open_duration else u64(-1, True)
     mp_tracks, sp_tracks = [], []
-    for defn, tracks, d in ((PICTURE, mp_tracks, duration), (PICTURE, sp_tracks, source_duration or duration)):
+    for defn, tracks, d in ((PICTURE, mp_tracks, duration), (PICTURE, sp_tracks, duration)):
         seq, trk = new(), new()
-        sets.append(local_set(0x0F00, [(0x3C0A, seq), (0x0201, defn), (0x0202, u64(d) if not open_duration else u64(-1, True))]))
+        pic_open = open_picture and tracks is mp_tracks
+        seq_props = [(0x3C0A, seq), (0x0201, defn)]
+        if not pic_open:
+            seq_props.append((0x0202, u64(d)))
+        sets.append(local_set(0x0F00, seq_props))
         sets.append(local_set(0x3B00, [(0x3C0A, trk), (0x4B01, rat(rate)), (0x4803, seq)]))
         tracks.append(trk)
     for _ in audio:
@@ -112,23 +120,42 @@ def header_metadata(rate=25, duration=250, video=(1920, 1080, 0, 10), audio=((48
         d = new()
         descs.append(d)
         sets.append(local_set(0x2800, [(0x3C0A, d), (0x3001, rat(rate)), (0x3002, u64(duration)), (0x3203, u32(w)),
-                                       (0x3202, u32(h)), (0x320C, bytes([layout])), (0x3301, u32(depth))], tagmap))
+                                       (0x3202, u32(h)), (0x320C, bytes([layout])), (0x3301, u32(depth))]))
     for sr, ch, bits in audio:
         d = new()
         descs.append(d)
-        sets.append(local_set(0x4800, [(0x3C0A, d), (0x3D03, rat(sr)), (0x3D07, u32(ch)), (0x3D01, u32(bits))], tagmap))
-    if multiple and len(descs) > 1:
+        sets.append(local_set(0x4800, [(0x3C0A, d), (0x3D03, rat(sr)), (0x3D07, u32(ch)), (0x3D01, u32(bits))]))
+    if len(descs) > 1:
         sets.append(local_set(0x4400, [(0x3C0A, new()), (0x3001, rat(rate)), (0x3F01, batch(descs))]))
     sets.insert(0, local_set(0x3700, [(0x3C0A, new()), (0x4403, batch(sp_tracks))]))
     sets.append(local_set(0x3600, [(0x3C0A, new()), (0x4403, batch(mp_tracks))]))
     return sets
 
 
-def index_segment(start=0, duration=250, rate=25, cbe=0, index_sid=1, body_sid=1):
+def index_segment(start=0, duration=250, rate=25, cbe=0, index_sid=1, body_sid=1, uid_=None):
+    seg_uid = uid_ if uid_ is not None else uid(900 + start)
     body = b"".join(struct.pack(">HH", t, len(v)) + v for t, v in (
-        (0x3C0A, uid(900 + start)), (0x3F0B, rat(rate)), (0x3F0C, u64(start)), (0x3F0D, u64(duration)),
+        (0x3C0A, seg_uid), (0x3F0B, rat(rate)), (0x3F0C, u64(start)), (0x3F0D, u64(duration)),
         (0x3F05, u32(cbe)), (0x3F06, u32(index_sid)), (0x3F07, u32(body_sid))))
     return klv(H("060e2b34025301010d01020101100100"), body)
+
+
+def timecode_track(frames, base=Fraction(30, 1), drop=False):
+    """Material timecode track: sequence referencing a timecode set."""
+    seq, trk, tc = uid(8501), uid(8502), uid(8503)
+    sets = [
+        local_set(0x1400, [(0x3C0A, tc),
+                           (0x1501, u16(frames) + bytes(6)),
+                           (0x1502, rat(base)),
+                           (0x1503, bytes([1 if drop else 0]))]),
+        local_set(0x0F00, [(0x3C0A, seq), (0x0201, TIMECODE), (0x1001, batch([tc]))]),
+        local_set(0x3B00, [(0x3C0A, trk), (0x4B01, rat(base)), (0x4803, seq)]),
+    ]
+    return trk, sets
+
+
+def u16(v):
+    return v.to_bytes(2, "big")
 
 
 def element(kind="picture", n=1, size=64, width=None):
@@ -140,20 +167,32 @@ def rip(count=2):
     return klv(H("060e2b34020501010d01020101110100"), bytes(12 * count) + u32(0))
 
 
-def mxf(header_sets, frames=10, audio=1, index=None):
-    op, header_status, footer_sets, run_in, width, extra, body = "OP1a", 4, None, b"", None, b"", False
-    out = run_in + partition("header", header_status, 0, 0, op) + fill()
+def mxf(header_sets, frames=10, audio=1, index=None, *, op="OP1a", run_in=b"",
+        header_status=4, footer_status=4, footer_sets=None, body_sid=0,
+        extra=b"", fill_version=2):
+    out = run_in + partition("header", header_status, body_sid, 0, op) + fill(version=fill_version)
     out += primer() + b"".join(header_sets)
     for i in range(frames):
-        out += element("system", 1, 28, width) + element("picture", 1, 200, width)
+        out += element("system", 1, 28) + element("picture", 1, 200)
         for a in range(audio):
-            out += element("sound", a + 1, 96, width)
+            out += element("sound", a + 1, 96)
     out += extra
-    if body:
-        out += partition("body", 4, 1, 1, op) + b"".join(index or [])
-    out += partition("footer", 4, 0, 1, op)
+    out += partition("footer", footer_status, body_sid, 1, op)
     if footer_sets:
-        out += primer() + b"".join(footer_sets)
-    if not body:
-        out += b"".join(index or [])
+        out += b"".join(footer_sets)
+    out += b"".join(index or [])
+    return out + rip()
+
+
+def body_partition_mxf(header_sets, frames=4, *, body_status=4, index=None, body_index=None,
+                       body_sets=None, body_sid=1, op="OP1a", header_status=4, body_primer=False):
+    """Header + essence + a body partition (with its own index/metadata) + footer."""
+    out = partition("header", header_status, 0, 0, op) + fill() + primer() + b"".join(header_sets)
+    for i in range(frames):
+        out += element("system", 1, 28) + element("picture", 1, 200) + element("sound", 1, 96)
+    out += partition("body", body_status, body_sid, 1, op)
+    if body_sets and body_primer:
+        out += primer()
+    out += b"".join(body_index or index or []) + b"".join(body_sets or [])
+    out += partition("footer", 4, body_sid, 1, op) + b"".join(index or [])
     return out + rip()
