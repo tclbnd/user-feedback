@@ -10,7 +10,8 @@ class SupError(ValueError):
 
 
 def seconds(pts):
-    return str(Fraction(pts, 1000))
+    """Presentation timestamps tick at 90 kHz."""
+    return str(Fraction(pts, 90000))
 
 
 def rle_pixels(data, width, height, alpha):
@@ -48,10 +49,13 @@ def rle_pixels(data, width, height, alpha):
 
 def parse(data):
     pos, n = 0, len(data)
-    objects, palette = {}, {}
+    objects, fragments = {}, {}
+    palettes = {}
+    windows = []
     events = []
     out = {"width": None, "height": None, "display_sets": 0, "epochs": 0}
     pcs = None
+    current = None
     while pos < n:
         if pos + 13 > n or data[pos:pos + 2] != b"PG":
             raise SupError("bad segment header at %d" % pos)
@@ -66,26 +70,67 @@ def parse(data):
                 out["epochs"] += 1
             comps, q = [], 11
             for _ in range(count):
-                oid, _wid, flags, x, y = struct.unpack_from(">HBBHH", body, q)
+                oid, wid, flags, x, y = struct.unpack_from(">HBBHH", body, q)
                 q += 8
-                comps.append({"id": oid, "x": x, "y": y})
-            pcs = {"pts": pts, "comps": comps}
+                crop = None
+                if flags & 0x80:                # object_cropped_flag: cropping parameters follow
+                    cx, cy, cw, ch = struct.unpack_from(">HHHH", body, q)
+                    q += 8
+                    crop = {"x": cx, "y": cy, "width": cw, "height": ch}
+                comps.append({"id": oid, "window": wid, "forced": bool(flags & 0x40),
+                              "x": x, "y": y, "crop": crop})
+            pcs = {"pts": pts, "pal_id": pal_id, "palette_update": bool(pal_update & 0x80), "comps": comps}
             out["display_sets"] += 1
+        elif kind == WDS:
+            windows = []
+            for q in range(1, 1 + 9 * body[0], 9):
+                wid, x, y, w, h = struct.unpack_from(">BHHHH", body, q)
+                windows.append({"id": wid, "x": x, "y": y, "width": w, "height": h})
         elif kind == PDS:
-            palette = {body[q]: body[q + 4] for q in range(2, len(body) - 4, 5)}
+            entries = palettes.setdefault(body[0], {})
+            for q in range(2, len(body) - 4, 5):
+                entries[body[q]] = body[q + 4]     # entry index -> alpha
         elif kind == ODS:
-            oid = struct.unpack_from(">H", body)[0]
-            w, h = struct.unpack_from(">HH", body, 7)
-            objects[oid] = {"width": w, "height": h, "data": body[11:]}
+            oid, _version, seq = struct.unpack_from(">HBB", body)
+            if oid not in fragments:
+                # first (or only) fragment: 3-byte data length, then width and height
+                length = int.from_bytes(body[4:7], "big") - 4
+                w, h = struct.unpack_from(">HH", body, 7)
+                fragments[oid] = {"width": w, "height": h, "length": length,
+                                  "data": bytearray(body[11:])}
+            else:                               # continuation fragment: bitmap data only
+                fragments[oid]["data"] += body[3:]
+            frag = fragments[oid]
+            if len(frag["data"]) >= frag["length"]:
+                objects[oid] = {"width": frag["width"], "height": frag["height"],
+                                "data": bytes(frag["data"])}
+                del fragments[oid]
         elif kind == END and pcs is not None:
-            objs = []
-            for c in pcs["comps"]:
-                o = objects.get(c["id"])
-                if o is None:
-                    raise SupError("composition uses undefined object %d" % c["id"])
-                objs.append({"id": c["id"], "x": c["x"], "y": c["y"], "width": o["width"], "height": o["height"],
-                             "opaque_pixels": rle_pixels(o["data"], o["width"], o["height"], palette)})
-            events.append({"start": seconds(pcs["pts"]), "end": None, "forced": False, "objects": objs})
+            if pcs["palette_update"]:
+                # palette-only display set (fade): the subtitle stays on screen
+                if current is not None:
+                    current["palette_updates"] += 1
+            elif pcs["comps"]:
+                if current is not None:         # replaced by the new composition
+                    current["end"] = seconds(pcs["pts"])
+                alpha = dict(palettes.get(pcs["pal_id"], {}))
+                objs = []
+                for c in pcs["comps"]:
+                    o = objects.get(c["id"])
+                    if o is None:
+                        raise SupError("composition uses undefined object %d" % c["id"])
+                    objs.append({"id": c["id"], "x": c["x"], "y": c["y"],
+                                 "width": o["width"], "height": o["height"],
+                                 "opaque_pixels": rle_pixels(o["data"], o["width"], o["height"], alpha),
+                                 "window": c["window"], "crop": c["crop"]})
+                current = {"start": seconds(pcs["pts"]), "end": None,
+                           "forced": any(c["forced"] for c in pcs["comps"]),
+                           "objects": objs, "windows": [dict(w) for w in windows],
+                           "palette_updates": 0}
+                events.append(current)
+            elif current is not None:           # empty composition clears the screen
+                current["end"] = seconds(pcs["pts"])
+                current = None
             pcs = None
     out["subtitles"] = events
     return out
