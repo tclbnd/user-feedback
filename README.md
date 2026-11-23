@@ -5,6 +5,13 @@ before they go to broadcast. `lufsinfo.py` measures each file per ITU-R
 BS.1770-4 and EBU R 128 and prints one JSON summary; deliveries must sit at
 -23 LUFS integrated.
 
+The measurement applies the two BS.1770-4 K-weighting stages to every channel,
+sums the weighted mean square over the channels (L/R/C weight 1, surround
+weight 1.41, LFE excluded) and reads `-0.691 + 10 log10` of that power.
+Integrated loudness uses 400 ms blocks with a -70 LUFS absolute gate followed
+by a -10 LU relative gate; loudness range uses 3 s blocks with a -70 LUFS
+absolute gate followed by a -20 LU relative gate (EBU Tech 3342).
+
 ## Output
 
 | field | meaning |
@@ -23,7 +30,10 @@ Loudness values are `%.1f`, or `null` when there is nothing to measure.
 Blocks start every 100 ms. Channel roles come from the WAVE_FORMAT_EXTENSIBLE
 channel mask when the file has one, otherwise from the usual order for the
 channel count (mono C; stereo L R; 5.1 L R C LFE Ls Rs). Surround channels are
-weighted 1.41. Samples are 16-bit or 24-bit PCM, or 32-bit float.
+weighted 1.41 and the LFE channel is left out of the measurement. Samples are
+8-bit, 16-bit, 24-bit or 32-bit PCM, or 32/64-bit float; the K-weighting
+coefficients are derived for the file's own sample rate, so any rate from
+8 kHz to 192 kHz measures the same programme level.
 
 ## Layout
 
