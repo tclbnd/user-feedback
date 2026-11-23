@@ -16,11 +16,16 @@ def ptime(seconds_frames, fps=25):
     return bytes([bcd(hh), bcd(mm), bcd(ss), flag | bcd(ff)])
 
 
-def cell(t, fps=25):
-    return bytes(4) + ptime(t, fps) + bytes(16)
+def cell(t, fps=25, kind=0, block=0, still=0):
+    """One 24-byte C_PBIT entry; kind/block are the cell type / block mode fields."""
+    head = bytearray(24)
+    head[0] = (kind << 6) | (block << 4)
+    head[4:8] = ptime(t, fps)
+    head[22] = still
+    return bytes(head)
 
 
-def pgc(total, cells, entries, fps=25):
+def pgc(total, cells, entries, fps=25, kinds=(), blocks=(), stills=()):
     """cells: list of time tuples; entries: first cell number of each program."""
     head = bytearray(0xEC)
     head[2], head[3] = len(entries), len(cells)
@@ -29,15 +34,21 @@ def pgc(total, cells, entries, fps=25):
     body = bytes(entries) + bytes((-len(entries)) % 2)
     cpb = pmap + len(body)
     struct.pack_into(">HHH", head, 0xE6, pmap, cpb, 0)
-    return bytes(head) + body + b"".join(cell(t, fps) for t in cells)
+    body += b"".join(
+        cell(t, fps, kinds[i] if i < len(kinds) else 0,
+             blocks[i] if i < len(blocks) else 0,
+             stills[i] if i < len(stills) else 0)
+        for i, t in enumerate(cells))
+    return bytes(head) + body
 
 
 def ifo(pgcs, titles, audios=(), subs=(), pal=True, wide=False):
-    """titles: list of chapter lists [(pgcn, pgn), ...]."""
+    """titles: list of chapter lists [(pgcn, pgn), ...]; audios/subs are raw 8/6-byte attrs."""
     head = bytearray(SECTOR)
     head[0:12] = b"DVDVIDEO-VTS"
     struct.pack_into(">II", head, 0xC8, 1, 2)
-    struct.pack_into(">H", head, 0x200, ((1 if pal else 0) << 12) | ((3 if wide else 0) << 10))
+    # VTS_VST_ATR: TV system in bits 15..14 (1 = PAL), aspect in bits 13..12 (3 = 16:9).
+    struct.pack_into(">H", head, 0x200, ((1 if pal else 0) << 14) | ((3 if wide else 0) << 12))
     struct.pack_into(">H", head, 0x202, len(audios))
     for i, a in enumerate(audios):
         head[0x204 + 8 * i:0x20C + 8 * i] = a
