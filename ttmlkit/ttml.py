@@ -20,13 +20,29 @@ def local(tag):
 class Params:
     def __init__(self, root):
         g = lambda name, default=None: root.get("{%s}%s" % (TTP, name), default)
-        self.frame_rate = int(g("frameRate", "30"))
-        self.effective = Fraction(self.frame_rate)
+        frame = g("frameRate")
+        self.frame_rate = int(frame) if frame else 30
+        # TTML1 6.2.9: the effective frame rate is frameRate scaled by frameRateMultiplier.
+        mult = g("frameRateMultiplier")
+        if mult:
+            try:
+                num, den = (int(x) for x in mult.split())
+            except ValueError:
+                raise TtmlError("bad ttp:frameRateMultiplier %r" % mult)
+            if den == 0:
+                raise TtmlError("bad ttp:frameRateMultiplier %r" % mult)
+            self.effective = Fraction(self.frame_rate * num, den)
+        else:
+            self.effective = Fraction(self.frame_rate)
         self.sub_frame_rate = int(g("subFrameRate", "1"))
         tick = g("tickRate")
         if tick:
             self.tick_rate = Fraction(int(tick))
+        elif frame:
+            # TTML1 6.2.10: with a frame rate but no ttp:tickRate, a tick is one sub-frame.
+            self.tick_rate = self.effective * self.sub_frame_rate
         else:
+            # Without any frame rate, a tick is one second.
             self.tick_rate = Fraction(1)
 
     def seconds(self, expr):
@@ -38,24 +54,34 @@ class Params:
             if frac:
                 t += Fraction(frac)
             if frames:
-                t += Fraction(int(frames), 100)
+                # Clock time with frames: the frame component counts frames at the effective
+                # frame rate, not hundredths of a second; `sub` counts sub-frames.
+                frames_f = Fraction(int(frames))
+                if sub:
+                    frames_f += Fraction(int(sub), self.sub_frame_rate)
+                t += frames_f / self.effective
             return t
         m = OFFSET.match(expr)
         if m:
             v, unit = Fraction(m.group(1)), m.group(2)
-            return {"h": v * 3600, "m": v * 60, "s": v, "ms": v, "f": v / self.effective,
-                    "t": v / self.tick_rate}[unit]
+            return {"h": v * 3600, "m": v * 60, "s": v, "ms": v / 1000,
+                    "f": v / self.effective, "t": v / self.tick_rate}[unit]
         raise TtmlError("bad time expression %r" % expr)
 
 
 def text_of(el):
+    """The text lines of an element: a `br` ends the current line, white-space runs collapse."""
     lines, cur = [], []
 
     def walk(e):
         if e.text:
             cur.append(e.text)
         for c in e:
-            walk(c)
+            if local(c.tag) == "br":
+                lines.append("".join(cur))
+                cur[:] = []
+            else:
+                walk(c)
             if c.tail:
                 cur.append(c.tail)
     walk(el)
@@ -75,24 +101,36 @@ def parse(text):
            "language": root.get("{http://www.w3.org/XML/1998/namespace}lang"), "paragraphs": []}
 
     def interval(el, start, parent_end, prev_end, container):
-        """Absolute (begin, end) of an element; `start` is where the element's time begins (the parent's begin,
-        or the end of the previous sibling in a seq container)."""
+        """Absolute (begin, end) on the document timeline.
+
+        `begin`/`end` offsets are measured from the time the element's container starts
+        (`start`), except in a `seq` container where they are measured from the end of the
+        previous sibling (`prev_end`). `dur` is measured from the element's own begin.
+        """
+        origin = prev_end if container == "seq" else start
         b = el.get("begin")
-        e = el.get("end")
-        d = el.get("dur")
-        begin = prm.seconds(b) if b else start
-        end = None
-        if e:
-            end = prm.seconds(e)
-        if end is None:
-            end = parent_end if container == "par" else begin
-        if parent_end is not None and end > parent_end:
+        begin = origin + prm.seconds(b) if b else origin
+        ends = []
+        if el.get("end"):
+            ends.append(origin + prm.seconds(el.get("end")))
+        if el.get("dur"):
+            ends.append(begin + prm.seconds(el.get("dur")))
+        if ends:
+            end = min(ends)
+        elif container == "par":
+            # In a par container an element without end or dur lasts until its parent ends.
             end = parent_end
+        else:
+            # In a seq container it takes no time, so the next sibling starts at its begin.
+            end = begin
+        if parent_end is not None and end is not None and end > parent_end:
+            end = parent_end
+        if end is not None and end < begin:
+            end = begin
         return begin, end
 
     def visit(el, start, parent_end, container):
         prev_end = start
-        kind = el.get("timeContainer", "par")
         for c in el:
             name = local(c.tag)
             if name not in ("body", "div", "p", "span"):
