@@ -22,70 +22,111 @@ def alaw(b):
     return mag if sign else -mag
 
 
+_FIELD = re.compile(rb"[ \t]*([A-Za-z0-9_]+) +-([irs])(\d*) +")
+
+
 def header(data):
     if data[:8] != b"NIST_1A\n":
         raise SphereError("not a NIST SPHERE file")
-    nl = data.index(b"\n", 8)
-    size = 1024
+    nl = data.find(b"\n", 8)
+    if nl < 0:
+        raise SphereError("truncated header")
+    try:
+        size = int(data[8:nl])
+    except ValueError:
+        raise SphereError("bad header size %r" % data[8:nl])
+    if size < nl + 1:
+        raise SphereError("header size %d too small" % size)
     text = data[nl + 1:size]
     fields, p = {}, 0
     while p < len(text):
-        m = re.compile(rb"([A-Za-z0-9_]+)\s+-([irs])(\d*)\s").match(text, p)
+        m = _FIELD.match(text, p)
         if not m:
-            if text[p:p + 8] == b"end_head":
+            if text.startswith(b"end_head", p):
                 break
             q = text.find(b"\n", p)
             if q < 0:
                 break
             p = q + 1
             continue
-        name, typ, n = m.group(1).decode(), m.group(2), m.group(3)
+        name, typ, width = m.group(1).decode(), m.group(2), int(m.group(3) or 0)
         p = m.end()
-        if typ == b"s":
-            q = text.find(b"\n", p)
-            value = text[p:q].split()[0].decode("latin-1") if text[p:q].split() else ""
-            p = q
-        else:
-            q = text.find(b"\n", p)
-            raw = text[p:q].strip().decode()
-            value = int(raw) if typ == b"i" else raw
-            p = q
-        fields[name] = value
         q = text.find(b"\n", p)
-        p = q + 1 if q >= 0 else len(text)
+        end = len(text) if q < 0 else q
+        if end > p and text[end - 1:end] == b"\r":
+            end -= 1
+        if typ == b"s":
+            # A -sN value is exactly N characters, spaces included; a shorter
+            # value ends at the line break.
+            stop = p + width if width and p + width <= end else end
+            value = text[p:stop].decode("latin-1")
+            p = stop
+        else:
+            raw = text[p:end].decode("latin-1").strip()
+            value = int(raw.split()[0]) if typ == b"i" else raw
+            p = end
+        fields[name] = value
+        if q < 0:
+            break
+        p = q + 1
     return size, fields
+
+
+def _samples(raw, width, endian, codec):
+    """Decode data bytes into integer sample values."""
+    if codec == "ulaw":
+        return [ulaw(b) for b in raw]
+    if codec == "alaw":
+        return [alaw(b) for b in raw]
+    if width == 1:
+        return list(struct.unpack("%db" % len(raw), raw))
+    code = {2: "h", 4: "i"}.get(width)
+    if code is None:
+        return []
+    n = len(raw) // width
+    return list(struct.unpack("%s%d%s" % (endian, n, code), raw[:n * width]))
+
+
+_ORDER = {"01": "little", "0123": "little", "10": "big", "3210": "big", "1": "single"}
+_RAW = ("pcm", "ulaw", "alaw")
 
 
 def parse(data):
     size, f = header(data)
     channels = f.get("channel_count", 1)
     width = f.get("sample_n_bytes", 2)
-    coding = str(f.get("sample_coding", "pcm")).split(",")
-    order = str(f.get("sample_byte_format", "01" if width == 2 else "1"))
-    compressed = any("shorten" in c or "wavpack" in c for c in coding[1:]) or "embedded" in ",".join(coding)
+    parts = [c.strip() for c in str(f.get("sample_coding", "pcm")).split(",")]
+    parts = [c for c in parts if c] or ["pcm"]
+    coding = parts[0]
+    codec = coding.lower()
+    compressed = len(parts) > 1 or codec not in _RAW
+    order = str(f.get("sample_byte_format", "1" if width == 1 else "01")).strip()
+    byte_order = _ORDER.get(order, order)
+    endian = {"little": "<", "big": ">"}.get(byte_order, "<")
+    # µ-law and A-law are one byte per sample whatever the declared width.
+    step = 1 if codec in ("ulaw", "alaw") else width
     body = data[size:]
     rate = f.get("sample_rate")
     count = f.get("sample_count")
     if count is None and not compressed:
-        count = len(body) // (width * channels)
-    out = {"header_bytes": size, "fields": f, "channels": channels, "sample_rate": rate, "sample_count": count,
-           "bytes_per_sample": width, "coding": coding[0], "compressed": compressed,
-           "byte_order": {"01": "little", "10": "big", "1": "single", "0123": "little", "3210": "big"}.get(order, order),
-           "duration": str(Fraction(count, rate * channels)) if count is not None and rate else None,
+        count = len(body) // (step * channels)
+    out = {"header_bytes": size, "fields": f, "channels": channels, "sample_rate": rate,
+           "sample_count": count, "bytes_per_sample": width, "coding": coding,
+           "compressed": compressed, "byte_order": byte_order,
+           "duration": str(Fraction(count, rate)) if count is not None and rate else None,
            "data_bytes": len(body), "complete": None, "checksum_ok": None, "peak": None}
     if compressed:
         return out
-    need = count * channels * width
+    need = count * channels * step
     out["complete"] = len(body) >= need
-    raw = body[:need]
-    n = len(raw) // width
-    if width == 1:
-        vals, full = list(struct.unpack("%db" % n, raw)), 128
+    vals = _samples(body[:need], width, endian, codec)
+    if codec in ("ulaw", "alaw"):
+        full = 32768
+    elif width == 1:
+        full = 128
     else:
-        e = "<"
-        fmt = {2: "h", 4: "i"}[width]
-        vals, full = list(struct.unpack(e + "%d%s" % (n, fmt), raw[:n * width])), 1 << (8 * width - 1)
+        full = 1 << (8 * width - 1)
     out["peak"] = "%.6f" % (max((abs(v) for v in vals), default=0) / full)
-    if "sample_checksum" in f and width == 2 and coding[0] == "pcm":
+    if "sample_checksum" in f and width == 2 and codec == "pcm":
         out["checksum_ok"] = sum(v & 0xFFFF for v in vals) % 65536 == f["sample_checksum"]
     return out
