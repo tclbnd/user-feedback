@@ -9,24 +9,43 @@ class HgrError(ValueError):
 
 
 def line_offset(y):
-    """Offset of line y in the 8 KiB page: three interleaved groups of 64, 8 and 1 lines."""
-    return y * 40
+    """Offset of line y in the 8 KiB page.
+
+    Apple II hi-res lines are interleaved: the address is
+    $2000 + 40*(y/64) + 128*((y/8) mod 8) + 1024*(y mod 8).
+    The 192 lines occupy offsets 0..8183, with line 191 ending at 8184
+    (hence the common 8184-byte short BSAVE).
+    """
+    return ((y & 7) << 10) + (((y >> 3) & 7) << 7) + ((y >> 6) * 40)
+
+
+PAGE_SIZE = 8192
+SHORT_SIZE = 8184
 
 
 def parse(data):
-    if len(data) != 8192:
+    if len(data) not in (PAGE_SIZE, SHORT_SIZE):
         raise HgrError("not a hi-res screen (%d bytes)" % len(data))
-    page = data.ljust(8192, b"\0")
+    # Short BSAVEs omit the final eight bytes (offsets 8184..8191).
+    page = data.ljust(PAGE_SIZE, b"\0")
 
     def lit(x, y):
         if not 0 <= x < 280:
             return False
         b = page[line_offset(y) + x // 7]
-        return bool(b >> (6 - x % 7) & 1)
+        # Pixel 0 of a byte is its low bit (bit 0); bit 7 is the group bit.
+        return bool((b >> (x % 7)) & 1)
 
     def colour(x, y):
         if not lit(x, y):
             return "black"
+        # Two lit pixels next to each other on the same line show white.
+        if lit(x - 1, y) or lit(x + 1, y):
+            return "white"
+        b = page[line_offset(y) + x // 7]
+        group1 = bool(b & 0x80)
+        if group1:
+            return "blue" if x % 2 == 0 else "orange"
         return "violet" if x % 2 == 0 else "green"
 
     counts = {}
