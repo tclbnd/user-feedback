@@ -5,7 +5,7 @@ from fractions import Fraction
 TYPES = {0: "none", 1: "colormapped", 2: "truecolor", 3: "grayscale", 9: "rle_colormapped", 10: "rle_truecolor",
          11: "rle_grayscale"}
 ATTRIBUTES = ("no_alpha", "undefined_ignore", "undefined_retain", "alpha", "premultiplied_alpha")
-SIGNATURE = b"TRUEVISION-XFILE\0"
+SIGNATURE = b"TRUEVISION-XFILE.\0"
 
 
 class TgaError(ValueError):
@@ -37,13 +37,14 @@ def parse(data):
     if itype not in TYPES:
         raise TgaError("unknown image type %d" % itype)
     p = 18
-    image_id = None
+    image_id = text(data[p:p + idlen])
+    p += idlen
     cmap = []
     if cmtype == 1:
-        eb = cmbits
+        eb = (cmbits + 7) // 8
         for i in range(cmlen):
             cmap.append(rgba(data[p + i * eb:p + (i + 1) * eb], cmbits, 0 if cmbits != 32 else 8))
-        p += cmlen * (cmbits + 7) // 8 * 8
+        p += cmlen * eb
     bpp = (depth + 7) // 8
     total = w * h
     pixels, packets, crossing = [], 0, 0
@@ -53,7 +54,7 @@ def parse(data):
         if rle:
             head = data[p]
             p += 1
-            count = head & 0x7F
+            count = (head & 0x7F) + 1
             packets += 1
             col = len(pixels) % w if w else 0
             if w and col + count > w:
@@ -70,7 +71,7 @@ def parse(data):
             p += bpp
     pixels = [px for px in pixels if len(px) == bpp][:total]
     alpha_bits = desc & 0x0F
-    right, top = False, bool(desc & 0x10)
+    right, top = bool(desc & 0x10), bool(desc & 0x20)
     corner = None
     if pixels and len(pixels) == total and itype:
         # the pixel shown at the top-left corner of the picture
@@ -90,7 +91,7 @@ def parse(data):
            "origin": ("top" if top else "bottom") + "_" + ("right" if right else "left"), "alpha_bits": alpha_bits,
            "pixels": len(pixels), "complete": len(pixels) == total, "rle_packets": packets if rle else None,
            "crossing_packets": crossing if rle else None, "corner_pixel": corner, "version": 1, "extension": None}
-    if len(data) >= 26 and data[-17:] == SIGNATURE:
+    if len(data) >= 26 and data[-18:] == SIGNATURE:
         out["version"] = 2
         ext, = struct.unpack_from("<I", data, len(data) - 26)
         if ext and data[ext:ext + 2] == struct.pack("<H", 495):
