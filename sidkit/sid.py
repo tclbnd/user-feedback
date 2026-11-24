@@ -24,18 +24,28 @@ def parse(data):
     if len(data) < 0x76 or data[:4] not in (b"PSID", b"RSID"):
         raise SidError("not a SID tune")
     kind = data[:4].decode()
-    version, offset, load, init, play, songs, start, speed = struct.unpack_from("<HHHHHHHI", data, 4)
-    offset = 0x76
+    # All header fields are big-endian.
+    version, offset, load, init, play, songs, start, speed = struct.unpack_from(">HHHHHHHI", data, 4)
     payload = data[offset:]
+    # A zero load address means the first two data bytes hold the real
+    # big-endian load address and are not part of the C64 image.
+    if load == 0:
+        if len(payload) < 2:
+            raise SidError("missing load address in tune data")
+        load = struct.unpack_from(">H", payload, 0)[0]
+        payload = payload[2:]
+    # Init address 0 means "same as the load address".
+    if init == 0:
+        init = load
     out = {"format": kind, "version": version, "name": text(data[0x16:0x36]), "author": text(data[0x36:0x56]),
            "released": text(data[0x56:0x76]), "load_address": "$%04X" % load,
            "end_address": "$%04X" % (load + len(payload) - 1) if payload else None, "data_bytes": len(payload),
            "init_address": "$%04X" % init, "play_address": "$%04X" % play if play else None,
            "songs": songs, "start_song": start,
-           "speeds": ["cia" if i < 32 and speed >> (31 - i) & 1 else "vbi" for i in range(min(songs, 256))],
+           "speeds": ["cia" if speed >> min(i, 31) & 1 else "vbi" for i in range(min(songs, 256))],
            "clock": None, "sid_model": None, "chips": ["$D400"], "player": None, "free_pages": None}
     if version >= 2:
-        flags, = struct.unpack_from("<H", data, 0x76)
+        flags, = struct.unpack_from(">H", data, 0x76)
         out["clock"] = CLOCKS[flags >> 4 & 3]
         out["sid_model"] = [MODELS[flags >> 2 & 3]]
         if flags & 1:
@@ -46,12 +56,12 @@ def parse(data):
             second = extra_sid(data[0x7A])
             if second:
                 out["chips"].append(second)
-                out["sid_model"].append(MODELS[flags >> 6 & 3])
+                out["sid_model"].append(MODELS[flags >> 10 & 3])
                 if version >= 4:
                     third = extra_sid(data[0x7B])
                     if third:
                         out["chips"].append(third)
-                        out["sid_model"].append(MODELS[flags >> 8 & 3])
+                        out["sid_model"].append(MODELS[flags >> 12 & 3])
         page, length = data[0x78], data[0x79]
         if page == 0xFF:
             out["free_pages"] = []
