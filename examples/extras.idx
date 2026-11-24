@@ -1,0 +1,25 @@
+# VobSub index file, v7 (do not modify this line!)
+#
+size: 720x576
+org: 0, 0
+scale: 100%, 100%
+alpha: 100%
+smooth: OFF
+fadein/out: 50, 50
+align: OFF at LEFT TOP
+time offset: -1000
+forced subs: ON
+palette: 000000, f0f0f0, cccccc, 999999, 3333fa, 1111bb, fa3333, bb1111, 33fa33, 11bb11, fafa33, bbbb11, fa33fa, bb11bb, 33fafa, 11bbbb
+custom colors: ON, tridx: 1000, colors: ffffff, 000000, ffff00, 808080
+langidx: 0
+
+id: en, index: 0
+timestamp: 00:00:01:500, filepos: 000001000
+timestamp: 00:00:03:250, filepos: 000002000
+timestamp: 00:00:07:999, filepos: 000003000
+
+id: de, index: 4
+delay: -00:00:00:500
+timestamp: 00:00:02:000, filepos: 000001000
+timestamp: 00:00:01:800, filepos: 000002000
+timestamp: 00:00:09:050, filepos: 000003000
