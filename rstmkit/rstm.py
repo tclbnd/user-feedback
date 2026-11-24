@@ -2,7 +2,7 @@
 import struct
 from fractions import Fraction
 
-CODECS = {0: "pcm16", 1: "pcm8", 2: "dsp_adpcm"}
+CODECS = {0: "pcm8", 1: "pcm16", 2: "dsp_adpcm"}
 
 
 class RstmError(ValueError):
@@ -24,11 +24,11 @@ def parse(data):
     data_off, data_size = u32(0x20), u32(0x24)
     if data[head_off:head_off + 4] != b"HEAD":
         raise RstmError("HEAD chunk not found")
-    base = head_off
+    base = head_off + 8
     refs = [u32(head_off + 8 + 8 * i + 4) for i in range(3)]
     s = base + refs[0]
     codec, loop, channels = u8(s), u8(s + 1), u8(s + 2)
-    rate = u32(s + 4)
+    rate = u16(s + 4)
     loop_start, total = u32(s + 8), u32(s + 12)
     blocks, block_size, block_samples = u32(s + 20), u32(s + 24), u32(s + 28)
     last_size, last_samples, last_padded = u32(s + 32), u32(s + 36), u32(s + 40)
@@ -39,8 +39,8 @@ def parse(data):
     expected = ((blocks - 1) * block_size + last_padded) * channels if blocks else 0
     return {"version": "%d.%d" % (version >> 8, version & 0xFF), "byte_order": "big" if e == ">" else "little",
             "codec": CODECS.get(codec, "codec_%d" % codec), "channels": channels, "listed_channels": listed_channels,
-            "sample_rate": rate, "loop": bool(loop), "loop_start": loop_start,
-            "total_samples": total, "duration": str(Fraction(blocks * block_samples, rate)) if rate else None,
+            "sample_rate": rate, "loop": bool(loop), "loop_start": loop_start if loop else None,
+            "total_samples": total, "duration": str(Fraction(total, rate)) if rate else None,
             "blocks": blocks, "block_samples": block_samples, "last_block_samples": last_samples,
             "tracks": tracks, "track_info": "long" if track_type else "short",
             "data_bytes": data_size - 0x20, "expected_data_bytes": expected,
