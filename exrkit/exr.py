@@ -3,9 +3,10 @@ import struct
 from fractions import Fraction
 
 MAGIC = b"\x76\x2f\x31\x01"
-PIXEL_TYPES = ("half", "uint", "float")
-COMPRESSIONS = ("none", "rle", "zips", "zip", "piz", "pxr24", "b44", "b44a")
-LINES = {"none": 1, "rle": 1, "zips": 1, "zip": 1, "pxr24": 1, "piz": 1, "b44": 1, "b44a": 1}
+PIXEL_TYPES = ("uint", "half", "float")
+COMPRESSIONS = ("none", "rle", "zips", "zip", "piz", "pxr24", "b44", "b44a", "dwaa", "dwab")
+LINES = {"none": 1, "rle": 1, "zips": 1, "zip": 16, "piz": 32, "pxr24": 16,
+         "b44": 32, "b44a": 32, "dwaa": 32, "dwab": 256}
 ORDERS = ("increasing_y", "decreasing_y", "random_y")
 LEVELS = ("one_level", "mipmap", "ripmap")
 
@@ -21,7 +22,7 @@ def cstr(data, p):
 
 def box(v):
     x0, y0, x1, y1 = struct.unpack("<4i", v)
-    return {"origin": [x0, y0], "size": [x1 - x0, y1 - y0]}
+    return {"origin": [x0, y0], "size": [x1 - x0 + 1, y1 - y0 + 1]}
 
 
 def channels(v):
@@ -40,8 +41,6 @@ def header(data, p):
     while data[p] != 0:
         name, p = cstr(data, p)
         typ, p = cstr(data, p)
-        if typ not in TYPES:
-            raise ExrError("unknown attribute type %r" % typ)
         size, = struct.unpack_from("<i", data, p)
         p += 4
         attrs[name] = (typ, data[p:p + size])
@@ -75,7 +74,6 @@ def describe(attrs, tiled_file):
     return part
 
 
-TYPES = {"chlist", "compression", "box2i", "lineOrder", "float", "v2f", "tiledesc", "string", "rational"}
 KNOWN = {"channels", "compression", "dataWindow", "displayWindow", "lineOrder", "pixelAspectRatio",
          "screenWindowCenter", "screenWindowWidth", "tiles", "name", "type", "version", "chunkCount", "framesPerSecond"}
 
@@ -84,9 +82,13 @@ def parse(data):
     if data[:4] != MAGIC:
         raise ExrError("not an OpenEXR file")
     v, = struct.unpack_from("<I", data, 4)
-    out = {"version": v & 0xFF, "tiled": bool(v & 0x100), "long_names": bool(v & 0x400), "deep": bool(v & 0x800),
+    out = {"version": v & 0xFF, "tiled": bool(v & 0x200), "long_names": bool(v & 0x400), "deep": bool(v & 0x800),
            "multipart": bool(v & 0x1000), "parts": []}
     p = 8
     attrs, p = header(data, p)
     out["parts"].append(describe(attrs, out["tiled"]))
+    if out["multipart"]:
+        while data[p] != 0:                                 # headers end with an empty header
+            attrs, p = header(data, p)
+            out["parts"].append(describe(attrs, False))
     return out
