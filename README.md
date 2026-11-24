@@ -22,7 +22,17 @@ used to check timing, channels and the CMF-specific controller events.
 
 The header of each version, the event stream (delta times, running status,
 meta and system exclusive events) and the CMF controllers follow the
-Creative Music File format.
+Creative Music File format. Version 1.0 stores the instrument count as a
+single byte and has no tempo field; version 1.1 stores both as words.
+Durations are `ticks / ticks_per_second`.
+
+Delta times are MIDI-style variable length values. Status bytes may be
+omitted to carry on with the previous channel message (running status is
+dropped after a meta or system exclusive event). System exclusive events
+(`F0`/`F7`) and system/common messages are skipped. Note-on events with
+velocity 0 are note-offs, not new notes. Controller 0x66 counts markers,
+0x67 switches rhythm mode on when non-zero, and 0x68/0x69 set the
+transpose up/down.
 
 ## Layout
 
