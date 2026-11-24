@@ -10,8 +10,31 @@ class SdsError(ValueError):
 
 
 def num(b):
-    """7-bit groups, least significant first."""
-    return sum(v << (7 * i) for i, v in enumerate(reversed(b)))
+    """SDS multi-byte number: 7-bit groups, least significant group first."""
+    return sum(v << (7 * i) for i, v in enumerate(b))
+
+
+def decode_words(body, bits):
+    """Unpack sample words from a packet's 120 data bytes.
+
+    Each word of ``bits`` sample bits occupies ceil(bits / 7) 7-bit bytes,
+    most significant group first, left-justified in the packed field (the
+    unused low bits of the last group are zero).
+    """
+    per = (bits + 6) // 7
+    shift = per * 7 - bits
+    sign_bit = 1 << (bits - 1)
+    span = 1 << bits
+    words = []
+    for i in range(0, 120 - per + 1, per):
+        v = 0
+        for b in body[i:i + per]:
+            v = (v << 7) | b
+        v >>= shift
+        if v & sign_bit:  # two's complement
+            v -= span
+        words.append(v)
+    return words
 
 
 def messages(data):
@@ -43,22 +66,18 @@ def parse(data):
         elif sub == 0x02 and len(m) == 127:
             packets += 1
             k, body, chk = m[4], m[5:125], m[125]
-            x = 0xF0 ^ 0x7E ^ dev ^ 0x02 ^ k
-            for b in body:
+            # SDS checksum: XOR of every byte from the universal realtime
+            # ID (0x7E) through the last data byte, kept to 7 bits.
+            x = 0
+            for b in m[1:125]:
                 x ^= b
-            if x & 0x7F != chk:
+            if (x & 0x7F) != chk:
                 bad += 1
             if k != expect:
                 order += 1
             expect = (k + 1) & 0x7F
             if head:
-                per = head["bits"] // 7
-                for i in range(0, 120 - per + 1, per):
-                    v = 0
-                    for b in body[i:i + per]:
-                        v = v << 7 | b
-                    v >>= max(per * 7 - head["bits"], 0)
-                    words.append(v)
+                words.extend(decode_words(body, head["bits"]))
         elif sub in HANDSHAKES and len(m) == 6:
             name = HANDSHAKES[sub]
             shakes[name] = shakes.get(name, 0) + 1
@@ -67,11 +86,14 @@ def parse(data):
     words = words[:head["length"]]
     rate = Fraction(10 ** 9, head["period"]) if head["period"] else None
     full = 1 << (head["bits"] - 1)
+    loop = None if head["loop_type"] == 0x7F else {
+        "start": head["loop_start"], "end": head["loop_end"],
+        "type": LOOPS.get(head["loop_type"], "type_%d" % head["loop_type"])}
     return {"device_id": head["device"], "sample_number": head["sample_number"], "bits": head["bits"],
             "sample_rate": str(rate) if rate else None, "length": head["length"],
             "duration": str(head["length"] / rate) if rate else None,
-            "loop": {"start": head["loop_start"], "end": head["loop_end"], "type": LOOPS.get(head["loop_type"], "type_%d" % head["loop_type"])}
-            ,
+            "loop": loop,
             "packets": packets, "bad_checksums": bad, "out_of_order": order, "samples": len(words),
             "complete": len(words) == head["length"], "first_sample": words[0] if words else None,
-            "peak": "%.6f" % (max(abs(w) for w in words) / full) if words else None, "handshakes": dict(sorted(shakes.items()))}
+            "peak": "%.6f" % (max(abs(w) for w in words) / full) if words else None,
+            "handshakes": dict(sorted(shakes.items()))}
