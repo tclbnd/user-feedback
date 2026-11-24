@@ -17,7 +17,9 @@ def chunks(data, start, end):
             yield cid, data[body:body + 4], body + 4, body + size
         else:
             yield cid, None, body, body + size
-        p = body + size
+        # RIFF chunks are padded to an even number of bytes; the pad byte
+        # is not counted in the chunk size and must be skipped.
+        p = body + size + (size & 1)
 
 
 LOOP_TYPES = {0: "forward", 1: "release"}
@@ -60,7 +62,9 @@ def parse(data):
             for wcid, wkind, wb, we in chunks(data, b, e):
                 if wkind != b"wave":
                     continue
-                wave_offsets.append(wb - 4 - 8 - b)       # offset of the wave's LIST chunk within the pool
+                # pool table offsets point at the wave's LIST chunk header,
+                # measured from the start of the wave pool's content
+                wave_offsets.append(wb - 4 - 8 - b)
                 frames = 0
                 align = 1
                 ws = None
@@ -85,26 +89,38 @@ def parse(data):
         for cid, kind, b, e in chunks(data, ib, ie):
             if cid == b"insh":
                 _count, bank, program = struct.unpack_from("<III", data, b)
-                inst.update(bank_msb=(bank >> 16) & 0x7F, bank_lsb=bank & 0xFF, program=program & 0x7F)
+                # ulBank: bit 31 marks a drum kit, bits 8-15 the MSB, bits 0-7 the LSB
+                inst.update(bank_msb=(bank >> 8) & 0x7F, bank_lsb=bank & 0x7F,
+                            program=program & 0x7F, drums=bool(bank & 0x80000000))
             elif cid == b"LIST" and kind == b"INFO":
                 inst["name"] = info_name(data, b, e)
             elif cid == b"LIST" and kind == b"lrgn":
+                # DLS Level 1 uses "rgn " regions, Level 2 writes "rgn2"
                 for rcid, rkind, rb, re_ in chunks(data, b, e):
-                    if rkind != b"rgn ":
+                    if rkind not in (b"rgn ", b"rgn2"):
                         continue
                     reg = {"keys": None, "wave": None, "looped": False}
                     own = None
+                    table_index = None
                     for c2, _, cb, ce in chunks(data, rb, re_):
                         if c2 == b"rgnh":
                             lo, hi = struct.unpack_from("<HH", data, cb)
                             reg["keys"] = [lo, hi]
                         elif c2 == b"wlnk":
-                            idx, = struct.unpack_from("<I", data, cb + 8)
-                            if idx < len(cues):
-                                reg["wave"] = idx
+                            table_index, = struct.unpack_from("<I", data, cb + 8)
                         elif c2 == b"wsmp":
                             own = sample_info(data, cb)
-                    si = own or {"unity_note": None, "gain_db": None, "loop": None}
+                    # the wave link indexes the pool table; the table entry
+                    # is the wave's offset inside the wave pool
+                    if table_index is not None and table_index < len(cues):
+                        reg["wave"] = by_offset.get(cues[table_index])
+                    # sample information: the region's own wsmp wins, otherwise
+                    # the wsmp of the wave the region plays applies
+                    si = own
+                    if si is None and reg["wave"] is not None:
+                        si = wave_wsmp[reg["wave"]]
+                    if si is None:
+                        si = {"unity_note": None, "gain_db": None, "loop": None}
                     reg.update(si)
                     reg["looped"] = si["loop"] is not None
                     inst["regions"].append(reg)
