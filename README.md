@@ -17,6 +17,7 @@ check running time, channels and events before conversion to MIDI.
 | `controllers` | change-controller events counted by name: `program`, `bank`, `modulation`, `volume`, `pan`, `expression`, `reverb`, `chorus`, `sustain`, `soft`, else `controller_N` |
 | `system_events` | system events counted by name: `sounds_off`, `notes_off`, `mono`, `poly`, `reset`, else `system_N` |
 | `pitch_bends` | the number of pitch wheel events |
+| `measures` | the number of measure marker events |
 | `score_end` | `true` when a score-end event ends the score |
 
 Only the score bytes the header gives belong to the music. Event encoding,
