@@ -28,10 +28,12 @@ sample's data, `null` for compressed samples or samples without data).
 
 The header, order list markers, channel panning values, sample flags,
 pattern headers and the song message follow the Impulse Tracker format.
+Both the 64-byte IT 2.00 and 80-byte IT 2.04+ sample header layouts are
+recognised, as are pattern blocks with and without the `IMPP` marker.
 
 ## Layout
 
-- `itkit/it.py` – header, orders, samples, patterns
+- `itkit/it.py` – header, orders, channels, samples, packed patterns, message
 - `itinfo.py` – command line
 
 ## Running
