@@ -13,7 +13,9 @@ file, so the pens are given for all three modes.
 | `amsdos` | for a file with a valid AMSDOS header: `user`, `filename` (`NAME.EXT`), `type` (`basic`, `protected`, `binary`, else `type_N`), `load` and `execute` (`&XXXX`) and `length` (the 24-bit file length); else `null` |
 | `screen_bytes` | bytes after the header (an integer) |
 | `points` | for `mode0` (160 × 200, 16 pens), `mode1` (320 × 200, 4 pens) and `mode2` (640 × 200, 2 pens): the pen number at `top_left` (0, 0), `row_1` (0, 1), `row_8` (0, 8), `middle` (int(0.5 × (width − 1)), 100) and `bottom_right` (width − 1, 199) |
-| `mode1_pens` | how many of the 320 × 200 mode 1 pixels use pens 0, 1, 2 and 3 |
+| `mode0_pens` | how many of the 160 × 200 mode 0 pixels (32000) use pens 0–15 |
+| `mode1_pens` | how many of the 320 × 200 mode 1 pixels (64000) use pens 0, 1, 2 and 3 |
+| `mode2_pens` | how many of the 640 × 200 mode 2 pixels (128000) use pens 0 and 1 |
 
 The screen memory layout, the bit layout of each mode and the AMSDOS header
 (including its checksum, which decides whether the first 128 bytes are a
