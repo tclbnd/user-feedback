@@ -13,12 +13,12 @@ order, channels, samples and patterns before modules go on the player.
 | `stereo`, `instrument_mode`, `linear_slides` | the header flags (`true`/`false`) |
 | `global_volume`, `mix_volume`, `speed`, `tempo` | integers from the header |
 | `orders` | the patterns the song plays, in order, up to the end-of-song marker (separator markers left out) |
-| `channels` | the number of enabled channels |
-| `surround_channels` | the number of channels panned to surround |
+| `channels` | the number of enabled channels (muted and unused pan slots excluded) |
+| `surround_channels` | the number of enabled channels panned to surround |
 | `instruments` | the number of instruments (an integer) |
 | `samples` | one entry per sample, see below |
-| `pattern_rows` | the number of rows of each pattern (integers) |
-| `notes`, `note_offs`, `note_cuts` | note events in the stored pattern data within each pattern's rows: notes 0–119, note-offs and note-cuts (integers) |
+| `pattern_rows` | the number of rows of each pattern (integers; a missing pattern counts as 64 rows) |
+| `notes`, `note_offs`, `note_cuts` | note events decoded from each pattern's packed data, counted within its rows: notes 0–119, note-offs (254) and note-cuts (253) |
 | `message` | the song message with line breaks as `\n`, `null` without one |
 
 Each sample has `name`, `length` (in sample frames), `bits` (8 or 16),
@@ -27,11 +27,12 @@ or `null`), `compressed`, and `data_bytes` (the size of an uncompressed
 sample's data, `null` for compressed samples or samples without data).
 
 The header, order list markers, channel panning values, sample flags,
-pattern headers and the song message follow the Impulse Tracker format.
+packed pattern rows (mask variables, channel switches and running-mask
+updates) and the song message follow the Impulse Tracker format.
 
 ## Layout
 
-- `itkit/it.py` – header, orders, samples, patterns
+- `itkit/it.py` – header, orders, samples, packed pattern decoding, message
 - `itinfo.py` – command line
 
 ## Running
