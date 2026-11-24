@@ -1,9 +1,13 @@
 """Minimal GBS rips for the tests."""
+import struct
 
 
-def rip(songs=3, title=b"Test"):
+def rip(songs=3, title=b"Test", first=1, load=0x3F00, init=0x3F00,
+        play=0x3F10, stack=0xFFFE, tma=0, tac=0, code=64):
     h = bytearray(0x70)
     h[:3] = b"GBS"
-    h[3], h[4], h[5] = 1, songs, 1
+    h[3], h[4], h[5] = 1, songs, first
+    struct.pack_into("<HHHH", h, 6, load, init, play, stack)
+    h[0x0E], h[0x0F] = tma, tac
     h[0x10:0x10 + len(title)] = title
-    return bytes(h) + bytes(64)
+    return bytes(h) + bytes(code)
