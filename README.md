@@ -8,7 +8,7 @@ check length, loop point and the register traffic before conversion.
 
 | field | meaning |
 |---|---|
-| `header` | for a file with a GYMX header: `song`, `game`, `publisher`, `emulator`, `dumper`, `comment` (`null` when empty), `loop_frame` (the stored loop frame, `null` for 0) and `packed` (`true` when the log data is compressed); else `null` |
+| `header` | for a file with a GYMX header: `song`, `game`, `publisher`, `emulator`, `dumper`, `comment` (each `null` when empty), `loop_frame` (the stored 1-based loop frame, `null` for 0) and `packed` (`true` when the log data is zlib-compressed); else `null` |
 | `frames`, `duration` | the number of frame waits, and the playing time in seconds as a fraction string |
 | `ym_port0_writes`, `ym_port1_writes`, `psg_writes` | register writes to the YM2612's two ports and to the PSG |
 | `dac_writes` | YM2612 writes to the DAC data register |
@@ -18,9 +18,12 @@ check length, loop point and the register traffic before conversion.
 | `key_ons` | key-on events (at least one operator on) per FM channel `"1"`–`"6"`, listing only channels with at least one |
 | `loop_seconds` | where the loop starts, in seconds as a fraction string (frame 1 is the start of the song); `null` without a loop |
 
-The GYMX header, its compression, the command set, the frame rate and the
-YM2612 key-on register follow the GYM format as Gens writes it, the YM2612
-register map and the SN76489 PSG.
+The GYMX header (magic `GYMX`, five 32-byte text fields, a 256-byte comment,
+then the loop frame and unpacked size as little-endian uint32), its zlib
+compression, the command set, the 60 Hz frame rate, the YM2612 key-on register
+(0x28; channel codes 6 and 7 are invalid) and the SN76489 PSG latch byte
+(register bits 6:4, bit 4 selects volume) follow the GYM format as Gens writes
+it, the YM2612 register map and the SN76489 PSG.
 
 ## Layout
 
