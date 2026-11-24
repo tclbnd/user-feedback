@@ -24,18 +24,22 @@ def parse(data):
     if len(data) < 0x76 or data[:4] not in (b"PSID", b"RSID"):
         raise SidError("not a SID tune")
     kind = data[:4].decode()
-    version, offset, load, init, play, songs, start, speed = struct.unpack_from("<HHHHHHHI", data, 4)
-    offset = 0x76
+    version, offset, load, init, play, songs, start, speed = struct.unpack_from(">HHHHHHHI", data, 4)
     payload = data[offset:]
+    if load == 0:
+        # The C64 load address is stored little-endian in the first two data bytes.
+        load = struct.unpack_from("<H", payload, 0)[0]
+        payload = payload[2:]
+    data_bytes = len(payload)
     out = {"format": kind, "version": version, "name": text(data[0x16:0x36]), "author": text(data[0x36:0x56]),
            "released": text(data[0x56:0x76]), "load_address": "$%04X" % load,
-           "end_address": "$%04X" % (load + len(payload) - 1) if payload else None, "data_bytes": len(payload),
+           "end_address": "$%04X" % (load + data_bytes - 1) if data_bytes else None, "data_bytes": data_bytes,
            "init_address": "$%04X" % init, "play_address": "$%04X" % play if play else None,
            "songs": songs, "start_song": start,
-           "speeds": ["cia" if i < 32 and speed >> (31 - i) & 1 else "vbi" for i in range(min(songs, 256))],
+           "speeds": ["cia" if speed >> min(i, 31) & 1 else "vbi" for i in range(songs)],
            "clock": None, "sid_model": None, "chips": ["$D400"], "player": None, "free_pages": None}
     if version >= 2:
-        flags, = struct.unpack_from("<H", data, 0x76)
+        flags, = struct.unpack_from(">H", data, 0x76)
         out["clock"] = CLOCKS[flags >> 4 & 3]
         out["sid_model"] = [MODELS[flags >> 2 & 3]]
         if flags & 1:
