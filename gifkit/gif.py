@@ -28,8 +28,8 @@ def parse(data):
         raise GifError("not a GIF file")
     w, h, packed, bg, aspect = struct.unpack_from("<HHBBB", data, 6)
     out = {"version": data[3:6].decode(), "width": w, "height": h,
-           "global_colors": 1 << (packed & 7) if packed & 0x80 else None, "background": bg,
-           "aspect": "%.3f" % (aspect / 64) if aspect else None,
+           "global_colors": 2 << (packed & 7) if packed & 0x80 else None, "background": bg,
+           "aspect": "%.3f" % ((aspect + 15) / 64) if aspect else None,
            "loop_count": None, "frames": [], "duration": "0", "comments": [], "truncated": False}
     p = 13 + (3 * out["global_colors"] if out["global_colors"] else 0)
     gce = None
@@ -45,15 +45,16 @@ def parse(data):
             label = data[p + 1]
             if label == 0xF9:
                 size, flags, delay, transp = struct.unpack_from("<BBHB", data, p + 2)
-                gce = {"delay": delay, "disposal": DISPOSAL.get(flags & 7, "type_%d" % (flags & 7)),
-                       "transparent": transp}
+                disposal = (flags >> 2) & 7
+                gce = {"delay": delay, "disposal": DISPOSAL.get(disposal, "type_%d" % disposal),
+                       "transparent": transp if flags & 1 else None}
                 _, p = sub_blocks(data, p + 2 + 1 + size)
                 continue
             if label == 0xFF:
                 ident = data[p + 3:p + 3 + data[p + 2]]
                 payload, p = sub_blocks(data, p + 3 + data[p + 2])
                 if ident == b"NETSCAPE2.0" and len(payload) >= 3:
-                    out["loop_count"] = struct.unpack_from(">H", payload, 1)[0]
+                    out["loop_count"] = struct.unpack_from("<H", payload, 1)[0]
                 continue
             if label == 0xFE:
                 payload, p = sub_blocks(data, p + 2)
@@ -64,17 +65,15 @@ def parse(data):
         if tag == 0x2C:
             x, y, fw, fh, flags = struct.unpack_from("<HHHHB", data, p + 1)
             p += 10
-            local = 1 << (flags & 7) if flags & 0x80 else None
+            local = 2 << (flags & 7) if flags & 0x80 else None
             if local:
                 p += 3 * local
-            p += 1
-            p += 1 + data[p]
-            if data[p] == 0:
-                p += 1
+            _, p = sub_blocks(data, p + 1)
             g = gce or {"delay": 0, "disposal": "none", "transparent": None}
+            gce = None
             out["frames"].append({"x": x, "y": y, "width": fw, "height": fh, "interlaced": bool(flags & 0x40),
                                   "local_colors": local, **g})
-            total += Fraction(g["delay"], 1000)
+            total += Fraction(g["delay"], 100)
             continue
         raise GifError("unexpected block 0x%02X at %d" % (tag, p))
     out["duration"] = str(total)
