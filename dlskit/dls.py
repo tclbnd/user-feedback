@@ -17,7 +17,9 @@ def chunks(data, start, end):
             yield cid, data[body:body + 4], body + 4, body + size
         else:
             yield cid, None, body, body + size
-        p = body + size
+        # RIFF pads every chunk to an even length; the pad byte is not counted
+        # in the chunk's size, so step over it before looking for the next one.
+        p = body + size + (size & 1)
 
 
 LOOP_TYPES = {0: "forward", 1: "release"}
@@ -28,7 +30,8 @@ def sample_info(data, b):
     size, unity, _fine, gain, _opts, loops = struct.unpack_from("<IHhiII", data, b)
     loop = None
     if loops:
-        _ls, ltype, start, length = struct.unpack_from("<IIII", data, b + size)
+        # loops follow the fixed part, whose size the chunk reports itself
+        _ls, ltype, start, length = struct.unpack_from("<IIII", data, b + max(size, 20))
         loop = {"type": LOOP_TYPES.get(ltype, "type_%d" % ltype), "start": start, "length": length}
     return {"unity_note": unity, "gain_db": "%.2f" % (gain / 65536), "loop": loop}
 
@@ -85,26 +88,36 @@ def parse(data):
         for cid, kind, b, e in chunks(data, ib, ie):
             if cid == b"insh":
                 _count, bank, program = struct.unpack_from("<III", data, b)
-                inst.update(bank_msb=(bank >> 16) & 0x7F, bank_lsb=bank & 0xFF, program=program & 0x7F)
+                # ulBank: LSB in the first byte, the 7-bit MSB in the second,
+                # and the drum-kit flag in the top bit of the dword.
+                inst.update(bank_lsb=bank & 0x7F, bank_msb=(bank >> 8) & 0x7F,
+                            program=program & 0x7F, drums=bool(bank & 0x80000000))
             elif cid == b"LIST" and kind == b"INFO":
                 inst["name"] = info_name(data, b, e)
             elif cid == b"LIST" and kind == b"lrgn":
                 for rcid, rkind, rb, re_ in chunks(data, b, e):
-                    if rkind != b"rgn ":
+                    if rkind not in (b"rgn ", b"rgn2"):   # rgn2 is the Level 2 region
                         continue
                     reg = {"keys": None, "wave": None, "looped": False}
                     own = None
+                    cue = None
                     for c2, _, cb, ce in chunks(data, rb, re_):
                         if c2 == b"rgnh":
                             lo, hi = struct.unpack_from("<HH", data, cb)
                             reg["keys"] = [lo, hi]
                         elif c2 == b"wlnk":
-                            idx, = struct.unpack_from("<I", data, cb + 8)
-                            if idx < len(cues):
-                                reg["wave"] = idx
+                            cue, = struct.unpack_from("<I", data, cb + 8)
                         elif c2 == b"wsmp":
                             own = sample_info(data, cb)
-                    si = own or {"unity_note": None, "gain_db": None, "loop": None}
+                    # ulTableIndex selects a cue in ptbl; the cue's offset then
+                    # located the wave inside the pool.
+                    if cue is not None and cue < len(cues):
+                        reg["wave"] = by_offset.get(cues[cue])
+                    wave = reg["wave"]
+                    # The region's own wsmp wins; otherwise the wave's applies.
+                    si = own if own is not None else (wave_wsmp[wave] if wave is not None else None)
+                    if si is None:
+                        si = {"unity_note": None, "gain_db": None, "loop": None}
                     reg.update(si)
                     reg["looped"] = si["loop"] is not None
                     inst["regions"].append(reg)

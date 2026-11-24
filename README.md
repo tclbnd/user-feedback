@@ -15,15 +15,21 @@ JSON summary per bank.
 | `instruments` | one entry per instrument in file order |
 
 Each instrument has `name` (its INAM text or `null`), `bank_msb` and `bank_lsb`
-(the MIDI bank select values, integers 0–127), `program` (0–127), `drums`
-(`true` for a drum kit) and `regions`: one entry per region in file order with
-`keys` (`[low, high]` key range), `wave` (index of the wave the region plays
-within the wave pool, counting from 0; `null` when it cannot be resolved) and
-`looped` (`true` when the region's sample information has a loop),
-`unity_note` (integer), `gain_db` (the gain in decibels, `%.2f`) and `loop`
-(the first loop as `{"type", "start", "length"}` with `type` `forward` or
-`release`, else `null`), all from the sample information that applies to the
-region (`null` when none does).
+(the MIDI bank select values, integers 0–127, taken from the two bytes of
+`insh`'s bank field), `program` (0–127), `drums` (`true` for a drum kit, from
+the bank field's top bit) and `regions`: one entry per region in file order
+(`rgn ` as well as Level 2's `rgn2`) with `keys` (`[low, high]` key range),
+`wave` (index of the wave the region plays within the wave pool, counting from
+0; `null` when it cannot be resolved) and `looped` (`true` when the region's
+sample information has a loop), `unity_note` (integer), `gain_db` (the gain in
+decibels, `%.2f`) and `loop` (the first loop as `{"type", "start", "length"}`
+with `type` `forward` or `release`, else `null`), all from the sample
+information that applies to the region (`null` when none does).
+
+A region reaches its wave through the `wlnk` table index, which selects a cue
+in `ptbl`; the cue's offset then locates the wave inside `wvpl`. The sample
+information is the region's own `wsmp` when it has one, otherwise the `wsmp` of
+the wave the region plays.
 
 Instrument, region and wave chunks follow the DLS Level 1 and Level 2
 specifications; banks from both levels are in use.
