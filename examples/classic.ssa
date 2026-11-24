@@ -1,0 +1,17 @@
+[Script Info]
+; generated
+ScriptType: v4.00
+PlayResX: 640
+PlayResY: 480
+WrapStyle: 0
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Tahoma,30,&H0000FFFF,&H000000FF,&H00000000,&H80000000,0,0,1,2,1,6,10,10,20,1
+Style: Low,Tahoma,28,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,1,2,1,1,10,10,20,1
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: Marked=0,0:00:05.00,0:00:09.00,Default,,0,0,0,,Old-school, comma, heavy
+Dialogue: Marked=0,0:00:10.00,0:00:13.00,Low,,0,0,0,,{\a10}Centre left
+Dialogue: Marked=0,0:00:14.00,0:00:16.00,Default,,0,0,0,,Wrapped\nsoftly
