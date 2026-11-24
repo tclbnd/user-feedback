@@ -2,28 +2,82 @@
 import re
 from fractions import Fraction
 
-TIME = re.compile(r"^(\d+):(\d{2}):(\d{2})\.(\d{2})$")
-LEGACY = {1: 1, 2: 2, 3: 3, 5: 7, 6: 8, 7: 9, 9: 4, 10: 5, 11: 6}     # SSA alignment -> numpad
+TIME = re.compile(r"^(\d+):(\d{1,2}):(\d{1,2})(?:\.(\d+))?$")
+# SSA v4 alignment -> numpad: 1-3 bottom, 5-7 top, 9-11 middle (4 and 8 are unused).
+LEGACY = {1: 1, 2: 2, 3: 3, 5: 7, 6: 8, 7: 9, 9: 4, 10: 5, 11: 6}
 BLOCK = re.compile(r"\{([^}]*)\}")
+TAG = re.compile(r"\\([A-Za-z]+)([^\\]*)")
+
+STYLE_FORMAT = {
+    "ssa": ["name", "fontname", "fontsize", "primarycolour", "secondarycolour", "tertiarycolour",
+            "backcolour", "bold", "italic", "borderstyle", "outline", "shadow", "alignment",
+            "marginl", "marginr", "marginv", "alphalevel", "encoding"],
+    "ass": ["name", "fontname", "fontsize", "primarycolour", "secondarycolour", "outlinecolour",
+            "backcolour", "bold", "italic", "underline", "strikeout", "scalex", "scaley", "spacing",
+            "angle", "borderstyle", "outline", "shadow", "alignment", "marginl", "marginr",
+            "marginv", "encoding"],
+}
+EVENT_FORMAT = {
+    "ssa": ["marked", "start", "end", "style", "name", "marginl", "marginr", "marginv", "effect", "text"],
+    "ass": ["layer", "start", "end", "style", "name", "marginl", "marginr", "marginv", "effect", "text"],
+}
+STYLE_SECTIONS = {"v4 styles": "ssa", "v4+ styles": "ass", "v4 styles+": "ass"}
 
 
 class AssError(ValueError):
     pass
 
 
+def fields(fmt, value):
+    """Split a Style/Dialogue line by `fmt`, keeping every comma in the text field."""
+    parts = value.split(",", len(fmt) - 1)
+    return {name: (parts[i] if i < len(parts) else "") if name == "text"
+            else (parts[i] if i < len(parts) else "").strip()
+            for i, name in enumerate(fmt)}
+
+
 def seconds(t):
+    """`H:MM:SS.cc`: the fraction is hundredths of a second, not milliseconds."""
     m = TIME.match(t.strip())
     if not m:
         raise AssError("bad time %r" % t)
-    h, mi, s, cs = (int(x) for x in m.groups())
-    return Fraction(((h * 60 + mi) * 60 + s) * 1000 + cs, 1000)
+    h, mi, s, frac = m.groups()
+    value = Fraction((int(h) * 60 + int(mi)) * 60 + int(s))
+    return value + Fraction(int(frac), 10 ** len(frac)) if frac else value
 
 
 def colour(v):
-    v = v.strip()
-    n = int(v[2:].rstrip("&"), 16) if v.upper().startswith("&H") else int(v)
-    a, r, g, b = n >> 24 & 255, n >> 16 & 255, n >> 8 & 255, n & 255
-    return "#%02x%02x%02x" % (r, g, b), 255 - a
+    """`&HAABBGGRR` / SSA `&HBBGGRR` -> (`#rrggbb`, alpha byte)."""
+    v = v.strip().rstrip("&")
+    n = int(v[2:], 16) if v[:2].upper() == "&H" else int(v or "0")
+    a, b, g, r = n >> 24 & 255, n >> 16 & 255, n >> 8 & 255, n & 255
+    return "#%02x%02x%02x" % (r, g, b), a
+
+
+def integer(v, default=0):
+    """First integer in a field (`Marked=0`, `Layer: 2`, ` 3 `)."""
+    m = re.search(r"-?\d+", v or "")
+    return int(m.group(0)) if m else default
+
+
+def numpad(v, default=2):
+    n = integer(str(v), 0)
+    return n if 1 <= n <= 9 else default
+
+
+def legacy_alignment(v):
+    """SSA v4 alignment number (1-3, 5-7, 9-11) -> numpad position, else None."""
+    return LEGACY.get(integer(str(v), 0))
+
+
+def fields(fmt, value):
+    """Split a Style/Dialogue line by `fmt`, keeping every comma in the text field."""
+    parts = value.split(",", len(fmt) - 1)
+    out = {}
+    for i, name in enumerate(fmt):
+        part = parts[i] if i < len(parts) else ""
+        out[name] = part if name == "text" else part.strip()
+    return out
 
 
 def text_info(raw, wrap_style):
@@ -34,12 +88,12 @@ def text_info(raw, wrap_style):
     for m in BLOCK.finditer(raw):
         if not drawing:
             out.append(raw[pos:m.start()])
-        for tag in re.findall(r"\\([a-z]+)([^\\]*)", m.group(1)):
-            name, arg = tag[0], tag[1].strip()
+        for name, arg in TAG.findall(m.group(1)):
+            arg = arg.strip()
             if name == "an" and arg.isdigit():
-                info["alignment"] = int(arg)
+                info["alignment"] = numpad(arg)
             elif name == "a" and arg.isdigit():
-                info["legacy"] = int(arg)
+                info["legacy"] = legacy_alignment(arg)
             elif name == "pos":
                 x, y = arg.strip("()").split(",")[:2]
                 info["position"] = [float(x), float(y)]
@@ -55,14 +109,13 @@ def text_info(raw, wrap_style):
         out.append(raw[pos:])
     text = "".join(out).replace("\\h", " ")
     text = text.replace("\\n", "\n" if wrap_style == 2 else " ")
-    lines = [" ".join(l.split()) for l in text.split("\\N")]
-    lines = [p for l in lines for p in l.split("\n")]
+    lines = [" ".join(p.split()) for l in text.split("\\N") for p in l.split("\n")]
     return lines, info
 
 
 def parse(text):
     section, info, styles, events, comments = None, {}, {}, [], 0
-    fmt = {}
+    formats = {}
     for raw in text.splitlines():
         line = raw.strip()
         if not line or line.startswith(";"):
@@ -74,36 +127,39 @@ def parse(text):
         key = key.strip()
         if section == "script info":
             info[key.lower()] = value.strip()
-        elif section in ("v4+ styles", "v4 styles", "v4 styles+"):
+        elif section in STYLE_SECTIONS:
+            kind = STYLE_SECTIONS[section]
             if key == "Format":
-                fmt["style"] = [f.strip().lower() for f in value.split(",")]
+                formats[section] = [f.strip().lower() for f in value.split(",")]
             elif key == "Style":
-                f = fmt.get("style") or []
-                vals = [v.strip() for v in value.split(",", len(f) - 1)]
-                d = dict(zip(f, vals))
-                al = int(d.get("alignment", "2"))
-                col, alpha = colour(d.get("primarycolour", "&H00FFFFFF"))
-                styles[d.get("name", "Default")] = {"font": d.get("fontname"), "size": float(d.get("fontsize", "0")),
-                                                     "color": col, "opacity": alpha, "alignment": al}
+                d = fields(formats.get(section) or STYLE_FORMAT[kind], value)
+                col, alpha = colour(d.get("primarycolour") or "&H00FFFFFF")
+                if kind == "ssa":
+                    alignment = legacy_alignment(d.get("alignment", "2")) or 2
+                else:
+                    alignment = numpad(d.get("alignment", "2"))
+                styles[d.get("name") or "Default"] = {
+                    "font": d.get("fontname"), "size": float(d.get("fontsize") or 0),
+                    "color": col, "opacity": 255 - alpha, "alignment": alignment}
         elif section == "events":
             if key == "Format":
-                fmt["event"] = [f.strip().lower() for f in value.split(",")]
+                formats[section] = [f.strip().lower() for f in value.split(",")]
             elif key == "Comment":
                 comments += 1
             elif key == "Dialogue":
-                f = fmt.get("event") or []
-                f = ["layer", "start", "end", "style", "name", "marginl", "marginr", "marginv", "effect", "text"]
-                vals = value.split(",")
-                d = dict(zip(f, [v.strip() if i < len(f) - 1 else v for i, v in enumerate(vals)]))
-                lines, tags = text_info(d.get("text", ""), int(info.get("wrapstyle", "0") or 0))
-                style = d.get("style", "Default").lstrip("*")
-                base = styles.get(style, {"alignment": 2})["alignment"]
-                al = tags["alignment"] or (LEGACY.get(tags["legacy"]) if tags["legacy"] else None) or base
-                events.append({"start": seconds(d["start"]), "end": seconds(d["end"]), "style": style,
-                               "layer": int(d.get("layer", "0") or 0), "lines": lines, "alignment": al,
-                               "position": tags["position"], "fade": tags["fade"],
+                if not formats.get(section):
+                    raise AssError("no [Events] Format line")
+                d = fields(formats[section], value)
+                lines, tags = text_info(d.get("text", ""), integer(info.get("wrapstyle", "0")))
+                style = (d.get("style") or "Default").strip().lstrip("*")
+                base = styles.get(style, {}).get("alignment", 2)
+                al = tags["alignment"] or tags["legacy"] or base
+                events.append({"start": seconds(d.get("start", "")), "end": seconds(d.get("end", "")),
+                               "style": style, "layer": integer(d.get("layer") or d.get("marked") or "0"),
+                               "lines": lines, "alignment": al, "position": tags["position"],
+                               "fade": tags["fade"],
                                "karaoke": str(Fraction(tags["karaoke"], 100)) if tags["karaoke"] else None})
-    if "event" not in fmt:
+    if "events" not in formats:
         raise AssError("no [Events] format line")
     res = [int(info[k]) if info.get(k, "").isdigit() else None for k in ("playresx", "playresy")]
     return {"script_type": info.get("scripttype"), "play_res": res, "styles": styles,
