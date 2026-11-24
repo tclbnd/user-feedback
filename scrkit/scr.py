@@ -11,12 +11,17 @@ class ScrError(ValueError):
 
 
 def bitmap_offset(x, y):
-    """Display file address of the byte holding pixel (x, y): the screen is three thirds of 8 character rows."""
-    return y * 32 + (x >> 3)
+    """Display file address of the byte holding pixel (x, y).
+
+    The bitmap is three 2048-byte thirds (y >> 6); inside a third the character
+    row (y >> 3 & 7) selects a 32-byte block and the pixel line (y & 7) an
+    8-byte line within it.
+    """
+    return ((y >> 6) << 11) + (((y >> 3) & 7) << 5) + ((y & 7) << 8) + (x >> 3)
 
 
 def spectrum(index, bright):
-    level = NORMAL
+    level = BRIGHT if bright else NORMAL
     g, r, b = index >> 2 & 1, index >> 1 & 1, index & 1          # colour number bits: green, red, blue
     return "#%02x%02x%02x" % (r * level, g * level, b * level)
 
@@ -32,6 +37,8 @@ def parse(data):
     size = len(data)
     if size in (6912, 6976):
         kind = "standard" if size == 6912 else "ulaplus"
+    elif size == 12288:
+        kind = "timex_hicolor"
     elif size == 12289:
         kind = "timex_hires"
     else:
@@ -46,17 +53,18 @@ def parse(data):
         return data[6144 + (y >> 3) * 32 + (x >> 3)]
 
     def pixel(x, y):
-        if kind == "timex_hires":                             # 512 x 192: even columns in bank 1, odd in bank 2
+        if kind == "timex_hires":                             # 512 x 192: two 6144-byte banks, alternating per byte
             bank = 0 if (x >> 3) % 2 == 0 else 6144
-            return data[bank + bitmap_offset((x >> 1) & ~7 | x & 7, y)] >> (7 - (x & 7)) & 1
-        return data[bitmap_offset(x, y)] >> (x & 7) & 1
+            column = (x >> 4) * 8 + (x & 7)
+            return data[bank + bitmap_offset(column, y)] >> (7 - (x & 7)) & 1
+        return data[bitmap_offset(x, y)] >> (7 - (x & 7)) & 1
 
     def colour(x, y):
         a = attr(x, y)
         on = pixel(x, y)
         if kind == "ulaplus":
             return ulaplus(pal[((a >> 6) & 3) * 16 + (a & 7 if on else 8 + (a >> 3 & 7))])
-        return spectrum(a & 7 if on else a >> 4 & 7, a & 0x40)
+        return spectrum(a & 7 if on else a >> 3 & 7, a & 0x40)
 
     width = 512 if kind == "timex_hires" else 256
     out = {"format": kind, "width": width, "height": 192,
