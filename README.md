@@ -24,13 +24,16 @@ Each part has:
 | `pixel_aspect` | rounded to 6 decimals |
 | `tiles` | for a tile description: `{"size": [x, y], "level_mode", "rounding"}` with `one_level` / `mipmap` / `ripmap` and `down` / `up`; else `null` |
 | `chunks` | the number of chunks the data window needs: scan-line blocks at the part's compression, or for a tile description the tiles of all its resolution levels; else `null` |
-| `frame_rate` | `framesPerSecond` as a fraction string, `null` without one |
+| `frame_rate` | `framesPerSecond` as a fraction string (`24000/1001`, reduced), `null` without one |
 | `custom` | names of the attributes this list does not describe, sorted |
 
 The header, attribute encoding, version flags and the scan lines per block
 of each compression and the resolution levels of tiled images follow the
 OpenEXR file layout. Attributes of any type
-are stored as name, type name, size and value.
+are stored as name, type name, size and value, so an attribute of a type this
+module does not know is still read: it is simply listed under `custom` and, if
+it shares a described attribute's name with a different type, that field is
+`null`.
 
 ## Layout
 
