@@ -2,8 +2,10 @@
 import re
 from fractions import Fraction
 
-TIMESTAMP = re.compile(r"^timestamp:\s*(-?)(\d+):(\d+):(\d+):(\d+),\s*filepos:\s*([0-9A-Fa-f]+)\s*$")
-DELAY = re.compile(r"^delay:\s*()(\d+):(\d+):(\d+):(\d+)\s*$")
+TIMESTAMP = re.compile(r"^timestamp:\s*([-+]?)(\d+):(\d+):(\d+):(\d+),\s*filepos:\s*([0-9A-Fa-f]+)\s*$", re.I)
+# The last field is milliseconds; `delay` may carry a leading - (or +) sign.
+DELAY = re.compile(r"^delay:\s*([-+]?)(\d+):(\d+):(\d+):(\d+)\s*$", re.I)
+ID_INDEX = re.compile(r"index:\s*(\d+)", re.I)
 
 
 class IdxError(ValueError):
@@ -11,16 +13,27 @@ class IdxError(ValueError):
 
 
 def ms(sign, h, m, s, f):
-    v = ((int(h) * 60 + int(m)) * 60 + int(s)) * 1000 + int(f) * 10
-    return -v if sign else v
+    """Build milliseconds from the VobSub hh:mm:ss:ms fields (the last one is ms)."""
+    v = ((int(h) * 60 + int(m)) * 60 + int(s)) * 1000 + int(f)
+    return -v if sign == "-" else v
+
+
+def color(text):
+    """Normalise one palette entry (``rrggbb``, optionally ``0x``-prefixed) to ``#rrggbb``."""
+    c = text.strip().lower()
+    if c.startswith("0x"):
+        c = c[2:]
+    return "#" + c.zfill(6)
 
 
 def parse(text):
+    if text and ord(text[0]) == 0xFEFF:                          # drop a UTF-8 BOM if present
+        text = text[1:]
     lines = text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
-    if not lines or not lines[0].startswith("# VobSub index file"):
+    if not lines or not lines[0].strip().startswith("# VobSub index file"):
         raise IdxError("not a VobSub index file")
     head = lines[0]
-    m = re.search(r"v(\d+)", head)
+    m = re.search(r"v(\d+)", head, re.I)
     out = {"version": int(m.group(1)) if m else None, "size": None, "origin": [0, 0], "scale": [100, 100],
            "alpha": 100, "palette": [], "custom_colors": None, "forced": False, "default_language": None, "languages": []}
     cur = None
@@ -42,12 +55,14 @@ def parse(text):
         elif key == "alpha":
             out["alpha"] = int(value.rstrip("%"))
         elif key == "palette":
-            out["palette"] = ["#" + v.strip().lower().zfill(6) for v in value.split(",")]
+            out["palette"] = [color(v) for v in value.split(",") if v.strip()]
         elif key == "custom colors":
             first = value.split(",")[0].strip().upper()
-            if first in ("ON", "OFF"):
-                cols = re.search(r"colors:\s*([0-9A-Fa-f,\s]+)", value)
-                out["custom_colors"] = ["#" + c.strip().lower().zfill(6) for c in cols.group(1).split(",") if c.strip()] if cols else []
+            if first == "ON":
+                cols = re.search(r"colors:\s*([0-9A-Fa-fxX,\s]+)", value)
+                out["custom_colors"] = [color(c) for c in cols.group(1).split(",") if c.strip()] if cols else []
+            elif first == "OFF":
+                out["custom_colors"] = None
         elif key == "time offset":
             offset = int(value)                                  # milliseconds added to every timestamp
         elif key == "forced subs":
@@ -56,15 +71,18 @@ def parse(text):
             out["default_language"] = int(value)
         elif key == "id":
             code, _, rest = value.partition(",")
-            idx = re.search(r"index:\s*(\d+)", rest)
-            cur = {"id": code.strip(), "index": len(out["languages"]),
+            idx = ID_INDEX.search(rest)
+            cur = {"id": code.strip(), "index": int(idx.group(1)) if idx else None,
                    "subtitles": 0, "first": None, "last": None, "delays": 0, "backwards": 0}
             out["languages"].append(cur)
+            if len(out["languages"]) > 1:
+                delay = 0                                        # delays apply per language stream
         elif key == "delay":
             d = DELAY.match(line)
             if not d:
                 raise IdxError("bad delay line %r" % line[:40])
-            pass
+            sign, h, mi, s, f = d.groups()
+            delay += ms(sign, h, mi, s, f)
             if cur is not None:
                 cur["delays"] += 1
         elif key == "timestamp":
@@ -72,7 +90,7 @@ def parse(text):
             if not t or cur is None:
                 raise IdxError("bad timestamp line %r" % line[:40])
             sign, h, mi, s, f, _pos = t.groups()
-            at = ms(sign, h, mi, s, f) + delay + offset
+            at = ms(sign, h, mi, s, f) + delay
             if cur["last"] is not None and at < cur["last"]:
                 cur["backwards"] += 1
             cur["subtitles"] += 1
@@ -81,5 +99,5 @@ def parse(text):
     for lang in out["languages"]:
         for k in ("first", "last"):
             if lang[k] is not None:
-                lang[k] = str(Fraction(lang[k], 1000))
+                lang[k] = str(Fraction(lang[k] + offset, 1000))
     return out
