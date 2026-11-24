@@ -25,12 +25,13 @@ def alaw(b):
 def header(data):
     if data[:8] != b"NIST_1A\n":
         raise SphereError("not a NIST SPHERE file")
-    nl = data.index(b"\n", 8)
-    size = 1024
-    text = data[nl + 1:size]
+    head_len_end = data.index(b"\n", 8)
+    size = int(data[8:head_len_end].strip())
+    text = data[head_len_end + 1:size]
     fields, p = {}, 0
+    field_re = re.compile(rb"([A-Za-z0-9_]+)\s+-([irs])(\d*)\s")
     while p < len(text):
-        m = re.compile(rb"([A-Za-z0-9_]+)\s+-([irs])(\d*)\s").match(text, p)
+        m = field_re.match(text, p)
         if not m:
             if text[p:p + 8] == b"end_head":
                 break
@@ -39,51 +40,117 @@ def header(data):
                 break
             p = q + 1
             continue
-        name, typ, n = m.group(1).decode(), m.group(2), m.group(3)
+        name, typ, length_digits = m.group(1).decode("latin-1"), m.group(2), m.group(3)
+        length = int(length_digits or 0)
         p = m.end()
-        if typ == b"s":
-            q = text.find(b"\n", p)
-            value = text[p:q].split()[0].decode("latin-1") if text[p:q].split() else ""
-            p = q
-        else:
-            q = text.find(b"\n", p)
-            raw = text[p:q].strip().decode()
-            value = int(raw) if typ == b"i" else raw
-            p = q
-        fields[name] = value
         q = text.find(b"\n", p)
-        p = q + 1 if q >= 0 else len(text)
+        line_end = q if q >= 0 else len(text)
+        if typ == b"s":
+            # -sN gives the exact value length, including spaces in the value.
+            fields[name] = text[p:p + length].decode("latin-1")
+            p += length
+            q = text.find(b"\n", p)
+            if q < 0:
+                break
+            p = q + 1
+        else:
+            raw = text[p:line_end].strip().decode("latin-1")
+            fields[name] = int(raw) if typ == b"i" else raw
+            if q < 0:
+                break
+            p = q + 1
     return size, fields
+
+
+def _is_compressed(coding):
+    coding = coding.lower()
+    if "shorten" in coding or "embedded" in coding:
+        return True
+    compressed_names = {"shn", "flac", "gzip", "gz", "mp3", "mpeg", "opus", "vorbis", "speex"}
+    return any(part.strip() in compressed_names for part in coding.split(","))
+
+
+def _endian(order, width):
+    if width == 1 or order == "1":
+        return ""
+    if order in ("10", "3210", "big", ">"):
+        return ">"
+    return "<"
 
 
 def parse(data):
     size, f = header(data)
-    channels = f.get("channel_count", 1)
-    width = f.get("sample_n_bytes", 2)
-    coding = str(f.get("sample_coding", "pcm")).split(",")
-    order = str(f.get("sample_byte_format", "01" if width == 2 else "1"))
-    compressed = False
+    channels = int(f.get("channel_count", 1))
+    width = int(f.get("sample_n_bytes", 2))
+
+    coding_text = str(f.get("sample_coding", "pcm"))
+    coding_parts = [part.strip() for part in coding_text.split(",") if part.strip()]
+    coding = coding_parts[0] if coding_parts else "pcm"
+    compressed = _is_compressed(coding_text)
+
+    default_order = {1: "1", 2: "01", 4: "0123"}.get(width, "01")
+    order = str(f.get("sample_byte_format", default_order)).strip()
+    byte_order = {"01": "little", "10": "big", "1": "single",
+                  "0123": "little", "3210": "big"}.get(order, order)
+    endian = _endian(order, width)
+
     body = data[size:]
     rate = f.get("sample_rate")
     count = f.get("sample_count")
     if count is None and not compressed:
         count = len(body) // (width * channels)
-    out = {"header_bytes": size, "fields": f, "channels": channels, "sample_rate": rate, "sample_count": count,
-           "bytes_per_sample": width, "coding": coding[0], "compressed": compressed,
-           "byte_order": {"01": "little", "10": "big", "1": "single", "0123": "little", "3210": "big"}.get(order, order),
-           "duration": str(Fraction(count, rate * channels)) if count is not None and rate else None,
+
+    duration = None
+    if count is not None and rate:
+        # sample_count is per channel, so do not divide by channel count.
+        duration = str(Fraction(int(count), int(rate)))
+
+    out = {"header_bytes": size, "fields": f, "channels": channels, "sample_rate": rate,
+           "sample_count": count, "bytes_per_sample": width, "coding": coding,
+           "compressed": compressed, "byte_order": byte_order, "duration": duration,
            "data_bytes": len(body), "complete": None, "checksum_ok": None, "peak": None}
-    if compressed:
+
+    need = None
+    raw = b""
+    if count is not None:
+        need = int(count) * channels * width
+        raw = body[:need]
+        raw = raw[:len(raw) // width * width]
+
+        checksum = f.get("sample_checksum")
+        if width == 2 and coding.lower() == "pcm" and checksum is not None:
+            n = len(raw) // 2
+            words = struct.unpack(endian + "%dH" % n, raw[:2 * n])
+            out["checksum_ok"] = (sum(words) & 0xFFFF) == (int(checksum) & 0xFFFF)
+
+    if compressed or count is None:
         return out
-    need = count * channels * width
+
     out["complete"] = len(body) >= need
-    raw = body[:need]
-    n = len(raw) // width
-    if width == 1:
-        vals, full = list(struct.unpack("%db" % n, raw)), 128
+
+    coding_key = coding.lower()
+    if coding_key in ("ulaw", "u-law", "mulaw", "mu-law"):
+        encoded = struct.unpack("%dB" % len(raw), raw)
+        vals = [ulaw(b) for b in encoded]
+        full = 1 << 15
+    elif coding_key in ("alaw", "a-law"):
+        encoded = struct.unpack("%dB" % len(raw), raw)
+        vals = [alaw(b) for b in encoded]
+        full = 1 << 15
+    elif width == 1:
+        n = len(raw)
+        vals = list(struct.unpack("%db" % n, raw))
+        full = 1 << 7
+    elif width in (2, 4):
+        fmt = {2: "h", 4: "i"}[width]
+        n = len(raw) // width
+        vals = list(struct.unpack(endian + "%d%s" % (n, fmt), raw[:n * width]))
+        full = 1 << (8 * width - 1)
     else:
-        e = "<"
-        fmt = "h"
-        vals, full = list(struct.unpack(e + "%d%s" % (n, fmt), raw[:n * width])), 1 << (8 * width - 1)
+        byteorder = "big" if endian == ">" else "little"
+        vals = [int.from_bytes(raw[i:i + width], byteorder, signed=True)
+                for i in range(0, len(raw), width)]
+        full = 1 << (8 * width - 1)
+
     out["peak"] = "%.6f" % (max((abs(v) for v in vals), default=0) / full)
     return out
