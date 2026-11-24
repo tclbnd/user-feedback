@@ -22,7 +22,7 @@ without the 150-sector lead-in that the disc ID algorithms count in.
 | `tracks`, `audio_tracks`, `data_tracks` | track counts (integers) |
 | `audio_seconds` | length of the audio session in seconds as a fraction string |
 | `cddb_id` | the FreeDB/CDDB disc ID, 8 lower-case hex digits |
-| `musicbrainz_id` | the MusicBrainz disc ID (28 characters) |
+| `musicbrainz_id` | the MusicBrainz disc ID (27 characters, URL-safe base64 with no padding) |
 | `accuraterip_id` | `NNN-xxxxxxxx-xxxxxxxx-xxxxxxxx`: audio track count, the two AccurateRip disc IDs and the CDDB disc ID, lower-case hex |
 
 The three identifiers follow the FreeDB, MusicBrainz and AccurateRip disc ID
