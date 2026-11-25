@@ -16,7 +16,7 @@ def main(paths):
             with open(path, "rb") as fh:
                 data = fh.read()
             out.append({"file": path, **parse(data)})
-        except (OSError, AyError, ValueError, IndexError, KeyError, ZeroDivisionError, struct.error, UnicodeDecodeError) as exc:
+        except (OSError, AyError, ValueError, TypeError, IndexError, KeyError, ZeroDivisionError, struct.error, UnicodeDecodeError) as exc:
             out.append({"file": path, "error": str(exc)})
     json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
     print()
