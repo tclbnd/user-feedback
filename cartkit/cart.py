@@ -66,12 +66,75 @@ def cart_bytes(data):
                  for i in range(0, len(px), 4))
 
 
+def _music(mem):
+    """Summarise the 64 music patterns at 0x3100 (4 channel bytes each).
+
+    In a channel byte bits 0-5 hold the sound effect number, bit 6 marks the
+    channel as disabled and bit 7 carries the pattern flag: loop start on
+    channel 0, loop end on channel 1, stop on channel 2.
+    """
+    patterns = 0
+    music_sfx = set()
+    loop_starts = loop_ends = stops = 0
+    for i in range(64):
+        ch = mem[0x3100 + i * 4:0x3100 + i * 4 + 4]
+        enabled = [c for c in ch if not c & 0x40]
+        if enabled:
+            patterns += 1
+            music_sfx |= {c & 0x3F for c in enabled}
+        loop_starts += bool(ch[0] & 0x80)
+        loop_ends += bool(ch[1] & 0x80)
+        stops += bool(ch[2] & 0x80)
+    return patterns, sorted(music_sfx), loop_starts, loop_ends, stops
+
+
+def _sfx(mem):
+    """Summarise the 64 sound effects at 0x3200 (68 bytes each).
+
+    Each effect is 32 two-byte notes followed by editor mode, speed, loop
+    start and loop end.  In a note bits 0-5 are pitch, 6-8 waveform, 9-11
+    volume, 12-14 effect and bit 15 selects a custom instrument.
+    """
+    sfx_used = notes = custom_notes = looping_sfx = 0
+    waveforms, effects, pitches = [0] * 8, [0] * 8, []
+    for i in range(64):
+        base = 0x3200 + i * 0x44
+        looping_sfx += mem[base + 0x43] > mem[base + 0x42]
+        used = False
+        for j in range(32):
+            word = mem[base + 2 * j] | mem[base + 2 * j + 1] << 8
+            if not (word >> 9) & 7:      # volume 0: silent note
+                continue
+            used = True
+            notes += 1
+            pitches.append(word & 0x3F)
+            effects[(word >> 12) & 7] += 1
+            if word & 0x8000:
+                custom_notes += 1
+            else:
+                waveforms[(word >> 6) & 7] += 1
+        sfx_used += used
+    return (sfx_used, notes, waveforms, custom_notes, effects,
+            [min(pitches), max(pitches)] if pitches else None, looping_sfx)
+
+
 def parse(data):
     mem = cart_bytes(data)
     hist = [0] * 16
     for b in mem[:0x2000]:
         hist[b & 15] += 1
         hist[b >> 4] += 1
-    cells = [mem[0x2000 + y * 128 + x] for y in range(32) for x in range(128)]
+    # The 128 x 64 map is split in memory: rows 0-31 at 0x2000, rows 32-63
+    # share the second half of the sprite sheet at 0x1000.
+    cells = mem[0x2000:0x3000] + mem[0x1000:0x2000]
+    patterns, music_sfx, loop_starts, loop_ends, stops = _music(mem)
+    sfx_used, notes, waveforms, custom_notes, effects, pitch_range, looping_sfx = _sfx(mem)
     return {"version": mem[0x8000], "gfx_histogram": hist,
-            "map_cells": sum(1 for c in cells if c), "map_tiles": len({c for c in cells if c})}
+            "flagged_sprites": sum(1 for b in mem[0x3000:0x3100] if b),
+            "map_cells": sum(1 for c in cells if c),
+            "map_tiles": len({c for c in cells if c}),
+            "sfx_used": sfx_used, "notes": notes, "waveforms": waveforms,
+            "custom_notes": custom_notes, "effects": effects,
+            "pitch_range": pitch_range, "looping_sfx": looping_sfx,
+            "patterns": patterns, "music_sfx": music_sfx,
+            "loop_starts": loop_starts, "loop_ends": loop_ends, "stops": stops}
