@@ -28,7 +28,9 @@ these registers.
 
 ## Layout
 
-- `tiakit/playfield.py` – playfield drawing
+- `tiakit/playfield.py` – TIA line drawing: playfield halves (repeated or
+  reflected), score colours, players (copies, width, reflection), missiles,
+  ball and their priority
 - `tiainfo.py` – command line
 
 ## Running
