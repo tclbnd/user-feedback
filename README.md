@@ -23,6 +23,33 @@ Only the bytes the header's compressed size covers belong to the audio.
 The header, flags, chunk headers and the IMA ADPCM decoding (as Westwood's
 games do it) follow the Westwood AUD format and the IMA ADPCM algorithm.
 
+## Format
+
+All integers are little-endian. The 12-byte file header is
+
+| offset | type | field |
+|---|---|---|
+| 0 | u16 | sample rate |
+| 2 | u32 | compressed size (audio bytes following the file header) |
+| 6 | u32 | uncompressed size (decoded PCM bytes) |
+| 10 | u8 | flags: bit 0 = 16-bit samples, bit 1 = stereo, bit 2 = signed |
+| 11 | u8 | codec: `1` Westwood SND1 ADPCM, `99` IMA ADPCM |
+
+Each 8-byte chunk header is
+
+| offset | type | field |
+|---|---|---|
+| 0 | u16 | compressed payload size |
+| 2 | u16 | uncompressed (decoded) size |
+| 4 | u16 | chunk id, `0xDEAF` |
+| 6 | u16 | chunk number |
+
+A chunk whose declared payload runs past the header's compressed size (or the
+end of the file) is the incomplete last chunk and sets `truncated`; only the
+bytes actually covered are decoded. For codec `99`, each payload byte holds two
+nibbles (low nibble first); stereo streams alternate channels, and the IMA
+predictor and step-index state carry over from one chunk to the next.
+
 ## Layout
 
 - `audkit/aud.py` – header, chunks, decoding
