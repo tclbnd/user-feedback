@@ -8,20 +8,22 @@ file, used to check the format, the chunk structure and the decoded level.
 
 | field | meaning |
 |---|---|
-| `sample_rate`, `channels`, `bits` | from the header (integers) |
-| `codec` | `westwood_adpcm` or `ima_adpcm` |
-| `chunks`, `bad_chunk_ids` | the number of chunks, and of chunks whose id is not the Westwood chunk id |
-| `data_bytes` | compressed bytes in the chunks (an integer) |
-| `header_size_ok` | `true` when the header's compressed size equals the chunks with their headers |
+| `sample_rate`, `channels`, `bits` | from the header (integers); flags bit 0 is stereo and bit 1 is 16-bit |
+| `codec` | `westwood_adpcm` (1) or `ima_adpcm` (99) |
+| `chunks`, `bad_chunk_ids` | the number of chunks, and of chunks whose id is not `0x0000DEAF` |
+| `data_bytes` | compressed payload bytes in the chunks (an integer), excluding chunk headers |
+| `header_size_ok` | `true` when payload bytes plus the 8-byte chunk headers equal the header's compressed size |
 | `output_bytes` | the decompressed size the header gives |
 | `chunk_output_bytes` | the decompressed sizes the chunk headers give, added up |
 | `frames`, `duration` | `output_bytes` in sample frames, and seconds as a fraction string |
-| `truncated` | `true` when the file ends before the chunks the header announces |
+| `truncated` | `true` when the file ends before the bytes the header's compressed size announces |
 | `peak`, `last_sample` | for IMA ADPCM: the largest decoded magnitude as a fraction of 32768 (`%.6f`) and the last decoded sample (an integer), decoding all chunk data as one stream; else `null` |
 
 Only the bytes the header's compressed size covers belong to the audio.
-The header, flags, chunk headers and the IMA ADPCM decoding (as Westwood's
-games do it) follow the Westwood AUD format and the IMA ADPCM algorithm.
+The file header stores its compressed size first and its decompressed size
+second; the chunk headers (`<HHI`, id `0x0000DEAF`) are little-endian.
+The IMA ADPCM state is not reset between chunks, so the whole file is decoded
+as one continuous nibble stream (low nibble of each byte first).
 
 ## Layout
 
