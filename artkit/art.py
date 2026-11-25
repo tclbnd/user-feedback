@@ -9,13 +9,18 @@ class ArtError(ValueError):
     pass
 
 
+def _signed_byte(value):
+    return value - 256 if value & 0x80 else value
+
+
 def parse(data):
     if len(data) < 16:
         raise ArtError("not an ART file")
     version, _, start, end = struct.unpack_from("<4I", data, 0)
     if version != 1 or end < start:
         raise ArtError("not an ART file")
-    n = end - start
+    # The header names the first and last tile numbers, both inclusive.
+    n = end - start + 1
     p = 16
     sx = struct.unpack_from("<%dh" % n, data, p); p += 2 * n
     sy = struct.unpack_from("<%dh" % n, data, p); p += 2 * n
@@ -33,13 +38,22 @@ def parse(data):
             continue
 
         def at(x, y):
-            k = y * w + x
+            # Tiles are stored one column at a time: column x, then row y.
+            k = x * h + y
             return px[k] if k < len(px) else None
 
-        tiles.append({"tile": i, "width": w, "height": h,
-                      "frames": (a >> 2) & 63, "animation": ANIM[a & 3],
-                      "offset": [(a >> 8) & 255, (a >> 16) & 255], "speed": (a >> 24) & 15,
-                      "transparent": sum(1 for b in px if b == TRANSPARENT) if len(px) == size else None,
-                      "top_right": at(w - 1, 0), "bottom_left": at(0, h - 1)})
+        tiles.append({
+            "tile": start + i,
+            "width": w,
+            "height": h,
+            # picanm is four bytes: frames+animation type, x offset, y offset, speed.
+            "frames": a & 63,
+            "animation": ANIM[(a >> 6) & 3],
+            "speed": (a >> 24) & 255,
+            "offset": [_signed_byte((a >> 8) & 255), _signed_byte((a >> 16) & 255)],
+            "transparent": sum(1 for b in px if b == TRANSPARENT) if len(px) == size else None,
+            "top_right": at(w - 1, 0),
+            "bottom_left": at(0, h - 1),
+        })
     return {"first_tile": start, "last_tile": end, "tiles": n, "nonempty": len(tiles), "pixel_bytes": total,
             "complete": complete, "tile_list": tiles}
