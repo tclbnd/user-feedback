@@ -22,9 +22,14 @@ summary per tune, used to check lengths, loop points and register data.
 | `first_tone_a` | channel A's tone frequency in the first frame (`clock / (16 × period)`, the 12-bit period from registers 0 and 1) as a fraction string, `null` when the period is 0 |
 
 YM5 and YM6 headers are big-endian; YM3 frames have 14 registers, YM5/YM6
-frames 16. YM3b ends with its loop frame as a little-endian 32-bit number.
-Header layout, digidrums, strings and the register order follow the YM
-format as written by Leonard's converters.
+frames 16. YM3b ends with its loop frame as a little-endian 32-bit number;
+a `YM3!` file is reported as `YM3b` when such a trailing loop frame is
+present and as `YM3!` otherwise. Header layout, digidrums, strings and the
+register order follow the YM format as written by Leonard's converters:
+each digidrum sample is a big-endian 32-bit size followed by its bytes, the
+samples sit between the fixed header and the three strings, and the register
+data then begins. Interleaved dumps (bit 0 of the attributes) store register
+0 for all frames, then register 1 for all frames, and so on.
 
 ## Layout
 
