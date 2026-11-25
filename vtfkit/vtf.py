@@ -11,6 +11,9 @@ BYTES = {"rgba8888": 4, "abgr8888": 4, "rgb888": 3, "bgr888": 3, "rgb565": 2, "i
          "rgba16161616": 8, "uvlx8888": 4}
 BLOCK = {"dxt1": 8, "dxt1_onebitalpha": 8, "dxt3": 16, "dxt5": 16}
 ENVMAP = 0x4000
+HIGH_RES_RESOURCE = 0x00000030
+RESOURCE_COUNT_OFFSET = 68
+RESOURCE_TABLE_OFFSET = 80
 
 
 class VtfError(ValueError):
@@ -31,6 +34,41 @@ def image_bytes(fmt, w, h):
     return w * h * BYTES[fmt]
 
 
+def high_res_offset(data, minor, header_size, fallback):
+    """Return the high-resolution offset from a 7.3+ resource dictionary."""
+    if minor < 3 or len(data) < RESOURCE_COUNT_OFFSET + 4:
+        return fallback
+
+    count = struct.unpack_from("<I", data, RESOURCE_COUNT_OFFSET)[0]
+    header_end = min(header_size, len(data))
+
+    def is_high_resource(entry):
+        if entry + 8 > len(data):
+            return False
+        resource_type, resource_data = struct.unpack_from("<II", data, entry)
+        return ((resource_type & 0x00FFFFFF) == HIGH_RES_RESOURCE and
+                resource_data >= header_size)
+
+    # The packed 7.3 header contains an 8-byte reserved area after the
+    # resource count, so resource entries normally begin at offset 80.
+    # Some writers place entries immediately after the count at offset 72.
+    for table_start in (RESOURCE_TABLE_OFFSET, RESOURCE_COUNT_OFFSET + 4):
+        for index in range(count):
+            entry = table_start + index * 8
+            if entry + 8 > header_end:
+                break
+            if is_high_resource(entry):
+                return struct.unpack_from("<I", data, entry + 4)[0]
+
+    # Be tolerant of a resource count/table layout we did not expect while
+    # staying within the declared header.
+    for entry in range(RESOURCE_COUNT_OFFSET, max(RESOURCE_COUNT_OFFSET, header_end - 7), 4):
+        if is_high_resource(entry):
+            return struct.unpack_from("<I", data, entry + 4)[0]
+
+    return fallback
+
+
 def parse(data):
     if len(data) < 64 or data[:4] != b"VTF\0":
         raise VtfError("not a VTF file")
@@ -42,17 +80,41 @@ def parse(data):
     mips = data[56]
     low_fmt = fmt_name(struct.unpack_from("<I", data, 57)[0])
     low_w, low_h = data[61], data[62]
-    depth = struct.unpack_from("<H", data, 63)[0] or 1
+    # The depth field was introduced in VTF 7.2.  In 7.0/7.1 these bytes are
+    # header padding or image data, so Source treats those textures as flat.
+    if minor >= 2:
+        depth = struct.unpack_from("<H", data, 63)[0] or 1
+    else:
+        depth = 1
     frames = frames or 1
-    faces = 6 if flags & ENVMAP else 1
-    thumb = image_bytes(high_fmt, low_w, low_h) if low_fmt and low_w and low_h else 0
+
+    if flags & ENVMAP:
+        # Before 7.5, environment maps carried one additional image (the
+        # legacy spheremap) with every mip level.
+        faces = 7 if minor < 5 else 6
+    else:
+        faces = 1
+
+    thumb = image_bytes(low_fmt, low_w, low_h) if low_fmt and low_w and low_h else 0
 
     def size(m):
         return image_bytes(high_fmt, max(1, width >> m), max(1, height >> m)) * max(1, depth >> m)
 
-    high_total = sum(size(m) for m in range(mips)) * frames * faces
-    high_start = header_size + thumb
-    largest = high_start
+    mip_sizes = [size(m) for m in range(mips)]
+    images_per_mip = frames * faces
+    high_total = sum(mip_sizes) * images_per_mip
+
+    # Legacy files place the low-resolution thumbnail immediately after the
+    # header, followed by the high-resolution mip chain.  7.3+ files locate
+    # the high-resolution data through the resource dictionary.
+    legacy_high_start = header_size + thumb
+    high_start = high_res_offset(data, minor, header_size, legacy_high_start)
+
+    # Mips are stored smallest first.  Mip 0 is therefore the largest image
+    # and begins after every smaller mip's complete frame/face/slice set.
+    smaller_mips = sum(mip_sizes[1:]) * images_per_mip
+    largest = high_start + smaller_mips
+
     return {"version": "%d.%d" % (major, minor), "width": width, "height": height, "depth": depth,
             "format": high_fmt, "mipmaps": mips, "frames": frames, "faces": faces,
             "thumbnail": [low_w, low_h] if thumb else None, "thumbnail_format": low_fmt if thumb else None,
