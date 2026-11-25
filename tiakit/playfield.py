@@ -3,25 +3,42 @@ import struct
 
 REC = 8
 
+# CTRLPF bits
+PF_REFLECT = 0x01
+PF_SCORE = 0x02
+
 
 class TiaError(ValueError):
     pass
 
 
 def cells(pf0, pf1, pf2):
-    """The 20 playfield cells of the left half, left to right."""
-    return ([pf0 >> (7 - i) & 1 for i in range(4)] + [pf1 >> (7 - i) & 1 for i in range(8)]
-            + [pf2 >> (7 - i) & 1 for i in range(8)])
+    """The 20 playfield cells of the left half, left to right.
+
+    TIA connects PF0 D4-D7 in that order, PF1 D7-D0, and PF2 D0-D7.
+    """
+    return ([(pf0 >> bit) & 1 for bit in range(4, 8)]
+            + [(pf1 >> bit) & 1 for bit in range(7, -1, -1)]
+            + [(pf2 >> bit) & 1 for bit in range(8)])
 
 
 def draw(rec):
     bk, pf, p0, p1, ctrl, pf0, pf1, pf2 = rec
     left = cells(pf0, pf1, pf2)
-    right = left
+    if ctrl & PF_REFLECT:
+        right = left[::-1]
+    else:
+        right = left
+
+    score_mode = ctrl & PF_SCORE
     out = []
-    for i, on in enumerate(left + right):
+    for cell, on in enumerate(left + right):
         if on:
-            c = pf
+            if score_mode:
+                # Score mode colours each physical half with its player colour.
+                c = p0 if cell < len(left) else p1
+            else:
+                c = pf
         else:
             c = bk
         out.extend([c] * 4)
