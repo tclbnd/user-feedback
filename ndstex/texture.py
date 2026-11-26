@@ -46,6 +46,10 @@ def parse(data):
         v = struct.unpack_from("<H", pal, addr)[0] if 0 <= addr and addr + 2 <= len(pal) else 0
         return (v & 31, v >> 5 & 31, v >> 10 & 31)
 
+    def mix(a, b, wa, wb):
+        d = wa + wb
+        return tuple((x * wa + y * wb) // d for x, y in zip(a, b))
+
     img = [[None] * w for _ in range(h)]
     if fmt == 7:
         for y in range(h):
@@ -59,23 +63,30 @@ def parse(data):
                 t = struct.unpack_from("<I", tex, 4 * k)[0]
                 pv = struct.unpack_from("<H", idx, 2 * k)[0]
                 a, mode = base + (pv & 0x3FFF) * 4, pv >> 14
-                c = [col(a), col(a + 2), col(a + 4), col(a + 6)]
+                p0, p1 = col(a), col(a + 2)
+                if mode == 0:
+                    cs = [p0 + (31,), p1 + (31,), mix(p0, p1, 1, 1) + (31,), (0, 0, 0, 0)]
+                else:
+                    cs = [p0 + (31,), p1 + (31,),
+                          mix(p0, p1, 5, 3) + (31,), mix(p0, p1, 3, 5) + (31,)]
                 for i in range(16):
                     n = t >> (2 * i) & 3
-                    clear = n == 3 and mode == 0
-                    img[by * 4 + i // 4][bx * 4 + i % 4] = (0, 0, 0, 0) if clear else c[n] + (31,)
+                    img[by * 4 + i // 4][bx * 4 + i % 4] = cs[n]
     else:
         bits = BITS[fmt]
         for y in range(h):
             for x in range(w):
                 p = (y * w + x) * bits
-                v = tex[p // 8] >> (8 - bits - p % 8) & ((1 << bits) - 1)
+                v = tex[p // 8] >> (p % 8) & ((1 << bits) - 1)
                 if fmt == 1:
-                    i, al = v >> 3, (v & 7) * 4
+                    i, a3 = v & 31, v >> 5
+                    al = (a3 << 2) | (a3 >> 1)
                 elif fmt == 6:
-                    i, al = v >> 5, v & 31
+                    i, al = v & 7, v >> 3
                 else:
                     i, al = v, 31
+                if c0 and i == 0:
+                    al = 0
                 img[y][x] = (0, 0, 0, 0) if al == 0 else col(base + 2 * i) + (al,)
     hexes = [["#%02x%02x%02x%02x" % tuple(_w5(c) for c in p) for p in row] for row in img]
     return {**out, "colors_used": len({c for row in hexes for c in row}),
