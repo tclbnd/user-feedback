@@ -1,6 +1,9 @@
 """Thomson MO5 screen snapshots (.mo5): border register, form plane and colour plane."""
 
 HDR = 16
+PLANE = 8192
+COLS = 40
+ROWS = 200
 
 
 class Mo5Error(ValueError):
@@ -20,21 +23,30 @@ def _runs(line):
 def parse(data):
     if len(data) < HDR or data[:8] != b"MO5SCRN\0":
         raise Mo5Error("not an MO5 screen snapshot")
-    border = data[8] & 15
-    colour = data[HDR:HDR + 8192]
-    form = data[HDR + 8192:HDR + 16384]
-    out = {"border": "%x" % border, "complete": len(form) == 8192}
+    # The gate-array register at $A7C0 keeps the border colour in its high
+    # nibble; the low nibble holds the control flags (memory plane, ...).
+    border = data[8] >> 4
+    # README: form (pixel) plane first, then colour plane, as the 6809 sees
+    # them: 40 bytes per line, line 0 first, last 192 bytes not displayed.
+    form = data[HDR:HDR + PLANE]
+    colour = data[HDR + PLANE:HDR + 2 * PLANE]
+    out = {"border": "%x" % border,
+           "complete": len(form) == PLANE and len(colour) == PLANE}
     if not out["complete"]:
         return {**out, "colors_used": None, "foreground_pixels": None, "first_row": None, "row_100": None, "last_row": None}
     rows, used, fgp = [], set(), 0
-    for ln in range(200):
+    for ln in range(ROWS):
         line = []
-        for xb in range(40):
-            f = form[ln * 40 + xb]
-            a = colour[ln * 40 + xb]
-            fg, bg = "%x" % (a & 15), "%x" % (a >> 4)
-            for s in range(8):
-                bit = f >> s & 1
+        for xb in range(COLS):
+            f = form[ln * COLS + xb]
+            a = colour[ln * COLS + xb]
+            # Colour attribute: high nibble is the ink (foreground),
+            # low nibble the paper (background).
+            fg, bg = "%x" % (a >> 4), "%x" % (a & 15)
+            # The form byte is shifted out most-significant bit first,
+            # so bit 7 is the leftmost pixel of the cell.
+            for s in range(7, -1, -1):
+                bit = (f >> s) & 1
                 fgp += bit
                 line.append(fg if bit else bg)
         used.update(line)
