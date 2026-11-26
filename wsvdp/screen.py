@@ -36,20 +36,25 @@ def parse(data):
         if c16:
             base = (0x8000 if bank else 0x4000) + number * 32 + line * 4
             if packed:
+                # packed tiles hold two 4-bit pixels per byte, high nibble first
                 b = vram[base + x // 2]
-                return b & 15 if x % 2 == 0 else b >> 4
+                return b >> 4 if x % 2 == 0 else b & 15
             return sum((vram[base + p] >> (7 - x) & 1) << p for p in range(4))
         base = 0x2000 + number * 16 + line * 2
         return (vram[base] >> (7 - x) & 1) | (vram[base + 1] >> (7 - x) & 1) << 1
 
-    def rgb(pal, c):
+    def rgb(pal, c, sprite=False):
         if colour:
-            w = struct.unpack_from("<H", vram, 0xFE00 + 2 * (pal * 16 + c))[0]
+            # background palettes live at $FE00, sprite palettes at $FF00
+            base = 0xFF00 if sprite else 0xFE00
+            w = struct.unpack_from("<H", vram, base + 2 * (pal * 16 + c))[0]
             return "#%02x%02x%02x" % ((w >> 8 & 15) * 17, (w >> 4 & 15) * 17, (w & 15) * 17)
+        # mono palette words pack four 3-bit shade-pool indexes
         pw = struct.unpack_from("<H", io, 0x20 + 2 * pal)[0]
-        k = pw >> (4 * c) & 7
+        k = pw >> (3 * c) & 7
         s = io[0x1C + k // 2] >> (4 * (1 - (k & 1))) & 15
-        v = s * 17
+        # shade 0 is the brightest level, shade 15 the darkest
+        v = (15 - s) * 17
         return "#%02x%02x%02x" % (v, v, v)
 
     def opaque(pal, c):
@@ -61,10 +66,12 @@ def parse(data):
         back = rgb(bgc >> 4, bgc & 15)
     else:
         s = io[0x1C + (io[1] & 7) // 2] >> (4 * (1 - (io[1] & 1))) & 15
-        back = "#%02x%02x%02x" % ((s * 17,) * 3)
+        v = (15 - s) * 17
+        back = "#%02x%02x%02x" % (v, v, v)
 
     def layer(scr):
-        base = (io[7] >> (4 * scr) & mask) * 0x400
+        # each screen map occupies 2 KB: 32 x 32 entries of 16 bits
+        base = (io[7] >> (4 * scr) & mask) * 0x800
         sx, sy = io[0x10 + 2 * scr], io[0x11 + 2 * scr]
         grid = [[None] * W for _ in range(H)]
         for y in range(H):
@@ -73,12 +80,12 @@ def parse(data):
                 xx = (x + sx) & 255
                 e = struct.unpack_from("<H", vram, base + 2 * ((yy >> 3) * 32 + (xx >> 3)))[0]
                 px, py = xx & 7, yy & 7
-                if e & 0x8000:
+                if e & 0x2000:
                     px = 7 - px
                 if e & 0x4000:
                     py = 7 - py
                 pal = e >> 9 & 15
-                c = pix(e & 0x1FF, e >> 13 & 1, py, px)
+                c = pix(e & 0x1FF, e >> 15 & 1, py, px)
                 if opaque(pal, c):
                     grid[y][x] = rgb(pal, c)
         return grid
@@ -87,9 +94,12 @@ def parse(data):
         grid = [[None] * W for _ in range(H)]
         tbase = (io[4] & (0x3F if colour else 0x1F)) * 0x200
         first, count = io[5] & 0x7F, io[6]
+        # lower-numbered sprites are in front, so draw them last
         for i in range(min(first + count, 128) - 1, first - 1, -1):
+            if i < 0:
+                break
             w, y0, x0 = struct.unpack_from("<HBB", vram, tbase + 4 * i)
-            if bool(w & 0x2000) != pri:
+            if bool(w & 0x8000) != pri:
                 continue
             pal = w >> 9 & 7
             for ly in range(8):
@@ -97,9 +107,10 @@ def parse(data):
                     X, Y = (x0 + lx) & 255, (y0 + ly) & 255
                     if X >= W or Y >= H:
                         continue
-                    c = pix(w & 0x1FF, 0, 7 - ly if w & 0x8000 else ly, 7 - lx if w & 0x4000 else lx)
+                    c = pix(w & 0x1FF, 0, 7 - ly if w & 0x4000 else ly,
+                            7 - lx if w & 0x2000 else lx)
                     if opaque(pal, c):
-                        grid[Y][X] = rgb(pal, c)
+                        grid[Y][X] = rgb(pal, c, sprite=True)
         return grid
 
     layers = []
