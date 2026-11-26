@@ -28,7 +28,11 @@ def _rgb(w):
 
 
 def _pixel(rom, tile, x, y):
-    base = tile * 128 + (0x40 if x >= 8 else 0x00) + y * 4
+    # Each 16x16 tile is 128 bytes: the first 64 bytes hold the left
+    # 8 columns and the next 64 the right 8 columns.  Every row is four
+    # bytes, one per bit plane 0-3; the cartridge bus interleaves the
+    # C1 ROM (planes 0,1) on even bytes with C2 (planes 2,3) on odd.
+    base = tile * 128 + (0x00 if x < 8 else 0x40) + y * 4
     if base + 4 > len(rom):
         return 0
     bit = 7 - (x & 7)
@@ -46,45 +50,71 @@ def parse(data):
     for n in range(1, 382):
         if v[0x8200 + n] & 0x3F and v[0x8000 + n] != 0x0FFF:
             raise SpriteError("shrunk sprites are not supported")
-    # resolve chains
+    # Resolve chains.  A sprite with a non-zero height starts a chain; its
+    # position registers hold the top-left corner.  A sprite whose height
+    # is zero is chained: it keeps the head's y/height and is placed 16
+    # pixels to the right of the previous link.  All positions are 9-bit
+    # and wrap around the 512-pixel playfield.  An entry with neither a
+    # position nor any tile data marks the end of a chain.
     sprites = []
-    x = y = rows = 0
+    heads = 0
+    head_x = head_y = rows = 0
+    chain_x = 0
     for n in range(1, 382):
         y3 = v[0x8200 + n]
-        y, rows, x = (0x200 - (y3 >> 7)) & 0x1FF, y3 & 0x3F, v[0x8400 + n] >> 7
-        if rows:
-            sprites.append((n, x, y, rows))
+        xw = v[0x8400 + n]
+        height = y3 & 0x3F
+        sy = (0x200 - (y3 >> 7)) & 0x1FF
+        sx = (xw >> 7) & 0x1FF
+        if height:
+            head_x, head_y, rows = sx, sy, height
+            chain_x = rows * 16
+            heads += 1
+            sprites.append((n, head_x, head_y, rows))
+        elif y3 == 0 and xw == 0:
+            chain_x = 0
+        elif v[n * 64] == 0:
+            chain_x = 0
+        else:
+            sprites.append((n, (head_x + chain_x) & 0x1FF, head_y, rows))
+            chain_x += 16
     back = _rgb(pal[0xFFF])
-    rows_out, seen, covered, missing = [], set(), 0, 0
+    missing = 0
     for n, sx, sy, r in sprites:
         for t in range(min(r, 32)):
-            code = v[n * 64 + 2 * t]
-            missing += code >= ntiles
+            if v[n * 64 + 2 * t] & 0x3FF >= ntiles:
+                missing += 1
+    rows_out, seen, covered = [], set(), 0
     for row in range(H):
-        scan = row
         line = [None] * W
+        # Lower sprite numbers have priority, so draw high numbers first
+        # and let lower numbers overwrite them.
         for n, sx, sy, r in reversed(sprites):
-            ln = (scan - sy) & 0x1FF
-            if r < 0x20 and ln >= r * 16:
+            # Sequential position of this scan line inside the sprite on the
+            # 512-pixel playfield.  A sprite crossing the playfield wrap
+            # reappears on the opposite screen edge with the same index.
+            k = (row - sy) & 0x1FF
+            if r < 0x20 and k >= r * 16:
                 continue
-            ti, py = (ln >> 4) & 31, ln & 15
-            code = v[n * 64 + 2 * ti]
+            ti, py = (k >> 4) & 31, k & 15
+            code = v[n * 64 + 2 * ti] & 0x3FF
             attr = v[n * 64 + 2 * ti + 1]
+            # Flip bits affect the individual 16x16 tile only.
             if attr & 2:
-                ti = r - 1 - ti
                 py ^= 15
-                code = v[n * 64 + 2 * ti]
-            p = attr >> 8
+            p = (attr >> 8) & 0x7F
+            if code >= ntiles:
+                continue
             for px in range(16):
                 X = (sx + px) & 0x1FF
                 if X >= W:
                     continue
-                c = _pixel(rom, code, 15 - px if attr & 1 else px, py) if code < ntiles else 0
+                c = _pixel(rom, code, 15 - px if attr & 1 else px, py)
                 if c:
                     line[X] = pal[p * 16 + c]
         covered += sum(1 for c in line if c is not None)
         out = [back if c is None else _rgb(c) for c in line]
         seen.update(out)
         rows_out.append(out)
-    return {"sprites": len(sprites), "tiles": ntiles, "missing_tiles": missing, "colors_used": len(seen),
+    return {"sprites": heads, "tiles": ntiles, "missing_tiles": missing, "colors_used": len(seen),
             "sprite_pixels": covered, "first_row": _runs(rows_out[0]), "row_112": _runs(rows_out[112]), "last_row": _runs(rows_out[-1])}
