@@ -21,18 +21,25 @@ def _runs(line):
 
 
 def _rgb(w):
-    return "#%02x%02x%02x" % tuple((c << 3) | (c >> 2) for c in (w >> 10 & 31, w >> 5 & 31, w & 31))
+    # Palette word: RRRRRGGGGGBBBBBI.  Bit 0 is the shared intensity LSB.
+    intensity = w & 1
+    chans = (((w >> 10) & 0x3E) | intensity,
+             ((w >> 5) & 0x3E) | intensity,
+             (w & 0x3E) | intensity)
+    return "#%02x%02x%02x" % tuple((c << 2) | (c >> 4) for c in chans)
 
 
 def _pix8(ram, code, x, y):
     b = ram[(code * 32 + y * 4 + x // 2) % RAM]
-    return b >> 4 if x & 1 else b & 15
+    return b >> 4 if not (x & 1) else b & 15
 
 
 def _pix16(ram, code, x, y):
-    q = (y >= 8) * 2 + (x >= 8)
+    # X68000 16x16 patterns store 8x8 blocks down each column first:
+    # TL=0, BL=1, TR=2, BR=3.
+    q = (y >= 8) + (x >= 8) * 2
     b = ram[(code * 128 + q * 32 + (y % 8) * 4 + (x % 8) // 2) % RAM]
-    return b >> 4 if x & 1 else b & 15
+    return b >> 4 if not (x & 1) else b & 15
 
 
 def parse(data):
@@ -62,7 +69,7 @@ def parse(data):
                     px = ts - 1 - px
                 if w & 0x4000:
                     py = ts - 1 - py
-                v = _pix8(ram, w & 255, px % 8, py % 8)
+                v = _pix16(ram, w & 255, px, py) if big else _pix8(ram, w & 255, px, py)
                 if v:
                     grid[y][x] = (w >> 8 & 15) * 16 + v
         return grid
@@ -73,14 +80,15 @@ def parse(data):
             x0, y0, c, p = spr[n]
             if (p & 3) != prw:
                 continue
-            sx, sy = x0 & 0x3FF, y0 & 0x3FF
+            # Sprite coordinates have a 16-pixel origin offset on X68000.
+            sx, sy = (x0 & 0x3FF) - 16, (y0 & 0x3FF) - 16
             for py in range(16):
                 for px in range(16):
                     X, Y = sx + px, sy + py
                     if not (0 <= X < W and 0 <= Y < H):
                         continue
-                    tx = 15 - px if c & 0x8000 else px
-                    ty = 15 - py if c & 0x4000 else py
+                    tx = 15 - px if c & 0x4000 else px
+                    ty = 15 - py if c & 0x8000 else py
                     v = _pix16(ram, c & 255, tx, ty)
                     if v:
                         grid[Y][X] = (c >> 8 & 15) * 16 + v
