@@ -36,23 +36,40 @@ def parse(data):
         for c in range(20):
             w = words[r * 20 + c]
             if stack_mode:
-                fg = w & 7
-                bg = csr[sp]
+                # STIC colour-stack words put the fourth foreground-colour
+                # bit at bit 12.  An advance bit refers to the current card,
+                # so move the stack pointer before selecting its background.
                 if w & 0x2000:
                     sp = (sp + 1) & 3
+                fg = (w & 7) | ((w & 0x1000) >> 9)
+                bg = csr[sp]
                 gram_sel = bool(w & 0x800)
-                loc = w & 0x07F8
+                loc = (w & 0x01F8) if gram_sel else (w & 0x07F8)
             else:
                 fg = w & 7
-                bg = (w >> 9) & 15
+                # The four background-colour bits are split around the
+                # GROM/GRAM select bit: word bits 9,10 and 12,13.
+                bg = ((w >> 9) & 3) | ((w >> 10) & 0x0C)
                 gram_sel = bool(w & 0x800)
                 loc = w & 0x01F8
+
+            # Direct coloured-square cards do not fetch pattern data.
+            if w & 0xC000:
+                kinds["squares"] += 1
+                square_fg = w & 7
+                if (w & 8) or (w & 0x1000):
+                    square_fg |= 8
+                for y in range(8):
+                    for x in range(8):
+                        img[r * 8 + y][c * 8 + x] = square_fg
+                continue
+
             kinds["gram" if gram_sel else "grom"] += 1
             mem = gram if gram_sel else grom
             for y in range(8):
                 b = mem[loc + y]
                 for x in range(8):
-                    img[r * 8 + y][c * 8 + x] = fg if b & (1 << x) else bg
+                    img[r * 8 + y][c * 8 + x] = fg if b & (0x80 >> x) else bg
     rows = [[COLOURS[v] for v in row] for row in img]
     return {"mode": "colour-stack" if stack_mode else "foreground-background", "cards": kinds,
             "colour_pixels": [sum(row.count(i) for row in img) for i in range(16)],
