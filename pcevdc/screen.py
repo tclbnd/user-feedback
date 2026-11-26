@@ -22,7 +22,8 @@ def _runs(line):
 
 def _rgb(v):
     p3 = lambda c: (c << 5) | (c << 2) | (c >> 1)
-    return "#%02x%02x%02x" % (p3(v >> 6 & 7), p3(v >> 3 & 7), p3(v & 7))
+    # HuC6260 palette words are GGGRRRBBB.
+    return "#%02x%02x%02x" % (p3((v >> 3) & 7), p3((v >> 6) & 7), p3(v & 7))
 
 
 def parse(data):
@@ -34,8 +35,9 @@ def parse(data):
     vram = struct.unpack_from("<32768H", data, HDR)
     sat = struct.unpack_from("<256H", data, HDR + 0x10000)
     vce = struct.unpack_from("<512H", data, HDR + 0x10000 + 512)
-    width = 32
-    height = 32
+    # MWR bits 5:4 select the BAT width; bit 6 selects its height.
+    width = (32, 64, 128, 128)[(mwr >> 4) & 3]
+    height = 64 if mwr & 0x40 else 32
     bg_on, spr_on = bool(cr & 0x80), bool(cr & 0x40)
     bxr, byr = bxr & 0x3FF, byr & 0x1FF
 
@@ -54,13 +56,18 @@ def parse(data):
                 continue
             shown += 1
             pal, front, xf, yf = at & 15, bool(at & 0x80), bool(at & 0x800), bool(at & 0x8000)
+            cells_x = wpx // 16
+            cells_y = h // 16
             for ly in range(h):
                 Y = sy + ly
                 if not 0 <= Y < H:
                     continue
                 line = (h - 1 - ly) if yf else ly
-                for cx in range(wpx // 16):
-                    cell = pattern + (line >> 4) * (wpx // 16) + cx
+                row_cell = line >> 4
+                for cx in range(cells_x):
+                    source_cx = cells_x - 1 - cx if xf else cx
+                    # HuC6270 lays out the vertical 16-pixel cells first.
+                    cell = pattern + source_cx * cells_y + row_cell
                     base = (cell << 6) + (line & 15)
                     for px in range(16):
                         X = sx + 16 * cx + px
@@ -69,21 +76,23 @@ def parse(data):
                         bit = 15 - ((15 - px) if xf else px)
                         c = sum(((vram[(base + 16 * p) & 0x7FFF] >> bit) & 1) << p for p in range(4))
                         if c:
-                            sprites[Y][X] = (pal << 4 | c, front)
+                            sprites[Y][X] = (0x100 | pal << 4 | c, front)
     rows, seen, sp = [], set(), 0
     for y in range(H):
         line = []
         by = (byr + y) & (height * 8 - 1)
         for x in range(W):
             bx = (bxr + x) & (width * 8 - 1)
-            entry = 0x100
+            entry = 0
             if bg_on:
                 e = vram[(by >> 3) * width + (bx >> 3)]
                 base = ((e & 0xFFF) << 4) + (by & 7)
                 w0, w1 = vram[base & 0x7FFF], vram[(base + 8) & 0x7FFF]
                 bit = 7 - (bx & 7)
                 c = (w0 >> bit & 1) | (w0 >> (bit + 8) & 1) << 1 | (w1 >> bit & 1) << 2 | (w1 >> (bit + 8) & 1) << 3
-                entry = (e >> 12) << 4 | c
+                # Pattern colour zero is the common backdrop colour.
+                if c:
+                    entry = ((e >> 12) << 4) | c
             s = sprites[y].get(x)
             if s and (s[1] or not bg_on or entry & 15 == 0):
                 entry = s[0]
