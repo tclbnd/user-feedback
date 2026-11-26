@@ -28,23 +28,26 @@ def parse(data):
     out = {"mode": "multicolour" if mcm else "hires", "complete": len(ram) == 65536}
     if not out["complete"]:
         return {**out, "colors_used": None, "first_row": None, "row_100": None, "last_row": None}
-    bmp = (r[0x12] & 0x38) << 7
+    bmp = (r[0x12] & 0x38) << 10
     mat = (r[0x14] & 0xF8) << 8
+    bg0 = r[0x15] & 0x7F
+    bg1 = r[0x16] & 0x7F
     rows, used = [], set()
     for y in range(200):
         line = []
         for cx in range(40):
             k = (y >> 3) * 40 + cx
-            a = ram[mat + 0x400 + k]
-            c = ram[mat + k]
-            b = ram[(bmp + k * 8 + (y & 7)) & 0xFFFF]
-            one = (a & 0x70) | (c >> 4)
-            zero = ((a & 0x07) << 4) | (c & 0x0F)
+            v = ram[mat + 0x400 + k]  # video matrix: hue nibbles
+            c = ram[mat + k]          # colour memory: 3-bit luminances
+            b = ram[bmp + k * 8 + (y & 7)]
+            one = (c & 0x70) | (v >> 4)
+            zero = ((c & 0x07) << 4) | (v & 0x0F)
             if mcm:
                 for s in (6, 4, 2, 0):
                     pair = b >> s & 3
-                    v = (r[0x15], zero, one, r[0x15])[pair]
-                    line.append("%02x" % v)
+                    pix = "%02x" % (bg0, one, zero, bg1)[pair]
+                    line.append(pix)
+                    line.append(pix)
             else:
                 for s in range(7, -1, -1):
                     line.append("%02x" % (one if b >> s & 1 else zero))
