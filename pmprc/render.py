@@ -27,13 +27,17 @@ def parse(data):
     if len(mem) < MEM:
         raise PrcError("memory image is truncated")
     mode = regs[0]
-    width = 12
+    map_size = (mode >> 4) & 3
+    if map_size == 1:
+        width = 16
+    elif map_size >= 2:
+        width = 24
+    else:
+        width = 12
     bg = (regs[2] & 0xF8) | regs[3] << 8 | (regs[4] & 0x1F) << 16
     spr = (regs[7] & 0xC0) | regs[8] << 8 | (regs[9] & 0x1F) << 16
     rd = lambda a: mem[a] if a < MEM else 0
     fb = 0x1000
-    for k in range(0x300):
-        mem[fb + k] = 0
     if mode & 0x02:
         for y in range(8):
             for x in range(12):
@@ -42,7 +46,8 @@ def parse(data):
                     mem[fb + y * 96 + x * 8 + i] = rd(bg + tile * 8 + i)
     shown = 0
     if mode & 0x04:
-        for e in range(24):
+        # Sprite 0 is the front-most entry; draw higher indices first.
+        for e in range(23, -1, -1):
             a = 0x1300 + 4 * e
             sx, sy = mem[a] & 0x7F, mem[a + 1] & 0x7F
             tile, flag = mem[a + 2], mem[a + 3]
@@ -56,11 +61,12 @@ def parse(data):
                 mask = (rd(s + 32) | rd(s + 40) << 8) & 0xFFFF
                 gfx = rd(s) | rd(s + 8) << 8
                 if flag & 4:
-                    gfx, mask = ~gfx & 0xFFFF, ~mask & 0xFFFF
+                    gfx = ~gfx & 0xFFFF
                 for j in range(16):
                     bit = (0x8000 >> j) if flag & 2 else (1 << j)
-                    X, Y = sx + i, sy + j
-                    if 0 <= X < 96 and 0 <= Y < 64 and mask & bit:
+                    # PRC coordinates have a 16-pixel border above/left of the LCD.
+                    X, Y = sx + i - 16, sy + j - 16
+                    if 0 <= X < 96 and 0 <= Y < 64 and not (mask & bit):
                         addr = fb + (Y >> 3) * 96 + X
                         if gfx & bit:
                             mem[addr] |= 1 << (Y & 7)
@@ -69,7 +75,7 @@ def parse(data):
     rows = []
     for y in range(64):
         if mode & 0x08:
-            rows.append([DARK if mem[fb + (y >> 3) * 96 + x] >> (7 - (y & 7)) & 1 else LIGHT for x in range(96)])
+            rows.append([DARK if mem[fb + (y >> 3) * 96 + x] >> (y & 7) & 1 else LIGHT for x in range(96)])
         else:
             rows.append([LIGHT] * 96)
     dark = sum(r.count(DARK) for r in rows)
