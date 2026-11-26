@@ -22,7 +22,7 @@ def _runs(line):
 def _tw(x, y):
     v = 0
     for b in range(11):
-        v |= (x >> b & 1) << (2 * b) | (y >> b & 1) << (2 * b + 1)
+        v |= (y >> b & 1) << (2 * b) | (x >> b & 1) << (2 * b + 1)
     return v
 
 
@@ -35,11 +35,19 @@ def colour(pix, v):
         return (_e(v >> 10 & 31, 5), _e(v >> 5 & 31, 5), _e(v & 31, 5), 255 if v >> 15 else 0)
     if pix == 1:
         return (_e(v >> 11 & 31, 5), _e(v >> 5 & 63, 6), _e(v & 31, 5), 255)
-    return ((v >> 12) * 17, (v >> 8 & 15) * 17, (v >> 4 & 15) * 17, (v & 15) * 17)
+    return ((v >> 8 & 15) * 17, (v >> 4 & 15) * 17, (v & 15) * 17, (v >> 12) * 17)
 
 
 def parse(data):
     pos, gbix = 0, None
+    if data[:4] == b"GBIX":
+        if len(data) < 12:
+            raise PvrError("truncated GBIX chunk")
+        gbix_size = struct.unpack_from("<I", data, 4)[0]
+        if gbix_size < 4 or len(data) < 8 + gbix_size:
+            raise PvrError("bad GBIX chunk")
+        gbix = struct.unpack_from("<I", data, 8)[0]
+        pos = 8 + gbix_size
     if data[pos:pos + 4] != b"PVRT" or len(data) < pos + 16:
         raise PvrError("not a PVR texture")
     pix, fmt, _, w, h = struct.unpack_from("<BBHHH", data, pos + 8)
@@ -51,10 +59,17 @@ def parse(data):
            "complete": len(body) >= need}
     if not out["complete"] or w == 0 or h == 0:
         return {**out, "vq_codes": None, "colors_used": None, "transparent_pixels": None, "first_row": None, "last_row": None}
+    if fmt in (1, 3) and w != h:
+        raise PvrError("%s textures must be square" % DATA[fmt])
     img = [[None] * w for _ in range(h)]
     codes = None
-    if fmt in (1, 9):
-        words = struct.unpack_from("<%dH" % (w * h), body)
+    words = struct.unpack_from("<%dH" % (w * h), body) if fmt in (1, 9) else None
+    if fmt == 9:
+        for y in range(h):
+            row = y * w
+            for x in range(w):
+                img[y][x] = colour(pix, words[row + x])
+    elif fmt == 1:
         for y in range(h):
             for x in range(w):
                 img[y][x] = colour(pix, words[_tw(x, y)])
@@ -63,10 +78,14 @@ def parse(data):
         idx = body[2048:]
         codes = set()
         for y in range(h):
+            by = y // 2
+            sub_y = y & 1
             for x in range(w):
-                e = idx[(y // 2) * (w // 2) + x // 2]
+                bx = x // 2
+                e = idx[_tw(bx, by)]
                 codes.add(e)
-                img[y][x] = colour(pix, book[4 * e + ((x & 1) | (y & 1) << 1)])
+                sub = (x & 1) | (sub_y << 1)
+                img[y][x] = colour(pix, book[4 * e + sub])
         codes = len(codes)
     hexes = [["#%02x%02x%02x%02x" % c for c in row] for row in img]
     return {**out, "vq_codes": codes, "colors_used": len({c for row in hexes for c in row}),
