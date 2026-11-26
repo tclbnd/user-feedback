@@ -32,18 +32,21 @@ def parse(data):
             break
         bits = 16 if modes & 1 else 8
         width = bits // 8
-        signed = bool(modes & 2)
+        unsigned = bool(modes & 2)
         if bits == 16:
-            vals = list(struct.unpack("<%dh" % (size // 2), raw[:size // 2 * 2])) if signed else [v - 32768 for v in struct.unpack("<%dH" % (size // 2), raw[:size // 2 * 2])]
+            if unsigned:
+                vals = [v - 32768 for v in struct.unpack("<%dH" % (size // 2), raw[:size // 2 * 2])]
+            else:
+                vals = list(struct.unpack("<%dh" % (size // 2), raw[:size // 2 * 2]))
         else:
-            vals = [v - 256 if v > 127 else v for v in raw] if signed else [v - 128 for v in raw]
-        loop = "off" if not modes & 4 else ("pingpong" if modes & 16 else "forward")
+            vals = [v - 128 for v in raw] if unsigned else [v - 256 if v > 127 else v for v in raw]
+        loop = "off" if not modes & 4 else ("pingpong" if modes & 8 else "forward")
         samples.append({
-            "name": h[:7].split(b"\0")[0].decode("latin-1"), "bits": bits, "signed": signed, "loop": loop,
-            "reverse": bool(modes & 8), "rate": rate, "frames": len(vals),
-            "loop_start": ls + (frac >> 4) / 16, "loop_end": le + (frac & 15) / 16,
-            "root_key": _key(root), "low_key": _key(low), "high_key": _key(high), "balance": balance,
+            "name": h[:7].split(b"\0")[0].decode("latin-1"), "bits": bits, "signed": not unsigned, "loop": loop,
+            "reverse": bool(modes & 16), "rate": rate, "frames": len(vals),
+            "loop_start": ls // width + (frac >> 4) / 16, "loop_end": le // width + (frac & 15) / 16,
+            "root_key": _key(root / 1000), "low_key": _key(low / 1000), "high_key": _key(high / 1000), "balance": balance,
             "peak": max((abs(v) for v in vals), default=0),
             "crc32": "%08x" % zlib.crc32(struct.pack("<%dh" % len(vals), *vals))})
-        pos += 96 + len(vals)
+        pos += 96 + size
     return {"description": desc, "samples": samples, "complete": complete}
