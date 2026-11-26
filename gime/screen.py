@@ -1,7 +1,7 @@
 """CoCo 3 GIME graphics snapshots (.gime): $FF98-$FF9F, palette $FFB0-$FFBF and physical memory."""
 
 MEM, HDR = 0x80000, 8 + 8 + 16
-HRES = [16, 32, 48, 64, 80, 96, 128, 160]
+HRES = [16, 20, 32, 40, 64, 80, 128, 160]
 LPF = {0: 192, 1: 200, 3: 225}
 CRES = {0: 2, 1: 4, 2: 16}
 
@@ -33,15 +33,17 @@ def parse(data):
     mem = data[32:32 + MEM]
     if not vmode & 0x80:
         raise GimeError("text mode is not supported")
-    lpf, cres = vres >> 5 & 3, vres & 3
+    lpf, cres = (vres >> 5) & 3, vres & 3
     if lpf not in LPF or cres not in CRES:
         raise GimeError("undefined video resolution")
-    lines, colours, rowbytes = 192, CRES[cres], HRES[vres >> 2 & 7]
+    lines, colours, rowbytes = LPF[lpf], CRES[cres], HRES[(vres >> 2) & 7]
     bpp = {2: 1, 4: 2, 16: 4}[colours]
     width = rowbytes * 8 // bpp
-    start = v1 << 8 | v2
-    stride = rowbytes
-    hoff = 0
+    # FF9C/FF9D hold physical address bits A18-A3, i.e. an 8-byte unit.
+    start = ((v1 << 8) | v2) << 3
+    virtual = bool(hreg & 0x80)
+    hoff = hreg & 0x7F if virtual else 0
+    stride = 256 if virtual else rowbytes
     out = {"width": width, "height": lines, "colors": colours, "start": start, "complete": len(mem) == MEM,
            "border": _rgb(border), "palette": [_rgb(p) for p in pal]}
     if not out["complete"]:
@@ -51,10 +53,11 @@ def parse(data):
         base = start + y * stride
         line = []
         for xb in range(rowbytes):
-            off = (xb + hoff) % 256 if hreg & 0x80 else xb
+            off = (xb + hoff) % 256 if virtual else xb
             b = mem[(base + off) % MEM]
             for k in range(8 // bpp):
-                c = b >> (bpp * k) & ((1 << bpp) - 1)
+                shift = 8 - bpp * (k + 1)
+                c = (b >> shift) & ((1 << bpp) - 1)
                 line.append(_rgb(pal[c]))
         seen.update(line)
         rows.append(line)
