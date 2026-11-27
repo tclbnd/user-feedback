@@ -4,6 +4,13 @@ import struct
 SW, SH = 384, 224
 HDR = 6 + 8 + 12
 
+# BG map control word bits
+F_HFLIP = 0x2000  # bit 13: mirror the character horizontally
+F_VFLIP = 0x1000  # bit 12: mirror the character vertically
+F_CHAR = 0x01FF   # bits 8-0: character number
+F_PALETTE = 0xC000  # bits 15-14: GPLT register number
+MAPSIZE = 64      # BG map is 64 x 64 characters = 512 x 512 pixels
+
 
 class WorldError(ValueError):
     pass
@@ -25,28 +32,42 @@ def parse(data):
     brta, brtb, brtc, bkcol = data[6:10]
     gplt = data[10:14]
     gx, gy, mx, my, w, h = struct.unpack_from("<hhhhHH", data, 14)
-    level = [0, brta, brtb, brtc]
+    # BRTA/BRTB/BRTC are the per-step pulse widths of shades 1/2/3, so the
+    # LED level of each shade is the sum of its register and every lower one.
+    level = [0, brta, brta + brtb, brta + brtb + brtc]
+    # The WAT W/H fields hold (width - 1)/(height - 1), in pixels.
+    w, h = w + 1, h + 1
     chars = data[HDR:HDR + 2048 * 16]
     bmap = data[HDR + 2048 * 16:HDR + 2048 * 16 + 8192]
     complete = len(bmap) == 8192
-    out = {"window": [gx, gy, w, h], "levels": level, "background": level[bkcol & 3], "complete": complete,
+    # BKCOL selects the shade painted where no character pixel is drawn.
+    bg = level[bkcol & 3]
+    out = {"window": [gx, gy, w, h], "levels": level, "background": bg, "complete": complete,
            "screen": None, "first_line": None, "last_line": None}
     if not complete:
         return out
-    bg = level[bkcol & 3]
 
     def px(x, y):
-        u, v = (mx + x) % 256, (my + y) % 256
-        cw = struct.unpack_from("<H", bmap, 2 * ((v >> 3) * 64 + (u >> 3)))[0]
-        ch = cw & 0x1FF
+        # The 64 x 64 BG map wraps at 512 pixels in each direction.
+        u, v = (mx + x) & 511, (my + y) & 511
+        cw = struct.unpack_from("<H", bmap, 2 * ((v >> 3) * MAPSIZE + (u >> 3)))[0]
+        ch = cw & F_CHAR
         tx, ty = u & 7, v & 7
-        if cw & 0x1000:
+        if cw & F_HFLIP:
             tx = 7 - tx
-        if cw & 0x2000:
+        if cw & F_VFLIP:
             ty = 7 - ty
-        hw = struct.unpack_from(">H", chars, ch * 16 + 2 * ty)[0]
-        idx = hw >> (14 - 2 * tx) & 3
-        return level[gplt[cw >> 14] >> (2 * idx - 2) & 3] if idx else 0
+        # A character is 8 rows of 16 bits: plane 0 then plane 1, MSB first.
+        base = ch * 16 + 2 * ty
+        plane0, plane1 = chars[base], chars[base + 1]
+        bit = 7 - tx
+        idx = ((plane0 >> bit) & 1) | (((plane1 >> bit) & 1) << 1)
+        if idx == 0:
+            # Index 0 is transparent: the background colour shows through.
+            return bg
+        # GPLT fields are 2 bits each, field n holding the shade of pixel n.
+        shade = (gplt[cw >> 14] >> (2 * idx)) & 3
+        return level[shade]
 
     hist = {}
     for sy in range(SH):
