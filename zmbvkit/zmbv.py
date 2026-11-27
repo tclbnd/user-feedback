@@ -38,15 +38,22 @@ class Decoder:
             if self.cur is None or len(self.cur) != size:
                 self.cur = bytearray(size)
                 self.prev = bytearray(size)
-        try:
-            data = zlib.decompressobj().decompress(buf)
-        except zlib.error as exc:
-            raise ZmbvError("zlib: %s" % exc)
+            # One zlib stream is continued by all chunks between key frames.
+            self.z = zlib.decompressobj() if comp == 1 else None
+        if self.fmt is None:
+            raise ZmbvError("inter frame before key frame")
+        if self.comp == 1:
+            try:
+                data = self.z.decompress(buf)
+            except zlib.error as exc:
+                raise ZmbvError("zlib: %s" % exc)
+        else:
+            data = buf
         if flags & 1:
             self.intra(data)
+            self.prev[:] = self.cur
         else:
             self.xor(data, flags)
-        self.prev[:] = self.cur
         return bool(flags & 1)
 
     def intra(self, src):
@@ -68,14 +75,14 @@ class Decoder:
         if self.fmt == 4 and flags & 2:
             if len(src) < 768:
                 raise ZmbvError("palette change is truncated")
-            for k in range(768):
-                self.pal[k] = src[k]
+            self.pal[:] = src[:768]
             p = 768
         if len(src) - p < 2 * bx * by:
             raise ZmbvError("motion vectors are truncated")
         mv = src[p:p + 2 * bx * by]
         p += bx * by * 2
-        cur = prev = self.cur
+
+        nxt = bytearray(len(self.cur))
         block = 0
         for y in range(0, h, bh):
             bh2 = min(bh, h - y)
@@ -83,25 +90,33 @@ class Decoder:
                 bw2 = min(bw, w - x)
                 vx, vy = mv[block], mv[block + 1]
                 block += 2
-                d = vx & 1
-                dx = vx - 256 if vx & 0x80 else vx
+
+                # Bit 0 of the x-vector selects the optional block update.
+                # The actual vector is the signed byte formed by the other bits.
+                dx = (vx & 0xfe) - 256 if vx & 0x80 else (vx & 0xfe)
                 dy = vy - 256 if vy & 0x80 else vy
                 mx, my = x + dx, y + dy
                 for j in range(bh2):
                     o = ((y + j) * w + x) * bpp
-                    for i in range(bw2):
-                        sx, sy = min(max(mx + i, 0), w - 1), min(max(my + j, 0), h - 1)
-                        s = (sy * w + sx) * bpp
-                        cur[o + i * bpp:o + i * bpp + bpp] = prev[s:s + bpp]
-                if d:
-                    n = bw * bpp
+                    sx0 = min(max(mx, 0), w - bw2)
+                    sy = min(max(my + j, 0), h - 1)
+                    s = (sy * w + sx0) * bpp
+                    nxt[o:o + bw2 * bpp] = self.prev[s:s + bw2 * bpp]
+
+                if vx & 1:
+                    # The encoder emits complete blocks, including padding
+                    # outside the picture at the right and bottom edges.
+                    row_width = bw * bpp
+                    if p + bh * row_width > len(src):
+                        raise ZmbvError("block update is truncated")
                     for j in range(bh2):
                         o = ((y + j) * w + x) * bpp
-                        if p + n > len(src):
-                            raise ZmbvError("block difference is truncated")
-                        for k in range(n):
-                            cur[o + k] ^= src[p + k]
-                        p += n
+                        for k in range(bw2 * bpp):
+                            nxt[o + k] = src[p + k]
+                        p += row_width
+                    p += (bh - bh2) * row_width
+
+        self.prev, self.cur = self.cur, nxt
 
     def picture(self):
         if self.fmt == 4:
