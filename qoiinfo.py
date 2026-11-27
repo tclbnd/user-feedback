@@ -3,7 +3,6 @@
     python3 qoiinfo.py FILE [more files ...]
 """
 import json
-import struct
 import sys
 
 from qoikit.qoi import QoiError, parse
@@ -16,7 +15,7 @@ def main(paths):
             with open(path, "rb") as fh:
                 data = fh.read()
             out.append({"file": path, **parse(data)})
-        except (OSError, QoiError, ValueError, IndexError, KeyError, ZeroDivisionError, struct.error, UnicodeDecodeError) as exc:
+        except (OSError, QoiError) as exc:
             out.append({"file": path, "error": str(exc)})
     json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
     print()
