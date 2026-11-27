@@ -28,6 +28,48 @@ class Reader:
         return min(self.p, len(self.d))
 
 
+class _BitStream:
+    """Control bits and literal/copy bytes are two independent streams.
+
+    The control stream is a run of packed 32-bit little-endian words read
+    LSB-first; the data stream holds the literal pixels and copy parameters as
+    plain bytes.  The original implementation mixed both into one cursor, so a
+    32-bit control-word refill jumped into the middle of the data bytes.
+    """
+
+    def __init__(self, d):
+        self.d = d
+        self.ctrl = 0
+        self.word, self.bits_left = 0, 0
+        self.data = 4  # first 32-bit control word occupies bytes 0..3
+        self.exhausted = False
+
+    def bit(self):
+        if not self.bits_left:
+            if self.ctrl + 4 > len(self.d):
+                self.exhausted = True
+                return 0
+            self.word = int.from_bytes(
+                self.d[self.ctrl:self.ctrl + 4], "little")
+            self.ctrl += 4
+            self.bits_left = 32
+        b = self.word & 1
+        self.word >>= 1
+        self.bits_left -= 1
+        return b
+
+    def byte(self):
+        if self.data >= len(self.d):
+            self.exhausted = True
+            return 0
+        v = self.d[self.data]
+        self.data += 1
+        return v
+
+    def word16(self):
+        return self.byte() | (self.byte() << 8)
+
+
 class Decoder:
     def __init__(self, version, w, h):
         self.version, self.w, self.h = version, w, h
@@ -52,49 +94,70 @@ class Decoder:
                 count -= 1
 
     def intra(self, src):
-        r = Reader(src)
-        size = len(src)
-        n = self.w * self.h
+        # The frame is two interlaced fields.  They are produced into one
+        # linear buffer in order (even field then odd field); long copies can
+        # reach back across the field boundary.  The caller re-interleaves the
+        # two halves into display scan lines.
+        total = self.w * self.h
+        bs = _BitStream(src)
         cur = self.cur
-        state = {"buf": 0, "bits": 0}
-
-        def bit():
-            if not state["bits"]:
-                state["buf"], state["bits"] = r.le(4), 32
-            b = state["buf"] & 1
-            state["buf"] >>= 1
-            state["bits"] -= 1
-            return b
-
         w = 0
-        while r.tell() < size:
-            if bit():
-                if w >= n:
-                    break
-                cur[w] = r.byte()
+        data_end = len(src)
+        while w < total and not bs.exhausted and bs.data < data_end:
+            if bs.bit():
+                # literal pixel
+                if w < total:
+                    cur[w] = bs.byte()
                 w += 1
                 continue
-            if bit():
-                word = r.le(2)
-                count, off = word & 7, -(word >> 3)
+            if bs.bit():
+                # long back copy: 6-bit count, 10-bit distance, little-endian
+                word = bs.word16()
+                count = (word >> 10) & 0x3F
+                dist = word & 0x3FF
                 if not count:
-                    count = r.byte()
-                if not count:
-                    return
+                    count = bs.byte()
+                    if not count:
+                        break
+                # the stored count is two short of the pixels actually copied
+                count += 2
+                src_pos = w - dist
+                if not (0 <= src_pos < total):
+                    # reference before the frame start: nothing is copied
+                    continue
+                for _ in range(count):
+                    if w >= total or src_pos >= total:
+                        break
+                    cur[w] = cur[src_pos]
+                    w += 1
+                    src_pos += 1
             else:
-                count = bit() * 2
-                count += bit()
-                off = r.byte() - 0x100
-            off += w
-            if off < 0 or w + count > n:
-                break
-            for _ in range(count):
-                cur[w] = cur[off]
-                w += 1
-                off += 1
+                # short run: two count bits (LSB first) + one signed delta byte
+                count = bs.bit() + 2 * bs.bit() + 1
+                raw = bs.byte()
+                delta = raw - 0x100 if raw >= 0x80 else raw
+                for _ in range(count):
+                    if w >= total:
+                        break
+                    if w:
+                        cur[w] = (cur[w - 1] + delta) & 0xFF
+                    w += 1
 
     def picture(self):
-        return bytes(self.cur)
+        # Re-interleave the two fields: linear half 0 holds the even scan
+        # lines, half 1 the odd ones.
+        w, h = self.w, self.h
+        half = h // 2
+        fieldpx = half * w
+        flat = self.cur
+        out = bytearray(w * h)
+        for y in range(half):
+            out[(2 * y) * w:(2 * y + 1) * w] = flat[y * w:(y + 1) * w]
+            out[(2 * y + 1) * w:(2 * y + 2) * w] = \
+                flat[fieldpx + y * w:fieldpx + (y + 1) * w]
+        return bytes(out)
+
+
 
 
 def parse(data):
@@ -127,7 +190,8 @@ def parse(data):
             if len(ch) < 12:
                 skipped += 1
                 continue
-            dec.cur = bytearray(w * h)
+            # Do not clear the picture buffer: the player keeps the previous
+            # frame wherever an intra frame does not write a pixel.
             dec.intra(ch[12:])
             pic = dec.picture()
             rgb = b"".join(bytes([v >> 16 & 0xFF, v >> 8 & 0xFF, v & 0xFF]) for v in (dec.pal[i] for i in pic))
