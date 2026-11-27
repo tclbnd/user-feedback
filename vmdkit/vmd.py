@@ -3,6 +3,7 @@ import zlib
 
 MAGIC = b"VMDFRAME"
 QUEUE = 0x1000
+COMPRESSED = 0x80
 
 
 class VmdError(ValueError):
@@ -30,6 +31,47 @@ class Reader:
         return v
 
 
+def lz_unpack(buf):
+    """Sierra VMD LZSS: a flag byte per eight payload bytes, LSB first.
+
+    Set bit  -> the next byte is copied literally.
+    Clear bit -> a little-endian u16 back reference: high nibble gives the
+                 run length minus 3, the low 12 bits give the absolute source
+                 position inside the output buffer.
+    The record starts with the unpacked size (u32) and the XOR key (u32).
+    """
+    if len(buf) < 8:
+        raise VmdError("compressed frame is truncated")
+    out_size = int.from_bytes(buf[:4], "little")
+    r, out = 8, bytearray()
+    while r < len(buf) and len(out) < out_size:
+        flags = buf[r]
+        r += 1
+        for bit in range(8):
+            if len(out) >= out_size:
+                break
+            if flags & (1 << bit):
+                if r >= len(buf):
+                    raise VmdError("literal byte is truncated")
+                out.append(buf[r])
+                r += 1
+            else:
+                if r + 2 > len(buf):
+                    raise VmdError("back reference is truncated")
+                word = int.from_bytes(buf[r:r + 2], "little")
+                r += 2
+                src = word & 0x0FFF
+                run = (word >> 12) + 3
+                if src >= len(out) or len(out) + run > out_size:
+                    raise VmdError("back reference points outside the unpack buffer")
+                for _ in range(run):
+                    out.append(out[src])
+                    src += 1
+    if len(out) != out_size or r != len(buf):
+        raise VmdError("compressed frame did not unpack to its declared size")
+    return bytes(out)
+
+
 class Decoder:
     def __init__(self, w, h, lz_size):
         self.w, self.h, self.lz = w, h, lz_size
@@ -41,15 +83,21 @@ class Decoder:
         if len(buf) < 16:
             raise VmdError("frame record is too short")
         w, h = self.w, self.h
-        fx = int.from_bytes(buf[6:8], "little")
-        fy = int.from_bytes(buf[8:10], "little")
-        fw = int.from_bytes(buf[10:12], "little") - fx
-        fh = int.from_bytes(buf[12:14], "little") - fy
-        if fx < 0 or fw < 0 or fx >= w or fw > w or fx + fw > w:
-            raise VmdError("bad horizontal range")
-        if fy < 0 or fh < 0 or fy >= h or fh > h or fy + fh > h:
-            raise VmdError("bad vertical range")
-        pic = bytearray(w * h)
+
+        # The first frame anchors the movie's position on screen; every frame
+        # stores absolute screen coordinates, so subtract the anchor to get
+        # the coordinates inside the picture.
+        if self.prev is None:
+            self.xo = int.from_bytes(buf[6:8], "little")
+            self.yo = int.from_bytes(buf[8:10], "little")
+        fx = int.from_bytes(buf[6:8], "little") - self.xo
+        fy = int.from_bytes(buf[8:10], "little") - self.yo
+        # The right and bottom edges are inclusive.
+        fw = int.from_bytes(buf[10:12], "little") - self.xo - fx + 1
+        fh = int.from_bytes(buf[12:14], "little") - self.yo - fy + 1
+        if fx < 0 or fy < 0 or fw <= 0 or fh <= 0 or fx + fw > w or fy + fh > h:
+            raise VmdError("frame rectangle lies outside the picture")
+
         r = Reader(buf, 16)
         palette = self.palette
         if buf[15] & 0x02:
@@ -62,38 +110,70 @@ class Decoder:
             self.palette = palette
         if r.left() < 1:
             raise VmdError("no frame data")
+
         meth = r.byte()
-        if meth & 0x80:
-            raise VmdError("compressed frames are not supported")
+        payload = r.take(r.left())
+        if meth & COMPRESSED:
+            payload = lz_unpack(payload)
+            meth &= ~COMPRESSED
+        if meth not in (1, 2, 3):
+            raise VmdError(f"unknown method {meth}")
+
+        # Keep the previous picture: a frame only paints its own rectangle.
+        pic = bytearray(self.prev) if self.prev is not None else bytearray(w * h)
         prev = self.prev
+        if meth == 2:
+            if len(payload) != fw * fh:
+                raise VmdError("raw frame has the wrong size")
+            for row in range(fh):
+                base = (fy + row) * w + fx
+                pic[base:base + fw] = payload[row * fw:(row + 1) * fw]
+            self.prev = bytes(pic)
+            return
+
+        # Each frame row is an independent RLE segment: runs never cross a
+        # row boundary.  Split the payload into one segment per row; a segment
+        # may paint fewer than fw pixels, in which case the remaining columns
+        # keep the values already present in the picture.
+        seg_len, extra = divmod(len(payload), fh)
+        d = Reader(payload)
         for row in range(fh):
+            seg_end = d.p + seg_len + (1 if row < extra else 0)
             base = (fy + row) * w + fx
-            if meth == 2:
-                if r.left() < fw:
-                    raise VmdError("raw frame is truncated")
-                pic[base:base + fw] = r.take(fw)
-                continue
-            if meth not in (1, 3):
-                raise VmdError(f"unknown method {meth}")
             ofs = 0
-            while True:
-                n = r.byte()
-                if n & 0x80:
-                    n = (n & 0x7F) + 1
-                    if True:
-                        if ofs + n > fw or r.left() < n:
-                            raise VmdError("literal run is too long")
-                        pic[base + ofs:base + ofs + n] = r.take(n)
-                        ofs += n
+            while d.p < seg_end:
+                n = d.byte()
+                if n == 0xFF and meth == 3:
+                    # Solid run: a count byte (plus one) and one colour byte.
+                    if seg_end - d.p < 2:
+                        raise VmdError("solid run is truncated")
+                    count = d.byte() + 1
+                    colour = d.byte()
+                    if ofs + count > fw:
+                        raise VmdError("solid run is too long")
+                    pic[base + ofs:base + ofs + count] = bytes([colour]) * count
+                    ofs += count
+                elif n & 0x80:
+                    # Literal run.  At the end of a short row the run may be
+                    # cut off by the segment boundary; clamp to those bytes.
+                    count = (n & 0x7F) + 1
+                    count = min(count, seg_end - d.p)
+                    if count == 0:
+                        raise VmdError("literal run is truncated")
+                    if ofs + count > fw:
+                        raise VmdError("literal run is too long")
+                    pic[base + ofs:base + ofs + count] = d.take(count)
+                    ofs += count
                 else:
-                    if ofs + n + 1 > fw or prev is None:
+                    # Copy run: repaint columns from the previous picture.
+                    count = n + 1
+                    if prev is None or ofs + count > fw:
                         raise VmdError("copy run is too long")
-                    pic[base + ofs:base + ofs + n + 1] = prev[base + ofs:base + ofs + n + 1]
-                    ofs += n + 1
-                if ofs >= fw:
-                    break
-            if ofs > fw:
-                raise VmdError("row overflows")
+                    pic[base + ofs:base + ofs + count] = \
+                        prev[base + ofs:base + ofs + count]
+                    ofs += count
+        if d.left():
+            raise VmdError("frame data does not split evenly into rows")
         self.prev = bytes(pic)
 
 
