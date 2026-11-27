@@ -59,61 +59,84 @@ def _c8(v):
 class Decoder:
     def __init__(self, codec, channels):
         self.codec, self.ch = codec, channels
+        # SOL keeps its running predictor across packets; Xan keeps the
+        # adaptive shift across packets. Interplay takes a fresh predictor
+        # from the seed carried in every packet.
         self.sample = [0, 0]
+        self.shift = [4, 4]
 
     def packet(self, buf):
         stereo = self.ch - 1
         n = len(buf)
         c = self.codec
-        out = {"interplay": n - 6 - self.ch, "xan": n - 2 * self.ch, "sol-old": n * 2, "sol-new": n * 2, "sol-16": n}[c]
+        out = {
+            # Seed samples (one per channel) plus every remaining delta
+            # byte; in stereo an odd trailing byte only feeds channel 0.
+            "interplay": self.ch + max(n - 6 - 2 * self.ch, 0),
+            "xan": (n - 2 * self.ch) * self.ch,
+            "sol-old": n * 2,
+            "sol-new": n * 2,
+            "sol-16": n,
+        }[c]
         if out <= 0:
             raise DpcmError("packet is too small")
         res = []
         if c == "interplay":
+            # Six-byte MVE chunk header, then a 16-bit predictor seed per
+            # channel; the seeds themselves are the first output samples.
             p = 6
             pred = [0, 0]
             for k in range(self.ch):
                 pred[k] = _s16(buf[p] | buf[p + 1] << 8)
+                res.append(pred[k])
                 p += 2
             ch = 0
-            while len(res) < out and p < len(buf):
-                pred[ch] = _s16(pred[ch] + INTERPLAY[buf[p]])
+            while len(res) < out and p < n:
+                pred[ch] = _c16(pred[ch] + INTERPLAY[buf[p]])
                 p += 1
                 res.append(pred[ch])
                 ch ^= stereo
         elif c == "xan":
+            # A 16-bit predictor seed per channel (not emitted), then one
+            # delta byte per sample. The two low bits steer the adaptive
+            # shift, which persists across packets.
             p = 0
             pred = [0, 0]
-            shift = [4, 4]
             for k in range(self.ch):
                 pred[k] = _s16(buf[p] | buf[p + 1] << 8)
                 p += 2
             ch = 0
-            while len(res) < out:
+            while len(res) < out and p < n:
                 d = buf[p]
                 p += 1
                 m = d & 3
                 if m == 3:
-                    shift[ch] -= 1
+                    self.shift[ch] -= 1
                 else:
-                    shift[ch] += 2 * m
-                shift[ch] = max(shift[ch], 0)
-                diff = _s16((d & ~3 & 0xFF) << 8) >> shift[ch]
+                    self.shift[ch] += 2 * m
+                self.shift[ch] = max(0, min(10, self.shift[ch]))
+                diff = _s16((d & ~3 & 0xFF) << 8) >> self.shift[ch]
                 pred[ch] = _c16(pred[ch] + diff)
                 res.append(pred[ch])
                 ch ^= stereo
         elif c in ("sol-old", "sol-new"):
+            # High nibble first (channel 0), then low nibble (channel 1);
+            # the predictor carries over between packets.
             tab = SOL_OLD if c == "sol-old" else SOL_NEW
             for b in buf:
-                self.sample[0] = _c8(self.sample[0] + tab[b & 0x0F])
+                self.sample[0] = _c8(self.sample[0] + tab[b >> 4])
                 res.append(self.sample[0])
-                self.sample[stereo] = _c8(self.sample[stereo] + tab[b >> 4])
+                self.sample[stereo] = _c8(self.sample[stereo] + tab[b & 0x0F])
                 res.append(self.sample[stereo])
         else:
+            # Top bit marks a negative step; the step is the 7-bit table
+            # value centred around zero. Predictor wraps like int16.
             ch = 0
             for b in buf:
-                self.sample[ch] += SOL_16[b & 0x7F] if b < 0x80 else SOL_16[b & 0x7F] - 0x10000 // 2
-                self.sample[ch] = _c16(self.sample[ch])
+                step = SOL_16[b & 0x7F]
+                if b >= 0x80:
+                    step -= 0x4000
+                self.sample[ch] = _s16(self.sample[ch] + step)
                 res.append(self.sample[ch])
                 ch ^= stereo
         return res[:out]
@@ -134,6 +157,7 @@ def parse(data):
     pos = 18
     eight = codec in ("sol-old", "sol-new")
     allv, packets = [], []
+    decoder = Decoder(codec, channels)
     for _ in range(count):
         if pos + 4 > len(data):
             raise DpcmError("packet table is truncated")
@@ -143,7 +167,7 @@ def parse(data):
             raise DpcmError("packet data is truncated")
         pos += 4 + n
         try:
-            s = Decoder(codec, channels).packet(body)
+            s = decoder.packet(body)
             packets.append(len(s))
             allv += s
         except DpcmError:
