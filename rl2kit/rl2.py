@@ -8,28 +8,56 @@ class Rl2Error(Exception):
     pass
 
 
-def rle(w, h, data, out, base, back):
-    """Draw one RLE frame into out (a bytearray of w*h). back is the background frame or None."""
-    size = w * h
-    o = 0
-    end = len(data)
+def draw_rle(data, canvas, start, what):
+    """Draw one RL2 run-length coded stream into canvas, beginning at byte `start`.
+
+    Stream coding:
+      byte < 0x80              -> one literal pixel carrying that palette index
+      byte >= 0x80, count n    -> n pixels of palette index (byte & 0x7f);
+                                  a zero count writes nothing (end-of-stream marker)
+
+    Only the pixels the stream reaches are touched. Everything before `start`
+    and every pixel the stream does not reach is left intact, so partial frames
+    let the background frame (and pixels drawn by earlier frames) show through.
+    Returns the index just past the last pixel written.
+    """
+    size = len(canvas)
+    o = start
     p = 0
+    end = len(data)
     while p < end:
-        val = data[p]
+        code = data[p]
         p += 1
-        n = 1
-        if val >= 0x80:
-            if p >= end:
-                break
-            n = data[p] - 1
-            p += 1
-        if o >= size:
-            break
-        val &= 0x7F
-        while n > 0 and o < size:
-            out[o] = val
+        if code < 0x80:
+            if o >= size:
+                raise Rl2Error(what + " runs past the picture")
+            canvas[o] = code
             o += 1
-            n -= 1
+            continue
+        if p >= end:
+            raise Rl2Error(what + " has a truncated run")
+        count = data[p]
+        p += 1
+        color = code & 0x7F
+        if o + count > size:
+            raise Rl2Error(what + " runs past the picture")
+        canvas[o:o + count] = bytes((color,)) * count
+        o += count
+    return o
+
+
+def expand_palette(pal6):
+    """Expand the 256 VGA palette entries (6 bits per channel) to 8-bit RGB.
+
+    The DAC stores each channel in six bits, so used verbatim the colours only
+    reach about a quarter of full brightness and look black. The hardware shows
+    them by replicating the top bits into the low bits, spanning the full range.
+    """
+    lut = []
+    for i in range(256):
+        r, g, b = pal6[3 * i:3 * i + 3]
+        lut.append(bytes(((c << 2) | (c >> 4)) for c in (r, g, b)))
+    return lut
 
 
 def parse(data):
@@ -40,10 +68,11 @@ def parse(data):
     base = int.from_bytes(data[12:14], "little")
     if w == 0 or h == 0:
         raise Rl2Error("empty picture")
-    if base >= w * h:
+    size = w * h
+    if base >= size:
         raise Rl2Error("video base is outside the picture")
     pal6 = data[14:14 + 768]
-    pal = bytes(pal6)
+    lut = expand_palette(pal6)
     pos = 14 + 768
     bsize = int.from_bytes(data[pos:pos + 4], "little")
     pos += 4
@@ -51,25 +80,33 @@ def parse(data):
     if len(bdata) < bsize:
         raise Rl2Error("background frame is truncated")
     pos += bsize
-    if bsize:
-        raise Rl2Error("background frames are not supported")
-    back = None
     if pos + 2 > len(data):
         raise Rl2Error("frame count is missing")
     count = int.from_bytes(data[pos:pos + 2], "little")
     pos += 2
+
+    # One persistent picture: the background frame paints the whole canvas once,
+    # then every frame is drawn over it at the video base as an incremental delta.
+    canvas = bytearray(size)
+    has_background = bsize != 0
+    if has_background:
+        if draw_rle(bdata, canvas, 0, "background frame") != size:
+            raise Rl2Error("background frame does not fill the picture")
+
     frames = []
-    for _ in range(count):
+    for idx in range(count):
         if pos + 4 > len(data):
             raise Rl2Error("frame table is truncated")
         n = int.from_bytes(data[pos:pos + 4], "little")
-        body = data[pos + 4:pos + 4 + n]
+        pos += 4
+        body = data[pos:pos + n]
         if len(body) < n:
             raise Rl2Error("frame data is truncated")
-        pos += 4 + n
-        pic = bytearray(w * h)
-        rle(w, h, body, pic, base, back)
-        rgb = b"".join(pal[3 * v:3 * v + 3] for v in pic)
-        frames.append({"crc32": "%08x" % zlib.crc32(rgb), "first_row": "%08x" % zlib.crc32(rgb[:3 * w]),
+        pos += n
+        draw_rle(body, canvas, base, "frame %d" % idx)
+        rgb = b"".join(lut[v] for v in canvas)
+        frames.append({"crc32": "%08x" % zlib.crc32(rgb),
+                       "first_row": "%08x" % zlib.crc32(rgb[:3 * w]),
                        "last_row": "%08x" % zlib.crc32(rgb[-3 * w:])})
-    return {"width": w, "height": h, "video_base": base, "background": back is not None, "frames": frames}
+    return {"width": w, "height": h, "video_base": base,
+            "background": has_background, "frames": frames}
