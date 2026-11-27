@@ -2,7 +2,7 @@
 import zlib
 
 PAL, FIRST_AUDIO, AUDIO, IFRAME, PFRAME, YOFF, EOF = 0x02, 0x7C, 0x7D, 0x03, 0x01, 0x04, 0x14
-KIND = {IFRAME: "I", PFRAME: "P"}
+KIND = {IFRAME: "I", PFRAME: "P", YOFF: "Y"}
 
 
 class VidError(ValueError):
@@ -30,45 +30,70 @@ class Reader:
         self.p += n
         return v
 
+    def u16peek(self):
+        if self.p + 2 > len(self.d):
+            raise EOFError
+        return self.d[self.p] | self.d[self.p + 1] << 8
+
+
+def _scale6(v):
+    """Expand a 6-bit VGA DAC component to 8 bits the way the hardware does:
+    the top bits are copied into the low bits so 63 maps to 255, not 252."""
+    return (v << 2) | (v >> 4)
+
 
 def palette(raw):
     out = []
     for k in range(256):
-        v = int.from_bytes(raw[3 * k:3 * k + 3], "big") * 4 & 0xFFFFFF
-        out.append((v >> 16, v >> 8 & 0xFF, v & 0xFF))
+        r, g, b = raw[3 * k], raw[3 * k + 1], raw[3 * k + 2]
+        out.append((_scale6(r), _scale6(g), _scale6(b)))
     return out
 
 
-def video_packet(r, kind, npixels):
-    """Collect one video block the way the demuxer does; returns the packet bytes after the block type."""
+def video_packet(r, kind, width, npixels):
+    """Collect one video block the way the demuxer does; returns the packet bytes after the block type.
+
+    A block ends either on an explicit zero code or as soon as the whole
+    picture (or, for a Y offset update, everything below the starting line)
+    has been covered -- the last block of a movie often has no zero code.
+    An I-frame RLE fill is clipped to the end of its row, so its nominal
+    length can overshoot the pixels it actually paints.
+    """
     pkt = bytearray()
+    dst = 0
     if kind == YOFF:
         pkt += r.take(2)
-    copied = 0
-    while True:
+    while dst < npixels:
         code = r.u8()
         pkt.append(code)
-        if code >= 0x80:
-            if kind == IFRAME:
-                pkt.append(r.u8())
-        elif code:
-            pkt += r.take(code)
         if code == 0:
             break
+        n = code & 0x7F
+        if code >= 0x80:
+            if kind == IFRAME:
+                # One colour byte; the fill never crosses a row boundary.
+                pkt.append(r.u8())
+                dst += min(n, width - dst % width)
+            else:
+                # A skip on a P / Y update covers n destination pixels.
+                dst += n
+        else:
+            # A literal run is one byte per pixel and may span rows.
+            pkt += r.take(n)
+            dst += n
     return bytes(pkt)
 
 
 def decode(pic, w, h, kind, pkt):
     p = 0
     dst = 0
+    end = w * h
     if kind == YOFF:
         y = pkt[0] | pkt[1] << 8
         p = 2
         if y >= h:
             raise VidError("y offset below the picture")
         dst = y * w
-    end = w * h
-    remaining = w
     while p < len(pkt):
         code = pkt[p]
         p += 1
@@ -76,16 +101,26 @@ def decode(pic, w, h, kind, pkt):
             break
         n = code & 0x7F
         if code < 0x80:
+            if dst + n > end:
+                raise VidError("video packet runs past the picture")
             pic[dst:dst + n] = pkt[p:p + n]
             p += n
+            dst += n
         elif kind == IFRAME:
-            pic[dst:dst + n] = bytes([pkt[p]]) * n
+            # An RLE fill paints one colour but is clipped at the row end;
+            # any nominal remainder is simply discarded.
+            run = min(n, w - dst % w)
+            if dst + run > end:
+                raise VidError("video packet runs past the picture")
+            pic[dst:dst + run] = bytes([pkt[p]]) * run
             p += 1
+            dst += run
         else:
-            pic[dst:dst + n] = bytes(n)
-        pic[:] = pic[:end]
-        remaining -= n
-        dst += n
+            # A P / Y high-bit code is a skip: the destination pixels keep
+            # whatever a previous frame left there.
+            if dst + n > end:
+                raise VidError("video packet runs past the picture")
+            dst += n
 
 
 def parse(data):
@@ -98,7 +133,6 @@ def parse(data):
         raise VidError("empty picture")
     pic = bytearray(w * h)
     cur_pal = [(0, 0, 0)] * 256
-    pending = None
     rate = 11111
     audio = bytearray()
     frames, palettes = [], 0
@@ -111,13 +145,22 @@ def parse(data):
                 palettes += 1
             elif t in (FIRST_AUDIO, AUDIO):
                 if t == FIRST_AUDIO:
-                    r.u16()
-                    rate = 1000000 // max(1, r.u8())
+                    # The three bytes are a big-endian 1 MHz timer divisor;
+                    # reading only the last byte gives rates 256x too small.
+                    divisor = int.from_bytes(r.take(3), "big")
+                    rate = 1000000 // max(1, divisor)
                 n = r.u16()
                 audio += r.take(n)
             elif t in KIND:
-                ticks = r.u16()
-                pkt = video_packet(r, t, w * h)
+                ticks = r.u16() + delay
+                if t == YOFF:
+                    y = r.u16peek()
+                    if y >= h:
+                        raise VidError("y offset below the picture")
+                    npixels = w * (h - y)
+                else:
+                    npixels = w * h
+                pkt = video_packet(r, t, w, npixels)
                 decode(pic, w, h, t, pkt)
                 frames.append({"type": KIND[t], "ticks": ticks, "crc32": "%08x" % zlib.crc32(bytes(pic))})
             elif t == EOF:

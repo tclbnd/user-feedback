@@ -19,6 +19,22 @@ JSON summary per file.
 
 The picture starts as index 0 and the palette as all black.
 
+## Decoding rules (matching the game player)
+
+- A video block ends on an explicit zero code, or as soon as the whole
+  picture (everything below the start line for a `Y` frame) is covered; the
+  last block of a movie often has no zero code.
+- A code below 0x80 is a literal run of that many palette indices (runs may
+  cross row boundaries). A code with the high bit set on an `I` frame is an
+  RLE fill of one colour, clipped to the end of its row so it never paints
+  into the next row. On a `P`/`Y` frame a high-bit code is a skip: those
+  destination pixels keep whatever an earlier frame left there.
+- Palette components are 6-bit VGA DAC values; each is expanded to 8 bits by
+  copying its top two bits into the low bits, so 63 maps to 255.
+- The first audio block carries a three-byte big-endian 1&nbsp;MHz timer
+  divisor; the rate is `1000000 // divisor`.
+- A frame's duration is its block ticks plus the header delay.
+
 ## Layout
 
 - `vidkit/bethsoft.py` – block walker and frame decoder
