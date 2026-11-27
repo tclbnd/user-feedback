@@ -8,8 +8,19 @@ prints one JSON summary per snapshot.
 ## File layout
 
 `C140SNAP`, the 24 voice register blocks (16 bytes each, voice 1 first) as last
-written, then the sample ROM as the chip's 16-bit data bus sees it, two bytes
-per 16-bit word in the order the chip reads them.
+written, then the sample ROM.
+
+Each register block holds, in byte order: the right and left 8-bit channel
+volumes, then big-endian 16-bit words for frequency, the control/bank word,
+start, end and loop. The control word's top byte is the bank select (0–3) and
+its low byte carries the flags: key-on (`0x80`), compressed format (`0x08`)
+and loop enable (`0x10`).
+
+The ROM follows the chip's banked addressing: each bank is 65536 16-bit words,
+so a voice's word address is `bank * 65536 + start`. Every ROM word is stored
+big-endian. Linear samples are signed 12-bit values in the low 12 bits of a
+word; compressed samples are the 8-bit companded code in the high byte (the low
+byte is unused). A voice's playback rate is `21390 * frequency / 32768` Hz.
 
 ## Output
 
