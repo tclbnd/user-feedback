@@ -23,7 +23,7 @@ class Decoder:
         if odd > 1:
             raise YopError("bad odd/even flag")
         src = 4
-        base = self.first[0]
+        base = self.first[odd]
         for i in range(self.ncol):
             r, g, b = pkt[src:src + 3]
             self.pal[base + i] = (r << 2 & 0xFF) << 16 | (g << 2 & 0xFF) << 8 | (b << 2 & 0xFF)
@@ -36,10 +36,10 @@ class Decoder:
                 if src >= len(pkt):
                     raise YopError("frame data runs out")
                 if low is not None:
-                    tag, low = pkt[low] >> 4, None
+                    tag, low = pkt[low] & 0x0F, None
                 else:
                     low = src
-                    tag = pkt[src] & 0x0F
+                    tag = pkt[src] >> 4
                     src += 1
                 dst = y * w + x
                 if tag != 15:
@@ -48,12 +48,22 @@ class Decoder:
                         raise YopError("frame data runs out")
                     rd = lambda k: pkt[src + k] if src + k < len(pkt) else 0
                     self.pic[dst] = rd(0)
-                    self.pic[dst + 1] = rd(lut[1])
-                    self.pic[dst + w] = rd(lut[0])
+                    self.pic[dst + 1] = rd(lut[0])
+                    self.pic[dst + w] = rd(lut[1])
                     self.pic[dst + w + 1] = rd(lut[2])
                     src += lut[3]
                 else:
-                    pass
+                    if len(pkt) - src < 2:
+                        raise YopError("frame data runs out")
+                    sx = x + int.from_bytes(pkt[src:src + 1], "little", signed=True)
+                    sy = y + int.from_bytes(pkt[src + 1:src + 2], "little", signed=True)
+                    src += 2
+                    if 0 <= sx and 0 <= sy and sx + 2 <= w and sy + 2 <= self.h:
+                        org = sy * w + sx
+                        self.pic[dst] = self.pic[org]
+                        self.pic[dst + 1] = self.pic[org + 1]
+                        self.pic[dst + w] = self.pic[org + w]
+                        self.pic[dst + w + 1] = self.pic[org + w + 1]
 
 
 def parse(data):
