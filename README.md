@@ -17,6 +17,29 @@ Decoding starts with no reference picture and an all-black palette. A frame
 that cannot be decoded is reported with `ok` false and leaves the reference
 picture as it was.
 
+## Compression modes
+
+Modes 2/4 are full-frame key pictures and 3/5 full-frame deltas (one palette
+index per pixel); a zero index in a delta leaves the reference pixel alone.
+
+Modes 12 (key) and 13 (delta) are the ScummVM block encodings. The picture is
+split into 4x4 blocks. After zlib inflation each block frame starts with a
+12-byte big-endian header followed by 32 bytes of RLE block-type codes (a byte
+under 32 is one type; a byte of 32 or more repeats the next byte `b-31`
+times), then the block payloads:
+
+| type | meaning | payload |
+|---|---|---|
+| 0 | skip, keep current pixels | none |
+| 1 | raw block | 16 palette indices |
+| 2 | two colours | 2 colours + four 1-bit row masks |
+| 3, 8 | solid fill | one palette index |
+| 4 | three colours | 3 colours + 16 index bytes (index 3 = keep current pixel) |
+| 5, 10-15, 33 | keyframe pattern blocks | a short palette cycled over the 16 pixels |
+
+A `NULL` frame carries no picture and keeps the previous frame. A palette
+(`CMAP`) precedes some frames and stores each entry as R, G, B bytes.
+
 ## Output
 
 | field | meaning |
