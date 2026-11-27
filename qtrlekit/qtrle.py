@@ -33,103 +33,120 @@ class Reader:
         return self.d[self.p] if self.p < len(self.d) else 0
 
 
+def _unpack(depth, x):
+    if depth == 4:
+        return [(x >> 4) & 0x0F, x & 0x0F]
+    if depth == 2:
+        return [(x >> 6) & 0x03, (x >> 4) & 0x03, (x >> 2) & 0x03, x & 0x03]
+    return [(x >> 7) & 1, (x >> 6) & 1, (x >> 5) & 1, (x >> 4) & 1,
+            (x >> 3) & 1, (x >> 2) & 1, (x >> 1) & 1, x & 1]
+
+
 def decode(pic, w, h, depth, pkt):
-    if len(pkt) < 6:
+    # A frame is a 4-byte chunk size, a 16-bit big-endian header, then rows.
+    # A chunk that carries nothing after its size leaves the picture unchanged.
+    if len(pkt) < 4:
         raise QtrleError("packet is too short")
     r = Reader(pkt, 4)
+    if r.left() == 0:
+        return "unchanged"
     header = r.byte() << 8 | r.byte()
     if header & 0x0008:
-        r.p += 8
-    start, lines = 0, h
+        for _ in range(8):
+            r.byte()
+    g = GROUP[depth]
     limit = w * h
+    row = 0
+    changed = False
 
-    def check(ptr, n):
-        pass
+    def need(n):
+        if r.left() < n:
+            raise Stop
 
-    row = start * w
     try:
-        if depth == 1:
-            ptr = row
-            while lines:
-                skip = r.byte()
-                code = r.s8()
-                if code == 0:
+        while row < h and r.left():
+            need(1)
+            desc = r.byte()
+            if desc & 0x80:
+                # High bit set: skip this many whole rows, then read the
+                # within-row skip descriptor for the next drawn row.
+                row += desc & 0x7F
+                if row >= h:
                     break
-                if skip & 0x80:
-                    lines -= 1
-                    ptr = row + 16 * (skip & 0x7F)
-                    row += w
-                else:
-                    ptr += 16 * skip
-                check(ptr, 0)
+                need(1)
+                desc = r.byte()
+            # The within-row skip is counted in pixel groups; scale to pixels.
+            ptr = row * w + g * desc
+            while r.left():
+                need(1)
+                code = r.s8()
                 if code == -1:
+                    break
+                if code == 0:
+                    need(1)
+                    ptr += g * r.byte()
                     continue
                 if code < 0:
-                    a, b = r.byte(), r.byte()
-                    check(ptr, -code * 16)
-                    for _ in range(-code):
-                        for byte in (a, b):
-                            for k in range(8):
-                                pic[ptr] = byte >> (7 - k) & 1
+                    count = -code
+                    if depth == 16:
+                        need(2)
+                        value = r.byte() << 8 | r.byte()
+                        if ptr + count > limit:
+                            raise Stop
+                        for _ in range(count):
+                            pic[ptr] = value
+                            ptr += 1
+                    elif depth == 8:
+                        need(g)
+                        values = [r.byte() for _ in range(g)]
+                        if ptr + count * g > limit:
+                            raise Stop
+                        for _ in range(count):
+                            for value in values:
+                                pic[ptr] = value
+                                ptr += 1
+                    else:
+                        need(1)
+                        values = _unpack(depth, r.byte())
+                        # A packed run carries one pattern byte; the count is
+                        # in byte-sized sub-groups of (8/depth) pixels each.
+                        span = count * len(values)
+                        if ptr + span > limit:
+                            raise Stop
+                        for _ in range(count):
+                            for value in values:
+                                pic[ptr] = value
                                 ptr += 1
                 else:
-                    check(ptr, code * 16)
-                    for _ in range(code * 2):
-                        x = r.byte()
-                        for k in range(8):
-                            pic[ptr] = x >> (7 - k) & 1
-                            ptr += 1
-            return "decoded"
-        g = GROUP[depth]
-        while lines:
-            lines -= 1
-            ptr = row + g * r.byte()
-            check(ptr, 0)
-            while True:
-                code = r.s8()
-                if code == -1:
-                    break
-                if r.left() < 1:
-                    raise Stop
-                if code == 0:
-                    ptr += g * r.byte()
-                elif code < 0:
                     if depth == 16:
-                        vals = [r.byte() | r.byte() << 8]
-                    elif depth == 8:
-                        vals = [r.byte() for _ in range(4)]
-                    else:
-                        vals = []
-                        for _ in range(4):
-                            x = r.byte()
-                            vals += [x >> s & ((1 << depth) - 1) for s in range(0, 8, depth)]
-                    check(ptr, -code * g)
-                    for _ in range(-code):
-                        for k, v in enumerate(vals):
-                            pic[(ptr + k) % len(pic)] = v
-                        ptr += g
-                else:
-                    if depth == 16:
-                        check(ptr, code)
+                        need(code * 2)
+                        if ptr + code > limit:
+                            raise Stop
                         for _ in range(code):
-                            pic[ptr] = r.byte() | r.byte() << 8
+                            pic[ptr] = r.byte() << 8 | r.byte()
                             ptr += 1
                     elif depth == 8:
-                        check(ptr, code)
+                        need(code)
+                        if ptr + code > limit:
+                            raise Stop
                         for _ in range(code):
                             pic[ptr] = r.byte()
                             ptr += 1
                     else:
-                        check(ptr, code * 4 * (g >> 2))
-                        for _ in range(code * 4):
-                            x = r.byte()
-                            for s in range(0, 8, depth):
-                                pic[ptr % len(pic)] = x >> s & ((1 << depth) - 1)
+                        # One literal byte yields (8/depth) pixels.
+                        nbytes = code
+                        need(nbytes)
+                        if ptr + nbytes * (8 // depth) > limit:
+                            raise Stop
+                        for _ in range(nbytes):
+                            for value in _unpack(depth, r.byte()):
+                                pic[ptr] = value
                                 ptr += 1
-            row += w
+                changed = True
+            row += 1
     except Stop:
         return "stopped"
-    return "decoded"
+    return "decoded" if changed else "unchanged"
 
 
 def parse(data):
