@@ -12,8 +12,25 @@ def _u16(d, p):
     return d[p] | d[p + 1] << 8
 
 
+def _lcw_copy(dst, count, back, size):
+    """Copy `count` bytes from `back` bytes behind the current output position.
+
+    Source and destination may overlap; copying one byte at a time repeats the
+    matched bytes the way an LZ77 back-reference does.
+    """
+    if count == 0:
+        return
+    if back < 1 or back > len(dst):
+        raise WsaError("LCW copy points outside the output")
+    if len(dst) + count > size:
+        raise WsaError("LCW data unpacks past the delta buffer")
+    start = len(dst) - back
+    for k in range(count):
+        dst.append(dst[start + k])
+
+
 def lcw(src, size):
-    """Format 80: unpack into a fresh buffer of `size` bytes."""
+    """Format 80: unpack into a fresh buffer of at most `size` bytes."""
     dst = bytearray()
     p = 0
     while True:
@@ -21,57 +38,86 @@ def lcw(src, size):
             raise WsaError("LCW data ends without the end command")
         cmd = src[p]
         p += 1
-        if not cmd & 0x80:
+        if cmd == 0x80:
+            break
+        if cmd < 0x80:
+            # Short back-reference: 12-bit distance (one more than the gap),
+            # length 3..10.
             if p >= len(src):
                 raise WsaError("LCW copy is truncated")
-            count = (cmd & 0x70) >> 4
-            start = ((cmd & 0x0F) << 8) | src[p]
+            count = ((cmd & 0x70) >> 4) + 3
+            back = (((cmd & 0x0F) << 8) | src[p]) + 1
             p += 1
-            if start >= len(dst) and count:
-                raise WsaError("LCW copy points past the data")
-            dst += dst[start:start + count]
-        elif cmd & 0x40 == 0:
+            _lcw_copy(dst, count, back, size)
+        elif cmd < 0xC0:
+            # Literal run of 1..63 bytes.
             count = cmd & 0x3F
-            if count == 0:
-                break
             if p + count > len(src):
                 raise WsaError("LCW literal run is truncated")
+            if len(dst) + count > size:
+                raise WsaError("LCW data unpacks past the delta buffer")
             dst += src[p:p + count]
             p += count
-        elif cmd in (0xFE, 0xFF):
-            raise WsaError("LCW command 0x%02x is not supported" % cmd)
-        else:
+        elif cmd < 0xFE:
+            # Long back-reference: 16-bit distance, length 3..66.
             count = (cmd & 0x3F) + 3
-            start = _u16(src, p)
+            back = _u16(src, p)
             p += 2
-            if start >= len(dst) and count:
-                raise WsaError("LCW copy points past the data")
-            dst += dst[start:start + count]
-        if len(dst) > size:
-            raise WsaError("LCW data unpacks past the delta buffer")
+            _lcw_copy(dst, count, back, size)
+        elif cmd == 0xFE:
+            # Fill: 16-bit count followed by the byte to repeat.
+            count = _u16(src, p)
+            p += 2
+            if p >= len(src):
+                raise WsaError("LCW fill is truncated")
+            if len(dst) + count > size:
+                raise WsaError("LCW data unpacks past the delta buffer")
+            dst += bytes([src[p]]) * count
+            p += 1
+        else:
+            # Very long back-reference: 16-bit count, then 16-bit distance.
+            count = _u16(src, p)
+            back = _u16(src, p + 2)
+            p += 4
+            _lcw_copy(dst, count, back, size)
     return bytes(dst)
 
 
 def xor_delta(pic, delta):
     """Format 40: apply an XOR delta onto the picture in place."""
     p = d = 0
+
+    def put(count, value):
+        if d + count > len(pic):
+            raise WsaError("XOR delta runs past the picture")
+        for k in range(count):
+            pic[d + k] ^= value
+
     while True:
         if p >= len(delta):
             raise WsaError("XOR delta ends without the end command")
         cmd = delta[p]
         p += 1
         if cmd == 0:
-            count, val = delta[p], delta[p + 1]
+            # XOR fill: count, then the byte to XOR with.
+            if p + 2 > len(delta):
+                raise WsaError("XOR fill is truncated")
+            count, value = delta[p], delta[p + 1]
             p += 2
-            for k in range(count):
-                pic[d + k] ^= val
+            put(count, value)
             d += count
         elif cmd < 0x80:
+            # XOR run: the next `cmd` bytes are XORed onto the picture.
+            if p + cmd > len(delta):
+                raise WsaError("XOR run is truncated")
+            if d + cmd > len(pic):
+                raise WsaError("XOR delta runs past the picture")
             for k in range(cmd):
                 pic[d + k] ^= delta[p + k]
             p += cmd
             d += cmd
         elif cmd > 0x80:
+            # Skip over `cmd & 0x7F` bytes of unchanged picture.
             d += cmd & 0x7F
         else:
             word = _u16(delta, p)
@@ -79,9 +125,38 @@ def xor_delta(pic, delta):
             if word == 0:
                 break
             if not word & 0x8000:
+                # Long skip over `word` unchanged bytes.
                 d += word
             else:
-                raise WsaError("XOR delta command 0x%04x is not supported" % word)
+                count = word & 0x3FFF
+                if word & 0x4000:
+                    # Long XOR fill: one value byte follows.
+                    if p >= len(delta):
+                        raise WsaError("XOR long fill is truncated")
+                    put(count, delta[p])
+                    p += 1
+                else:
+                    # Long XOR run: `count` literal bytes follow.
+                    if p + count > len(delta):
+                        raise WsaError("XOR long run is truncated")
+                    if d + count > len(pic):
+                        raise WsaError("XOR delta runs past the picture")
+                    for k in range(count):
+                        pic[d + k] ^= delta[p + k]
+                    p += count
+                d += count
+
+
+def _next_offset(offs, k):
+    """Start of the next frame after `k` that carries data, else None.
+
+    The search stops before the final offset, which is the loop frame's end
+    rather than the start of another frame.
+    """
+    for j in range(k + 1, len(offs) - 1):
+        if offs[j]:
+            return offs[j]
+    return None
 
 
 def parse(data):
@@ -98,12 +173,24 @@ def parse(data):
     loop = offs[nframes + 1] != 0
     pic = bytearray(w * h)
     frames = []
-    count = nframes + 1 if loop else nframes
-    for k in range(count):
-        start, end = offs[k], offs[k + 1]
-        if not start or end <= start or end > len(data):
-            raise WsaError("frame %d lies outside the file" % k)
+
+    def decode(start, end, what):
+        if start >= len(data) or end > len(data) or end <= start:
+            raise WsaError("%s lies outside the file" % what)
         xor_delta(pic, lcw(data[start:end], dsize))
+
+    for k in range(nframes):
+        start = offs[k]
+        if start:
+            end = _next_offset(offs, k)
+            decode(start, len(data) if end is None else end, "frame %d" % k)
+        # An offset of 0 means the frame stores no data: the picture stays as it was.
         frames.append("%08x" % zlib.crc32(bytes(pic)))
-    return {"frames": len(frames), "x": x, "y": y, "width": w, "height": h, "palette": has_pal, "loop": loop,
-            "crc32": frames}
+    out = {"frames": len(frames), "x": x, "y": y, "width": w, "height": h, "palette": has_pal, "loop": loop,
+           "crc32": frames}
+    if loop:
+        start, end = offs[nframes], offs[nframes + 1]
+        if start:
+            decode(start, end, "loop frame")
+        out["loop_crc32"] = "%08x" % zlib.crc32(bytes(pic))
+    return out
