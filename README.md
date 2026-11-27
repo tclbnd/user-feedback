@@ -11,6 +11,21 @@ snapshot.
 map, row by row), the 1 KB pattern RAM, then the pattern ROM from the
 cartridge (32 bytes per pattern, pattern 0 first).
 
+## Display rules (D65010)
+
+- Register 7: bits 7–5 select the ROM pattern bank (256 patterns per bank),
+  bit 3 switches the tile layer off (the whole screen becomes the border
+  colour), bits 2–0 are the border colour.
+- The tile map is 32 × 24 tiles of 8 × 8 pixels, but the leftmost and
+  rightmost tile columns belong to the border, not the tile layer.
+- Tiles `0x00`–`0xdf` come from the selected ROM pattern bank; tiles
+  `0xe0`–`0xff` come from the 32 patterns in pattern RAM instead.
+- Each 32-byte pattern holds 8 unused bytes, then three 8-byte planes
+  (one bit per pixel each, bit 7 leftmost). The first plane is the high
+  colour bit, the last plane the low one.
+- Colour values map straight to the chip's three digital guns: bit 0 is red,
+  bit 1 green, bit 2 blue.
+
 ## Output
 
 | field | meaning |
