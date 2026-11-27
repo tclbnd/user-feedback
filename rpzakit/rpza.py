@@ -30,11 +30,14 @@ class Reader:
 
 
 def _blend(a, b):
+    # RPZA four-colour palette: colour A, two weighted transitions, colour B.
     c = [a, 0, 0, b]
-    for sh in (10, 5, 0):
-        ta, tb = a >> sh & 0x1F, b >> sh & 0x1F
-        c[1] |= ((ta + tb) >> 1) << sh
-        c[2] |= ((ta + tb) >> 1) << sh
+    for i, weight_a in ((1, 2), (2, 1)):
+        v = 0
+        for sh in (10, 5, 0):
+            ca, cb = (a >> sh) & 0x1F, (b >> sh) & 0x1F
+            v |= ((weight_a * ca + (3 - weight_a) * cb + 1) // 3) << sh
+        c[i] = v
     return c
 
 
@@ -42,72 +45,97 @@ def decode(pic, stride, w, h, data):
     r = Reader(data)
     if r.left() < 4:
         raise RpzaError("frame is too short")
+    # Chunk header: 0xE1 marker followed by the chunk length as a 3-byte
+    # big-endian integer, counting the four header bytes themselves.
+    if data[0] != 0xE1:
+        raise RpzaError("bad RPZA chunk header 0x%02x" % data[0])
+    chunk_len = (data[1] << 16) | (data[2] << 8) | data[3]
+    if chunk_len > len(data):
+        raise RpzaError("chunk length runs past the frame")
     r.p = 4
     total = (w // 4) * (h // 4)
+    nblocks = 0
     row = col = 0
-    colour_a = 0
 
     def advance():
-        nonlocal row, col, total
+        nonlocal row, col, nblocks
+        nblocks += 1
         col += 4
         if col + 4 > w:
             col = 0
             row += 4
-        total -= 1
-
-    def check():
-        pass
 
     def put(y, x, v):
-        pic[(row + y) * stride + col + x] = v
+        yy, xx = row + y, col + x
+        if yy < h and xx < w:
+            pic[yy * stride + xx] = v
 
-    while r.left():
+    def room():
+        # Bytes still available inside this chunk (never read its padding).
+        return chunk_len - r.p
+
+    while nblocks < total and room() > 0:
         op = r.byte()
-        n = op & 0x1F
-        if not op & 0x80:
-            colour_a = op << 8 | r.byte()
-            op = 0
-        kind = op & 0xE0
+        kind, n = op & 0xE0, op & 0x1F
+        if n == 0:
+            n = 32
         if kind == 0x80:
+            # n blocks of black.
             for _ in range(n):
-                check()
                 for y in range(4):
                     for x in range(4):
                         put(y, x, 0)
                 advance()
         elif kind == 0xA0:
+            if room() < 2:
+                raise RpzaError("fill colour is truncated")
             colour_a = r.be16()
             for _ in range(n):
-                check()
                 for y in range(4):
                     for x in range(4):
                         put(y, x, colour_a)
                 advance()
-        elif kind in (0xC0, 0x20):
-            if kind == 0xC0:
-                colour_a = r.be16()
+        elif kind == 0xC0:
+            # A run of four-colour blocks: two palette colours, then four
+            # index bytes per block. A run cut off by the chunk boundary
+            # decodes only the complete blocks; the rest are skipped so the
+            # block position still advances and their pixels stay put.
+            if room() < 4:
+                raise RpzaError("four-colour palette is truncated")
+            colour_a = r.be16()
             c4 = _blend(colour_a, r.be16())
-            if r.left() < n * 4:
-                raise RpzaError("not enough index bytes")
-            for _ in range(n):
-                check()
+            complete = min(n, room() // 4)
+            for _ in range(complete):
                 for y in range(4):
                     idx = r.byte()
                     for x in range(4):
-                        put(y, x, c4[idx >> (2 * x) & 3])
+                        # High pair first: pixels run left to right.
+                        put(y, x, c4[idx >> (2 * (3 - x)) & 3])
                 advance()
-        elif kind == 0x00:
-            if r.left() < 30:
-                raise RpzaError("16-colour block is truncated")
-            check()
-            for y in range(4):
-                for x in range(4):
-                    if y or x:
-                        colour_a = r.be16()
-                    put(y, x, colour_a)
+            for _ in range(n - complete):
+                advance()
+            if nblocks >= total or room() == 0:
+                break
+        elif kind == 0x20:
+            # One 16-colour block: every pixel carries its own RGB555 value.
+            # The low five bits are part of the opcode, not a repeat count.
+            # Only the pixels that actually fit in the chunk are written;
+            # the rest keep whatever the previous frame left.
+            written = 0
+            while written < 16 and room() >= 2:
+                y, x = divmod(written, 4)
+                put(y, x, r.be16())
+                written += 1
             advance()
+        elif kind == 0x60:
+            # Skip n blocks, leaving whatever the previous frame drew.
+            for _ in range(n):
+                advance()
         else:
-            continue
+            raise RpzaError("unknown opcode 0x%02x" % op)
+    # Frames may stop before every block: the blocks never touched keep what
+    # the previous frame drew, which is how unchanged areas stay put.
+
 
 
 def parse(data):
