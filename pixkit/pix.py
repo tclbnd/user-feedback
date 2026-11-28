@@ -1,8 +1,25 @@
-"""BRender pixel maps (.pix): header chunk, optional palette chunk and the image data chunk."""
-import struct
+"""BRender pixel maps (.pix): header chunk, optional palette chunk and the image data chunk.
+
+On-disk layout (all words big-endian):
+
+* 16-byte file magic: the four 32-bit words 0x12, 0x08, 0x02, 0x02.
+* A sequence of chunks.  Each chunk is a 32-bit type word, a 32-bit size
+  word and ``size`` data bytes.
+* A type-3 chunk is a pixel map header.  Its body is a fixed 10-byte header
+  (format byte, two pad bytes, 16-bit width, 16-bit height, two reserved
+  bytes) followed by the NUL-terminated map name, so the chunk size is
+  ``10`` plus the length of the name including its terminator.
+* A type-0x21 chunk carries raw data.  Its body starts with an 8-byte
+  sub-header (origin/origin_bias and row bytes, normally zero on disk);
+  the chunk size counts only the payload that follows, not those 8 bytes.
+"""
 import zlib
 
-FORMATS = {3: ("pal8", 1), 4: ("rgb565", 2), 5: ("rgb555", 2), 6: ("rgb24", 3), 7: ("xrgb", 4), 8: ("argb", 4)}
+# Format codes per BRender's br_pixelmap_type:
+# 3 = 8-bit indexed, 4 = RGB 565, 5 = RGB 555, 6 = RGB 24,
+# 7 = xRGB 32, 8 = ARGB 32, 18 = grey with alpha (YA 8).
+FORMATS = {3: ("pal8", 1), 4: ("rgb565", 2), 5: ("rgb555", 2),
+           6: ("rgb24", 3), 7: ("xrgb", 4), 8: ("argb", 4), 18: ("ya8", 2)}
 
 # BRender standard palette (std.pal): 64 greys, then 32-step ramps of blue, green, cyan, red, magenta and yellow.
 STD_PAL = [
@@ -49,92 +66,133 @@ class In:
         self.d, self.p = d, 0
 
     def left(self):
-        return max(0, len(self.d) - self.p)
+        return len(self.d) - self.p
+
+    def need(self, n):
+        if self.p + n > len(self.d):
+            raise PixError("truncated pixel map")
 
     def be32(self):
-        b = self.d[self.p:self.p + 4].ljust(4, b"\0")
+        self.need(4)
+        v = int.from_bytes(self.d[self.p:self.p + 4], "big")
         self.p += 4
-        return int.from_bytes(b, "big")
+        return v
 
     def be16(self):
-        b = self.d[self.p:self.p + 2].ljust(2, b"\0")
+        self.need(2)
+        v = int.from_bytes(self.d[self.p:self.p + 2], "big")
         self.p += 2
-        return int.from_bytes(b, "big")
+        return v
 
     def byte(self):
-        v = self.d[self.p] if self.p < len(self.d) else 0
+        self.need(1)
+        v = self.d[self.p]
         self.p += 1
         return v
 
+    def take(self, n):
+        self.need(n)
+        v = self.d[self.p:self.p + n]
+        self.p += n
+        return v
 
-def header(g):
-    n = g.be32()
-    fmt = g.byte()
-    g.p += 2
-    w, h = g.be16(), g.be16()
-    g.p += max(0, n - 11)
+
+def read_header(g):
+    """Read a type-3 pixel map header chunk and return (format, width, height)."""
+    n = g.be32()          # chunk body size, including the name
+    if n < 10:
+        raise PixError("bad pixel map header")
+    fmt = g.byte()        # 0: pixel format
+    g.take(2)             # 1..2: padding
+    w, h = g.be16(), g.be16()   # 3..6: width and height
+    g.take(2)             # 7..8: reserved
+    # 9..: NUL-terminated identifier; the body size covers the whole name.
+    g.take(n - 9)
     return fmt, w, h
 
 
 def five(v):
+    # Widen a 5-bit component to 8 bits by repeating its top bits.
     return (v << 3) | (v >> 2)
+
+
+def six(v):
+    # Widen a 6-bit component to 8 bits by repeating its top bits.
+    return (v << 2) | (v >> 4)
 
 
 def parse(data):
     g = In(data)
     if [g.be32() for _ in range(4)] != [0x12, 0x08, 0x02, 0x02]:
         raise PixError("not a BRender pixel map")
-    t = g.be32()
-    if t != 0x03:
-        raise PixError("bad chunk type")
-    fmt, w, h = header(g)
+
+    if g.be32() != 0x03:
+        raise PixError("missing pixel map header")
+    fmt, w, h = read_header(g)
     if fmt not in FORMATS:
         raise PixError("unsupported pixel format")
-    name, bpp = FORMATS[fmt]
-    bpl = bpp * w
     if not w or not h:
         raise PixError("empty picture")
-    t = g.be32()
+    name, bpp = FORMATS[fmt]
+    expect = bpp * w * h
+
+    def open_data_chunk():
+        """Open a type-0x21 chunk: skip its 8-byte on-disk sub-header and
+        return the payload length given by the chunk size."""
+        if g.be32() != 0x21:
+            raise PixError("bad image data chunk")
+        size = g.be32()
+        g.take(8)           # origin/origin_bias and row bytes, on disk only
+        return size
+
+    # An indexed map may carry an embedded palette: its own type-3 header
+    # (a 1x256 xRGB map) followed by a type-0x21 chunk of 256 entries.
     pal = None
-    if name == "pal8" and t in (0x03, 0x3D):
-        pfmt, _, _ = header(g)
-        if pfmt != 7:
-            raise PixError("palette is not RGB")
-        t = g.be32()
-        n = g.be32()
-        if t != 0x21:
-            raise PixError("bad palette chunk")
-        pal = [g.be32() & 0xFFFFFF for _ in range(256)]
-        g.p += 16
-        t = g.be32()
+    if name == "pal8" and g.left() >= 4 and int.from_bytes(
+            data[g.p:g.p + 4], "big") == 0x03:
+        g.be32()
+        pfmt, pw, ph = read_header(g)
+        if pfmt != 7 or pw * ph != 256:
+            raise PixError("palette is not an RGB map of 256 entries")
+        psize = open_data_chunk()
+        if psize < 256 * 4:
+            raise PixError("truncated palette")
+        pal = [int.from_bytes(g.take(4), "big") & 0xFFFFFF for _ in range(256)]
+        g.take(psize - 256 * 4)      # any palette payload padding
     elif name == "pal8":
-        pal = [k * 0x010101 for k in range(256)]
-    n = g.be32()
-    left = g.left()
-    if t != 0x21 or left // bpl < h:
-        raise PixError("bad image data chunk")
-    raw = data[g.p:g.p + h * bpl]
-    rgb, alpha = bytearray(), None
-    if name in ("argb", "ya8"):
-        alpha = bytearray()
+        pal = STD_PAL
+
+    isize = open_data_chunk()
+    if isize < expect:
+        raise PixError("truncated image data")
+    raw = g.take(expect)
+    g.take(isize - expect)           # any row padding to the chunk boundary
+
+    rgb = bytearray()
+    alpha = bytearray() if name in ("argb", "ya8") else None
     for k in range(w * h):
         px = raw[k * bpp:(k + 1) * bpp]
         if name == "pal8":
             v = pal[px[0]]
             rgb += bytes((v >> 16 & 0xFF, v >> 8 & 0xFF, v & 0xFF))
         elif name == "rgb555":
-            v = px[0] << 8 | px[1]
+            v = (px[0] << 8) | px[1]
             rgb += bytes((five(v >> 10 & 31), five(v >> 5 & 31), five(v & 31)))
         elif name == "rgb565":
-            v = px[0] << 8 | px[1]
-            g6 = v >> 5 & 63
-            rgb += bytes((five(v >> 11 & 31), (g6 << 2) | (g6 >> 4), five(v & 31)))
+            v = (px[0] << 8) | px[1]
+            rgb += bytes((five(v >> 11 & 31), six(v >> 5 & 63), five(v & 31)))
         elif name == "rgb24":
-            rgb += px
+            rgb += bytes((px[0], px[1], px[2]))
         elif name in ("xrgb", "argb"):
-            rgb += px[0:3]
-        else:
+            # On-disk order is R, G, B, (unused byte or alpha); BRender's
+            # br_colour is 0x00RRGGBB, so the RGB bytes lead the pixel.
+            rgb += bytes((px[0], px[1], px[2]))
+            if name == "argb":
+                alpha.append(px[3])
+        else:  # ya8: grey byte then alpha byte
             rgb += bytes((px[0],) * 3)
             alpha.append(px[1])
-    return {"format": name, "width": w, "height": h, "crc32": "%08x" % zlib.crc32(bytes(rgb)),
+
+    return {"format": name, "width": w, "height": h,
+            "crc32": "%08x" % zlib.crc32(bytes(rgb)),
             "alpha_crc32": None if alpha is None else "%08x" % zlib.crc32(bytes(alpha))}
