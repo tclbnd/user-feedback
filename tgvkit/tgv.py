@@ -32,7 +32,7 @@ class Bits:
 def unpack(src, p, dst, w, h):
     end = len(src)
     dend = w * h
-    p += 2
+    p += 5 if src[p] & 1 else 2
     if end - p < 3:
         raise TgvError("intra data is truncated")
     size = src[p] << 16 | src[p + 1] << 8 | src[p + 2]
@@ -58,7 +58,7 @@ def unpack(src, p, dst, w, h):
                 s2 = (b0 & 0x3F) + 4
                 p += 3
         else:
-            off = ((b0 & 0x60) << 3) + g(p + 1)
+            off = ((b0 & 0x60) << 3) + g(p + 1) + 1
             s2 = ((b0 & 0x1C) >> 2) + 3
             p += 2
         if s1 > end - p:
@@ -104,7 +104,7 @@ class Tgv:
             p += 12
             i = 0
             while i < n and i < 256 and len(buf) - p >= 3:
-                self.pal[i] = buf[p + 2] << 16 | buf[p + 1] << 8 | buf[p]
+                self.pal[i] = buf[p] << 16 | buf[p + 1] << 8 | buf[p + 2]
                 p += 3
                 i += 1
             if len(buf) - p < 5:
@@ -127,7 +127,7 @@ class Tgv:
         p += 12
         mvbits = (nmv * 20 + 7) & ~7
         g = Bits(buf, p, mvbits)
-        mvs = [(g.get(10), g.get(10)) for _ in range(nmv)]
+        mvs = [(g.sget(10), g.sget(10)) for _ in range(nmv)]
         p += mvbits >> 3
         raw = p
         p += 16 * nraw
@@ -137,7 +137,7 @@ class Tgv:
             tmp = [g.get(8) for _ in range(4)]
             blk = [0] * 16
             for j in range(16):
-                blk[j] = tmp[g.get(2)]
+                blk[15 - j] = tmp[g.get(2)]
             books.append(blk)
         pic = bytearray(w * h)
         last = self.last
