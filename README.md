@@ -14,10 +14,16 @@ Screenpresso codec does and prints one JSON summary per file.
 | 2 | packet count (`u16` little-endian) |
 | | for each packet its size (`u32` little-endian) and the packet exactly as stored in the AVI |
 
-A packet has two header bytes (compression level and key-frame flag; pixel
-size: 2 bytes for RGB555, 3 for BGR, 4 for BGR0) followed by a zlib stream
-holding the frame data. Key frames carry a whole picture, other frames a
-delta that is added to the previous picture.
+A packet has two header bytes. The first carries the compression level and,
+in its low bit, the key-frame flag; the second is the pixel-size code, a power
+of two: `4` for RGB555 (2 bytes/pixel), `8` for BGR (3 bytes/pixel) and
+`16` for BGR0 (4 bytes/pixel). The header is followed by a zlib stream holding
+the frame data. Key frames carry a whole picture, other frames a delta whose
+bytes the codec adds (modulo 256) to the previous picture.
+
+Bitmaps use the Windows DIB layout: rows are stored bottom to top and each row
+is padded so the stride (width times bytes-per-pixel, rounded up to a multiple
+of four) divides the buffer evenly.
 
 ## Output
 

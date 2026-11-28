@@ -1,4 +1,11 @@
-"""Screenpresso screen recordings: zlib key frames."""
+"""Screenpresso screen recordings: zlib key and delta frames.
+
+A packet's zlib stream holds a full picture-sized bitmap.  Key frames carry
+the whole picture, delta frames a byte-wise difference that the Screenpresso
+codec adds (modulo 256) to the previous picture.  Bitmaps are stored the
+Windows DIB way: rows run bottom to top and every row is padded so the
+distance between two rows (the stride) is a multiple of four bytes.
+"""
 import struct
 import zlib
 
@@ -7,50 +14,63 @@ class SpresError(ValueError):
     pass
 
 
+# Second packet byte is a power of two: 1 << bytes-per-pixel.
+_PIXEL_SIZE_CODES = {4: 2, 8: 3, 16: 4}
+
+
 class Spres:
     def __init__(self, w, h):
         self.w, self.h = w, h
         self.cs = None
-        self.rows = None
-        self.buf = bytearray(w * h * 4)
+        self.stride = 0
+        self.buf = None
+        self.keyed = False
 
     def packet(self, pkt):
         if len(pkt) < 2:
             raise SpresError("packet is too small")
         key = pkt[0] & 1
-        cs = (pkt[1] & 3) + 1
-        if cs not in (1, 2, 3, 4):
+        cs = _PIXEL_SIZE_CODES.get(pkt[1])
+        if cs is None:
             raise SpresError("unsupported pixel size")
+        if not key and not self.keyed:
+            raise SpresError("delta frame without a key frame")
+        stride = (self.w * cs + 3) & ~3
+        size = stride * self.h
         d = zlib.decompressobj()
         try:
-            out = d.decompress(pkt[2:], len(self.buf) + 1)
+            out = d.decompress(pkt[2:], size + 1)
         except zlib.error:
             raise SpresError("inflate failed")
-        if not d.eof:
+        if not d.eof or len(out) != size:
             raise SpresError("inflate failed")
-        self.buf[:] = out[:len(self.buf)].ljust(len(self.buf), b"\0")
-        if self.rows is None or cs != self.cs:
-            self.cs = cs
-            self.rows = [bytearray(self.w * cs) for _ in range(self.h)]
-        bw = self.w * cs
-        src = bw
-        if not key:
-            raise SpresError("delta frames are not supported")
-        for y in range(self.h):
-            self.rows[y][:] = self.buf[y * src:y * src + bw]
+        self.cs, self.stride = cs, stride
+        if self.buf is None or len(self.buf) != size:
+            self.buf = bytearray(size)
+        if key:
+            self.buf[:] = out
+            self.keyed = True
+        else:
+            # Delta: Screenpresso adds every byte to the previous picture.
+            self.buf = bytearray(
+                (a + b) & 0xFF for a, b in zip(self.buf, out)
+            )
 
     def picture(self):
+        cs, stride, w, h = self.cs, self.stride, self.w, self.h
         out = bytearray()
-        for r in self.rows:
-            for x in range(self.w):
-                if self.cs == 1:
-                    out += bytes([r[x]] * 3)
-                elif self.cs == 2:
-                    v = r[2 * x] | r[2 * x + 1] << 8
-                    out += bytes((c << 3) for c in (v >> 10 & 31, v >> 5 & 31, v & 31))
+        for y in range(h):
+            # Stored bottom-up: the last stored row is the first output row.
+            row = self.buf[(h - 1 - y) * stride:]
+            for x in range(w):
+                o = x * cs
+                if cs == 2:
+                    v = row[o] | row[o + 1] << 8
+                    comps = (v >> 10 & 31, v >> 5 & 31, v & 31)
+                    out += bytes((c << 3) | (c >> 2) for c in comps)
                 else:
-                    o = x * self.cs
-                    out += bytes(r[o:o + 3])
+                    # cs 3 (BGR) or 4 (BGR0); the report wants RGB, swap R/B.
+                    out += bytes((row[o + 2], row[o + 1], row[o]))
         return bytes(out)
 
 
