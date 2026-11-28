@@ -20,32 +20,34 @@ class Bytes:
 
 
 def rle8(pic, w, h, g):
-    line, pos = 0, 0
+    line, pos = h - 1, 0
     while g.left() > 0:
         p1 = g.u8()
         if p1 == 0:
             p2 = g.u8()
             if p2 == 0:
-                line += 1
-                if line >= h:
+                line -= 1
+                if line < 0:
                     return "decoded"
                 pos = 0
                 continue
             if p2 == 1:
                 return "decoded"
             if p2 == 2:
-                dy, dx = g.u8(), g.u8()
-                line += dy
+                dx, dy = g.u8(), g.u8()
                 pos += dx
-                if line >= h or pos >= w:
+                line -= dy
+                if line < 0 or pos >= w:
                     raise RleError("delta beyond the picture")
                 continue
-            p2 = min(p2, w - pos)
             if g.left() < p2:
                 raise RleError("literal runs past the data")
-            pic[line * w + pos:line * w + pos + p2] = g.d[g.p:g.p + p2]
+            n = min(p2, w - pos)
+            pic[line * w + pos:line * w + pos + n] = g.d[g.p:g.p + n]
             g.p += p2
-            pos += p2
+            if p2 & 1:
+                g.p += 1
+            pos += n
         else:
             v = g.u8()
             p1 = min(p1, w - pos)
@@ -68,26 +70,28 @@ def rle4(pic, w, h, g):
             elif sb == 1:
                 return "decoded"
             elif sb == 2:
-                line -= g.u8()
                 ptr += g.u8()
+                line -= g.u8()
             else:
                 odd = sb & 1
                 n = (sb + 1) // 2
                 extra = n & 1
-                if ptr + 2 * n - odd > w or g.left() < n:
+                if ptr + 2 * n - odd > w or g.left() < n + extra:
                     raise RleError("literal runs past the line")
                 for i in range(n):
                     if ptr >= w:
                         break
                     b = g.u8()
-                    pic[line * w + ptr] = b & 0x0F
+                    pic[line * w + ptr] = b >> 4
                     ptr += 1
                     if i + 1 == n and odd:
                         break
                     if ptr >= w:
                         break
-                    pic[line * w + ptr] = b >> 4
+                    pic[line * w + ptr] = b & 0x0F
                     ptr += 1
+                if extra:
+                    g.p += 1
         else:
             if ptr + code > w + 1:
                 raise RleError("run past the line")
@@ -95,7 +99,7 @@ def rle4(pic, w, h, g):
             for i in range(code):
                 if ptr >= w:
                     break
-                pic[line * w + ptr] = b & 0x0F if i % 2 == 0 else b >> 4
+                pic[line * w + ptr] = b >> 4 if i % 2 == 0 else b & 0x0F
                 ptr += 1
     return "decoded"
 
@@ -123,7 +127,6 @@ def parse(data):
         if len(body) < n:
             raise RleError("frame data is truncated")
         pos += 4 + n
-        pic = bytearray(w * h)
         try:
             state = (rle8 if depth == 8 else rle4)(pic, w, h, Bytes(body))
         except RleError:
