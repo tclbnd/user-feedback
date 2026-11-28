@@ -29,6 +29,18 @@ fields.
 
 A file that cannot be decoded gets an `error` entry instead.
 
+## Decoding notes
+
+- Bitmap rows are stored bottom-up; output is top-down, as Windows draws it.
+- Packed 1/4/8bpp pixels run most-significant bit first.
+- Colour rows and AND-mask rows are DWORD aligned.
+- For 1/4/8/24bpp images the AND mask marks transparent pixels. A 32bpp
+  image with a non-zero alpha channel uses alpha instead (any non-zero alpha
+  counts as opaque); if all alpha bytes are zero, the mask is used, and if
+  there is no mask either the image is fully opaque.
+- In cursor files the directory entry's `wPlanes` and `wBitCount` fields hold
+  the hotspot `[x, y]`.
+
 ## Layout
 
 - `icokit/ico.py` – directory and image decoder
