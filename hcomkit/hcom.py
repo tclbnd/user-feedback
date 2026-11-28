@@ -12,6 +12,19 @@ def s16(b, p):
 
 
 class Decoder:
+    """HCOM dictionary and bit stream decoder.
+
+    The header ends with the first sample of the sound.  It is emitted before
+    the coded samples and, on delta-coded sounds, it is also the value the
+    first delta is added to.
+
+    The code is read most-significant bit first.  Every chunk starts again at
+    the root of the tree, but the running sample carries over from the previous
+    chunk.  A leaf's value is a signed delta when the delta flag is set; when
+    it is clear the value is an offset from silence, so the sample is
+    ``value + 128``.
+    """
+
     def __init__(self, extra):
         if len(extra) <= 7:
             raise HcomError("dictionary header is too short")
@@ -19,8 +32,8 @@ class Decoder:
         if n == 0 or len(extra) < n * 4 + 7:
             raise HcomError("dictionary is truncated")
         self.delta = int.from_bytes(extra[2:6], "big")
-        self.sample = 128
         self.first = extra[-1]
+        self.sample = self.first
         self.dict = []
         for i in range(n):
             l, r = s16(extra, 6 + 4 * i), s16(extra, 8 + 4 * i)
@@ -31,12 +44,15 @@ class Decoder:
         out = bytearray()
         self.node = 0
         for byte in data:
-            for k in range(8):
+            for k in range(7, -1, -1):
                 bit = byte >> k & 1
                 self.node = self.dict[self.node][1] if bit else self.dict[self.node][0]
                 l, r = self.dict[self.node]
                 if l == -1:
-                    self.sample = (self.sample + r) & 0xFF
+                    if self.delta:
+                        self.sample = (self.sample + r) & 0xFF
+                    else:
+                        self.sample = (r + 128) & 0xFF
                     out.append(self.sample)
                     self.node = 0
         return bytes(out)
@@ -52,7 +68,7 @@ def parse(data):
     pos = 12 + elen
     count = data[pos] | data[pos + 1] << 8 if pos + 2 <= len(data) else 0
     pos += 2
-    samples, chunks = bytearray(), []
+    samples, chunks = bytearray([dec.first]), []
     for _ in range(count):
         if pos + 4 > len(data):
             raise HcomError("chunk table is truncated")
