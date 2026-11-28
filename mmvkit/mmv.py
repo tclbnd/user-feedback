@@ -34,7 +34,7 @@ class Mmv:
         for i in range(128):
             v = g.byte() << 16 | g.byte() << 8 | g.byte()
             self.pal[i] = v
-            self.pal[i + 128] = v
+            self.pal[i + 128] = (v << 2) & 0xFFFFFF
 
     def intra(self, g, hh, hv):
         x = y = 0
@@ -44,17 +44,20 @@ class Mmv:
             c = g.byte()
             if c & 0x80:
                 run = 1
-                c &= 0x7F
             else:
-                run = (c & 0x7F) + 1
+                run = (c & 0x7F) + 2
                 c = g.byte()
+            run *= 1 + hh
             run = min(run, self.w - x)
-            o = y * self.w + x
-            self.pix[o:o + run] = bytes([c]) * run
+            for dy in range(1 + hv):
+                if y + dy >= self.h:
+                    break
+                o = (y + dy) * self.w + x
+                self.pix[o:o + run] = bytes([c]) * run
             x += run
             if x >= self.w:
                 x = 0
-                y += 1
+                y += 1 + hv
 
     def inter(self, g, hh, hv):
         off = g.byte() | g.byte() << 8
@@ -65,7 +68,7 @@ class Mmv:
         y = 0
         while g.p < stop:
             length = g.byte()
-            x = g.byte()
+            x = g.byte() + ((length & 0x80) << 1)
             length &= 0x7F
             if not length:
                 y += 1
