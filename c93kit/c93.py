@@ -3,6 +3,11 @@ import zlib
 
 W, H = 320, 192
 
+# The player reads an 8x8 two-colour block's row mask least-significant bit
+# first, while the rest of the decoder indexes masks from the most significant
+# bit.  Pre-reverse each byte so both can share colours().
+MIRROR = bytes(int("{:08b}".format(v)[::-1], 2) for v in range(256))
+
 
 class C93Error(ValueError):
     pass
@@ -32,7 +37,8 @@ class Reader:
 class Decoder:
     def __init__(self):
         self.pics = [None, None]
-        self.pals = [None, None]
+        black = [(0, 0, 0)] * 256
+        self.pals = [list(black), list(black)]
         self.cur = 0
 
     def copy(self, to, tx, ty, src, offset, size):
@@ -68,19 +74,22 @@ class Decoder:
             for x in range(0, W, 8):
                 if not queue:
                     v = r.byte()
-                    queue = [v >> 4, v & 0x0F]
+                    # The two block types of a type byte are stored low nibble first.
+                    queue = [v & 0x0F, v >> 4]
                 t = queue.pop(0)
                 if t == 0x02:
                     self.copy(new, x, y, old, r.le(2), 8)
                 elif t in (0x06, 0x07):
                     src = new if t == 0x07 else old
-                    for i in (0, 4):
-                        for j in (0, 4):
+                    # Quadrants are stored left to right, then top to bottom.
+                    for j in (0, 4):
+                        for i in (0, 4):
                             self.copy(new, x + i, y + j, src, r.le(2), 4)
                 elif t == 0x08:
                     cols = list(r.take(2))
                     for i in range(8):
-                        self.colours(new, x, y + i, 8, 1, 1, cols, r.byte())
+                        # Each row mask has its leftmost pixel in bit 0.
+                        self.colours(new, x, y + i, 8, 1, 1, cols, MIRROR[r.byte()])
                 elif t in (0x0A, 0x0B, 0x0D):
                     for j in (0, 4):
                         for i in (0, 4):
@@ -103,7 +112,8 @@ class Decoder:
         if b & 1:
             self.pals[new_i] = [tuple(r.take(3)) for _ in range(256)]
         else:
-            self.pals[new_i] = [(0, 0, 0)] * 256
+            # No palette in this packet: the previous frame's palette stays.
+            self.pals[new_i] = list(self.pals[old_i])
         return bool(b & 2), new_i
 
 

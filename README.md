@@ -16,11 +16,13 @@ summary per file.
 Each packet starts with a flag byte (bit 0: a 256-colour palette of 8-bit
 red, green, blue triples follows the picture data; bit 1: key frame), then
 codes the 320 × 192 picture as 8 × 8 blocks, left to right and top to
-bottom. Block types come four bits at a time from type bytes in the stream.
-The player keeps two pictures and alternates between them, so a frame is
-drawn over the picture from two frames back, and blocks may copy from the
-previous frame. A frame without a palette shows the previous frame's
-palette. Both pictures start as all zero bytes, the palette as all black.
+bottom. Block types come four bits at a time from type bytes in the stream,
+low nibble first. An 8 × 8 two-colour block stores one row mask per line with
+its leftmost pixel in bit 0. The player keeps two pictures and alternates
+between them, so a frame is drawn over the picture from two frames back, and
+blocks may copy from the previous frame. A frame without a palette shows the
+previous frame's palette. Both pictures start as all zero bytes, the palette
+as all black.
 
 ## Output
 
