@@ -23,8 +23,7 @@ class Decoder:
         self.w, self.h = w, h
         start, count = le16(buf, p + 12), le16(buf, p + 14)
         q = p + 16
-        i = 0
-        start = 0
+        i = start
         while i < start + count and i < 256 and end - q >= 3:
             self.pal[i] = tuple(buf[q:q + 3])
             q += 3
@@ -34,9 +33,10 @@ class Decoder:
         w, h = self.w, self.h
         for j in range(y, y + 4):
             for i in range(x, x + 4):
-                sx = min(max(i + dx, 0), w - 1)
-                sy = min(max(j + dy, 0), h - 1)
-                dst[j * w + i] = ref[sy * w + sx]
+                sx = i + dx
+                sy = j + dy
+                if 0 <= sx < w and 0 <= sy < h:
+                    dst[j * w + i] = ref[sy * w + sx]
 
     def frame(self, buf):
         end = len(buf)
@@ -79,12 +79,12 @@ class Decoder:
                             raw += 16
                         elif raw < end:
                             mv = buf[raw]
-                            if self.last is not None:
-                                self.motion(pic, self.last, x * 4, y * 4, (mv & 0xF) - 8, (mv >> 4) - 8)
+                            if self.last2 is not None:
+                                self.motion(pic, self.last2, x * 4, y * 4, (mv & 0xF) - 7, (mv >> 4) - 7)
                             raw += 1
                     else:
                         if self.last is not None:
-                            self.motion(pic, self.last, x * 4, y * 4, (v & 0xF) - 8, (v >> 4) - 8)
+                            self.motion(pic, self.last, x * 4, y * 4, (v & 0xF) - 7, (v >> 4) - 7)
                     i += 1
         self.last2, self.last = self.last, pic
         return key, pic
