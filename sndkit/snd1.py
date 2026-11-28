@@ -1,7 +1,11 @@
 """Westwood SND1 audio (.snd): chunks of 2-bit and 4-bit ADPCM, raw bytes, big deltas and runs, 8-bit unsigned output."""
 import zlib
 
+# 4-bit ADPCM step table used by the game's sound driver. The high nibble of
+# a byte is played second, the low nibble first.
 TABLE4 = (-9, -8, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 8)
+
+SILENCE = 128
 
 
 class SndError(ValueError):
@@ -12,9 +16,6 @@ def clip(v):
     return 0 if v < 0 else 255 if v > 255 else v
 
 
-_last = 128
-
-
 def chunk(buf):
     if len(buf) < 4:
         raise SndError("chunk is too small")
@@ -23,51 +24,55 @@ def chunk(buf):
     if in_size > len(buf):
         raise SndError("chunk data is larger than the chunk")
     p = 4
-    if in_size == out_size + 4:
+    # The driver passes coded blocks through untouched when both sizes agree.
+    if in_size == out_size:
         return bytes(buf[p:p + out_size])
     out = bytearray()
-    global _last
-    sample = _last
+    # Every block starts from silence; no predictor carries over between
+    # chunks the way the driver restarts its output sample.
+    sample = SILENCE
     while len(out) < out_size and p < len(buf):
         code, count = buf[p] >> 6, buf[p] & 0x3F
         p += 1
         if code == 0:
-            smp = 4 * (count + 1)
-        elif code == 1:
-            smp = 2 * (count + 1)
-        elif code == 2:
-            smp = 1 if count & 0x20 else count + 1
-        else:
-            smp = count + 1
-        smp = min(smp, out_size - len(out))
-        size = 0 if (code == 2 and count & 0x20) or code == 3 else count + 1
-        if p + size > len(buf):
-            break
-        if code == 0:
+            # 2-bit ADPCM: each byte holds four samples, low pair first
+            # (the driver shifts right by 0, 2, 4 and 6).
             for _ in range(count + 1):
+                if p >= len(buf):
+                    raise SndError("2-bit ADPCM block is truncated")
                 c = buf[p]
                 p += 1
-                for sh in (6, 4, 2, 0):
+                for sh in (0, 2, 4, 6):
                     sample = clip(sample + ((c >> sh) & 3) - 2)
                     out.append(sample)
         elif code == 1:
+            # 4-bit ADPCM: low nibble first, then the high nibble, with the
+            # signed delta taken from the driver's step table.
             for _ in range(count + 1):
+                if p >= len(buf):
+                    raise SndError("4-bit ADPCM block is truncated")
                 c = buf[p]
                 p += 1
-                for nib in (c & 0xF, c >> 4):
-                    sample = clip(sample + nib - 8)
-                    out.append(sample)
+                sample = clip(sample + TABLE4[c & 0xF])
+                out.append(sample)
+                sample = clip(sample + TABLE4[c >> 4])
+                out.append(sample)
         elif code == 2:
             if count & 0x20:
-                d = count & 0x1F
-                sample = clip(sample + d)
+                # One big delta: an unsigned five-bit jump upward (0..31).
+                sample = clip(sample + (count & 0x1F))
                 out.append(sample)
             else:
-                out += buf[p:p + smp]
-                p += smp
+                # Raw bytes, copied verbatim; each byte is the new sample.
+                if p + count + 1 > len(buf):
+                    raise SndError("raw block is truncated")
+                for _ in range(count + 1):
+                    sample = buf[p]
+                    p += 1
+                    out.append(sample)
         else:
-            out += bytes([sample]) * smp
-    _last = sample
+            # Run: hold the current sample.
+            out += bytes([sample]) * (count + 1)
     return bytes(out)
 
 
@@ -76,8 +81,6 @@ def parse(data):
         raise SndError("not an SND1 pack")
     rate = data[8] | data[9] << 8
     count = data[10] | data[11] << 8
-    global _last
-    _last = 128
     pos = 12
     samples, chunks = bytearray(), []
     for _ in range(count):
