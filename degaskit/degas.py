@@ -1,7 +1,7 @@
 """Atari ST Degas / Degas Elite pictures (.pi1-.pi3, .pc1-.pc3): resolution word, STE palette, bitplanes, PackBits."""
 import zlib
 
-MODES = {0: (320, 200, 4), 1: (640, 200, 4), 2: (640, 400, 1)}
+MODES = {0: (320, 200, 4), 1: (640, 200, 2), 2: (640, 400, 1)}
 
 
 class DegasError(ValueError):
@@ -9,33 +9,46 @@ class DegasError(ValueError):
 
 
 def ste(v):
-    """One palette word to 8-bit R, G, B."""
-    return tuple(((v >> sh) & 7) * 32 for sh in (8, 4, 0))
+    """One STE palette word to 8-bit R, G, B.
+
+    STE colours are 12-bit, four bits per channel: red in bits 11-8, green in
+    7-4 and blue in 3-0.  Each channel is expanded 0..15 -> 0..255, so a fully
+    set channel is white rather than the 224 that a 3-bit ST palette word gives.
+    """
+    return tuple(((v >> sh) & 0xF) * 17 for sh in (8, 4, 0))
 
 
-def unpack_line(data, pos, size):
-    """PackBits one scanline of `size` bytes; returns (bytes, new position)."""
+def unpack(data, pos, size):
+    """PackBits the picture data, producing `size` bytes; returns (bytes, new position).
+
+    Degas Elite uses the full 0x81..0xFF range for repeats and counts a run as
+    257 - n bytes.  Using 256 - n (plain PackBits) drops one byte from every
+    run, which shifts everything after it left and eventually overruns the
+    scanline.  A run may span scanlines, as it does in the original format.
+    """
     out = bytearray()
     while len(out) < size:
         if pos >= len(data):
-            raise DegasError("compressed data ends inside a scanline")
+            raise DegasError("compressed data ends inside the picture")
         n = data[pos]
         pos += 1
-        if n < 0x80:
+        if n < 0x80:                      # literal run of n + 1 bytes
             cnt = n + 1
             if pos + cnt > len(data):
                 raise DegasError("literal run is truncated")
+            end = len(out) + cnt
             out += data[pos:pos + cnt]
             pos += cnt
-        elif n == 0x80:
+        elif n == 0x80:                   # no operation
             continue
-        else:
+        else:                             # repeat the next byte 257 - n times
             if pos >= len(data):
                 raise DegasError("repeat run is truncated")
-            out += bytes([data[pos]]) * (256 - n)
+            end = len(out) + (257 - n)
+            out += bytes([data[pos]]) * (257 - n)
             pos += 1
-        if len(out) > size:
-            raise DegasError("run crosses the end of a scanline")
+        if end > size:
+            raise DegasError("run crosses the end of the picture data")
     return bytes(out), pos
 
 
@@ -50,19 +63,15 @@ def parse(data):
     w, h, planes = MODES[res]
     pal = [data[2 + 2 * k] << 8 | data[3 + 2 * k] for k in range(16)]
     bpl = w // 8
-    rows = []
+    line_size = bpl * planes
     pos = 34
     if packed:
-        for _ in range(h):
-            raw, pos = unpack_line(data, pos, bpl * planes)
-            rows.append([b"".join(raw[(g * planes + p) * 2:(g * planes + p) * 2 + 2] for g in range(w // 16)) for p in range(planes)])
+        body, pos = unpack(data, pos, line_size * h)
     else:
-        need = bpl * planes * h
+        need = line_size * h
         if pos + need > len(data):
             raise DegasError("picture data is truncated")
-        for y in range(h):
-            raw = data[pos + y * bpl * planes:pos + (y + 1) * bpl * planes]
-            rows.append([b"".join(raw[(g * planes + p) * 2:(g * planes + p) * 2 + 2] for g in range(w // 16)) for p in range(planes)])
+        body = data[pos:pos + need]
         pos += need
     anim = None
     if packed and pos + 32 <= len(data):
@@ -73,7 +82,12 @@ def parse(data):
     else:
         colours = [ste(v) for v in pal]
     img = bytearray()
-    for planes_row in rows:
+    for y in range(h):
+        raw = body[y * line_size:(y + 1) * line_size]
+        # The ST screen is planar along each scanline: every bit of plane 0 for
+        # the line, then plane 1, and so on.  Interleaving 16-pixel groups of
+        # the planes scrambles the picture.
+        planes_row = [raw[p * bpl:(p + 1) * bpl] for p in range(planes)]
         for x in range(w):
             idx = 0
             for p in range(planes):
