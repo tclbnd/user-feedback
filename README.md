@@ -14,9 +14,22 @@ player does and prints one JSON summary per file.
 | | for each packet its size (`u32` little-endian), then a flag byte (bit 0: a palette of 256 RGB triples, 8 bits per component, follows) and the video data exactly as stored in the movie |
 
 The video data is a series of codes whose top two bits select the operation
-(skip, literal pixels or a copy from the player's 32 KB history of literal
+(skip, literal pixels or a copy from the player's 32 KB history of drawn
 pixels, fill, long skip) and whose low six bits give a count. The picture,
 the history and the palette are kept from packet to packet.
+
+| top two bits | operation |
+|---|---|
+| `00` | short skip of 0–63 pixels; nothing is drawn or recorded |
+| `01` | literal run: count 1–63 pixels follow; count 0 marks a history copy — a `u16` little-endian absolute history offset and then one count byte, each pixel read from the history |
+| `10` | fill of 1–63 pixels with the following byte |
+| `11` | long skip: the low six bits form the high byte and the next byte the low byte of a 14-bit skip count |
+
+Every pixel a packet draws — literal, fill or history copy — is appended to
+the 32 KB history ring at its running cursor, wrapping modulo 32768; skips
+move only the draw cursor and leave the history alone. Each packet continues
+the running picture, history cursor and palette (a packet without the
+palette flag keeps the previous palette).
 
 ## Output
 
