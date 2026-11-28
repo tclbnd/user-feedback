@@ -43,44 +43,38 @@ class Canvas:
     def __init__(self, w, h, planes, bpp):
         self.w, self.h, self.planes, self.bpp = w, h, planes, bpp
         self.pix = bytearray(w * h)
-        self.x, self.y, self.plane = 0, 0, 0
+        # PC Paint stores bitmap rows bottom-to-top, like a BMP.
+        self.x, self.y, self.plane = 0, h - 1, 0
+
+    def _advance(self):
+        self.x += 1
+        if self.x >= self.w:
+            self.x = 0
+            self.y -= 1
+            if self.y < 0:
+                self.y = self.h - 1
+                self.plane += 1
 
     def run8(self, value, run):
-        while run > 0:
-            if self.x + run >= self.w:
-                n = self.w - self.x
-                for k in range(n):
-                    self.pix[self.y * self.w + self.x + k] = value
-                run -= n
-                self.x = 0
-                self.y += 1
-                if self.y >= self.h:
-                    return True
-            else:
-                for k in range(run):
-                    self.pix[self.y * self.w + self.x + k] = value
-                self.x += run
-                return False
+        for _ in range(run):
+            if self.plane >= self.planes:
+                return True
+            self.pix[self.y * self.w + self.x] = value
+            self._advance()
         return False
 
     def runbits(self, value, run):
+        # Each encoded byte holds 8/bpp nibbles for the current plane; the
+        # nibble goes into that plane's bit position of the pixel index.
         bpp = self.bpp
         mask = (1 << bpp) - 1
-        while run > 0:
+        for _ in range(run):
             for j in range(8 - bpp, -1, -bpp):
                 if self.plane >= self.planes:
                     return
-                self.pix[self.y * self.w + self.x] |= (value >> j) & mask
-                self.x += 1
-                if self.x == self.w:
-                    self.x = 0
-                    self.y += 1
-                    if self.y >= self.h:
-                        self.y = 0
-                        self.plane += 1
-                        if self.plane >= self.planes:
-                            return
-            run -= 1
+                self.pix[self.y * self.w + self.x] |= (
+                    ((value >> j) & mask) << (bpp * self.plane))
+                self._advance()
 
 
 def parse(data):
@@ -108,12 +102,15 @@ def parse(data):
     after = g.p + esize
     pal = [(0, 0, 0)] * 256
     if etype in (1, 2):
-        for i in range(min(esize, 16)):
-            pal[i] = rgb(CGA[min(g.u8(), 15)])
-    elif etype == 3:
+        # CGA palette extension: bytes are indices into the 16 CGA colours.
         for i in range(min(esize, 16)):
             pal[i] = rgb(CGA[g.u8() & 15])
+    elif etype == 3:
+        # EGA palette extension: bytes are indices into the 64 EGA colours.
+        for i in range(min(esize, 64)):
+            pal[i] = rgb(EGA[g.u8() & 63])
     elif etype in (4, 5):
+        # VGA extension: six bits per channel, scaled up to eight.
         for i in range(min(esize // 3, 256)):
             pal[i] = tuple((g.u8() << 2) & 0xFF for _ in range(3))
     else:
@@ -121,51 +118,54 @@ def parse(data):
             pal[0], pal[1] = (0, 0, 0), (255, 255, 255)
         elif bpp == 2:
             for i in range(4):
-                pal[i] = rgb(CGA[i])
+                pal[i] = rgb(EGA[i])
         else:
+            # PC Paint on EGA/VGA shows the first 16 EGA colours.
             for i in range(16):
-                pal[i] = rgb(CGA[i])
+                pal[i] = rgb(EGA[i])
     g.p = after
     c = Canvas(w, h, planes, bpp_plane)
-    val = 0
+    last = 0
     if g.u16():
-        while g.left() >= 6:
-            t1 = g.left()
-            t2 = g.u16()
-            stop = t1 - min(t1, t2)
-            g.p += 2
+        # Run-length bitmap: a sequence of blocks, each with its own size
+        # and marker byte. The cursor carries across block boundaries.
+        while g.left() >= 6 and c.plane < planes:
+            block_bytes = g.u16()
+            g.u16()  # reserved/skip word
             marker = g.u8()
-            done = False
-            while c.plane < planes and g.left() > stop:
-                run = 1
+            block_end = min(len(g.d), g.p + max(0, block_bytes - 5))
+            while c.plane < planes and g.p < block_end:
                 val = g.u8()
+                run = 1
                 if val == marker:
                     run = g.u8()
                     if run == 0:
                         run = 256
                     val = g.u8()
+                last = val
                 if bpp_plane == 8:
                     if c.run8(val, run):
-                        done = True
                         break
                 else:
                     c.runbits(val, run)
-            if done:
-                break
-        else:
-            if c.plane < planes and c.x < w:
-                run = (h - c.y) * w - c.x
-                if bpp_plane == 8:
-                    c.run8(val, run)
-                else:
-                    c.runbits(val, run // (8 // bpp_plane))
+            g.p = block_end
+        # A picture may stop before every pixel is described; the rest is
+        # filled with the last run value, the way PC Paint leaves it.
+        while c.plane < planes:
+            if bpp_plane == 8:
+                if c.run8(last, 1):
+                    break
+            else:
+                c.runbits(last, 1)
     else:
-        y = 0
-        while y < h and g.left() > 0:
-            row = g.d[g.p:g.p + w]
-            c.pix[y * w:y * w + len(row)] = row
-            g.p += w
-            y += 1
+        # Raw bitmap: bytes streamed in the same bottom-to-top, plane-by-plane
+        # order that the run-length writer uses.
+        while c.plane < planes and g.left() > 0:
+            val = g.u8()
+            if bpp_plane == 8:
+                c.run8(val, 1)
+            else:
+                c.runbits(val, 1)
     img = b"".join(bytes(pal[v]) for v in c.pix)
     return {"width": w, "height": h, "planes": planes, "bits": bpp, "palette_type": etype,
             "crc32": "%08x" % zlib.crc32(img), "first_row": "%08x" % zlib.crc32(img[:3 * w]),
