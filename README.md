@@ -15,18 +15,21 @@ the ARBC codec does and prints one JSON summary per file.
 | | for each packet its size (`u32` little-endian) and the packet exactly as stored in the AVI |
 
 A packet has an 8-byte header, a segment count (`u16` little-endian) and the
-segments. Each segment gives one colour (its red, green and blue bytes each
-followed by a padding byte) and a flags byte selecting the tile sizes that
-follow (1024, 256, 64, 16 and 4 pixels square); each tile group is a tile
-count and, per tile, its row, column and a 16-bit mask of the 4 × 4 parts of
-the tile to paint. The picture is stored bottom row first.
+segments. Each segment gives one colour as three little-endian `u16` values
+(one byte of red, green or blue followed by a padding byte) and a flags byte
+selecting the tile sizes that follow (4, 8, 16, 32 and 64 pixels square); each
+tile group is a tile count and, per tile, its row, column and a 16-bit mask of
+the 4 × 4 sub-tiles of the tile to paint. The picture is stored bottom row
+first, and mask bit 0 addresses the bottom-right sub-tile (the bits run from
+the bottom-right corner right-to-left and bottom-to-top). Tiles that do not
+fit entirely inside the picture are ignored.
 
 ## Output
 
 | field | meaning |
 |---|---|
 | `width`, `height` | header values |
-| `frames` | one object per packet: `state` (`decoded`, `skipped` when the packet produces no picture, `error` when the codec rejects it); decoded packets also give `crc32` (lower-case hex) of the picture as RGB, three bytes per pixel, rows top to bottom |
+| `frames` | one object per packet: `state` (`decoded`, `skipped` when the packet contains no segments and so produces no picture, `error` when the codec rejects it); decoded packets also give `crc32` (lower-case hex) of the picture as RGB, three bytes per pixel, rows top to bottom. Each packet paints over the picture produced by the previous one, so the CRC reflects the accumulated frame. |
 
 A file that cannot be read at all gets an `error` entry instead.
 
