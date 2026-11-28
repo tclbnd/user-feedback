@@ -34,7 +34,11 @@ class Toons:
         """Returns True when the data ran out."""
         nxt, end = 0, len(data)
         skip = 0
-        dst_x, dst_y = max(dst_x, 0), max(dst_y, 0)
+        if dst_x < 0:
+            skip = -dst_x
+            dst_x = 0
+        if dst_x + width > self.w:
+            width = self.w - dst_x
         if dst_y + height > self.h:
             height = self.h - dst_y
         for y in range(height):
@@ -56,7 +60,7 @@ class Toons:
                 val = data[p]
                 p += 1
                 raw = not val & 0x80
-                size = (val & 0x7F) if not raw else (val & 0x7F) + 1
+                size = (val & 0x7F) + 1
                 if to_skip >= size:
                     to_skip -= size
                     step = size if raw else 1
@@ -84,7 +88,8 @@ class Toons:
                 else:
                     color = data[p] if p < end else 0
                     p += 1
-                    self.pix[row + x:row + x + size] = bytes([color]) * size
+                    if color:
+                        self.pix[row + x:row + x + size] = bytes([color]) * size
                 x += size
         return False
 
@@ -100,6 +105,8 @@ class Toons:
         pal_set = buf[38]
         if offset > len(buf):
             raise ToonError("sprite offset is past the frame")
+        for sid in [sid for sid, (end_frame, _) in self.sprites.items() if end_frame < frame_id]:
+            del self.sprites[sid]
         p = offset
         for _ in range(count):
             if p + 14 > len(buf):
@@ -107,8 +114,6 @@ class Toons:
             sid = be16(buf, p)
             if sid >= MAX_SPRITES:
                 raise ToonError("sprite id is too high")
-            if sid in self.sprites:
-                raise ToonError("duplicate sprite id")
             size = be32(buf, p + 4)
             if size < 14:
                 raise ToonError("sprite is too small")
@@ -119,20 +124,25 @@ class Toons:
                 raise ToonError("sprite data is truncated")
             self.sprites[sid] = (end_frame, bytes(buf[p:p + size]))
             p += size
+        diff = None
         while p < len(buf):
             if p + 8 > len(buf):
                 raise ToonError("entry header is truncated")
+            tag = bytes(buf[p:p + 4])
             size = be32(buf, p + 4)
             p += 8
             if size < 8 or size - 8 > len(buf) - p:
                 raise ToonError("entry is truncated")
+            if tag == b"Diff" and size >= 12:
+                diff = (s16(buf, p), s16(buf, p + 2), bytes(buf[p + 4:p + size - 8]))
             p += size - 8
+        self.pix[:] = bytes([background]) * (self.w * self.h)
         if offset >= 44:
             q, qend = 44, offset
             for i in range(referenced):
                 if q + 10 > qend:
                     raise ToonError("sprite list is truncated")
-                sid, top, left, right = be16(buf, q), s16(buf, q + 2), s16(buf, q + 4), s16(buf, q + 8)
+                sid, top, left = be16(buf, q), s16(buf, q + 2), s16(buf, q + 4)
                 q += 10
 
                 if sid >= MAX_SPRITES:
@@ -143,14 +153,18 @@ class Toons:
                 if len(data) < 14:
                     continue
                 self.render(data[14:], left, top, be16(data, 2), be16(data, 0))
-            if pal_id and pal_id != self.last_pal:
-                if pal_id >= MAX_SPRITES:
-                    raise ToonError("palette id is too high")
-                if pal_id in self.sprites:
-                    data = self.sprites[pal_id][1]
-                    self.last_pal = pal_id
-                    n = min(256, len(data) // 6)
-                    self.pal[:n] = [(data[6 * k + 1], data[6 * k + 3], data[6 * k + 5]) for k in range(n)]
+        if diff is not None:
+            diff_x, diff_y, diff_data = diff
+            if len(diff_data) >= 14:
+                self.render(diff_data[14:], diff_x, diff_y, be16(diff_data, 2), be16(diff_data, 0))
+        if pal_id and pal_id != self.last_pal:
+            if pal_id >= MAX_SPRITES:
+                raise ToonError("palette id is too high")
+            if pal_id in self.sprites:
+                data = self.sprites[pal_id][1]
+                self.last_pal = pal_id
+                n = min(256, len(data) // 6)
+                self.pal[:n] = [(data[6 * k], data[6 * k + 2], data[6 * k + 4]) for k in range(n)]
 
 
 def parse(data):
