@@ -8,38 +8,40 @@ class SgrError(ValueError):
 
 
 def bgr8(x):
-    """Pixel byte as stored."""
-    return x
+    """Repack an RBG323 pixel as BGR8 (2 bits blue, 3 bits green, 3 bits red)."""
+    return ((x & 0x18) << 3) | ((x & 0x07) << 3) | ((x >> 5) & 0x07)
 
 
 def frame(src, w, h):
-    pix = bytearray(w * h)
-    x = y = 0
+    total = w * h
+    pix = bytearray(total)
+    pos = 0
     p, end = 0, len(src)
-    while p < end:
+    while p < end and pos < total:
         v = src[p]
         p += 1
-        if v == 0 or v == 0xC0:
+        if v == 0:
             continue
-        if v < 0x80:
-            c = bgr8(src[p] if p < end else 0)
+        if v < 0xC0:
+            # Opcodes below 0xC0 are runs of one repeated pixel; a run
+            # keeps going across scanlines.
+            if p >= end:
+                raise SgrError("run data is truncated")
+            c = bgr8(src[p])
             p += 1
-            n = min(v, w - x)
-            if y < h:
-                pix[y * w + x:y * w + x + n] = bytes([c]) * n
-            x += n
+            n = min(v, total - pos)
+            pix[pos:pos + n] = bytes([c]) * n
+            pos += v
         else:
-            n = v - 0x80 if v < 0xC0 else v - 0xBF
+            # 0xC0..0xFF start a span of raw pixels; the count is the
+            # opcode minus 0xC0, so 0xC0 is an empty (no-op) span.
+            n = v - 0xC0
             if end - p < n:
                 raise SgrError("raw data is truncated")
-            k = min(n, w - x)
-            if y < h:
-                pix[y * w + x:y * w + x + k] = bytes(bgr8(b) for b in src[p:p + k])
-            x += k
+            k = min(n, total - pos)
+            pix[pos:pos + k] = bytes(bgr8(b) for b in src[p:p + k])
+            pos += n
             p += n
-        if x >= w:
-            x = 0
-            y += 1
     return pix
 
 
