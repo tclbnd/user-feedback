@@ -1,4 +1,4 @@
-"""RemotelyAnywhere screen capture (RASC) packets: FINT, KFRM, DLTA, MOUS and MPOS chunks over two frame buffers."""
+"""RemotelyAnywhere screen capture (RASC) packets: FINT, KFRM, DLTA, MOVE, MOUS and MPOS chunks over two frame buffers."""
 import struct
 import zlib
 
@@ -71,7 +71,7 @@ class Rasc:
         fmt = g.le16()
         g.p += 24
         if fmt == 8:
-            stride, bpp = w, 1
+            stride, bpp = (w + 3) & ~3, 1
         elif fmt == 16:
             stride, bpp = w * 2, 2
         elif fmt == 32:
@@ -98,7 +98,7 @@ class Rasc:
             raise RascError("inflate failed")
         k = 0
         for f in (self.f2, self.f1):
-            for i in range(self.h):
+            for i in range(self.h - 1, -1, -1):
                 row = f[i]
                 part = out[k:k + self.stride]
                 if len(part) < self.stride and not d.eof:
@@ -116,16 +116,18 @@ class Rasc:
             raise RascError("delta rectangle is outside the frame")
         g.p += 4
         comp = g.le32()
-        if comp in (0, 1):
+        if comp == 0:
             if g.left() < usize:
                 raise RascError("delta is truncated")
             dc = In(g.d, g.p, g.p + usize)
+        elif comp == 1:
+            dc = In(inflate(g.d[g.p:pos + size], usize))
         else:
             raise RascError("unsupported delta compression")
         if self.f1 is None:
             raise RascError("no frame set up")
         bpp = self.bpp
-        row = y
+        row = y + h - 1
         cx, cy = 0, h
         xo = x * bpp
         f1, f2 = self.f1, self.f2
@@ -135,7 +137,7 @@ class Rasc:
             if cx >= w * bpp:
                 cx = 0
                 cy -= 1
-                row += 1
+                row -= 1
 
         def word(f, o):
             r = f[row]
@@ -184,6 +186,53 @@ class Rasc:
                 raise RascError("unknown delta operation")
         g.p = pos + size
 
+    def copy_rect(self, x, y, w, h, mx, my):
+        if mx + w > self.w or my + h > self.h:
+            raise RascError("move rectangle is outside the frame")
+        bpp = self.bpp
+        for j in range(h):
+            src = self.f1[my + j]
+            self.f2[y + j][x * bpp:(x + w) * bpp] = src[mx * bpp:(mx + w) * bpp]
+
+    def clear_rect(self, x, y, w, h):
+        bpp = self.bpp
+        for j in range(y, y + h):
+            r = self.f2[j]
+            r[x * bpp:(x + w) * bpp] = bytes(w * bpp)
+
+    def move(self, g, size):
+        pos = g.p
+        g.p += 8
+        nb_moves = g.le32()
+        g.p += 8
+        comp = g.le32()
+        if not nb_moves or nb_moves > 0x7FFFFFFF // 16 or comp:
+            raise RascError("bad move chunk")
+        if self.f2 is None:
+            raise RascError("no frame set up")
+        for _ in range(nb_moves):
+            g.p += 2
+            t = g.le16()
+            sx, sy = g.le16(), g.le16()
+            ex, ey = g.le16(), g.le16()
+            mx, my = g.le16(), g.le16()
+            if (sx >= self.w or sy >= self.h or ex > self.w or ey > self.h
+                    or mx >= self.w or my >= self.h):
+                raise RascError("move rectangle is outside the frame")
+            if sx > ex or sy > ey:
+                raise RascError("bad move rectangle")
+            w, h = ex - sx, ey - sy
+            if t == 2:
+                self.copy_rect(sx, sy, w, h, mx, my)
+            elif t == 3:
+                self.clear_rect(sx, sy, w, h)
+            elif t == 4:
+                self.copy_rect(sx, sy, w, h, mx, my)
+                self.clear_rect(mx, my, w, h)
+            else:
+                raise RascError("unknown move operation")
+        g.p = pos + size
+
     def mous(self, g, size):
         pos = g.p
         g.p += 8
@@ -218,6 +267,21 @@ class Rasc:
                     out += bytes(((c << 3) | (c >> 2)) for c in (v >> 10 & 31, v >> 5 & 31, v & 31))
                 else:
                     out += bytes([r[4 * x + 2], r[4 * x + 1], r[4 * x]])
+        if self.cursor is not None:
+            cw, ch, cdata = self.cursor
+            for j in range(ch):
+                y = self.cy + j
+                if y >= h:
+                    continue
+                for i in range(cw):
+                    x = self.cx + i
+                    if x >= w:
+                        continue
+                    o = (j * cw + i) * 3
+                    px = cdata[o:o + 3]
+                    if px == b"\xff\xff\xff":
+                        continue
+                    out[(y * w + x) * 3:(y * w + x) * 3 + 3] = px
         return bytes(out)
 
     def packet(self, pkt):
@@ -239,10 +303,14 @@ class Rasc:
                 self.kfrm(g, size)
             elif t == b"DLTA":
                 self.dlta(g, size)
+            elif t == b"MOVE":
+                self.move(g, size)
             elif t == b"MOUS":
                 self.mous(g, size)
             elif t == b"MPOS":
                 self.mpos(g, size)
+            elif t == b"EMPT":
+                return None
             else:
                 g.p += size
         if self.f1 is None:
