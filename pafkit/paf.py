@@ -44,7 +44,7 @@ class Paf:
 
     def src_pos(self, g):
         v = g.be16()
-        page, x, y = v >> 14, v & 0x7F, (v >> 7) & 0x7F
+        page, x, y = v >> 14, (v & 0x7F) * 2, ((v >> 7) & 0x7F) * 2
         return page, x + y * self.w
 
     def decode0(self, g, code):
@@ -102,10 +102,10 @@ class Paf:
                     raise PafError("opcodes ran out")
                 o = ops[op] if op < len(ops) else 0
                 if bx & 4:
-                    opc = o >> 4
+                    opc = o & 15
                     op += 1
                 else:
-                    opc = o & 15
+                    opc = o >> 4
                 for c in SEQ[opc]:
                     off = 0 if c in (2, 5) else 2 * w
                     if c in (2, 3, 4):
@@ -148,7 +148,7 @@ class Paf:
                 raise PafError("bad palette update")
             for k in range(min(cnt, 256 - idx)):
                 r, gg, b = g.byte(), g.byte(), g.byte()
-                self.pal[idx + k] = (r << 2, gg << 2, b << 2)
+                self.pal[idx + k] = ((r << 2) | (r >> 4), (gg << 2) | (gg >> 4), (b << 2) | (b >> 4))
         cur = self.pages[self.cur]
         if kind == 0:
             self.decode0(g, code)
@@ -167,7 +167,7 @@ class Paf:
                     raise PafError("rle data ran out")
                 c = g.byte()
                 c = c - 256 if c & 0x80 else c
-                n = abs(c)
+                n = abs(c) + 1
                 if d + n > self.vsize:
                     raise PafError("rle run goes past the frame")
                 if c < 0:
@@ -176,7 +176,7 @@ class Paf:
                     cur[d:d + n] = g.take(n)
                 d += n
         img = b"".join(bytes(self.pal[v]) for v in cur[:self.vsize])
-        self.cur = 0
+        self.cur = (self.cur + 1) & 3
         return img
 
 
