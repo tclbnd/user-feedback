@@ -1,4 +1,5 @@
-"""Argonaut BRP video chunks (8-bit): PAL8, MAD1 block types and RLE frames."""
+"""Argonaut BRP video chunks (8-bit): PAL8, MAD1 block types, AVCF/ALCD block
+map frames and RLE frames."""
 import struct
 import zlib
 
@@ -65,7 +66,8 @@ class Argo:
                         mvx, mvy = g.byte() * bsize, g.byte() * bsize
                         a, b = g.byte(), g.byte()
                         c = ((a & 0x3F) << 8) + b
-                        mx, my = mvx + (c & 0x7F), mvy + (c >> 7)
+                        mx = mvx + (c & 0x7F) - 64
+                        my = mvy + (c >> 7) - 64
                         mx, my = min(max(mx, 0), w - bsize), min(max(my, 0), h - bsize)
                         bw = bh = bsize
                         for r in range(bh):
@@ -84,6 +86,8 @@ class Argo:
                         f = g.byte()
                         o = y * w + x
                         P[o:o + 2] = bytes([f, f])
+                        if y + 1 < h:
+                            P[o + w:o + w + 2] = bytes([f, f])
             elif t == 3:
                 g.p += 2
             elif t == 2:
@@ -101,7 +105,7 @@ class Argo:
                     while cnt >= 0:
                         bits = g.byte()
                         for _ in range(4):
-                            code = bits >> 6
+                            code = bits & 3
                             o = dy * w + pos
                             if code == 1:
                                 P[o] = P[o - 1] if o else 0
@@ -117,16 +121,51 @@ class Argo:
                                 dy += 1
                                 if dy >= h:
                                     return
-                            bits = (bits << 2) & 0xFF
+                            bits >>= 2
                         cnt -= 1
             else:
                 raise ArgoError("unknown block type")
+
+    def blocks(self, g, masked):
+        w, h, P = self.w, self.h, self.pix
+        if g.left() < 1024:
+            raise ArgoError("block table is truncated")
+        table = [g.d[g.p + 4 * i:g.p + 4 * i + 4] for i in range(256)]
+        g.p += 1024
+        bw = w // 2
+        n = bw * (h // 2)
+        if masked:
+            mlen = (n + 7) // 8
+            if g.left() < mlen:
+                raise ArgoError("block mask is truncated")
+            mask = g.d[g.p:g.p + mlen]
+            g.p += mlen
+            order = [i for i in range(n) if mask[i >> 3] >> (i & 7) & 1]
+        else:
+            order = range(n)
+        if g.left() < len(order):
+            raise ArgoError("block indices are truncated")
+        for i in order:
+            t = table[g.byte()]
+            o = (i // bw) * 2 * w + (i % bw) * 2
+            P[o] = t[0]
+            P[o + 1] = t[1]
+            P[o + w] = t[2]
+            P[o + w + 1] = t[3]
 
     def rle(self, g):
         w, h, P = self.w, self.h, self.pix
         pos = y = 0
         while g.left() > 0:
             cnt, px = g.byte(), g.byte()
+            if cnt == 0:
+                pos += px
+                while pos >= w:
+                    pos -= w
+                    y += 1
+                    if y >= h:
+                        return
+                continue
             while cnt > 0:
                 P[pos + y * w] = px
                 cnt -= 1
@@ -167,8 +206,10 @@ def parse(data):
                 continue
             if tag == b"MAD1":
                 v.mad1(g)
-            elif tag in (b"AVCF", b"ALCD"):
-                raise ArgoError("block map frames are not supported")
+            elif tag == b"AVCF":
+                v.blocks(g, masked=False)
+            elif tag == b"ALCD":
+                v.blocks(g, masked=True)
             elif tag in (b"RLEF", b"RLED"):
                 v.rle(g)
             else:

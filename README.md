@@ -18,8 +18,10 @@ Each chunk starts with a four-character tag: `PAL8` (palette update: start
 and count as `u16` little-endian, then RGB triples), `MAD1` (a list of block
 types ended by `0xFF`: 8 fills 8×8 blocks, 7 moves blocks, 6 is a raw
 picture, 5 fills 2×2 blocks, 2 is a coded delta), `AVCF` / `ALCD` (a table
-of 2×2 blocks and block indices, all or masked) and `RLEF` / `RLED`
-(count and pixel pairs). The picture is kept from chunk to chunk.
+of 256 2×2 pixel blocks, then one table index per 2×2 block of the picture —
+for `ALCD` a bitmask comes first and only the masked blocks get an index) and
+`RLEF` / `RLED` (count and pixel pairs; a zero count skips that many pixels).
+The picture is kept from chunk to chunk.
 
 ## Output
 
